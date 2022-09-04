@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3DC2FC922886E18E003750D3"
-               BuildableName = "WhatToEatToday.app"
-               BlueprintName = "WhatToEatToday"
-               ReferencedContainer = "container:WhatToEatToday.xcodeproj">
+               BuildableName = "Ambrosia.app"
+               BlueprintName = "Ambrosia"
+               ReferencedContainer = "container:Ambrosia.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3DC2FC922886E18E003750D3"
-            BuildableName = "WhatToEatToday.app"
-            BlueprintName = "WhatToEatToday"
-            ReferencedContainer = "container:WhatToEatToday.xcodeproj">
+            BuildableName = "Ambrosia.app"
+            BlueprintName = "Ambrosia"
+            ReferencedContainer = "container:Ambrosia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <LocationScenarioReference
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3DC2FC922886E18E003750D3"
-            BuildableName = "WhatToEatToday.app"
-            BlueprintName = "WhatToEatToday"
-            ReferencedContainer = "container:WhatToEatToday.xcodeproj">
+            BuildableName = "Ambrosia.app"
+            BlueprintName = "Ambrosia"
+            ReferencedContainer = "container:Ambrosia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
