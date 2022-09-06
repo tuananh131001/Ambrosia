@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "Three O'clock - Coffee & Tea-Iced Oolong Tea with Chia Seeds.jpeg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
