@@ -65,6 +65,8 @@
 		3DC2FC9B2886E18F003750D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DC2FC9A2886E18F003750D3 /* Assets.xcassets */; };
 		3DC2FC9E2886E18F003750D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */; };
 		3DC2FCA62886E1E3003750D3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2FCA52886E1E3003750D3 /* HomeView.swift */; };
+		44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1B28C6F49A003D7E19 /* User.swift */; };
+		44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +105,8 @@
 		3DC2FC9A2886E18F003750D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3DC2FCA52886E1E3003750D3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		44CC5F1B28C6F49A003D7E19 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				3D4705DA288E4C0400502DD1 /* Restaurant.swift */,
+				44CC5F1B28C6F49A003D7E19 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */,
+				44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				3D42C22E28992446005BA233 /* MapDisplayButton.swift in Sources */,
 				3D42C25F28999B3F005BA233 /* MapAnnotationView.swift in Sources */,
 				3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */,
+				44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */,
 				3D8371312893B9CC0067C946 /* RatingView.swift in Sources */,
 				3D304AFD289CBFB700B269ED /* UltilityView.swift in Sources */,
 				3D83711F289397340067C946 /* LaunchView.swift in Sources */,
@@ -420,6 +427,7 @@
 				3D83712A2893B8580067C946 /* PopularRestaurantsView.swift in Sources */,
 				3D8371262893A7D30067C946 /* FoodDetailView.swift in Sources */,
 				3D42C26128999B6D005BA233 /* MapView.swift in Sources */,
+				44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */,
 				3D304AFB289CBD4B00B269ED /* UltilityModel.swift in Sources */,
 				3D837119289389830067C946 /* GifView.swift in Sources */,
 				3D837145289410650067C946 /* LaunchContentView.swift in Sources */,
