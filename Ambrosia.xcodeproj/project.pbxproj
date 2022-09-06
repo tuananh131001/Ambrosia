@@ -33,6 +33,7 @@
 		3D1B2F0D28C735940091BD2F /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2F0C28C735940091BD2F /* FirebaseRemoteConfigSwift */; };
 		3D1B2F0F28C735940091BD2F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2F0E28C735940091BD2F /* FirebaseStorage */; };
 		3D1B2F1128C735940091BD2F /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2F1028C735940091BD2F /* FirebaseStorageCombine-Community */; };
+		3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1B2F1228C737790091BD2F /* SignUpView.swift */; };
 		3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D275820289FC4BA00C7DD6C /* ImageShadowView.swift */; };
 		3D275823289FCDBD00C7DD6C /* DontUse in Resources */ = {isa = PBXBuildFile; fileRef = 3D275822289FCDBD00C7DD6C /* DontUse */; };
 		3D27582528A00FBC00C7DD6C /* cat-eat.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3D27582428A00FBC00C7DD6C /* cat-eat.gif */; };
@@ -71,6 +72,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D1B2F1228C737790091BD2F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		3D275820289FC4BA00C7DD6C /* ImageShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageShadowView.swift; sourceTree = "<group>"; };
 		3D275822289FCDBD00C7DD6C /* DontUse */ = {isa = PBXFileReference; lastKnownFileType = text; path = DontUse; sourceTree = "<group>"; };
 		3D27582428A00FBC00C7DD6C /* cat-eat.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "cat-eat.gif"; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				3D304AF5289CB7C500B269ED /* Food */,
 				3D304AF4289CB77B00B269ED /* Restaurants */,
 				3D83712F2893B9BB0067C946 /* ReuseableViews */,
+				3D1B2F1228C737790091BD2F /* SignUpView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				3D304AFB289CBD4B00B269ED /* UltilityModel.swift in Sources */,
 				3D837119289389830067C946 /* GifView.swift in Sources */,
 				3D837145289410650067C946 /* LaunchContentView.swift in Sources */,
+				3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */,
 				3D42C21A2896D931005BA233 /* NavigateLink.swift in Sources */,
 				3D83712E2893B9590067C946 /* RestaurantSearchCardView.swift in Sources */,
 			);

@@ -20,7 +20,7 @@ import MapKit
 
 class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurants = [Restaurant]()
-    
+    @Published var loginSuccess = false
     // MARK: Location
     var locationManager = CLLocationManager()
     @Published var authorizationState = CLAuthorizationStatus.notDetermined

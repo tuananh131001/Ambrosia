@@ -15,25 +15,24 @@ import SwiftUI
 
 struct LaunchView: View {
     @EnvironmentObject var model: RestaurantModel
-    
+
     // splashsreen here
     var body: some View {
         // if app has not ask user permission to access location
-        if model.authorizationState == .notDetermined {
+        if !model.loginSuccess {
             LaunchContentView()
         }
+        else if model.authorizationState == .notDetermined {
+
+            LaunchContentView(openSetting: true)
+        }
         // user allow access to location
-        else if model.authorizationState == .authorizedAlways || model.authorizationState == .authorizedWhenInUse {
-            
+            else if model.loginSuccess {
             HomeView()
-            
+
         }
         // user not allow -> open settings
-        else {
-            LaunchContentView(openSetting: true)
-            
-        }
-        
+
     }
-    
+
 }
