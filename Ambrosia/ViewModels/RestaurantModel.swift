@@ -162,11 +162,6 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
-    func fetchImage(imageId:String) {
-        hasError = false
-        let urlString = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=\(imageId)&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
-
-    }
     func addReviewFromUser(reviewDescription:String,rating:Int,username:String,email:String){
         let id = UUID()
         let date = Date.now

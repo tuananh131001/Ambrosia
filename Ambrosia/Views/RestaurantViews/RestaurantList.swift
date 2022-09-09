@@ -19,7 +19,7 @@ struct RestaurantList: View {
             ScrollView{
                 VStack{
                     ForEach(restaurantModel.restaurants,id:\.place_id){ res in
-                        RestaurantCardView(rest: res, cardWidth: UIScreen.main.bounds.width - 30, cardHeight: 357, displayType: "all")
+                        RestaurantCard(rest: res, cardWidth: UIScreen.main.bounds.width - 30, cardHeight: 357, displayType: "all")
                     }
                 }
             }
