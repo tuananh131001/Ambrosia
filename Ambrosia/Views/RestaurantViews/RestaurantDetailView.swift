@@ -46,28 +46,28 @@ struct RestaurantDetailView: View {
                         // MARK: open hour and phone
                         Button(action: {
                             // if have phone -> call action
-                            if rest.tel != "" {
-                                let formattedString = "tel://" + rest.tel.replacingOccurrences(of: " ", with: "-")
-                                guard let url = URL(string: formattedString) else { return }
-                                UIApplication.shared.open(url)
-                            }
+//                            if rest.tel != "" {
+//                                let formattedString = "tel://" + rest.tel.replacingOccurrences(of: " ", with: "-")
+//                                guard let url = URL(string: formattedString) else { return }
+//                                UIApplication.shared.open(url)
+//                            }
                         }) {
                             HStack {
                                 // if have phone number -> display call
-                                if (rest.tel != "") {
-                                    Image(systemName: "phone.fill")
-                                        .foregroundColor(Color("RestDetailIconColor"))
-                                }
+//                                if (rest.tel != "") {
+//                                    Image(systemName: "phone.fill")
+//                                        .foregroundColor(Color("RestDetailIconColor"))
+//                                }
                                 // if not have phone number -> display hour
-                                else {
-                                    Image(systemName: "clock.badge.checkmark")
-                                        .foregroundColor(Color("RestDetailIconColor"))
-                                }
+//                                else {
+//                                    Image(systemName: "clock.badge.checkmark")
+//                                        .foregroundColor(Color("RestDetailIconColor"))
+//                                }
                                 // open hour
-                                Text(rest.openHour)
-                                    .foregroundColor(Color("RestDetailAddColor"))
-                                    .font(.headline)
-                                    .lineLimit(1)
+//                                Text(rest.openHour)
+//                                    .foregroundColor(Color("RestDetailAddColor"))
+//                                    .font(.headline)
+//                                    .lineLimit(1)
                                 
                             }
                         }
@@ -85,12 +85,12 @@ struct RestaurantDetailView: View {
                         
                         // MARK: restaurant description
                         // need add read more
-                        Text(rest.description)
-                            .lineSpacing(5)
-                            .lineLimit(showFullText ? nil : 2)
-                            .font(.body)
-                            .foregroundColor(Color("RestDetailDescColor"))
-                            .onTapGesture(perform: { showFullText.toggle() })
+//                        Text(rest.description)
+//                            .lineSpacing(5)
+//                            .lineLimit(showFullText ? nil : 2)
+//                            .font(.body)
+//                            .foregroundColor(Color("RestDetailDescColor"))
+//                            .onTapGesture(perform: { showFullText.toggle() })
                     }
                     .padding()
                 }

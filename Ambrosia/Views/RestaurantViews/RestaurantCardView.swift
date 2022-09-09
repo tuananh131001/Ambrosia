@@ -78,11 +78,11 @@ struct RestaurantCardView: View {
                             .foregroundColor(.black)
                         
                         // MARK: restaurant category
-                        if displayType == "all" {
-                            Text(rest.categories[0])
-                                .foregroundColor(Color("RestCardCaptColor"))
-                                .italic()
-                        }
+//                        if displayType == "all" {
+//                            Text(rest.categories[0])
+//                                .foregroundColor(Color("RestCardCaptColor"))
+//                                .italic()
+//                        }
                     }
                     Spacer()
                 }
