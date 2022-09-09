@@ -25,22 +25,12 @@ struct Restaurant: Decodable, Identifiable {
     var address: String = ""
 
     var rating: Double = 4
-    var foodList = [Food]()
-    
     // MARK: - methods
     func coordinateObject() -> CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: coordinates[0], longitude: coordinates[1])
     }
     func isPopular() -> Bool {
         return rating >= 4.5
-    }
-    func findPriceRange() -> String {
-        let minPrice = foodList.map { $0.price }.min()
-        let maxPrice = foodList.map { $0.price }.max()
-        if let newMin = minPrice, let newMax = maxPrice {
-            return "\(String(newMin / 1000))k ~ \(String(newMax / 1000))k VND"
-        }
-        return "0d ~ 0d"
     }
 
     static func testData () -> Restaurant {
@@ -54,25 +44,10 @@ struct Restaurant: Decodable, Identifiable {
             categories: ["Dim Sum", "Hot Pot"],
             coordinates: [0.0, 0.0],
             address: "109 Tôn Dật Tiên",
-            rating: 4,
-            foodList: [Food.testData()])
+            rating: 4
+            ) 
     }
 }
-struct Food: Decodable, Identifiable {
-    var id: Int = 0
-    var name: String = ""
-    var description: String = ""
-    var category: String = ""
-    var price: Int = 0
-    
-    // MARK: - methods
-    static func testData() -> Food {
-        // for display data in preview
-        return Food(id: 0, name: "Shrimp Dumplings - Har Gow", description: "Shrimp, Flour", category: "Dim Sum", price: 30_000)
-    }
-}
-
-
 
 
 
