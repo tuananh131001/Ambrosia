@@ -31,18 +31,12 @@ struct RestaurantDetailView: View {
                 // MARK: - Restaurant Info
                 VStack {
                     // MARK: restaurant cover image
-                    
-                    
-                    
-                    
                     VStack(alignment: .leading, spacing: 13) {
                         // MARK: restaurant name
                         Text(rest.name)
                             .font(.largeTitle)
                             .bold()
                             .foregroundColor(Color("RestDetailTitleColor"))
-                        
-                        
                         // MARK: open hour and phone
                         Button(action: {
                             // if have phone -> call action

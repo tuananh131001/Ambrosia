@@ -30,8 +30,6 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     // Current user region and coordinate
     @Published var userLocation = MKCoordinateRegion()
     @Published var currentUserCoordinate: CLLocationCoordinate2D?
-    
-    
     // MARK: Current restaurant
     @Published var currentRestaurant: Restaurant?
     var currentRestaurantIndex = 0
@@ -151,6 +149,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
                         if let data = data,
                             let restaurantArr = try? decoder.decode(Restaurants.self, from: data) {
 //                            print(restaurantArr)
+                            print(restaurantArr.results)
                             self?.restaurants = restaurantArr.results
                         }
                         else {
@@ -163,7 +162,6 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
-    
     func addReviewFromUser(reviewDescription:String,rating:Int,username:String,email:String){
         let id = UUID()
         let date = Date.now
