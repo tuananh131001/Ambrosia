@@ -109,26 +109,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
     }
     
-    // MARK: - Deal with Data
-    func getLocalData() {
-        // get url to json file
-        let jsonUrl = Bundle.main.url(forResource: "restaurants", withExtension: "json")
-        
-        // read file into data object
-        do {
-            let jsonData = try Data(contentsOf: jsonUrl!)
-            
-            // try to decode  json -> array modules
-            let jsonDecoder = JSONDecoder()
-            let restaurants = try jsonDecoder.decode([Restaurant].self, from: jsonData)
-            // assign parsed module to module property
-            self.restaurants.append(contentsOf: restaurants)
-        }
-        catch {
-            // catch error
-            print("Could not parse local data")
-        }
-    }
+   
     
     // MARK: - Restaurant
     // MARK: distance from current position to restaurant
@@ -136,10 +117,10 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         return UltilityModel.calculateDistance(lat1: currentUserCoordinate?.latitude ?? 0.0, lon1: currentUserCoordinate?.longitude ?? 0.0, lat2: restaurant.coordinates[0], lon2: restaurant.coordinates[1])
     }
     // MARK: Restaurant Navigation Method
-    func navigateRestaurant(_ restId: Int) {
+    func navigateRestaurant(_ restId: String) {
         // find the index for the restaurant id
         currentRestaurantIndex = restaurants.firstIndex(where: {
-            $0.id == restId
+            $0.place_id == restId
         }) ?? 0
         
         // set the current restaurant
@@ -158,8 +139,8 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     
     // MARK: - Food
     // create category list
-    func findAllCategories(_ restId: Int) -> [String] {
-        let restaurantIndex = restaurants.firstIndex(where: { $0.id == restId}) ?? 0
+    func findAllCategories(_ restId: String) -> [String] {
+        let restaurantIndex = restaurants.firstIndex(where: { $0.place_id == restId}) ?? 0
         var categorySet = Set<String>() // unique list to keep track of unique string
         var categoryArr = [String]()
         for food in restaurants[restaurantIndex].foodList {
@@ -173,8 +154,8 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     // MARK: Food Navigation Method
-    func navigateFood(_ foodId: Int, _ restId: Int) {
-        let restaurantIndex = restaurants.firstIndex(where: { $0.id == restId}) ?? 0
+    func navigateFood(_ foodId: Int, _ restId: String) {
+        let restaurantIndex = restaurants.firstIndex(where: { $0.place_id == restId}) ?? 0
         // find the index for the restaurant id
         currentFoodIndex = restaurants[restaurantIndex].foodList.firstIndex(where: {
             $0.id == foodId

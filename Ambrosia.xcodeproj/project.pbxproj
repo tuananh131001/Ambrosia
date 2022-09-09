@@ -62,11 +62,13 @@
 		3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */; };
 		3D85B3EA289144FA001BF2AF /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D85B3E9289144FA001BF2AF /* restaurants.json */; };
 		3D85B3EC28917B7D001BF2AF /* FoodCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3EB28917B7D001BF2AF /* FoodCardView.swift */; };
-		3DBE44B328C4B38C0086B863 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DBE44B228C4B38C0086B863 /* GoogleService-Info.plist */; };
 		3DC2FC972886E18E003750D3 /* EatTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2FC962886E18E003750D3 /* EatTime.swift */; };
 		3DC2FC9B2886E18F003750D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DC2FC9A2886E18F003750D3 /* Assets.xcassets */; };
 		3DC2FC9E2886E18F003750D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */; };
 		3DC2FCA62886E1E3003750D3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2FCA52886E1E3003750D3 /* HomeView.swift */; };
+		3DCBB9BB28CAF29D008AD384 /* NewRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCBB9BA28CAF29D008AD384 /* NewRestaurant.swift */; };
+		3DCBB9BD28CAF2C3008AD384 /* NewRestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCBB9BC28CAF2C3008AD384 /* NewRestaurantModel.swift */; };
+		3DF8693028CB049F00AB4363 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */; };
 		44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1B28C6F49A003D7E19 /* User.swift */; };
 		44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */; };
 /* End PBXBuildFile section */
@@ -102,12 +104,14 @@
 		3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
 		3D85B3E9289144FA001BF2AF /* restaurants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
 		3D85B3EB28917B7D001BF2AF /* FoodCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCardView.swift; sourceTree = "<group>"; };
-		3DBE44B228C4B38C0086B863 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3DC2FC932886E18E003750D3 /* Ambrosia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ambrosia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DC2FC962886E18E003750D3 /* EatTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatTime.swift; sourceTree = "<group>"; };
 		3DC2FC9A2886E18F003750D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3DC2FCA52886E1E3003750D3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		3DCBB9BA28CAF29D008AD384 /* NewRestaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRestaurant.swift; sourceTree = "<group>"; };
+		3DCBB9BC28CAF2C3008AD384 /* NewRestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRestaurantModel.swift; sourceTree = "<group>"; };
+		3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		44CC5F1B28C6F49A003D7E19 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +219,7 @@
 			children = (
 				3D4705DA288E4C0400502DD1 /* Restaurant.swift */,
 				44CC5F1B28C6F49A003D7E19 /* User.swift */,
+				3DCBB9BA28CAF29D008AD384 /* NewRestaurant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			children = (
 				3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */,
 				44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */,
+				3DCBB9BC28CAF2C3008AD384 /* NewRestaurantModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -269,7 +275,7 @@
 		3DC2FC952886E18E003750D3 /* Ambrosia */ = {
 			isa = PBXGroup;
 			children = (
-				3DBE44B228C4B38C0086B863 /* GoogleService-Info.plist */,
+				3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */,
 				3D83712028939CF30067C946 /* Info.plist */,
 				3D304AF6289CB9A700B269ED /* Ultilities */,
 				3D4705DC288E4D5C00502DD1 /* ViewModels */,
@@ -400,7 +406,7 @@
 				3D275823289FCDBD00C7DD6C /* DontUse in Resources */,
 				3D83713B2893F1780067C946 /* GermaniaOne-Regular.ttf in Resources */,
 				3DC2FC9B2886E18F003750D3 /* Assets.xcassets in Resources */,
-				3DBE44B328C4B38C0086B863 /* GoogleService-Info.plist in Resources */,
+				3DF8693028CB049F00AB4363 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +422,7 @@
 				3D42C22E28992446005BA233 /* MapDisplayButton.swift in Sources */,
 				3D42C25F28999B3F005BA233 /* MapAnnotationView.swift in Sources */,
 				3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */,
+				3DCBB9BD28CAF2C3008AD384 /* NewRestaurantModel.swift in Sources */,
 				44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */,
 				3D8371312893B9CC0067C946 /* RatingView.swift in Sources */,
 				3D304AFD289CBFB700B269ED /* UltilityView.swift in Sources */,
@@ -428,6 +435,7 @@
 				3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */,
 				3D304B03289ED8A300B269ED /* Ultility.swift in Sources */,
 				3D8371382893D3DF0067C946 /* FoodListView.swift in Sources */,
+				3DCBB9BB28CAF29D008AD384 /* NewRestaurant.swift in Sources */,
 				3D85B3DE288FE20E001BF2AF /* RestaurantCardView.swift in Sources */,
 				3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */,
 				3D83712A2893B8580067C946 /* PopularRestaurantsView.swift in Sources */,

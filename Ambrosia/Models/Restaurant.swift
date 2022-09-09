@@ -14,8 +14,8 @@
 import Foundation
 import CoreLocation
 
-struct Restaurant: Decodable, Identifiable {
-    var id: Int = 0
+struct Restaurant: Codable {
+    var place_id: String
     var name: String = ""
     var description: String = ""
     var tel: String = ""
