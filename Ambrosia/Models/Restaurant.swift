@@ -17,18 +17,23 @@ import CoreLocation
 struct Restaurant: Codable {
     var place_id: String
     var name: String = ""
-//    var description: String = ""
-//    var tel: String = ""
-//    var openHour: String = ""
-//    var categories: [String] = [""]
-//    var coordinates: [Double] = [0.0, 0.0]
-//    var address: String = ""
+    var opening_hours:OpeningHours?
+    var vicinity:String?
+    var price_level:Int?
+    var photos: [Photos]?
+    var review = Reviews()
+    enum CodingKeys: String, CodingKey {
+          case place_id
+          case name
+          case opening_hours
+          case vicinity
+          case price_level
+          case photos
+       }
+
 
     var rating: Double = 4
-    // MARK: - methods
-//    func coordinateObject() -> CLLocationCoordinate2D {
-//        return CLLocationCoordinate2D(latitude: coordinates[0], longitude: coordinates[1])
-//    }
+
     func isPopular() -> Bool {
         return rating >= 4.5
     }
@@ -37,4 +42,26 @@ struct Restaurant: Codable {
 }
 
 
+struct OpeningHours:Codable{
+    var open_now:Bool?
+}
 
+struct Photos:Codable{
+    var photo_reference: String?
+}
+
+struct Review:Identifiable{
+    var id = UUID()
+    var reviewDescription: String
+    var dateCreated:Date
+    var rating: Int
+    var username:String
+    var email:String
+}
+
+typealias Reviews = [Review]
+
+
+struct Restaurants: Codable {
+    var results:[Restaurant]
+}

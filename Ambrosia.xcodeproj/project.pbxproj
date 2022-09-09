@@ -57,8 +57,6 @@
 		3DC2FC9B2886E18F003750D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DC2FC9A2886E18F003750D3 /* Assets.xcassets */; };
 		3DC2FC9E2886E18F003750D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */; };
 		3DC2FCA62886E1E3003750D3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2FCA52886E1E3003750D3 /* HomeView.swift */; };
-		3DCBB9BB28CAF29D008AD384 /* NewRestaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCBB9BA28CAF29D008AD384 /* NewRestaurant.swift */; };
-		3DCBB9BD28CAF2C3008AD384 /* NewRestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCBB9BC28CAF2C3008AD384 /* NewRestaurantModel.swift */; };
 		3DF8693028CB049F00AB4363 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */; };
 		44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1B28C6F49A003D7E19 /* User.swift */; };
 		44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */; };
@@ -91,8 +89,6 @@
 		3DC2FC9A2886E18F003750D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3DC2FCA52886E1E3003750D3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		3DCBB9BA28CAF29D008AD384 /* NewRestaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRestaurant.swift; sourceTree = "<group>"; };
-		3DCBB9BC28CAF2C3008AD384 /* NewRestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRestaurantModel.swift; sourceTree = "<group>"; };
 		3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		44CC5F1B28C6F49A003D7E19 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -138,6 +134,7 @@
 		3D304AF4289CB77B00B269ED /* RestaurantViews */ = {
 			isa = PBXGroup;
 			children = (
+				3D4D1B1B28CB211500034146 /* RestaurantList.swift */,
 				3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */,
 				3D85B3DD288FE20E001BF2AF /* RestaurantCardView.swift */,
 				3D83712D2893B9590067C946 /* RestaurantSearchCardView.swift */,
@@ -177,7 +174,6 @@
 			children = (
 				3D4705DA288E4C0400502DD1 /* Restaurant.swift */,
 				44CC5F1B28C6F49A003D7E19 /* User.swift */,
-				3DCBB9BA28CAF29D008AD384 /* NewRestaurant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -187,7 +183,6 @@
 			children = (
 				3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */,
 				44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */,
-				3DCBB9BC28CAF2C3008AD384 /* NewRestaurantModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -257,7 +252,6 @@
 				44A7C10928CB0504003D9F02 /* SettingViews */,
 				44A7C10828CB03CE003D9F02 /* AuthViews */,
 				3D304AF4289CB77B00B269ED /* RestaurantViews */,
-				3D4D1B1B28CB211500034146 /* RestaurantList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -391,7 +385,6 @@
 			files = (
 				3DC2FC972886E18E003750D3 /* EatTime.swift in Sources */,
 				3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */,
-				3DCBB9BD28CAF2C3008AD384 /* NewRestaurantModel.swift in Sources */,
 				44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */,
 				3D8371312893B9CC0067C946 /* RatingView.swift in Sources */,
 				3D304AFD289CBFB700B269ED /* AssignGradientColor.swift in Sources */,
@@ -403,7 +396,6 @@
 				3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */,
 				3D304B03289ED8A300B269ED /* DrawCustomShapes.swift in Sources */,
 				3D4D1B1C28CB211500034146 /* RestaurantList.swift in Sources */,
-				3DCBB9BB28CAF29D008AD384 /* NewRestaurant.swift in Sources */,
 				3D85B3DE288FE20E001BF2AF /* RestaurantCardView.swift in Sources */,
 				3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */,
 				44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */,

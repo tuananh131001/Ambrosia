@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RestaurantList: View {
-    @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var restaurantModel: RestaurantModel
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Popular")
@@ -29,10 +29,14 @@ struct RestaurantList: View {
 //                    }
 //                }
 //            }
-            List(model.restaurants,id:\.place_id){ res in
+            List(restaurantModel.restaurants,id:\.place_id){ res in
                 Text(res.name)
             }
-        }.onAppear(perform: model.fetchRestaurant)
+        }
+        .onAppear {
+            restaurantModel.addReviewFromUser(reviewDescription: "như Sir", rating: 10,username: "Sir",email: "Sir@gmail.com")
+            print(restaurantModel.restaurants[0].review)
+        }
     }
 }
 
