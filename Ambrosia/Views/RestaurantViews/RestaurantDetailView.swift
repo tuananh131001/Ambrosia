@@ -74,20 +74,7 @@ struct RestaurantDetailView: View {
                         
                         // MARK: restaurant address -> display map
                         HStack(spacing: 3) {
-                            Button(action: {
-                                model.openAppleMap(endCoordinate: rest.coordinateObject())
-                            }, label: {
-                                HStack {
-                                    Image(systemName: "mappin.and.ellipse")
-                                        .foregroundStyle(Color("RestDetailIconColor"))
-                                        .symbolRenderingMode(.hierarchical)
-                                        .font(.title3)
-                                    Text(rest.address)
-                                        .foregroundColor(Color("RestDetailAddColor"))
-                                        .font(.headline)
-                                        .lineLimit(1)
-                                }
-                            })
+                         
                             
                             Spacer()
                             
@@ -113,6 +100,5 @@ struct RestaurantDetailView: View {
                 
             }
         }
-        .ignoresSafeArea()
     }
 }

@@ -69,19 +69,19 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     // MARK: Location manager
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // stop auto zooming in apple map
-        manager.stopUpdatingLocation()
-        // store userLocation
-        locations.last.map {
-            currentUserCoordinate = CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)
-            userLocation = UltilityModel.createCoordinateRegion(currentUserCoordinate!)
-            
-            // display recent restaurants inside the regions
-//            currentRegion = userLocation
-        }
-
-    }
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        // stop auto zooming in apple map
+//        manager.stopUpdatingLocation()
+//        // store userLocation
+//        locations.last.map {
+//            currentUserCoordinate = CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)
+//            userLocation = UltilityModel.createCoordinateRegion(currentUserCoordinate!)
+//
+//            // display recent restaurants inside the regions
+////            currentRegion = userLocation
+//        }
+//
+//    }
     // MARK: Ask user location permission
     func requestGeolocationPermission() {
         // remember to open Info -> Target -> Info -> Below Bundle Version String -> Click add -> Type "Privacy - Location When In Use Usage Description" with value "Please allow us to access your location"
@@ -90,20 +90,20 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     // open apple map to show routes to the user
-    func openAppleMap(endCoordinate: CLLocationCoordinate2D) {
-        // create url to open apple map having route from current location to place
-        let routeURL = "http://maps.apple.com/?saddr=\(UltilityModel.convertCoordinateString(currentUserCoordinate ?? CLLocationCoordinate2D()))&daddr=\(UltilityModel.convertCoordinateString(endCoordinate))"
-        // binding
-        guard let url = URL(string: routeURL) else {
-            return
-        }
-        // open apple map based on the ios version
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
-    }
+//    func openAppleMap(endCoordinate: CLLocationCoordinate2D) {
+//        // create url to open apple map having route from current location to place
+//        let routeURL = "http://maps.apple.com/?saddr=\(UltilityModel.convertCoordinateString(currentUserCoordinate ?? CLLocationCoordinate2D()))&daddr=\(UltilityModel.convertCoordinateString(endCoordinate))"
+//        // binding
+//        guard let url = URL(string: routeURL) else {
+//            return
+//        }
+//        // open apple map based on the ios version
+//        if #available(iOS 10.0, *) {
+//            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//        } else {
+//            UIApplication.shared.openURL(url)
+//        }
+//    }
     
     // MARK: - Deal with Data
     func getLocalData() {
