@@ -12,29 +12,29 @@ struct User: Decodable{
     var password: String
     var favoriteRestaurants: [Restaurant]
     var email:String
-    var reviews: [Review]
     
     // Function for testing
     static func testUser() -> User{
+//        let geometry = Geometry(location: Location(lat: 10, lng: 100))
+        let user = User(username: "Sir", password: "Sir ne", favoriteRestaurants: [], email: "sir@gmail.com")
         let restaurant = Restaurant(
             place_id: "sir1",
-            name: "Yeebo"
+            name: "Yeebo",
+            opening_hours: OpeningHours(open_now: false),
+            vicinity: "70 nhà Sir",
+            price_level: 2
+            
         )
-        let reviews = [Review(restaurant: restaurant, reviewDescription: "bị sir khinh",score: 8)]
-        return User(username: "sir", password: "sir123", favoriteRestaurants: [Restaurant(
-            place_id: "sir2",
-            name: "Yeebo"
-            )],email: "huyne",reviews: reviews)
+//        let reviews = [Review(restaurant: restaurant, reviewDescription: "bị sir khinh",score: 8)]
+        return User(username: "sir", password: "sir123", favoriteRestaurants: [restaurant
+            ],email: "huyne")
         
     }
 }
 
-struct Review: Decodable, Identifiable{
-    var id = UUID()
-    var restaurant: Restaurant
-    var reviewDescription: String
-    var score: Int
-}
+
+
+
 
 
 
