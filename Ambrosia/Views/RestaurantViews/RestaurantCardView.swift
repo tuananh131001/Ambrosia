@@ -12,20 +12,20 @@
  */
 
 import SwiftUI
-extension View {
-    func multicolorGlow() -> some View {
-        ZStack {
-            ForEach(0..<2) { i in
-                Rectangle()
-                    .fill(AngularGradient(gradient: Gradient(colors:
-                                                                [Color.blue, Color.purple, Color.orange, Color.red]), center: .center))
-                    .frame(width: 400, height: 300)
-                    .mask(self.blur(radius: 20))
-                    .overlay(self.blur(radius: 5 - CGFloat(i * 5)))
-            }
-        }
-    }
-}
+//extension View {
+//    func multicolorGlow() -> some View {
+//        ZStack {
+//            ForEach(0..<2) { i in
+//                Rectangle()
+//                    .fill(AngularGradient(gradient: Gradient(colors:
+//                                                                [Color.blue, Color.purple, Color.orange, Color.red]), center: .center))
+//                    .frame(width: 400, height: 300)
+//                    .mask(self.blur(radius: 20))
+//                    .overlay(self.blur(radius: 5 - CGFloat(i * 5)))
+//            }
+//        }
+//    }
+//}
 struct RestaurantCardView: View {
     var rest: Restaurant
     @EnvironmentObject var model: RestaurantModel
@@ -60,12 +60,7 @@ struct RestaurantCardView: View {
                         .lineLimit(1)
                         .foregroundColor(Color("RestCardTitleColor"))
                     Spacer()
-                    if displayType == "all" {
-                        // MARK: distance
-                        Label("\(model.calculateDistanceRest(rest), specifier: "%.2f") km", systemImage: "car")
-                            .foregroundColor(Color("RestCardCaptColor"))
-                            .font(.subheadline)
-                    }
+
                     
                 }
                 .padding(.top, 10)
@@ -88,20 +83,8 @@ struct RestaurantCardView: View {
                                 .foregroundColor(Color("RestCardCaptColor"))
                                 .italic()
                         }
-                        // MARK: price
-                        else {
-                            Text(rest.findPriceRange())
-                                .font(.subheadline)
-                                .foregroundColor(Color("RestCardPriceColor"))
-                        }
                     }
                     Spacer()
-                    // MARK: restaurant price range
-                    if displayType == "all" {
-                        Text("＄\(rest.findPriceRange())")
-                            .foregroundColor(Color("RestCardPriceColor"))
-                    }
-                    
                 }
                 .font(.subheadline)
                 

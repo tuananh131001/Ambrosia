@@ -42,14 +42,6 @@ struct RestaurantSearchCardView: View {
                         .lineLimit(1)
                         .foregroundColor(Color("RestCardTitleColor"))
                     
-                    // MARK: some food of the restaurants
-                    HStack {
-                        Text("\(rest.foodList[0].name), \(rest.foodList[1].name)")
-                            .lineLimit(1)
-                            .font(.subheadline)
-                            .foregroundStyle(Color("RestDetailAddColor"))
-                    }
-                    
                     // MARK: rating of the restaurant and distance
                     RatingView(rest: rest)
                     

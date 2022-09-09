@@ -7,14 +7,12 @@
 
 import Foundation
 
-struct User: Decodable, Identifiable{
+struct User: Decodable{
     var username: String
     var password: String
-    var id = UUID()
     var favoriteRestaurants: [Restaurant]
     var email:String
     var reviews: [Review]
-    var scores:[Score]
     
     // Function for testing
     static func testUser() -> User{
@@ -27,10 +25,8 @@ struct User: Decodable, Identifiable{
             categories: ["Dim Sum", "Hot Pot"],
             coordinates: [0.0, 0.0],
             address: "109 Tôn Dật Tiên",
-            rating: 4,
-            foodList: [Food.testData()])
-        let scores = [Score(restaurant: restaurant, score: 5)]
-        let reviews = [Review(restaurant: restaurant, reviewDescription: "bị sir khinh")]
+            rating: 4)
+        let reviews = [Review(restaurant: restaurant, reviewDescription: "bị sir khinh",score: 8)]
         return User(username: "sir", password: "sir123", favoriteRestaurants: [Restaurant(
             id: 0,
             name: "Yeebo",
@@ -40,8 +36,7 @@ struct User: Decodable, Identifiable{
             categories: ["Dim Sum", "Hot Pot"],
             coordinates: [0.0, 0.0],
             address: "109 Tôn Dật Tiên",
-            rating: 4,
-            foodList: [Food.testData()])], email: "leanhsir@gmail.com", reviews: reviews, scores: scores)
+            rating: 4)],email: "huyne",reviews: reviews)
         
     }
 }
@@ -50,11 +45,8 @@ struct Review: Decodable, Identifiable{
     var id = UUID()
     var restaurant: Restaurant
     var reviewDescription: String
+    var score: Int
 }
 
-struct Score:Decodable,Identifiable{
-    var id = UUID()
-    var restaurant:Restaurant
-    var score:Int
-}
+
 

@@ -16,21 +16,21 @@
 
 import Foundation
 import SwiftUI
-
-// MARK: Remove "back" text on navigation bar title
-extension UINavigationController {
-    // Remove back button text
-    open override func viewWillLayoutSubviews() {
-        navigationBar.topItem?.backButtonDisplayMode = .minimal
-    }
-
-    // Hide on scroll
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        // Change navigation "back" color
-        navigationBar.tintColor = UIColor(named: "RestDetailTitleColor")
-    }
-}
+//
+//// MARK: Remove "back" text on navigation bar title
+//extension UINavigationController {
+//    // Remove back button text
+//    open override func viewWillLayoutSubviews() {
+//        navigationBar.topItem?.backButtonDisplayMode = .minimal
+//    }
+//
+//    // Hide on scroll
+//    override open func viewDidLoad() {
+//        super.viewDidLoad()
+//        // Change navigation "back" color
+//        navigationBar.tintColor = UIColor(named: "RestDetailTitleColor")
+//    }
+//}
 
 
 // MARK: add gradient to shadow

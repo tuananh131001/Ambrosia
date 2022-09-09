@@ -31,44 +31,7 @@ struct RestaurantDetailView: View {
                 // MARK: - Restaurant Info
                 VStack {
                     // MARK: restaurant cover image
-                    // for adding effect to the image
-                    GeometryReader { geo in
-                        ZStack(alignment: .center) {
-                            
-                            if geo.frame(in: .global).minY <= 0 {
-                                // scroll down outside the screen -> move image up
-                                ZStack {
-                                    Image("\(rest.name)-bck")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                    
-                                    ImageShadowView(opacity: 0.6)
-                                }
-                                .offset(y: geo.frame(in: .global).minY / 9) // move image up
-                                .clipped()
-                                
-                            }
-                            else {
-                                // scroll up -> increase image size + move image down
-                                ZStack {
-                                    Image("\(rest.name)-bck")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                    ImageShadowView(opacity: 0.6)
-                                }
-                                .scaleEffect(1 + geo.frame(in: .global).minY / 500) // change scale of image
-                                .clipped()
-                                .offset(y: -geo.frame(in: .global).minY) // move image down
-                                .animation(.easeInOut.delay(2), value: imageScale)
-                                .background(Color("RestDetailImageBckColor").opacity(0.4))
-                            }
-                        }
-                        // for fixing the text stand on the image bug
-                        .frame(height: 600, alignment: .center)
-                        .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), radius: 5, x: 3, y: 3)
-                        
-                    }
-                    .frame(height: 603, alignment: .center)
+                    
                     
                     
                     
@@ -111,20 +74,7 @@ struct RestaurantDetailView: View {
                         
                         // MARK: restaurant address -> display map
                         HStack(spacing: 3) {
-                            Button(action: {
-                                model.openAppleMap(endCoordinate: rest.coordinateObject())
-                            }, label: {
-                                HStack {
-                                    Image(systemName: "mappin.and.ellipse")
-                                        .foregroundStyle(Color("RestDetailIconColor"))
-                                        .symbolRenderingMode(.hierarchical)
-                                        .font(.title3)
-                                    Text(rest.address)
-                                        .foregroundColor(Color("RestDetailAddColor"))
-                                        .font(.headline)
-                                        .lineLimit(1)
-                                }
-                            })
+                         
                             
                             Spacer()
                             
@@ -146,13 +96,9 @@ struct RestaurantDetailView: View {
                 }
                 
                 
-                // MARK: - Food list with category
-                FoodListView(rest: rest)
-                    .padding(.bottom)
-                
+           
                 
             }
         }
-        .ignoresSafeArea()
     }
 }
