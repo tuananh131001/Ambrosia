@@ -105,37 +105,18 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
 //        }
 //    }
     
-    // MARK: - Deal with Data
-    func getLocalData() {
-        // get url to json file
-        let jsonUrl = Bundle.main.url(forResource: "restaurants", withExtension: "json")
-        
-        // read file into data object
-        do {
-            let jsonData = try Data(contentsOf: jsonUrl!)
-            
-            // try to decode  json -> array modules
-            let jsonDecoder = JSONDecoder()
-            let restaurants = try jsonDecoder.decode([Restaurant].self, from: jsonData)
-            // assign parsed module to module property
-            self.restaurants.append(contentsOf: restaurants)
-        }
-        catch {
-            // catch error
-            print("Could not parse local data")
-        }
-    }
+   
     
     // MARK: - Restaurant
     // MARK: distance from current position to restaurant
-//    func calculateDistanceRest(_ restaurant: Restaurant) -> Double {
-//        return UltilityModel.calculateDistance(lat1: currentUserCoordinate?.latitude ?? 0.0, lon1: currentUserCoordinate?.longitude ?? 0.0, lat2: restaurant.coordinates[0], lon2: restaurant.coordinates[1])
-//    }
-//    // MARK: Restaurant Navigation Method
-    func navigateRestaurant(_ restId: Int) {
+    func calculateDistanceRest(_ restaurant: Restaurant) -> Double {
+        return UltilityModel.calculateDistance(lat1: currentUserCoordinate?.latitude ?? 0.0, lon1: currentUserCoordinate?.longitude ?? 0.0, lat2: restaurant.coordinates[0], lon2: restaurant.coordinates[1])
+    }
+    // MARK: Restaurant Navigation Method
+    func navigateRestaurant(_ restId: String) {
         // find the index for the restaurant id
         currentRestaurantIndex = restaurants.firstIndex(where: {
-            $0.id == restId
+            $0.place_id == restId
         }) ?? 0
         
         // set the current restaurant
@@ -151,4 +132,33 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
         return false
     }
+    
+    // MARK: - Food
+    // create category list
+    func findAllCategories(_ restId: String) -> [String] {
+        let restaurantIndex = restaurants.firstIndex(where: { $0.place_id == restId}) ?? 0
+        var categorySet = Set<String>() // unique list to keep track of unique string
+        var categoryArr = [String]()
+        for food in restaurants[restaurantIndex].foodList {
+            if !categorySet.contains(food.category) {
+                categorySet.insert(food.category)
+                categoryArr.append(food.category)
+            }
+        }
+        return categoryArr
+        
+    }
+    
+    // MARK: Food Navigation Method
+    func navigateFood(_ foodId: Int, _ restId: String) {
+        let restaurantIndex = restaurants.firstIndex(where: { $0.place_id == restId}) ?? 0
+        // find the index for the restaurant id
+        currentFoodIndex = restaurants[restaurantIndex].foodList.firstIndex(where: {
+            $0.id == foodId
+        }) ?? 0
+        
+        // set the current restaurant
+        currentFood = restaurants[restaurantIndex].foodList[currentFoodIndex]
+    }
+    
 }
