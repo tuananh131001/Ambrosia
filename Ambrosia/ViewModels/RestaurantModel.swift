@@ -19,7 +19,10 @@ import CoreLocation
 import MapKit
 
 class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
-    @Published var restaurants = [Restaurant]()
+    @Published var restaurants:[Restaurant] = [Restaurant]()
+    @Published var hasError  = false
+    @Published var error: RestaurantError?
+
     @Published var loginSuccess = false
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -40,7 +43,6 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     override init() {
         // Init method of NSObject
         super.init()
-        getLocalData()
         
         // Set content model as the delegate of the location manager
         locationManager.delegate = self
@@ -105,13 +107,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
 //        }
 //    }
     
-   
-    
-    // MARK: - Restaurant
-    // MARK: distance from current position to restaurant
-    func calculateDistanceRest(_ restaurant: Restaurant) -> Double {
-        return UltilityModel.calculateDistance(lat1: currentUserCoordinate?.latitude ?? 0.0, lon1: currentUserCoordinate?.longitude ?? 0.0, lat2: restaurant.coordinates[0], lon2: restaurant.coordinates[1])
-    }
+
     // MARK: Restaurant Navigation Method
     func navigateRestaurant(_ restId: String) {
         // find the index for the restaurant id
@@ -132,33 +128,49 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
         return false
     }
-    
-    // MARK: - Food
-    // create category list
-    func findAllCategories(_ restId: String) -> [String] {
-        let restaurantIndex = restaurants.firstIndex(where: { $0.place_id == restId}) ?? 0
-        var categorySet = Set<String>() // unique list to keep track of unique string
-        var categoryArr = [String]()
-        for food in restaurants[restaurantIndex].foodList {
-            if !categorySet.contains(food.category) {
-                categorySet.insert(food.category)
-                categoryArr.append(food.category)
+
+    func fetchRestaurant() {
+        hasError = false
+        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=1500&type=restaurant&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
+//        let urlString = "https://jsonplaceholder.typicode.com/users"
+        if let url = URL(string: urlString) {
+            URLSession.shared
+                .dataTask(with: url) { [weak self] data, response, error in
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    if let error = error {
+                        print ("error")
+                    } else {
+                        print(data!)
+                        let decoder = JSONDecoder()
+                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        if let data = data,
+                            let users = try? decoder.decode(NewRestaurant.self, from: data) {
+                            print(users)
+                            self?.restaurants = users.results
+                        }
+                        else {
+                            print("notthing")
+                        }
+                    }
+                }
+            }.resume()
+
+        }
+
+    }
+}
+extension RestaurantModel {
+    enum RestaurantError: LocalizedError {
+        case custom(error: Error)
+        case failedToDecode
+        var errorDescription: String? {
+            switch self {
+            case.failedToDecode:
+                return "Failed to decode response"
+            case .custom(let error):
+                return error.localizedDescription
             }
         }
-        return categoryArr
-        
     }
-    
-    // MARK: Food Navigation Method
-    func navigateFood(_ foodId: Int, _ restId: String) {
-        let restaurantIndex = restaurants.firstIndex(where: { $0.place_id == restId}) ?? 0
-        // find the index for the restaurant id
-        currentFoodIndex = restaurants[restaurantIndex].foodList.firstIndex(where: {
-            $0.id == foodId
-        }) ?? 0
-        
-        // set the current restaurant
-        currentFood = restaurants[restaurantIndex].foodList[currentFoodIndex]
-    }
-    
 }
