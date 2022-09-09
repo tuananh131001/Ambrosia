@@ -31,7 +31,6 @@ struct Restaurant: Codable {
           case photos
        }
 
-
     var rating: Double = 4
 
     func isPopular() -> Bool {

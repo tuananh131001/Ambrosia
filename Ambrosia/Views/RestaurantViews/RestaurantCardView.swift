@@ -28,7 +28,6 @@ import SwiftUI
 //}
 struct RestaurantCardView: View {
     var rest: Restaurant
-    @EnvironmentObject var model: RestaurantModel
     var cardWidth: CGFloat
     var cardHeight: CGFloat
     var displayType: String
@@ -37,60 +36,24 @@ struct RestaurantCardView: View {
         // Card content
         // add display gone or not gone
         VStack(alignment: .center, spacing: 5) {
-            
             // MARK: cover image
             ZStack {
-                Image("\(rest.name)-bck")
-                    .resizable()
-                    .scaledToFill()
+                // Image of each map
+                AsyncImage(url: URL(string: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=\(rest.photos?[0].photo_reference ?? "")&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY")) { image in
+                    image.resizable()
+                    image.scaledToFit()
+                    
+                } placeholder: {
+                    //put your placeholder here
+                    Color.red
+                }
                 ImageShadowView()
             }
-            .frame(width: cardWidth, height: cardHeight)
-            .cornerRadius(10)
-            .clipped()
-            
-            
+                .frame(width: cardWidth, height: cardHeight)
+                .cornerRadius(10)
+                .clipped()
             // MARK: Text
-            VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    // MARK: restaurant name
-                    Text(rest.name)
-                        .font(displayType == "all" ? .title2 : .title3)
-                        .bold()
-                        .lineLimit(1)
-                        .foregroundColor(Color("RestCardTitleColor"))
-                    Spacer()
-
-                    
-                }
-                .padding(.top, 10)
-                
-                Spacer()
-                HStack(spacing: 0) {
-                    HStack(spacing: 5) {
-                        
-                        // MARK: restaurant rating
-                        RatingView(rest: rest)
-                        
-                        Text("•")
-                            .font(.headline)
-                            .bold()
-                            .foregroundColor(.black)
-                        
-                        // MARK: restaurant category
-//                        if displayType == "all" {
-//                            Text(rest.categories[0])
-//                                .foregroundColor(Color("RestCardCaptColor"))
-//                                .italic()
-//                        }
-                    }
-                    Spacer()
-                }
-                .font(.subheadline)
-                
-            }
-            .frame(width: cardWidth)
-            
+            RestaurantInfoView(rest: rest, cardWidth: cardWidth, cardHeight: cardHeight, displayType: displayType)
             // MARK: divider
             if displayType == "all" {
                 Divider()
@@ -100,10 +63,46 @@ struct RestaurantCardView: View {
                     .padding(.vertical, 10)
             }
         }
-        .background(Color("RestCardBckColor"))
-        .cornerRadius(20)
-        .padding(.horizontal)
-        .frame(width: cardWidth)
-        
+            .background(Color("RestCardBckColor"))
+            .cornerRadius(20)
+            .padding(.horizontal)
+            .frame(width: cardWidth)
+    }
+}
+
+struct RestaurantInfoView: View {
+    var rest: Restaurant
+    var cardWidth: CGFloat
+    var cardHeight: CGFloat
+    var displayType: String
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                // MARK: restaurant name
+                Text(rest.name)
+                    .font(displayType == "all" ? .title2 : .title3)
+                    .bold()
+                    .lineLimit(1)
+                    .foregroundColor(Color("RestCardTitleColor"))
+                Spacer()
+
+            }
+                .padding(.top, 10)
+            Spacer()
+            HStack(spacing: 0) {
+                HStack(spacing: 5) {
+                    // MARK: restaurant rating
+                    RatingView(rest: rest)
+                    Text("•")
+                        .font(.headline)
+                        .bold()
+                        .foregroundColor(.black)
+                }
+                Spacer()
+            }
+                .font(.subheadline)
+
+        }
+            .frame(width: cardWidth)
     }
 }

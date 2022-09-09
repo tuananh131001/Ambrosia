@@ -16,21 +16,12 @@ struct RestaurantList: View {
                 .bold()
                 .padding(.horizontal)
             // MARK: display list of popular restaurants horizontally
-//            NavigationView {
-//                ScrollView(.horizontal, showsIndicators: false) {
-//                    VStack(spacing: 10) {
-//                        ForEach(model.restaurants, id: \.place_id) { res in
-//                            // check if restaurant is popular -> display
-//                            NavigationLink(destination: RestaurantDetailView(rest: res)) {
-//                                Text("Restaurant name " + res.name)
-//                            }
-//                        }
-//
-//                    }
-//                }
-//            }
-            List(restaurantModel.restaurants,id:\.place_id){ res in
-                Text(res.name)
+            ScrollView{
+                VStack{
+                    ForEach(restaurantModel.restaurants,id:\.place_id){ res in
+                        RestaurantCardView(rest: res, cardWidth: UIScreen.main.bounds.width - 30, cardHeight: 357, displayType: "all")
+                    }
+                }
             }
         }
         .onAppear {

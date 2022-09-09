@@ -21,39 +21,10 @@ struct HomeView: View {
 
     @EnvironmentObject var model: RestaurantModel
 
-
-
     var body: some View {
-
         VStack {
-//            Button("Button title") {
-//                model.fetchRestaurant
-//            }
-
-//            List (newRestaurantModel.results, id: \.place_id) {
-//                res in
-//                Text("Name : \(res.name)")
-//            }
             NavigationView {
                 RestaurantList()
-                // placement helps always display search bar when scroll
-//                        .searchable(text: $searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search Restaurants By Name") {
-//                            // suggestions for user when typing
-//                            ForEach(filteredSearchRestaurant, id: \.place_id) { rest in
-//                                HStack(spacing: 4) {
-//                                    Image(systemName: "magnifyingglass")
-//                                        .padding(.trailing, 10)
-//                                    Text("Are you looking for")
-//                                        .foregroundColor(.black)
-//                                    Text(rest.name)
-//                                        .bold()
-//                                        .lineLimit(1)
-//                                        .foregroundColor(Color("RestDetailTitleColor"))
-//
-//                                }
-//                                    .searchCompletion(rest.name)
-//                            }
-//                        }
             }
             // for display navigation items: App Title + Random Button
             .navigationBarTitleDisplayMode(.inline)
@@ -64,9 +35,7 @@ struct HomeView: View {
                         Text("EAT TIME!!")
                             .font(Font.custom("GermaniaOne-Regular", size: 40))
                             .bold()
-
                         Spacer()
-
                         // Random Button
                         Button(action: {
                             model.currentRandomRestaurant = model.restaurants.randomElement()
@@ -79,19 +48,6 @@ struct HomeView: View {
                 }
             })
         }.onAppear(perform: model.fetchRestaurant)
-// Result of search about list search restaurants
-//    var filteredSearchRestaurant: [Restaurant] {
-//        // search function
-//        if searchQuery.isEmpty {
-//            return newRestaurantModel.results
-//        }
-//        else {
-//            // if user types text to search
-//            return model.restaurants.filter {
-//                $0.name.lowercased().contains(searchQuery.lowercased())
-//            }
-//        }
-//    }
     }
 
     struct HomeView_Previews: PreviewProvider {
