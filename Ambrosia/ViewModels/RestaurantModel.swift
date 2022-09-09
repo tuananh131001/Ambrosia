@@ -19,7 +19,10 @@ import CoreLocation
 import MapKit
 
 class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
-    @Published var restaurants = [Restaurant]()
+    @Published var restaurants:[Restaurant] = [Restaurant]()
+    @Published var hasError  = false
+    @Published var error: RestaurantError?
+
     @Published var loginSuccess = false
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -40,7 +43,6 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     override init() {
         // Init method of NSObject
         super.init()
-        getLocalData()
         
         // Set content model as the delegate of the location manager
         locationManager.delegate = self
@@ -105,37 +107,12 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
 //        }
 //    }
     
-    // MARK: - Deal with Data
-    func getLocalData() {
-        // get url to json file
-        let jsonUrl = Bundle.main.url(forResource: "restaurants", withExtension: "json")
-        
-        // read file into data object
-        do {
-            let jsonData = try Data(contentsOf: jsonUrl!)
-            
-            // try to decode  json -> array modules
-            let jsonDecoder = JSONDecoder()
-            let restaurants = try jsonDecoder.decode([Restaurant].self, from: jsonData)
-            // assign parsed module to module property
-            self.restaurants.append(contentsOf: restaurants)
-        }
-        catch {
-            // catch error
-            print("Could not parse local data")
-        }
-    }
-    
-    // MARK: - Restaurant
-    // MARK: distance from current position to restaurant
-//    func calculateDistanceRest(_ restaurant: Restaurant) -> Double {
-//        return UltilityModel.calculateDistance(lat1: currentUserCoordinate?.latitude ?? 0.0, lon1: currentUserCoordinate?.longitude ?? 0.0, lat2: restaurant.coordinates[0], lon2: restaurant.coordinates[1])
-//    }
-//    // MARK: Restaurant Navigation Method
-    func navigateRestaurant(_ restId: Int) {
+
+    // MARK: Restaurant Navigation Method
+    func navigateRestaurant(_ restId: String) {
         // find the index for the restaurant id
         currentRestaurantIndex = restaurants.firstIndex(where: {
-            $0.id == restId
+            $0.place_id == restId
         }) ?? 0
         
         // set the current restaurant
@@ -150,5 +127,50 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
             }
         }
         return false
+    }
+
+    func fetchRestaurant() {
+        hasError = false
+        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=1500&type=restaurant&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
+//        let urlString = "https://jsonplaceholder.typicode.com/users"
+        if let url = URL(string: urlString) {
+            URLSession.shared
+                .dataTask(with: url) { [weak self] data, response, error in
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    if let error = error {
+                        print ("error")
+                    } else {
+                        print(data!)
+                        let decoder = JSONDecoder()
+                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        if let data = data,
+                            let users = try? decoder.decode(NewRestaurant.self, from: data) {
+                            print(users)
+                            self?.restaurants = users.results
+                        }
+                        else {
+                            print("notthing")
+                        }
+                    }
+                }
+            }.resume()
+
+        }
+
+    }
+}
+extension RestaurantModel {
+    enum RestaurantError: LocalizedError {
+        case custom(error: Error)
+        case failedToDecode
+        var errorDescription: String? {
+            switch self {
+            case.failedToDecode:
+                return "Failed to decode response"
+            case .custom(let error):
+                return error.localizedDescription
+            }
+        }
     }
 }
