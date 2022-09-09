@@ -60,12 +60,12 @@ struct RestaurantCardView: View {
                         .lineLimit(1)
                         .foregroundColor(Color("RestCardTitleColor"))
                     Spacer()
-                    if displayType == "all" {
-                        // MARK: distance
-                        Label("\(model.calculateDistanceRest(rest), specifier: "%.2f") km", systemImage: "car")
-                            .foregroundColor(Color("RestCardCaptColor"))
-                            .font(.subheadline)
-                    }
+//                    if displayType == "all" {
+//                        // MARK: distance
+//                        Label("\(model.calculateDistanceRest(rest), specifier: "%.2f") km", systemImage: "car")
+//                            .foregroundColor(Color("RestCardCaptColor"))
+//                            .font(.subheadline)
+//                    }
                     
                 }
                 .padding(.top, 10)
@@ -88,20 +88,8 @@ struct RestaurantCardView: View {
                                 .foregroundColor(Color("RestCardCaptColor"))
                                 .italic()
                         }
-                        // MARK: price
-                        else {
-                            Text(rest.findPriceRange())
-                                .font(.subheadline)
-                                .foregroundColor(Color("RestCardPriceColor"))
-                        }
                     }
                     Spacer()
-                    // MARK: restaurant price range
-                    if displayType == "all" {
-                        Text("＄\(rest.findPriceRange())")
-                            .foregroundColor(Color("RestCardPriceColor"))
-                    }
-                    
                 }
                 .font(.subheadline)
                 

@@ -25,8 +25,7 @@ struct User: Decodable{
             categories: ["Dim Sum", "Hot Pot"],
             coordinates: [0.0, 0.0],
             address: "109 Tôn Dật Tiên",
-            rating: 4,
-            foodList: [Food.testData()])
+            rating: 4)
         let reviews = [Review(restaurant: restaurant, reviewDescription: "bị sir khinh",score: 8)]
         return User(username: "sir", password: "sir123", favoriteRestaurants: [Restaurant(
             id: 0,
@@ -37,8 +36,7 @@ struct User: Decodable{
             categories: ["Dim Sum", "Hot Pot"],
             coordinates: [0.0, 0.0],
             address: "109 Tôn Dật Tiên",
-            rating: 4,
-            foodList: [Food.testData()])], email: "leanhsir@gmail.com", reviews: reviews)
+            rating: 4)],email: "huyne",reviews: reviews)
         
     }
 }
