@@ -141,8 +141,6 @@ struct HomeView: View {
                     }
                 }
                 
-                // Button to display map showing restaurants location
-                MapDisplayButton(isShowingMap: $isShowingMap)
             }
             // for display navigation items: App Title + Random Button
             .navigationBarTitleDisplayMode(.inline)
