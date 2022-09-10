@@ -167,9 +167,10 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     func addReviewFromUser(reviewDescription:String,rating:Int,username:String,email:String){
         let id = UUID()
         let date = Date.now
-        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: username,email: email)
+        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: username,email: email, image: "avatar1")
         restaurants[0].review.append(newReview)
     }
+    
 }
 
 

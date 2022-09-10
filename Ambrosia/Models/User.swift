@@ -16,7 +16,7 @@ struct User: Decodable{
     // Function for testing
     static func testUser() -> User{
 //        let geometry = Geometry(location: Location(lat: 10, lng: 100))
-        let user = User(username: "Sir", password: "Sir ne", favoriteRestaurants: [], email: "sir@gmail.com")
+
         let restaurant = Restaurant(
             place_id: "sir1",
             name: "Yeebo",

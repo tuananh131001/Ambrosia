@@ -57,6 +57,28 @@ struct Review:Identifiable{
     var rating: Int
     var username:String
     var email:String
+    var image:String
+    var isLiked:Bool = false
+    
+    static func testReviews()->[Review]{
+        let review1 = Review(reviewDescription: "hơi ngon", dateCreated: Date.now, rating: 4, username: "Sir", email: "Sir@gmail.com",image: "avatar1")
+        let review2 = Review(reviewDescription: "hơi dở", dateCreated: Date.now, rating: 3, username: "Chó Sir", email: "ChóSir@gmail.com",image: "avatar2")
+        let review3 = Review(reviewDescription: "hơi Sir", dateCreated: Date.now, rating: 2, username: "Lê Anh Sir", email: "LêAnhSir@gmail.com",image: "avatar3")
+        let review4 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com",image: "avatar4")
+        let review5 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com",image: "avatar4")
+        let review6 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com",image: "avatar4")
+        let review7 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com",image: "avatar4")
+        var reviews:[Review] = []
+        reviews.append(review1)
+        reviews.append(review2)
+        reviews.append(review3)
+        reviews.append(review4)
+        reviews.append(review5)
+        reviews.append(review6)
+        reviews.append(review7)
+
+        return reviews
+    }
 }
 
 typealias Reviews = [Review]

@@ -22,6 +22,7 @@ struct RestaurantDetailView: View {
     @State var imageHeight: CGFloat = 0
     @State var imageScale = 1.0 // for changing cover image when scrolling
     @State var showFullText = false // for expanding description of restaurant
+    @State var rating:Int
     @EnvironmentObject var model: RestaurantModel
     var body: some View {
         ScrollView {
@@ -79,7 +80,6 @@ struct RestaurantDetailView: View {
                             Spacer()
                             
                             // MARK: restaurant rating
-                            RatingView(rest: rest, fontSize: .title3)
                         }
                         
                         

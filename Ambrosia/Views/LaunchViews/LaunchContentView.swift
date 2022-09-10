@@ -22,7 +22,7 @@ struct LaunchContentView: View {
         ZStack {
             // for card
             Rectangle()
-                .foregroundColor(Color("DenyLocationBckColor"))
+                .foregroundColor(Color("BackgroundViewColor"))
 
             VStack (spacing: 30) {
 
