@@ -30,8 +30,6 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     // Current user region and coordinate
     @Published var userLocation = MKCoordinateRegion()
     @Published var currentUserCoordinate: CLLocationCoordinate2D?
-    
-    
     // MARK: Current restaurant
     @Published var currentRestaurant: Restaurant?
     var currentRestaurantIndex = 0
@@ -39,11 +37,13 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     // MARK: Current Random Restaurant
     @Published var currentRandomRestaurant: Restaurant?
     
+   
     // MARK: init
     override init() {
         // Init method of NSObject
         super.init()
-        
+        fetchRestaurant()
+
         // Set content model as the delegate of the location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -128,7 +128,10 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
         return false
     }
+    
+        
 
+    // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         hasError = false
         let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=1500&type=restaurant&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
@@ -138,16 +141,16 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
                 .dataTask(with: url) { [weak self] data, response, error in
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    if let error = error {
+                        if error != nil {
                         print ("error")
                     } else {
-                        print(data!)
                         let decoder = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
-                            let users = try? decoder.decode(NewRestaurant.self, from: data) {
-                            print(users)
-                            self?.restaurants = users.results
+                            let restaurantArr = try? decoder.decode(Restaurants.self, from: data) {
+//                            print(restaurantArr)
+                            print(restaurantArr.results)
+                            self?.restaurants = restaurantArr.results
                         }
                         else {
                             print("notthing")
@@ -159,7 +162,15 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
+    func addReviewFromUser(reviewDescription:String,rating:Int,username:String,email:String){
+        let id = UUID()
+        let date = Date.now
+        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: username,email: email)
+        restaurants[0].review.append(newReview)
+    }
 }
+
+
 extension RestaurantModel {
     enum RestaurantError: LocalizedError {
         case custom(error: Error)
