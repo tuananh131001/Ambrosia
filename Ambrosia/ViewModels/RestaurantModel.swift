@@ -129,12 +129,46 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         return false
     }
     
-        
+    func fetchDetail(place_id:String) -> Restaurant {
+        var restaurantDetail:Restaurant = Restaurant(place_id: "")
+        let urlString = " https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
+        if let url = URL(string: urlString) {
+            URLSession.shared
+                .dataTask(with: url) { [weak self] data, response, error in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        if error != nil {
+                        print ("error")
+                    } else {
+                        let decoder = JSONDecoder()
+                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        if let data = data,
+                           let restaurantArr = try? decoder.decode(RestaurantDetail.self, from: data) {
+                            print(restaurantArr)
+                            restaurantDetail.formatted_address = restaurantArr.result.formatted_address
+                        }
+                        else {
+                            print("notthing")
+                        }
+                    }
+                }
+            }.resume()
+
+        }
+        return restaurantDetail
+    }
 
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         hasError = false
+   
         let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=1500&type=restaurant&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
+        
+//    https://maps.googleapis.com/maps/api/place/findplacefromtext/json
+//      ?fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry
+//      &input=mongolian
+//      &inputtype=textquery
+//      &locationbias=circle%3A2000%4047.6918452%2C-122.2226413
+//      &key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY
 //        let urlString = "https://jsonplaceholder.typicode.com/users"
         if let url = URL(string: urlString) {
             URLSession.shared
