@@ -37,7 +37,7 @@ struct RestaurantDetailView: View {
                         Text(rest.name)
                             .font(.largeTitle)
                             .bold()
-                            .foregroundColor(Color("RestDetailTitleColor"))
+                            .foregroundColor(Color("PrimaryColor"))
 
 
                         // MARK: restaurant address -> display map
@@ -47,11 +47,11 @@ struct RestaurantDetailView: View {
                             }, label: {
                                 HStack {
                                     Image(systemName: "mappin.and.ellipse")
-                                        .foregroundStyle(Color("RestDetailIconColor"))
+                                        .foregroundStyle(Color("SubTextColor"))
                                         .symbolRenderingMode(.hierarchical)
                                         .font(.title3)
                                     Text(restaurantDetail.formatted_address ?? "")
-                                        .foregroundColor(Color("RestDetailAddColor"))
+                                        .foregroundColor(Color("SecondaryColor"))
                                         .font(.headline)
                                         .lineLimit(1)
                                 }
@@ -60,7 +60,6 @@ struct RestaurantDetailView: View {
                             Spacer()
                             
                             // MARK: restaurant rating
-                            RatingView(rest: rest, fontSize: .title3)
                         }
 
                         // MARK: restaurant description

@@ -20,7 +20,7 @@ struct RestaurantCardInfo: View {
                     .font(displayType == "all" ? .title2 : .title3)
                     .bold()
                     .lineLimit(1)
-                    .foregroundColor(Color("RestCardTitleColor"))
+                    .foregroundColor(Color("PrimaryColor"))
                 Spacer()
 
             }

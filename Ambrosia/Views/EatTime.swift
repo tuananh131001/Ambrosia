@@ -20,6 +20,7 @@ struct EatTime: App {
         FirebaseApp.configure()
     }
     var body: some Scene {
+        
         WindowGroup {
             LaunchView()
                 .environmentObject(RestaurantModel())
