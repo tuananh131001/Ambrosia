@@ -53,6 +53,58 @@ struct OpeningHours:Codable{
     var open_now:Bool?
 }
 
+
+
+
+
+struct RestaurantDetail:Codable{
+    var place_id:String?
+    var formatted_address:String?
+    var formatted_phone_number:String?
+    var name:String?
+    var delivery:Bool?
+    var dine_in:Bool?
+    var opening_hours:OpeningHoursDetail?
+    var takeout:Bool?
+    var serves_wine:Bool?
+    var price_level:Int?
+    var rating:Double?
+    var user_ratings_total:Int?
+    var photos: [Photos]?
+    var review = Reviews()
+    enum CodingKeys: String, CodingKey {
+          case place_id
+          case formatted_address
+          case formatted_phone_number
+          case name
+          case delivery
+          case dine_in
+          case opening_hours
+          case takeout
+          case serves_wine
+          case price_level
+          case rating
+          case user_ratings_total
+          case photos
+       }
+
+    
+}
+
+struct Restaurants: Codable {
+    var results:[Restaurant]
+}
+
+
+struct ResponseDetail:Codable{
+    var result:RestaurantDetail
+}
+
+struct OpeningHoursDetail:Codable{
+    var open_now:Bool?
+    var weekday_text:[String]?
+}
+
 struct Photos:Codable{
     var photo_reference: String?
 }
@@ -90,10 +142,6 @@ struct Review:Identifiable{
 
 typealias Reviews = [Review]
 
-struct RestaurantDetail: Codable {
-    var result:Restaurant
-}
-
-struct Restaurants: Codable {
-    var results:[Restaurant]
-}
+//struct RestaurantDetail: Codable {
+//    var result:Restaurant
+//}

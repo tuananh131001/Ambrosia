@@ -25,7 +25,7 @@ struct HomeView: View {
     init() {
         // Customize the tab bar for the whole app
         UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
-        UITabBar.appearance().unselectedItemTintColor = UIColor(Color("PlaceHolderText"))
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color("PlaceholderText"))
         UITabBar.appearance().barTintColor = UIColor(Color("PrimaryColor"))
     }
     

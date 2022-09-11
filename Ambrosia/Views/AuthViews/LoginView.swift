@@ -71,10 +71,8 @@ struct LoginView: View {
     func login() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
-                print(error?.localizedDescription ?? "")
                 loginSuccess = false
             } else {
-                print("success")
                 loginSuccess = true
             }
         }

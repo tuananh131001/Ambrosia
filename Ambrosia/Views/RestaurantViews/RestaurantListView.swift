@@ -37,7 +37,8 @@ struct RestaurantListView: View {
                             NavigationLink {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
-                                    restaurantModel.getCurrentRestaurant(id: r.place_id)
+                                    restaurantModel.fetchDetail(place_id: r.place_id)
+//                                    restaurantModel.getCurrentRestaurant(id: r.place_id)
                                 }
                                 
                             } label: {
