@@ -8,7 +8,7 @@
 import Foundation
 
 struct User: Decodable{
-    var username: String
+    var user: String
     var password: String
     var favoriteRestaurants: [Restaurant]
     var email:String
@@ -25,7 +25,7 @@ struct User: Decodable{
             price_level: 2
         )
 //        let reviews = [Review(restaurant: restaurant, reviewDescription: "bị sir khinh",score: 8)]
-        return User(username: "sir", password: "sir123", favoriteRestaurants: [restaurant
+        return User(user: "sir", password: "sir123", favoriteRestaurants: [restaurant
             ],email: "huyne",image: "avatar1")
         
     }
