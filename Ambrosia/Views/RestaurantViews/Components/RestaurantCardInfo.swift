@@ -20,7 +20,7 @@ struct RestaurantCardInfo: View {
                     .font(displayType == "all" ? .title2 : .title3)
                     .bold()
                     .lineLimit(1)
-                    .foregroundColor(Color("RestCardTitleColor"))
+                    .foregroundColor(Color("PrimaryColor"))
                 Spacer()
 
             }
@@ -29,7 +29,7 @@ struct RestaurantCardInfo: View {
             HStack(spacing: 0) {
                 HStack(spacing: 5) {
                     // MARK: restaurant rating
-                    RatingView(rest: rest)
+//                    RatingView(rest: rest)
                     Text("•")
                         .font(.headline)
                         .bold()

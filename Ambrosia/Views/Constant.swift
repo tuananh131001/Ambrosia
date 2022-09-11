@@ -1,0 +1,29 @@
+//
+//  Constant.swift
+//  Ambrosia
+//
+//  Created by Khanh Tran Nguyen Ha on 10/09/2022.
+//
+
+import Foundation
+import SwiftUI
+
+
+enum Constants {
+    static let PRIMARY_COLOR : Color = Color("PrimaryColor")
+    static let PRIMARY_COLOR_UI : UIColor = UIColor(named: "PrimaryColor")!
+    static let LIGH_PRIMARY_COLOR : Color = Color("LightPrimary")
+    static let LIGH_PRIMARY_COLOR_UI : UIColor = UIColor(named: "LightPrimary")!
+    static let APP_NAME_LARGE_SIZE : CGFloat = 45
+    static let FORM_PADDING_VERTICAL : CGFloat = 30
+    static let FORM_PADDING_HORIZAONTAL : CGFloat = 20
+    static let MODAL_MIN_HEIGHT : CGFloat = 280
+    static let MODAL_WIDTH : CGFloat = 300
+    
+    
+    static let FIELD_PADDING : CGFloat = 10
+    static let FIELD_HEIGHT: CGFloat = 44
+    static let FIELD_MIN_WIDTH: CGFloat = 230
+    static let FIELD_MAX_WIDTH: CGFloat = 320
+    static let CONRNER_RADIUS: CGFloat = 10
+}
