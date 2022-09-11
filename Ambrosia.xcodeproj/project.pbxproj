@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D0B8D5D28CDAA45004CB9E3 /* RestaurantCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0B8D5C28CDAA45004CB9E3 /* RestaurantCard.swift */; };
 		3D1B2EDF28C735940091BD2F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2EDE28C735940091BD2F /* FirebaseAnalytics */; };
 		3D1B2EE128C735940091BD2F /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2EE028C735940091BD2F /* FirebaseAnalyticsSwift */; };
 		3D1B2EE328C735940091BD2F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2EE228C735940091BD2F /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -51,6 +50,7 @@
 		3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D83713C2893F6E40067C946 /* AppNameView.swift */; };
 		3D837145289410650067C946 /* LaunchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D837144289410650067C946 /* LaunchContentView.swift */; };
 		3D85B3DC288FB0C8001BF2AF /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */; };
+		3D85B3DE288FE20E001BF2AF /* RestaurantCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3DD288FE20E001BF2AF /* RestaurantCard.swift */; };
 		3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */; };
 		3D85B3EA289144FA001BF2AF /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D85B3E9289144FA001BF2AF /* restaurants.json */; };
 		3DC2FC972886E18E003750D3 /* EatTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2FC962886E18E003750D3 /* EatTime.swift */; };
@@ -65,7 +65,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D0B8D5C28CDAA45004CB9E3 /* RestaurantCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCard.swift; sourceTree = "<group>"; };
 		3D1B2F1228C737790091BD2F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		3D275820289FC4BA00C7DD6C /* ImageShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageShadowView.swift; sourceTree = "<group>"; };
 		3D275822289FCDBD00C7DD6C /* DontUse */ = {isa = PBXFileReference; lastKnownFileType = text; path = DontUse; sourceTree = "<group>"; };
@@ -84,6 +83,7 @@
 		3D83713C2893F6E40067C946 /* AppNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNameView.swift; sourceTree = "<group>"; };
 		3D837144289410650067C946 /* LaunchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchContentView.swift; sourceTree = "<group>"; };
 		3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
+		3D85B3DD288FE20E001BF2AF /* RestaurantCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCard.swift; sourceTree = "<group>"; };
 		3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
 		3D85B3E9289144FA001BF2AF /* restaurants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
 		3DC2FC932886E18E003750D3 /* Ambrosia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ambrosia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,7 +273,7 @@
 		3DCB4F6628CB84D9000EEBDA /* Container */ = {
 			isa = PBXGroup;
 			children = (
-				3D0B8D5C28CDAA45004CB9E3 /* RestaurantCard.swift */,
+				3D85B3DD288FE20E001BF2AF /* RestaurantCard.swift */,
 			);
 			path = Container;
 			sourceTree = "<group>";
@@ -420,8 +420,8 @@
 				3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */,
 				3D304B03289ED8A300B269ED /* DrawCustomShapes.swift in Sources */,
 				3D4D1B1C28CB211500034146 /* RestaurantList.swift in Sources */,
+				3D85B3DE288FE20E001BF2AF /* RestaurantCard.swift in Sources */,
 				3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */,
-				3D0B8D5D28CDAA45004CB9E3 /* RestaurantCard.swift in Sources */,
 				44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */,
 				3D837119289389830067C946 /* GifView.swift in Sources */,
 				3D837145289410650067C946 /* LaunchContentView.swift in Sources */,
