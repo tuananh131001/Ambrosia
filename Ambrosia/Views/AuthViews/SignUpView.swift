@@ -95,10 +95,8 @@ struct SignUpView: View {
     func signUp() {        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 signUpMessage = error?.localizedDescription ?? "Sign up unsuccessfully"
-                print(error?.localizedDescription ?? "")
                 signUpSuccess = false
             } else {
-                print("success")
                 signUpSuccess = true
             }
         }

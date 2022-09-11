@@ -93,10 +93,8 @@ struct LaunchContentView: View {
     func login() {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
-                print(error?.localizedDescription ?? "")
                 model.loginSuccess = false
             } else {
-                print("success")
                 model.loginSuccess = true
                 model.requestGeolocationPermission()
             }
