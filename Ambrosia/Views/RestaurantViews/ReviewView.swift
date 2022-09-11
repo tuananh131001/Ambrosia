@@ -14,7 +14,7 @@ struct ReviewView: View {
         GeometryReader{
             geo in
             ZStack(alignment:.bottomTrailing){
-                ScrollView{
+                ScrollView(showsIndicators:false){
                     LazyVStack(alignment:.leading,spacing:35){
                         ForEach(0..<reviews.count,id: \.self){
                             index in
@@ -28,7 +28,7 @@ struct ReviewView: View {
                     CircleButtonView(buttonImage: "square.and.pencil")
                 
                 }.sheet(isPresented: $isShowAddReview) {
-                    AddReviewView()
+                    AddReviewView(restaurant: Restaurant.testRestaurant(), review: Review.testReviews()[0])
                 }
             }.padding([.trailing,.leading],30)
             

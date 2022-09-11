@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ReviewCard: View {
+    @EnvironmentObject var restaurantModel:RestaurantModel
     @State var rating:Int
     var review:Review
     var body: some View {
@@ -23,8 +24,15 @@ struct ReviewCard: View {
             }
             Text(review.reviewDescription).foregroundColor(Color("TextColor")).font(.system(size: 17))
             HStack(spacing:10){
-                Image(systemName: !review.isLiked ? "hand.thumbsup" : "hand.thumbsup.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 20, height: 14)
-                Text(!review.isLiked ? "Helpful?" : "").foregroundColor(Color("TextColor")).font(.system(size: 14))
+                Button {
+                    // TODO: Pass correct review from the restaurant detail list to use
+                    restaurantModel.updateLikeForReview(id: review.id)
+                } label: {
+                    Image(systemName: !review.isLiked ? "hand.thumbsup" : "hand.thumbsup.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 20, height: 14)
+                    Text(!review.isLiked ? "Helpful?" : "").foregroundColor(Color("TextColor")).font(.system(size: 14))
+                }
+
+         
             }
         }
     }

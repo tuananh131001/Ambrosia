@@ -18,24 +18,26 @@ struct Restaurant: Codable {
     var place_id: String
     var name: String = ""
     var opening_hours:OpeningHours?
-    var vicinity:String?
     var price_level:Int?
     var photos: [Photos]?
     var review = Reviews()
+    var formatted_address:String?
     enum CodingKeys: String, CodingKey {
           case place_id
           case name
           case opening_hours
-          case vicinity
           case price_level
           case photos
        }
-
 
     var rating: Double = 4
 
     func isPopular() -> Bool {
         return rating >= 4.5
+    }
+    
+    static func testRestaurant() -> Restaurant{
+        return Restaurant(place_id: "12345", name: "Nhà hàng Của Sir", opening_hours: OpeningHours(open_now: true), price_level: 2, photos: [Photos(photo_reference: "testRestaurant")], review: Review.testReviews(), formatted_address: "120 Sir street, Sir District, Sir Ward, Sir city", rating: 4.5)
     }
 
    
@@ -83,6 +85,9 @@ struct Review:Identifiable{
 
 typealias Reviews = [Review]
 
+struct RestaurantDetail: Codable {
+    var result:Restaurant
+}
 
 struct Restaurants: Codable {
     var results:[Restaurant]
