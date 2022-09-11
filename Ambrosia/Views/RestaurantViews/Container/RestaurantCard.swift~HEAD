@@ -43,3 +43,5 @@ struct RestaurantCard: View {
             .frame(width: cardWidth)
     }
 }
+
+

@@ -60,7 +60,6 @@ struct RestaurantDetailView: View {
                             Spacer()
                             
                             // MARK: restaurant rating
-                            RatingView(rest: rest, fontSize: .title3)
                         }
 
                         // MARK: restaurant description

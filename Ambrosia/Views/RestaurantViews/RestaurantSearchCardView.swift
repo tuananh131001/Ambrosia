@@ -43,7 +43,6 @@ struct RestaurantSearchCardView: View {
                         .foregroundColor(Color("RestCardTitleColor"))
                     
                     // MARK: rating of the restaurant and distance
-                    RatingView(rest: rest)
                     
                     Spacer()
                 }
