@@ -18,11 +18,11 @@ import Foundation
 import CoreLocation
 import MapKit
 
-class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
-    @Published var restaurants:[Restaurant] = [Restaurant]()
-    @Published var hasError  = false
+class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
+    @Published var restaurants: [Restaurant] = [Restaurant]()
+    @Published var hasError = false
     @Published var error: RestaurantError?
-    
+
     @Published var loginSuccess = false
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -33,33 +33,33 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     // MARK: Current restaurant
     @Published var currentRestaurant: Restaurant?
     var currentRestaurantIndex = 0
-    
+
     // MARK: Current Random Restaurant
     @Published var currentRandomRestaurant: Restaurant?
-    
-    
+
+
     // MARK: init
     override init() {
         // Init method of NSObject
         super.init()
         fetchRestaurant()
-        
+
         // Set content model as the delegate of the location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
-        
+
         // set current random restaurant
         currentRandomRestaurant = restaurants.randomElement()
     }
-    
+
     // MARK: - Location Methods
     //MARK:  Location Manager Delegate Methods
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        
+
         // Update the authorizationState property
         authorizationState = locationManager.authorizationStatus
-        
+
         if locationManager.authorizationStatus == .authorizedAlways ||
             locationManager.authorizationStatus == .authorizedWhenInUse {
             // after getting permission
@@ -69,7 +69,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
             print("No Permission")
         }
     }
-    
+
     // MARK: Location manager
     //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     //        // stop auto zooming in apple map
@@ -90,7 +90,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         // Request permission from the user
         locationManager.requestWhenInUseAuthorization()
     }
-    
+
     // open apple map to show routes to the user
     //    func openAppleMap(endCoordinate: CLLocationCoordinate2D) {
     //        // create url to open apple map having route from current location to place
@@ -106,19 +106,19 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     //            UIApplication.shared.openURL(url)
     //        }
     //    }
-    
-    
+
+
     // MARK: Restaurant Navigation Method
     func navigateRestaurant(_ restId: String) {
         // find the index for the restaurant id
         currentRestaurantIndex = restaurants.firstIndex(where: {
             $0.place_id == restId
         }) ?? 0
-        
+
         // set the current restaurant
         currentRestaurant = restaurants[currentRestaurantIndex]
     }
-    
+
     // check if has popular restaurant
     func hasPopularRestaurant() -> Bool {
         for rest in restaurants {
@@ -128,21 +128,21 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         }
         return false
     }
-    
-    func fetchDetail(place_id:String) -> Restaurant {
-        var restaurantDetail:Restaurant = Restaurant(place_id: "")
+
+    func fetchDetail(place_id: String) -> Restaurant {
+        var restaurantDetail: Restaurant = Restaurant(place_id: "")
         let urlString = " https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        if error != nil {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    if error != nil {
                         print ("error")
                     } else {
                         let decoder = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
-                           let restaurantArr = try? decoder.decode(RestaurantDetail.self, from: data) {
+                            let restaurantArr = try? decoder.decode(RestaurantDetail.self, from: data) {
                             print(restaurantArr)
                             restaurantDetail.formatted_address = restaurantArr.result.formatted_address
                         }
@@ -152,7 +152,6 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
                     }
                 }
             }.resume()
-
         }
         return restaurantDetail
     }
@@ -160,16 +159,16 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         hasError = false
-   
+
         let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
-        
+
 
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        if error != nil {
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    if error != nil {
                         print ("error")
                     } else {
                         let decoder = JSONDecoder()
@@ -181,44 +180,41 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
                             self?.restaurants = restaurantArr.results
                         }
                     }
-                }.resume()
-            
+                }
+
+            }.resume()
         }
-        
     }
-    
-    func getCurrentRestaurant(id:String){
     // Function to get current restaurant
+    func getCurrentRestaurant(id: String) {
         for index in 0..<restaurants.count {
+            if (restaurants[index].place_id == id) {
                 currentRestaurantIndex = index
                 break
-            if (restaurants[index].place_id == id){
             }
         }
         currentRestaurant = restaurants[currentRestaurantIndex]
     }
+
     // Function to update like for specific review
-        for i in 0..<(currentRestaurant?.review.count ?? 0){
-    func updateLikeForReview(id:UUID){
-    
+    func updateLikeForReview(id: UUID) {
+        for i in 0..<(currentRestaurant?.review.count ?? 0) {
             if(currentRestaurant?.review[i].id == id) {
                 currentRestaurant?.review[i].isLiked.toggle()
             }
         }
-    
     }
-    func addReviewFromUser(reviewDescription:String,rating:Int,name:String,email:String,image:String){
+
+
     // Function to add new review from user
-    
+    func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, image: String) {
         let id = UUID()
         let date = Date.now
-        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name,email: email, image: "avatar1")
+        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
         currentRestaurant?.review.append(newReview)
     }
-    
+
 }
-
-
 extension RestaurantModel {
     enum RestaurantError: LocalizedError {
         case custom(error: Error)

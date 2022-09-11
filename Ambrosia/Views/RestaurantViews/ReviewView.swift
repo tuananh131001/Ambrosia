@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ReviewView: View {
-    var reviews:[Review]
+    var reviews: [Review]
     @State var isShowAddReview = false
     var body: some View {
-        GeometryReader{
+        GeometryReader {
             geo in
-            ZStack(alignment:.bottomTrailing){
-                ScrollView(showsIndicators:false){
-                    LazyVStack(alignment:.leading,spacing:35){
-                        ForEach(0..<reviews.count,id: \.self){
+            ZStack(alignment: .bottomTrailing) {
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(alignment: .leading, spacing: 35) {
+                        ForEach(0..<reviews.count, id: \.self) {
                             index in
                             ReviewCard(rating: reviews[index].rating, review: reviews[index])
                         }
@@ -26,14 +26,14 @@ struct ReviewView: View {
                     isShowAddReview = true
                 } label: {
                     CircleButtonView(buttonImage: "square.and.pencil")
-                
+
                 }.sheet(isPresented: $isShowAddReview) {
                     AddReviewView(restaurant: Restaurant.testRestaurant(), review: Review.testReviews()[0])
                 }
-            }.padding([.trailing,.leading],30)
-            
+            }.padding([.trailing, .leading], 30)
+
         }.background(Color("CardBackgroundColor"))
-        
+
     }
 }
 

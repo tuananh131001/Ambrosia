@@ -28,7 +28,8 @@ struct LaunchView: View {
         }
         // user allow access to location
             else if model.loginSuccess {
-                ReviewView(reviews: Review.testReviews())
+//                ReviewView(reviews: Review.testReviews())
+                HomeView()
 
         }
         // user not allow -> open settings

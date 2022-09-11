@@ -36,6 +36,8 @@ struct RestaurantCard: View {
                     .cornerRadius(10)
                     .padding(.vertical, 10)
             }
+            // MARK: Review
+            
         }
             .background(Color("RestCardBckColor"))
             .cornerRadius(20)
