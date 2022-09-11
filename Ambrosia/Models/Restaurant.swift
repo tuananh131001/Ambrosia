@@ -22,7 +22,6 @@ struct Restaurant: Codable {
     var price_level:Int?
     var photos: [Photos]?
     var review = Reviews()
-    var formatted_address:String?
     enum CodingKeys: String, CodingKey {
           case place_id
           case name
@@ -57,14 +56,10 @@ struct Review:Identifiable{
     var rating: Int
     var username:String
     var email:String
-    
 }
 
 typealias Reviews = [Review]
 
-struct RestaurantDetail: Codable {
-    var result:Restaurant
-}
 
 struct Restaurants: Codable {
     var results:[Restaurant]
