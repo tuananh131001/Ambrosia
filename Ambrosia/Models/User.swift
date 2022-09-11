@@ -8,7 +8,7 @@
 import Foundation
 
 struct User: Decodable{
-    var username: String
+    var user: String
     var password: String
     var favoriteRestaurants: [Restaurant]
     var email:String
@@ -16,7 +16,7 @@ struct User: Decodable{
     // Function for testing
     static func testUser() -> User{
 //        let geometry = Geometry(location: Location(lat: 10, lng: 100))
-        let user = User(username: "Sir", password: "Sir ne", favoriteRestaurants: [], email: "sir@gmail.com")
+        let user = User(user: "Sir", password: "Sir ne", favoriteRestaurants: [], email: "sir@gmail.com")
         let restaurant = Restaurant(
             place_id: "sir1",
             name: "Yeebo",
@@ -26,7 +26,7 @@ struct User: Decodable{
             
         )
 //        let reviews = [Review(restaurant: restaurant, reviewDescription: "bị sir khinh",score: 8)]
-        return User(username: "sir", password: "sir123", favoriteRestaurants: [restaurant
+        return User(user: "sir", password: "sir123", favoriteRestaurants: [restaurant
             ],email: "huyne")
         
     }
