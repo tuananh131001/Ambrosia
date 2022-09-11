@@ -14,26 +14,16 @@ import SwiftUI
 
 struct RestaurantCard: View {
     var rest: Restaurant
-    var cardWidth: CGFloat
-    var cardHeight: CGFloat
-    var displayType: String
+    var cardWidth: CGFloat = UIScreen.main.bounds.width - 30
+    var cardHeight: CGFloat = 357
+    var displayType: String = "all"
     
     var body: some View {
         // Card content
         // add display gone or not gone
         VStack(alignment: .center, spacing: 5) {
             // MARK: cover image
-            ZStack {
-                // Image of each map
-                AsyncImage(url: URL(string: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=\(rest.photos?[0].photo_reference ?? "")&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY")) { image in
-                    image.resizable()
-                    image.scaledToFit()
-                } placeholder: {
-                    Color.red
-                }
-                ImageShadowView()
-            }
-                .frame(width: cardWidth, height: cardHeight)
+            RestaurantAsyncImage(photo_id: rest.photos?[0].photo_reference ?? "").frame(width: cardWidth, height: cardHeight)
                 .cornerRadius(10)
                 .clipped()
             // MARK: Text
@@ -53,4 +43,5 @@ struct RestaurantCard: View {
             .frame(width: cardWidth)
     }
 }
+
 
