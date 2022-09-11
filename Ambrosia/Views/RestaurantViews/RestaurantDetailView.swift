@@ -74,10 +74,6 @@ struct RestaurantDetailView: View {
                     }
                         .padding()
                 }
-
-
-
-
             }.onAppear(perform: {
                 restaurantDetail = model.fetchDetail(place_id: rest.place_id)
                 print(restaurantDetail)
