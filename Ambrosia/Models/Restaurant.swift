@@ -22,22 +22,27 @@ struct Restaurant: Codable {
     var photos: [Photos]?
     var review = Reviews()
     var formatted_address:String?
+    var rating: Double?
+    var vicinity: String?
+    var user_ratings_total: Int?
     enum CodingKeys: String, CodingKey {
           case place_id
           case name
           case opening_hours
           case price_level
           case photos
+          case rating
+          case vicinity
+          case user_ratings_total
        }
 
-    var rating: Double = 4
 
-    func isPopular() -> Bool {
-        return rating >= 4.5
-    }
+//    func isPopular() -> Bool {
+//        return rating >= 4.5
+//    }
     
     static func testRestaurant() -> Restaurant{
-        return Restaurant(place_id: "12345", name: "Nhà hàng Của Sir", opening_hours: OpeningHours(open_now: true), price_level: 2, photos: [Photos(photo_reference: "testRestaurant")], review: Review.testReviews(), formatted_address: "120 Sir street, Sir District, Sir Ward, Sir city", rating: 4.5)
+        return Restaurant(place_id: "12345", name: "Nhà hàng Của Sir", opening_hours: OpeningHours(open_now: true), price_level: 2, photos: [Photos(photo_reference: "testRestaurant")], review: Review.testReviews(), formatted_address: "120 Sir street, Sir District, Sir Ward, Sir city", rating: 4.5,vicinity: "120 Sir street, Sir District, Sir Ward, Sir city",user_ratings_total: 4)
     }
 
    
@@ -46,6 +51,58 @@ struct Restaurant: Codable {
 
 struct OpeningHours:Codable{
     var open_now:Bool?
+}
+
+
+
+
+
+struct RestaurantDetail:Codable{
+    var place_id:String?
+    var formatted_address:String?
+    var formatted_phone_number:String?
+    var name:String?
+    var delivery:Bool?
+    var dine_in:Bool?
+    var opening_hours:OpeningHoursDetail?
+    var takeout:Bool?
+    var serves_wine:Bool?
+    var price_level:Int?
+    var rating:Double?
+    var user_ratings_total:Int?
+    var photos: [Photos]?
+    var review = Reviews()
+    enum CodingKeys: String, CodingKey {
+          case place_id
+          case formatted_address
+          case formatted_phone_number
+          case name
+          case delivery
+          case dine_in
+          case opening_hours
+          case takeout
+          case serves_wine
+          case price_level
+          case rating
+          case user_ratings_total
+          case photos
+       }
+
+    
+}
+
+struct Restaurants: Codable {
+    var results:[Restaurant]
+}
+
+
+struct ResponseDetail:Codable{
+    var result:RestaurantDetail
+}
+
+struct OpeningHoursDetail:Codable{
+    var open_now:Bool?
+    var weekday_text:[String]?
 }
 
 struct Photos:Codable{
@@ -85,10 +142,6 @@ struct Review:Identifiable{
 
 typealias Reviews = [Review]
 
-struct RestaurantDetail: Codable {
-    var result:Restaurant
-}
-
-struct Restaurants: Codable {
-    var results:[Restaurant]
-}
+//struct RestaurantDetail: Codable {
+//    var result:Restaurant
+//}

@@ -19,7 +19,8 @@ import CoreLocation
 import MapKit
 
 class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
-    @Published var restaurants: [Restaurant] = [Restaurant]()
+    @Published var restaurants = [Restaurant]()
+    @Published var restaurantDetail:RestaurantDetail?
     @Published var hasError = false
     @Published var error: RestaurantError?
 
@@ -120,31 +121,31 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     // check if has popular restaurant
-    func hasPopularRestaurant() -> Bool {
-        for rest in restaurants {
-            if (rest.isPopular()) {
-                return true
-            }
-        }
-        return false
-    }
+//    func hasPopularRestaurant() -> Bool {
+//        for rest in restaurants {
+//            if (rest.isPopular()) {
+//                return true
+//            }
+//        }
+//        return false
+//    }
 
-    func fetchDetail(place_id: String) -> Restaurant {
-        var restaurantDetail: Restaurant = Restaurant(place_id: "")
-        let urlString = " https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
-        if let url = URL(string: urlString) {
+    func fetchDetail(place_id: String) {
+        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
+        print(urlString2)
+        if let url2 = URL(string: urlString2) {
             URLSession.shared
-                .dataTask(with: url) { [weak self] data, response, error in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                .dataTask(with: url2) { data, response, error in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
                     if error != nil {
                         print ("error")
                     } else {
-                        let decoder = JSONDecoder()
+                        let decoder2 = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        if let data = data,
-                            let restaurantArr = try? decoder.decode(RestaurantDetail.self, from: data) {
-                            print(restaurantArr)
-                            restaurantDetail.formatted_address = restaurantArr.result.formatted_address
+                        if let data2 = data,
+                            let restaurantArr2 = try? decoder2.decode(ResponseDetail.self, from: data2) {
+                            print(restaurantArr2)
+                            self.restaurantDetail = restaurantArr2.result
                         }
                         else {
                             print("notthing")
@@ -153,7 +154,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                 }
             }.resume()
         }
-        return restaurantDetail
     }
 
     // Method to fetch all nearby restaurants
@@ -169,14 +169,11 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     if error != nil {
-                        print ("error")
                     } else {
                         let decoder = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
                             let restaurantArr = try? decoder.decode(Restaurants.self, from: data) {
-//                            print(restaurantArr)
-                            print(restaurantArr.results)
                             self?.restaurants = restaurantArr.results
                         }
                     }
