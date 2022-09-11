@@ -17,32 +17,30 @@
 import SwiftUI
 
 struct RestaurantDetailView: View {
-
-    var rest: Restaurant
     @State var restaurantDetail: Restaurant = Restaurant(place_id: "")
     @State var imageHeight: CGFloat = 0
     @State var showFullText = false // for expanding description of restaurant
-    @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var restaurantModel: RestaurantModel
     var body: some View {
         
         ScrollView {
             // add display gone or not gone
             LazyVStack(alignment: .leading, spacing: 0) {
-                RestaurantDetailImage(rest: rest)
+                RestaurantDetailImage(rest: restaurantModel.currentRestaurant ?? Restaurant.testRestaurant())
                 VStack(alignment: .leading, spacing: 13) {
                     // MARK: restaurant name
-                    Text(rest.name)
+                    Text(restaurantModel.currentRestaurant?.name ?? Restaurant.testRestaurant().name)
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(Color("PrimaryColor"))
                 }.padding()
             }.onAppear(perform: {
-                restaurantDetail = model.fetchDetail(place_id: rest.place_id)
+                restaurantDetail = restaurantModel.fetchDetail(place_id: restaurantModel.currentRestaurant?.place_id ?? Restaurant.testRestaurant().place_id)
                 print(restaurantDetail)
             })
             
         }
-        ReviewView(reviews: Review.testReviews())
+        ReviewView(reviews: restaurantModel.currentRestaurant?.review ?? Restaurant.testRestaurant().review)
     }
 }
 
