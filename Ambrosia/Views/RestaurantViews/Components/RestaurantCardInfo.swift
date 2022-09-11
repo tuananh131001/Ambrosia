@@ -29,7 +29,7 @@ struct RestaurantCardInfo: View {
             HStack(spacing: 0) {
                 HStack(spacing: 5) {
                     // MARK: restaurant rating
-                    RatingView(rest: rest)
+//                    RatingView(rest: rest)
                     Text("•")
                         .font(.headline)
                         .bold()

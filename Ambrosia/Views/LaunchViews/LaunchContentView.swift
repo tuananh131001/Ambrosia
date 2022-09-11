@@ -23,7 +23,7 @@ struct LaunchContentView: View {
         ZStack {
             // for card
             Rectangle()
-                .foregroundColor(Color("BackgroundViewColor"))
+                .foregroundColor(Color("PrimaryColor"))
 
             // MARK: LOGIN PAGE CONTENT
             VStack (spacing: 20) {
