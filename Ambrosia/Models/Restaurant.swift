@@ -22,22 +22,27 @@ struct Restaurant: Codable {
     var photos: [Photos]?
     var review = Reviews()
     var formatted_address:String?
+    var rating: Double?
+    var vicinity: String?
+    var user_ratings_total: Int?
     enum CodingKeys: String, CodingKey {
           case place_id
           case name
           case opening_hours
           case price_level
           case photos
+          case rating
+          case vicinity
+          case user_ratings_total
        }
 
-    var rating: Double = 4
 
-    func isPopular() -> Bool {
-        return rating >= 4.5
-    }
+//    func isPopular() -> Bool {
+//        return rating >= 4.5
+//    }
     
     static func testRestaurant() -> Restaurant{
-        return Restaurant(place_id: "12345", name: "Nhà hàng Của Sir", opening_hours: OpeningHours(open_now: true), price_level: 2, photos: [Photos(photo_reference: "testRestaurant")], review: Review.testReviews(), formatted_address: "120 Sir street, Sir District, Sir Ward, Sir city", rating: 4.5)
+        return Restaurant(place_id: "12345", name: "Nhà hàng Của Sir", opening_hours: OpeningHours(open_now: true), price_level: 2, photos: [Photos(photo_reference: "testRestaurant")], review: Review.testReviews(), formatted_address: "120 Sir street, Sir District, Sir Ward, Sir city", rating: 4.5,vicinity: "120 Sir street, Sir District, Sir Ward, Sir city",user_ratings_total: 4)
     }
 
    

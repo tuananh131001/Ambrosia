@@ -21,7 +21,7 @@ struct RestaurantAsyncImage: View {
                 image.resizable()
                 image.scaledToFit()
             } placeholder: {
-                Color.red
+                Image("testRestaurant")
             }
             ImageShadowView()
         }

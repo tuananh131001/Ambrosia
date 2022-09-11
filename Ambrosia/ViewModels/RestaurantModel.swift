@@ -19,7 +19,8 @@ import CoreLocation
 import MapKit
 
 class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
-    @Published var restaurants: [Restaurant] = [Restaurant]()
+    @Published var restaurants = [Restaurant]()
+
     @Published var hasError = false
     @Published var error: RestaurantError?
 
@@ -120,18 +121,18 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     // check if has popular restaurant
-    func hasPopularRestaurant() -> Bool {
-        for rest in restaurants {
-            if (rest.isPopular()) {
-                return true
-            }
-        }
-        return false
-    }
+//    func hasPopularRestaurant() -> Bool {
+//        for rest in restaurants {
+//            if (rest.isPopular()) {
+//                return true
+//            }
+//        }
+//        return false
+//    }
 
     func fetchDetail(place_id: String) -> Restaurant {
         var restaurantDetail: Restaurant = Restaurant(place_id: "")
-        let urlString = " https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
+        let urlString = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
