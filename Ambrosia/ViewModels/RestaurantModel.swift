@@ -131,7 +131,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     
     func fetchDetail(place_id:String) -> Restaurant {
         var restaurantDetail:Restaurant = Restaurant(place_id: "")
-        let urlString = " https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
+        let urlString = " https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
@@ -161,15 +161,9 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     func fetchRestaurant() {
         hasError = false
    
-        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=1500&type=restaurant&key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY"
+        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
         
-//    https://maps.googleapis.com/maps/api/place/findplacefromtext/json
-//      ?fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry
-//      &input=mongolian
-//      &inputtype=textquery
-//      &locationbias=circle%3A2000%4047.6918452%2C-122.2226413
-//      &key=AIzaSyBtCts3HUN6SLrVPBY8LLsm4rNnleUtvZY
-//        let urlString = "https://jsonplaceholder.typicode.com/users"
+
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
