@@ -17,18 +17,17 @@
 import SwiftUI
 
 struct RestaurantDetailView: View {
-
+    
     var rest: Restaurant
-    @State var restaurantDetail:Restaurant = Restaurant(place_id: "")
     @State var imageHeight: CGFloat = 0
+    @State var imageScale = 1.0 // for changing cover image when scrolling
     @State var showFullText = false // for expanding description of restaurant
     @EnvironmentObject var model: RestaurantModel
     var body: some View {
         ScrollView {
             // add display gone or not gone
             LazyVStack(alignment: .leading, spacing: 0) {
-                RestaurantDetailImage(rest:rest)
-
+                
                 // MARK: - Restaurant Info
                 VStack {
                     // MARK: restaurant cover image
@@ -38,31 +37,46 @@ struct RestaurantDetailView: View {
                             .font(.largeTitle)
                             .bold()
                             .foregroundColor(Color("RestDetailTitleColor"))
-
-
+                        // MARK: open hour and phone
+                        Button(action: {
+                            // if have phone -> call action
+//                            if rest.tel != "" {
+//                                let formattedString = "tel://" + rest.tel.replacingOccurrences(of: " ", with: "-")
+//                                guard let url = URL(string: formattedString) else { return }
+//                                UIApplication.shared.open(url)
+//                            }
+                        }) {
+                            HStack {
+                                // if have phone number -> display call
+//                                if (rest.tel != "") {
+//                                    Image(systemName: "phone.fill")
+//                                        .foregroundColor(Color("RestDetailIconColor"))
+//                                }
+                                // if not have phone number -> display hour
+//                                else {
+//                                    Image(systemName: "clock.badge.checkmark")
+//                                        .foregroundColor(Color("RestDetailIconColor"))
+//                                }
+                                // open hour
+//                                Text(rest.openHour)
+//                                    .foregroundColor(Color("RestDetailAddColor"))
+//                                    .font(.headline)
+//                                    .lineLimit(1)
+                                
+                            }
+                        }
+                        
                         // MARK: restaurant address -> display map
                         HStack(spacing: 3) {
-                            Button(action: {
-//                                model.openAppleMap(endCoordinate: rest.coordinateObject())
-                            }, label: {
-                                HStack {
-                                    Image(systemName: "mappin.and.ellipse")
-                                        .foregroundStyle(Color("RestDetailIconColor"))
-                                        .symbolRenderingMode(.hierarchical)
-                                        .font(.title3)
-                                    Text(restaurantDetail.formatted_address ?? "")
-                                        .foregroundColor(Color("RestDetailAddColor"))
-                                        .font(.headline)
-                                        .lineLimit(1)
-                                }
-                            })
+                         
                             
                             Spacer()
                             
                             // MARK: restaurant rating
                             RatingView(rest: rest, fontSize: .title3)
                         }
-
+                        
+                        
                         // MARK: restaurant description
                         // need add read more
 //                        Text(rest.description)
@@ -72,48 +86,13 @@ struct RestaurantDetailView: View {
 //                            .foregroundColor(Color("RestDetailDescColor"))
 //                            .onTapGesture(perform: { showFullText.toggle() })
                     }
-                        .padding()
+                    .padding()
                 }
-
-
-
-
-            }.onAppear(perform: {
-                restaurantDetail = model.fetchDetail(place_id: rest.place_id)
-                print(restaurantDetail)
-            })
+                
+                
+           
+                
+            }
         }
     }
-}
-
-struct RestaurantDetailImage: View {
-    @State var imageScale = 1.0 // for changing cover image when scrolling
-    var rest:Restaurant
-    var body: some View {
-            GeometryReader { geo in
-                ZStack(alignment: .center) {
-                    if geo.frame(in: .global).minY <= 0 {
-                        // scroll down outside the screen -> move image up
-                        RestaurantAsyncImage(photo_id: rest.photos?[0].photo_reference ?? "")
-                            .offset(y: geo.frame(in: .global).minY / 9) // move image up
-                            .clipped()
-                        
-                    }
-                    else {
-                        // scroll up -> increase image size + move image down
-                        RestaurantAsyncImage(photo_id: rest.photos?[0].photo_reference ?? "")
-                            .scaleEffect(1 + geo.frame(in: .global).minY / 500) // change scale of image
-                            .clipped()
-                            .offset(y: -geo.frame(in: .global).minY) // move image down
-                            .animation(.easeInOut.delay(2), value: imageScale)
-                            .background(Color("RestDetailImageBckColor").opacity(0.4))
-                    }
-                }
-                // for fixing the text stand on the image bug
-                .frame(height: 600, alignment: .center)
-                .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), radius: 5, x: 3, y: 3)
-                
-            }.frame(height: 603, alignment: .center)
-        }
-    
 }
