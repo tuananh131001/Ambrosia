@@ -16,6 +16,7 @@ struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
     @State var email = ""
     @State var password = ""
+    @State private var showLoginMessage = false
     @State private var showingSignUpSheet = false
     var openSetting = false
     var body: some View {
@@ -24,41 +25,46 @@ struct LaunchContentView: View {
             Rectangle()
                 .foregroundColor(Color("PrimaryColor"))
 
-            VStack (spacing: 30) {
+            // MARK: LOGIN PAGE CONTENT
+            VStack (spacing: 20) {
 
                 Spacer()
 
-                // Login fields to sign in
+                // MARK: LOGIN INPUT FIELDS
                 Group {
                     TextField("Email", text: $email)
+                        .modifier(TextFieldModifier())
                     SecureField("Password", text: $password)
+                        .modifier(TextFieldModifier())
                 }
+                .multilineTextAlignment(.leading)
 
-                // Login button
+                // MARK: LOGIN BUTTON
                 Button {
                     login()
-
+                    showLoginMessage = true
                 } label: {
-                    Text("Sign in")
+                    Text("LOG IN")
                         .bold()
-                        .frame(width: 360, height: 50)
-                        .background(.thinMaterial)
-                        .cornerRadius(10)
                 }
+                .buttonStyle(ButtonStyle1())
 
+                // MARK: LOGIN MESSAGE
                 // Login message after pressing the login button
-                if model.loginSuccess {
-                    Text("Login Successfully! ✅")
-                        .foregroundColor(.green)
-                    // open app setting
-
-                } else {
-                    Text("Not Login Succeessfully Yet! ❌")
-                        .foregroundColor(.red)
+                if (showLoginMessage) {
+                    // Login message after pressing the login button
+                    if model.loginSuccess {
+                        Text("Login successfully! ✅")
+                            .foregroundColor(.green)
+                    } else {
+                        Text("Invalid login credentials! ❌")
+                            .foregroundColor(.red)
+                    }
                 }
 
                 Spacer()
 
+                // MARK: REGISTER BUTTON
                 // Button to show the sign up sheet
                 Button {
                     showingSignUpSheet.toggle()
@@ -72,15 +78,17 @@ struct LaunchContentView: View {
 
                 Spacer()
             }
-                .frame(width: 250)
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
+            .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
+            .foregroundColor(.white)
+            .multilineTextAlignment(.center)
         }.sheet(isPresented: $showingSignUpSheet) {
             SignUpView()
         }
             .ignoresSafeArea(.all, edges: .all)
 
     }
+    
+    // MARK: LOGIN LOGIC
     // Login function to use Firebase to check username and password to sign in
     func login() {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in

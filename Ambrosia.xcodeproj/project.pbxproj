@@ -62,6 +62,10 @@
 		3DF8693028CB049F00AB4363 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */; };
 		44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1B28C6F49A003D7E19 /* User.swift */; };
 		44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */; };
+		54585AF728CC498A003567D5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AF628CC498A003567D5 /* LoginView.swift */; };
+		54585AF928CC501C003567D5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AF828CC501C003567D5 /* Constant.swift */; };
+		54585AFD28CC52DA003567D5 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFC28CC52DA003567D5 /* Modifiers.swift */; };
+		54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +100,10 @@
 		3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		44CC5F1B28C6F49A003D7E19 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		54585AF628CC498A003567D5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		54585AF828CC501C003567D5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		54585AFC28CC52DA003567D5 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +258,7 @@
 		3DC2FCA42886E1CE003750D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				54585AFB28CC52AE003567D5 /* UISupport */,
 				3D304AF7289CB9BA00B269ED /* LaunchViews */,
 				3DC2FCA52886E1E3003750D3 /* HomeView.swift */,
 				3DC2FC962886E18E003750D3 /* EatTime.swift */,
@@ -257,6 +266,7 @@
 				44A7C10928CB0504003D9F02 /* SettingViews */,
 				44A7C10828CB03CE003D9F02 /* AuthViews */,
 				3D304AF4289CB77B00B269ED /* RestaurantViews */,
+				54585AF828CC501C003567D5 /* Constant.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -282,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				3D1B2F1228C737790091BD2F /* SignUpView.swift */,
+				54585AF628CC498A003567D5 /* LoginView.swift */,
 			);
 			path = AuthViews;
 			sourceTree = "<group>";
@@ -298,6 +309,15 @@
 			children = (
 			);
 			path = ProgessViews;
+			sourceTree = "<group>";
+		};
+		54585AFB28CC52AE003567D5 /* UISupport */ = {
+			isa = PBXGroup;
+			children = (
+				54585AFC28CC52DA003567D5 /* Modifiers.swift */,
+				54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */,
+			);
+			path = UISupport;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,6 +429,7 @@
 				3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */,
 				44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */,
 				3D8371312893B9CC0067C946 /* RatingView.swift in Sources */,
+				54585AF728CC498A003567D5 /* LoginView.swift in Sources */,
 				3DDCD18428CC936700B97159 /* RestaurantAsyncImage.swift in Sources */,
 				3D304AFD289CBFB700B269ED /* AssignGradientColor.swift in Sources */,
 				3D83711F289397340067C946 /* LaunchView.swift in Sources */,
@@ -416,7 +437,9 @@
 				3D85B3DC288FB0C8001BF2AF /* RestaurantModel.swift in Sources */,
 				3DCB4F6528CB8497000EEBDA /* RestaurantCardInfo.swift in Sources */,
 				3D4705DB288E4C0400502DD1 /* Restaurant.swift in Sources */,
+				54585AF928CC501C003567D5 /* Constant.swift in Sources */,
 				3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */,
+				54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */,
 				3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */,
 				3D304B03289ED8A300B269ED /* DrawCustomShapes.swift in Sources */,
 				3D4D1B1C28CB211500034146 /* RestaurantList.swift in Sources */,
@@ -428,6 +451,7 @@
 				3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */,
 				3D42C21A2896D931005BA233 /* NavigateLink.swift in Sources */,
 				3D83712E2893B9590067C946 /* RestaurantSearchCardView.swift in Sources */,
+				54585AFD28CC52DA003567D5 /* Modifiers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
