@@ -24,7 +24,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var hasError = false
     @Published var error: RestaurantError?
 
-    @Published var loginSuccess = false
     // MARK: Location
     var locationManager = CLLocationManager()
     @Published var authorizationState = CLAuthorizationStatus.notDetermined

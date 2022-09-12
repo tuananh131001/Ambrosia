@@ -10,16 +10,17 @@ import Firebase
 
 struct LoginView: View {
     @Environment(\.dismiss) var dismiss
-    
+    @EnvironmentObject var userModel: UserModel
+
     @State var email = ""
     @State var password = ""
-    
+
     @State var loginSuccess = false
-    
+
     var body: some View {
-        VStack{
+        VStack {
             Spacer()
-            
+
             // Sign up fields to sign up for a new account
             Group {
                 TextField("Email", text: $email)
@@ -43,7 +44,7 @@ struct LoginView: View {
                     .background(.thinMaterial)
                     .cornerRadius(10)
             }
-            
+
             // Sign up message after pressing the sign up button
             if loginSuccess {
                 Text("Login successfully! ✅")
@@ -52,9 +53,9 @@ struct LoginView: View {
                 Text("Invalid login credentails! ❌")
                     .foregroundColor(.red)
             }
-            
+
             Spacer()
-            
+
             // Button to dismiss the sign up sheet and go back to the sign in page
             Button {
                 dismiss()
@@ -64,7 +65,7 @@ struct LoginView: View {
 
             Spacer()
         }
-        
+
     }
 
     // Sign up function to use Firebase to create a new user account in Firebase
@@ -73,7 +74,13 @@ struct LoginView: View {
             if error != nil {
                 loginSuccess = false
             } else {
-                loginSuccess = true
+                print(authResult?.additionalUserInfo?.isNewUser ?? "error")
+                if((authResult?.additionalUserInfo?.isNewUser) != nil) {
+                    userModel.isNewUser = true
+                } else {
+                    loginSuccess = true
+                    dismiss()
+                }
             }
         }
     }

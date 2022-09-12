@@ -43,6 +43,8 @@
 		3D42C21A2896D931005BA233 /* NavigateLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42C2192896D931005BA233 /* NavigateLink.swift */; };
 		3D4705DB288E4C0400502DD1 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4705DA288E4C0400502DD1 /* Restaurant.swift */; };
 		3D48566C28CEEDF0001D7DAE /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48566B28CEEDF0001D7DAE /* FirebaseService.swift */; };
+		3D48566F28CEF595001D7DAE /* EditInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48566E28CEF595001D7DAE /* EditInformation.swift */; };
+		3D48567228CEF6D8001D7DAE /* InformationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48567128CEF6D8001D7DAE /* InformationForm.swift */; };
 		3D53FB6D28CE33DD00D6CE0F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D53FB6C28CE33DD00D6CE0F /* LoginView.swift */; };
 		3D837119289389830067C946 /* GifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D837118289389830067C946 /* GifView.swift */; };
 		3D83711F289397340067C946 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D83711E289397340067C946 /* LaunchView.swift */; };
@@ -89,6 +91,8 @@
 		3D42C2192896D931005BA233 /* NavigateLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateLink.swift; sourceTree = "<group>"; };
 		3D4705DA288E4C0400502DD1 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		3D48566B28CEEDF0001D7DAE /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		3D48566E28CEF595001D7DAE /* EditInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformation.swift; sourceTree = "<group>"; };
+		3D48567128CEF6D8001D7DAE /* InformationForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationForm.swift; sourceTree = "<group>"; };
 		3D53FB6C28CE33DD00D6CE0F /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3D837118289389830067C946 /* GifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
 		3D83711E289397340067C946 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
@@ -233,6 +237,23 @@
 			path = FirebaseHelpers;
 			sourceTree = "<group>";
 		};
+		3D48566D28CEF579001D7DAE /* UserView */ = {
+			isa = PBXGroup;
+			children = (
+				3D48567028CEF6C6001D7DAE /* Components */,
+				3D48566E28CEF595001D7DAE /* EditInformation.swift */,
+			);
+			path = UserView;
+			sourceTree = "<group>";
+		};
+		3D48567028CEF6C6001D7DAE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3D48567128CEF6D8001D7DAE /* InformationForm.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		3D83712F2893B9BB0067C946 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +317,7 @@
 		3DC2FCA42886E1CE003750D3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D48566D28CEF579001D7DAE /* UserView */,
 				3D304AF7289CB9BA00B269ED /* LaunchViews */,
 				3DC2FCA52886E1E3003750D3 /* HomeView.swift */,
 				3DC2FC962886E18E003750D3 /* EatTime.swift */,
@@ -484,6 +506,7 @@
 				3D85B3DE288FE20E001BF2AF /* RestaurantCard.swift in Sources */,
 				3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */,
 				44CC5F1E28C6FB1A003D7E19 /* UserModel.swift in Sources */,
+				3D48567228CEF6D8001D7DAE /* InformationForm.swift in Sources */,
 				3D837119289389830067C946 /* GifView.swift in Sources */,
 				3D837145289410650067C946 /* LaunchContentView.swift in Sources */,
 				3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */,
@@ -491,6 +514,7 @@
 				3D83712E2893B9590067C946 /* RestaurantSearchCardView.swift in Sources */,
 				44FDA24828CDBD2C0039C46C /* RoundedButton.swift in Sources */,
 				44453CB528CCD01E00C00F6D /* CircleButtonView.swift in Sources */,
+				3D48566F28CEF595001D7DAE /* EditInformation.swift in Sources */,
 				3D53FB6D28CE33DD00D6CE0F /* LoginView.swift in Sources */,
 				44969A1628CCBB3500F7EDD4 /* ReviewCard.swift in Sources */,
 				54585AFD28CC52DA003567D5 /* Modifiers.swift in Sources */,

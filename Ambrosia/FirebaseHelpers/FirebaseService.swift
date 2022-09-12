@@ -14,8 +14,7 @@ class FirebaseService: ObservableObject {
     @Published var signUpMessage = ""
     @Published var signUpSuccess = false
     // Sign up function to use Firebase to create a new user account in Firebase
-    func signUp(email:String, password:String , passwordConfirmation:String) {
-        signUpSuccess = false
+    func signUp(email: String, password: String, passwordConfirmation: String,user:UserModel)  {
         if (email == "" || password == "" || passwordConfirmation == "") {
             self.signUpMessage = "Please fill in all the fields"
         }
@@ -48,10 +47,16 @@ class FirebaseService: ObservableObject {
                             print("Document successfully written!")
                         }
                     }
+                    user.loginSuccess = true
+                    user.isNewUser = true
                     self.signUpSuccess = true
+                    
                 }
             }
         }
+    }
+    func updateUser(user:User ) {
+        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender], merge: true)
     }
 
 }

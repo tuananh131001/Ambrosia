@@ -24,6 +24,7 @@ struct EatTime: App {
         WindowGroup {
             LaunchView()
                 .environmentObject(RestaurantModel())
+                .environmentObject(UserModel())
         }
     }
 }
