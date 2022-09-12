@@ -25,10 +25,10 @@ struct HomeViewContent: View {
     
     @EnvironmentObject var model: RestaurantModel
     var body: some View {
-        TabView(selection:$tabSelection){
+        TabView(selection: $tabSelection) {
             //  Main feature character view
             RestaurantListView().tabItem {
-                VStack{
+                VStack {
                     Image(systemName: "house.circle")
                         .resizable()
                     Text("Home")
@@ -36,7 +36,7 @@ struct HomeViewContent: View {
             }.tag(1)
             //  Comics display by list
             FavouriteRestaurantView().tabItem {
-                VStack{
+                VStack {
                     Image(systemName: "heart.circle").foregroundColor(.red)
                     Text("Favourite")
                
@@ -45,8 +45,8 @@ struct HomeViewContent: View {
             }.tag(2)
             // BookStore display by list
             SettingView().tabItem {
-                VStack{
-                    Image(systemName:"gear.circle")
+                VStack {
+                    Image(systemName: "gear.circle")
                     Text("Profile")
                 }
             }.tag(3)
@@ -111,6 +111,7 @@ struct HomeView: View {
         static var previews: some View {
             HomeView()
                 .environmentObject(RestaurantModel())
+                .environmentObject(AuthenticationModel())
         }
     }
 }
