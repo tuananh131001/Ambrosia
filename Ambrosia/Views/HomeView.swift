@@ -111,6 +111,7 @@ struct HomeView: View {
         static var previews: some View {
             HomeView()
                 .environmentObject(RestaurantModel())
+                .environmentObject(AuthenticationModel())
         }
     }
 }

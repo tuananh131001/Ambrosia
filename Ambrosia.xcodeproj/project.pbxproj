@@ -80,9 +80,17 @@
 		44DFD4EF28CDE5F400E82F9F /* FavouriteRestaurantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFD4EE28CDE5F400E82F9F /* FavouriteRestaurantView.swift */; };
 		44DFD4F128CDEBDA00E82F9F /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFD4F028CDEBDA00E82F9F /* RestaurantCardView.swift */; };
 		44FDA24828CDBD2C0039C46C /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FDA24728CDBD2C0039C46C /* RoundedButton.swift */; };
+		540BDDB628CE002500A2B45B /* LoginUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540BDDB528CE002500A2B45B /* LoginUtils.swift */; };
 		54585AF928CC501C003567D5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AF828CC501C003567D5 /* Constant.swift */; };
 		54585AFD28CC52DA003567D5 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFC28CC52DA003567D5 /* Modifiers.swift */; };
 		54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */; };
+		54646D4628CF44510052A3AA /* ForgetPasswordModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */; };
+		54BE932528CEEE6200CD21CD /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 54BE932428CEEE6200CD21CD /* GoogleSignIn */; };
+		54BE932728CEEE6200CD21CD /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 54BE932628CEEE6200CD21CD /* GoogleSignInSwift */; };
+		54BE932928CEF32100CD21CD /* GoogleSignInBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BE932828CEF32100CD21CD /* GoogleSignInBtn.swift */; };
+		54BE932B28CEF41600CD21CD /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BE932A28CEF41600CD21CD /* AuthenticationModel.swift */; };
+		54BE932D28CEF73800CD21CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BE932C28CEF73800CD21CD /* ContentView.swift */; };
+		54BE932F28CEF8D800CD21CD /* LoginPhoneModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BE932E28CEF8D800CD21CD /* LoginPhoneModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,9 +143,15 @@
 		44DFD4EE28CDE5F400E82F9F /* FavouriteRestaurantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRestaurantView.swift; sourceTree = "<group>"; };
 		44DFD4F028CDEBDA00E82F9F /* RestaurantCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardView.swift; sourceTree = "<group>"; };
 		44FDA24728CDBD2C0039C46C /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		540BDDB528CE002500A2B45B /* LoginUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUtils.swift; sourceTree = "<group>"; };
 		54585AF828CC501C003567D5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		54585AFC28CC52DA003567D5 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordModal.swift; sourceTree = "<group>"; };
+		54BE932828CEF32100CD21CD /* GoogleSignInBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInBtn.swift; sourceTree = "<group>"; };
+		54BE932A28CEF41600CD21CD /* AuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
+		54BE932C28CEF73800CD21CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		54BE932E28CEF8D800CD21CD /* LoginPhoneModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPhoneModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,9 +182,11 @@
 				3D1B2EEF28C735940091BD2F /* FirebaseDatabase in Frameworks */,
 				3D1B2F0B28C735940091BD2F /* FirebaseRemoteConfig in Frameworks */,
 				3D1B2EFB28C735940091BD2F /* FirebaseFunctions in Frameworks */,
+				54BE932728CEEE6200CD21CD /* GoogleSignInSwift in Frameworks */,
 				3D1B2EEB28C735940091BD2F /* FirebaseAuthCombine-Community in Frameworks */,
 				3D1B2F0128C735940091BD2F /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				3D1B2EDF28C735940091BD2F /* FirebaseAnalytics in Frameworks */,
+				54BE932528CEEE6200CD21CD /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +214,7 @@
 				3D304AFC289CBFB700B269ED /* AssignGradientColor.swift */,
 				3D304B02289ED8A300B269ED /* DrawCustomShapes.swift */,
 				44969A1728CCBE9E00F7EDD4 /* FormatDate.swift */,
+				540BDDB528CE002500A2B45B /* LoginUtils.swift */,
 				442A4E7F28CEF3DD00AD37E4 /* CalculateDistance.swift */,
 			);
 			path = Utils;
@@ -208,6 +225,7 @@
 			children = (
 				3D83711E289397340067C946 /* LaunchView.swift */,
 				3D837144289410650067C946 /* LaunchContentView.swift */,
+				54BE932C28CEF73800CD21CD /* ContentView.swift */,
 				3D4D1B1D28CC9ADB00034146 /* SplashView.swift */,
 			);
 			path = LaunchViews;
@@ -236,6 +254,7 @@
 			children = (
 				3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */,
 				44CC5F1D28C6FB1A003D7E19 /* UserModel.swift */,
+				54BE932A28CEF41600CD21CD /* AuthenticationModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -287,6 +306,7 @@
 				44969A1528CCBB3500F7EDD4 /* ReviewCard.swift */,
 				44453CB428CCD01E00C00F6D /* CircleButtonView.swift */,
 				44FDA24728CDBD2C0039C46C /* RoundedButton.swift */,
+				54BE932828CEF32100CD21CD /* GoogleSignInBtn.swift */,
 				3D4D1B2128CEE53F00034146 /* BackgroundImage.swift */,
 				442A4E8328CF1D6E00AD37E4 /* Breadcrumbs.swift */,
 			);
@@ -298,6 +318,7 @@
 			children = (
 				3DC2FC952886E18E003750D3 /* Ambrosia */,
 				3DC2FC942886E18E003750D3 /* Products */,
+				54646D4428CF3CA60052A3AA /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -374,8 +395,10 @@
 		44A7C10828CB03CE003D9F02 /* AuthViews */ = {
 			isa = PBXGroup;
 			children = (
+				54BE932E28CEF8D800CD21CD /* LoginPhoneModal.swift */,
 				3DD65CC928CF11E20040120B /* LoginView.swift */,
 				3D1B2F1228C737790091BD2F /* SignUpView.swift */,
+				54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */,
 			);
 			path = AuthViews;
 			sourceTree = "<group>";
@@ -393,6 +416,13 @@
 			children = (
 			);
 			path = ProgessViews;
+			sourceTree = "<group>";
+		};
+		54646D4428CF3CA60052A3AA /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,6 +468,8 @@
 				3D1B2F0C28C735940091BD2F /* FirebaseRemoteConfigSwift */,
 				3D1B2F0E28C735940091BD2F /* FirebaseStorage */,
 				3D1B2F1028C735940091BD2F /* FirebaseStorageCombine-Community */,
+				54BE932428CEEE6200CD21CD /* GoogleSignIn */,
+				54BE932628CEEE6200CD21CD /* GoogleSignInSwift */,
 			);
 			productName = WhatToEatToday;
 			productReference = 3DC2FC932886E18E003750D3 /* Ambrosia.app */;
@@ -469,6 +501,7 @@
 			mainGroup = 3DC2FC8A2886E18E003750D3;
 			packageReferences = (
 				3D1B2EDD28C735940091BD2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				54BE932328CEEE6200CD21CD /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 3DC2FC942886E18E003750D3 /* Products */;
 			projectDirPath = "";
@@ -526,11 +559,16 @@
 				44DFD4EF28CDE5F400E82F9F /* FavouriteRestaurantView.swift in Sources */,
 				3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */,
 				54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */,
+				54BE932928CEF32100CD21CD /* GoogleSignInBtn.swift in Sources */,
 				3D4D1B2228CEE53F00034146 /* BackgroundImage.swift in Sources */,
 				3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */,
+				54646D4628CF44510052A3AA /* ForgetPasswordModal.swift in Sources */,
 				3D4D1B2428CEE7D600034146 /* SplashIconImage.swift in Sources */,
 				44DFD4ED28CDE5AF00E82F9F /* SettingView.swift in Sources */,
 				3D304B03289ED8A300B269ED /* DrawCustomShapes.swift in Sources */,
+				54BE932B28CEF41600CD21CD /* AuthenticationModel.swift in Sources */,
+				540BDDB628CE002500A2B45B /* LoginUtils.swift in Sources */,
+				54BE932F28CEF8D800CD21CD /* LoginPhoneModal.swift in Sources */,
 				44DFD4F128CDEBDA00E82F9F /* RestaurantCardView.swift in Sources */,
 				3D85B3DE288FE20E001BF2AF /* RestaurantCard.swift in Sources */,
 				3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */,
@@ -541,6 +579,8 @@
 				3D837145289410650067C946 /* LaunchContentView.swift in Sources */,
 				3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */,
 				3D42C21A2896D931005BA233 /* NavigateLink.swift in Sources */,
+				54BE932D28CEF73800CD21CD /* ContentView.swift in Sources */,
+				3D83712E2893B9590067C946 /* RestaurantSearchCardView.swift in Sources */,
 				44FDA24828CDBD2C0039C46C /* RoundedButton.swift in Sources */,
 				44453CB528CCD01E00C00F6D /* CircleButtonView.swift in Sources */,
 				3D48566F28CEF595001D7DAE /* EditInformation.swift in Sources */,
@@ -764,6 +804,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		54BE932328CEEE6200CD21CD /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -896,6 +944,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D1B2EDD28C735940091BD2F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		54BE932428CEEE6200CD21CD /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54BE932328CEEE6200CD21CD /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		54BE932628CEEE6200CD21CD /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54BE932328CEEE6200CD21CD /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
