@@ -25,6 +25,8 @@ struct Restaurant: Codable {
     var rating: Double?
     var vicinity: String?
     var user_ratings_total: Int?
+    var geometry:Geometry?
+    var distance: Double = 0
     enum CodingKeys: String, CodingKey {
           case place_id
           case name
@@ -34,6 +36,8 @@ struct Restaurant: Codable {
           case rating
           case vicinity
           case user_ratings_total
+        
+            case geometry
        }
 
 
@@ -72,6 +76,9 @@ struct RestaurantDetail:Codable{
     var user_ratings_total:Int?
     var photos: [Photos]?
     var review = Reviews()
+    var options = [String]()
+    var geometry:Geometry?
+    var distance: Double = 0
     enum CodingKeys: String, CodingKey {
           case place_id
           case formatted_address
@@ -86,6 +93,7 @@ struct RestaurantDetail:Codable{
           case rating
           case user_ratings_total
           case photos
+          case geometry
        }
 
     
@@ -107,6 +115,15 @@ struct OpeningHoursDetail:Codable{
 
 struct Photos:Codable{
     var photo_reference: String?
+}
+
+struct Geometry:Codable{
+    var location:Location?
+}
+
+struct Location:Codable{
+    var lat:Double?
+    var lng:Double?
 }
 
 struct Review:Identifiable{

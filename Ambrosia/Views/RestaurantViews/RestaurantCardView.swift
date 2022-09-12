@@ -14,30 +14,37 @@ struct RestaurantCardView: View {
     var address:String
     var photo_id:String
     var total_ratings:Int
+    var distance:Double
     var body: some View {
-        
-        HStack(){
-            RestaurantAsyncImage(photo_id: photo_id).frame(width: 150, height: 150).cornerRadius(10)
-            VStack(alignment:.leading,spacing:10){
-                Text(name).foregroundColor(Color("TextColor")).bold().multilineTextAlignment(.leading).lineLimit(2).font(.system(size: 18))
-                HStack{
-                    Image(systemName:"star.fill").foregroundColor(Color("PrimaryColor"))
-                    Text("\(rating,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                    Text("(\(total_ratings))").font(.system(size: 14)).foregroundColor(Color("TextColor")).offset(x:-5)
-                    
-                }
-                HStack{
-                    Image(systemName:"clock.circle").foregroundColor(Color("PrimaryColor"))
-                    Text(status ? "Open" : "Closed").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                    
-                }
-                HStack{
-                    Image(systemName:"map.circle.fill").foregroundColor(Color("PrimaryColor"))
-                    Text(address).multilineTextAlignment(.leading).lineLimit(2).font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                }
-            }
-            Spacer()
+        VStack(spacing:10){
+            HStack(spacing:15){
+                RestaurantAsyncImage(photo_id: photo_id).frame(width: 100, height: 100).cornerRadius(10)
+                VStack(alignment:.leading,spacing:10){
+                    Spacer()
+                    HStack{
+                        Image(systemName: "checkmark.seal.fill").foregroundColor(Color("SecondaryColor"))
+                        Text(name).foregroundColor(Color("TextColor")).bold().multilineTextAlignment(.leading).lineLimit(2).font(.system(size: 18)).offset(x:-5)
+                    }
+                  
+                    HStack{
+                        Text(address).multilineTextAlignment(.leading).lineLimit(2).font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
+                    }
+                    Spacer()
+                    HStack(spacing:2){
+                        Image(systemName:"star.fill").foregroundColor(Color("PrimaryColor"))
+                        Text("\(rating,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                        Text("(\(total_ratings))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-1)
+                        Text("•").foregroundColor(Color("SubTextColor"))
+                            Text("\(distance,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
+                        
+                        
+                    }
+                    Spacer()
+                }.frame(height: 100)
+                Spacer()
 
+            }
+            Divider()
         }
         
         
@@ -47,7 +54,7 @@ struct RestaurantCardView: View {
 
 struct RestaurantCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantCardView(name: "Sir2fjdsnfkjsdnfjksadfnksdjfnsjkfsfjdkndsjkfnajkdfnajk13", rating: 4.2, status: true, address: "Sir street, Sir citsdfjnsdkfjnsafkjnsdfkjsdnfjkassdfnkjsadfnkajndfjksnfjkdsfy",photo_id: "AeJbb3d0ekH078McekC_3v4lVCjIoxH2QvIURkmLrEEdonPFjT_wFfx8GkOPax_FnNPN_VPM2BHtIjALJl2deLtNZdbqb1IBR66bgQClHCsAcR-Vp0DcYEaH8ZyWiiVly_P0rVqFl1uLc67FMR2hHlSq9-OXhyb5G5o1yqUujJNasT6w6IoK",total_ratings: 14)
+        RestaurantCardView(name: "Mì Sinh Đôi", rating: 4.2, status: true, address: "70 Nguyễn Văn linh, Ward 3, District Go Vap",photo_id: "AeJbb3d0ekH078McekC_3v4lVCjIoxH2QvIURkmLrEEdonPFjT_wFfx8GkOPax_FnNPN_VPM2BHtIjALJl2deLtNZdbqb1IBR66bgQClHCsAcR-Vp0DcYEaH8ZyWiiVly_P0rVqFl1uLc67FMR2hHlSq9-OXhyb5G5o1yqUujJNasT6w6IoK",total_ratings: 14,distance: 0.5)
         
     }
 }

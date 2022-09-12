@@ -19,7 +19,8 @@ struct RestaurantAsyncImage: View {
             AsyncImage(url: URL(string: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=\(photo_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg")) { image in
                 image.renderingMode(.original)
                 image.resizable()
-                image.scaledToFit()
+                image.aspectRatio(contentMode: .fit)
+                image.ignoresSafeArea()
             } placeholder: {
                 Image("testRestaurant")
             }
