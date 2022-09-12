@@ -14,6 +14,7 @@ import SwiftUI
 import Firebase
 struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var userModel: UserModel
     @State var email = ""
     @State var password = ""
     @State var phone = ""
@@ -26,19 +27,19 @@ struct LaunchContentView: View {
     @State private var showLoginAppleModal = false
     @State private var checkCode = false
     @State private var showEnterCodeField = false
-    
+
     @State private var loginMessage = ""
-    
-    @FocusState private var emailIsFocused : Bool
-    @FocusState private var passwordIsFocused : Bool
-    
+
+    @FocusState private var emailIsFocused: Bool
+    @FocusState private var passwordIsFocused: Bool
+
     var openSetting = false
     var body: some View {
         ZStack (alignment: .center) {
             Rectangle()
                 .foregroundColor(Constants.PRIMARY_COLOR)
-            
-            
+
+
             // MARK: LOGIN PAGE CONTENT
             ZStack {
                 ZStack {
@@ -49,11 +50,11 @@ struct LaunchContentView: View {
                                 .bold()
                                 .font(Font(UIFont(name: "Chalkboard SE Bold", size: Constants.APP_NAME_LARGE_SIZE)! as CTFont))
                                 .foregroundColor(Constants.PRIMARY_COLOR)
-                            
+
                             // MARK: CAT GIF
-                            GifView(name: "cat-eat")                            .frame(width: 130, height: 110)
+                            GifView(name: "cat-eat") .frame(width: 130, height: 110)
                         }
-                        
+
                         VStack (spacing: 10) {
                             Group {
                                 TextField("Email", text: $email)
@@ -61,16 +62,16 @@ struct LaunchContentView: View {
                                 SecureField("Password", text: $password)
                                     .modifier(TextFieldModifier())
                             }
-                            .multilineTextAlignment(.leading)
+                                .multilineTextAlignment(.leading)
 
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
                             if (showLoginMessage) {
-                            Text(loginMessage)
-                                .foregroundColor(model.loginSuccess ? .green : .red)
+                                Text(loginMessage)
+                                    .foregroundColor(userModel.loginSuccess ? .green : .red)
                             }
                         }
-                        
+
                         VStack (spacing: 10) {
                             // MARK: LOGIN BUTTON
                             Button {
@@ -80,8 +81,8 @@ struct LaunchContentView: View {
                                 Text("Sign In")
                                     .bold()
                             }
-                            .buttonStyle(ButtonStylePrimary())
-                            
+                                .buttonStyle(ButtonStylePrimary())
+
                             // MARK: REGISTER BUTTON
                             // Button to show the sign up sheet
                             Button {
@@ -89,10 +90,10 @@ struct LaunchContentView: View {
                             } label: {
                                 Text("Sign Up Here!")
                             }
-                            
+
                             Text("or")
                                 .foregroundColor(.gray)
-                            
+
                             // MARK: ALTERNATIVE LOGIN
                             Group {
                                 // Button to login using phone
@@ -105,7 +106,7 @@ struct LaunchContentView: View {
                                             .bold()
                                     }
                                 }
-                                
+
                                 // Button to login using Apple
                                 Button {
                                     showLoginAppleModal = true
@@ -117,23 +118,23 @@ struct LaunchContentView: View {
                                     }
                                 }
                             }
-                            .buttonStyle(ButtonStyleLightPrimary())
+                                .buttonStyle(ButtonStyleLightPrimary())
                         }
-                    
+
 
                     }
-                    .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
-                    .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Constants.PRIMARY_COLOR)
-                   
+                        .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
+                        .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Constants.PRIMARY_COLOR)
+
                 }
-                .background(.white)
-                .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
-                .foregroundColor(.white)
-                .cornerRadius(Constants.CONRNER_RADIUS)
-                .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
-                
+                    .background(.white)
+                    .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
+                    .foregroundColor(.white)
+                    .cornerRadius(Constants.CONRNER_RADIUS)
+                    .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
+
 
 //                // MARK: open setting button
 //                Button {
@@ -172,9 +173,9 @@ struct LaunchContentView: View {
 
 
             }
-            .foregroundColor(.white)
-            .multilineTextAlignment(.center)
-            
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+
             // MARK: MODAL PHONE LOGIN
             if (showLoginPhoneModal) {
                 ZStack {
@@ -183,12 +184,12 @@ struct LaunchContentView: View {
                     VStack {
                         TextField("Enter phone number", text: $email)
                             .modifier(TextFieldModifier())
-                        
+
                         if (checkCode) {
                             TextField("Enter code", text: $code)
                                 .modifier(TextFieldModifier())
                         }
-                        
+
                         Button {
                             if (!checkCode) {
                                 checkCode = true
@@ -200,45 +201,45 @@ struct LaunchContentView: View {
                             Text(!checkCode ? "Send code via SMS" : "Verify")
                                 .bold()
                         }
-                        .buttonStyle(ButtonStyleWhite())
+                            .buttonStyle(ButtonStyleWhite())
 
-                        
+
                     }
-                    .padding(15)
-                    .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
-                    .background(Constants.PRIMARY_COLOR)
-                    .foregroundColor(.white)
-                    .cornerRadius(Constants.CONRNER_RADIUS)
-                    .overlay(
-                      Button(action: {
-                          showLoginPhoneModal = false
-                          checkCode = false
-                      }) {
-                        Image(systemName: "xmark.circle")
-                          .font(.title)
-                      }
+                        .padding(15)
+                        .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
+                        .background(Constants.PRIMARY_COLOR)
                         .foregroundColor(.white)
-                        .padding(.top, 20)
-                        .padding(.trailing, 20),
+                        .cornerRadius(Constants.CONRNER_RADIUS)
+                        .overlay(
+                        Button(action: {
+                            showLoginPhoneModal = false
+                            checkCode = false
+                        }) {
+                            Image(systemName: "xmark.circle")
+                                .font(.title)
+                        }
+                            .foregroundColor(.white)
+                            .padding(.top, 20)
+                            .padding(.trailing, 20),
                         alignment: .topTrailing
-                        )
+                    )
                 }
             }
-            
+
             // MARK: MODAL APPLE LOGIN
             if (showLoginAppleModal) {
                 ZStack {
                     Color("Shadow")
                         .edgesIgnoringSafeArea(.all)
-                    
+
                     VStack (spacing: 10) {
                         TextField("Enter Apple ID", text: $appleID)
                             .modifier(TextFieldModifier())
-                        
+
                         TextField("Enter password", text: $appleIDPassword)
                             .modifier(TextFieldModifier())
-                        
-                        
+
+
                         Button {
                             showLoginAppleModal = true
                             appleIDPassword = ""
@@ -246,25 +247,25 @@ struct LaunchContentView: View {
                             Text("Sign in")
                                 .bold()
                         }
-                        .buttonStyle(ButtonStyleWhite())
+                            .buttonStyle(ButtonStyleWhite())
                     }
-                    .padding()
-                    .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
-                    .background(Constants.PRIMARY_COLOR)
-                    .foregroundColor(.white)
-                    .cornerRadius(Constants.CONRNER_RADIUS)
-                    .overlay(
-                      Button(action: {
-                          showLoginAppleModal = false
-                      }) {
-                        Image(systemName: "xmark.circle")
-                          .font(.title)
-                      }
+                        .padding()
+                        .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
+                        .background(Constants.PRIMARY_COLOR)
                         .foregroundColor(.white)
-                        .padding(.top, 20)
-                        .padding(.trailing, 20),
+                        .cornerRadius(Constants.CONRNER_RADIUS)
+                        .overlay(
+                        Button(action: {
+                            showLoginAppleModal = false
+                        }) {
+                            Image(systemName: "xmark.circle")
+                                .font(.title)
+                        }
+                            .foregroundColor(.white)
+                            .padding(.top, 20)
+                            .padding(.trailing, 20),
                         alignment: .topTrailing
-                        )
+                    )
                 }
             }
         }.sheet(isPresented: $showingSignUpSheet) {
@@ -273,13 +274,13 @@ struct LaunchContentView: View {
             .ignoresSafeArea(.all, edges: .all)
 
     }
-    
+
     // MARK: LOGIN LOGIC
     // Login function to use Firebase to check username and password to sign in
     func login() {
         if (email == "" || password == "") {
             loginMessage = "Please enter email and password"
-            model.loginSuccess = false
+            userModel.loginSuccess = false
         }
         else {
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
@@ -292,32 +293,34 @@ struct LaunchContentView: View {
                     else {
                         loginMessage = "Invalid sign-in credentials"
                     }
-                    model.loginSuccess = false
+                    userModel.loginSuccess = false
                 } else {
                     print("success")
                     loginMessage = "Log in successfully"
-                    model.loginSuccess = true
+                    userModel.isNewUser = false
+                    userModel.loginSuccess = true
                     model.requestGeolocationPermission()
+
                 }
             }
         }
     }
-    
+
     func loginPhone() {
         PhoneAuthProvider.provider()
-          .verifyPhoneNumber(phone, uiDelegate: nil) { verificationID, error in
-              if let error = error {
-                  print(error.localizedDescription)
+            .verifyPhoneNumber(phone, uiDelegate: nil) { verificationID, error in
+            if let error = error {
+                print(error.localizedDescription)
 //                self.showMessagePrompt(error.localizedDescription)
                 return
-              }
-              // Sign in using the verificationID and the code sent to the user
-              // ...
-          }
+            }
+            // Sign in using the verificationID and the code sent to the user
+            // ...
+        }
     }
-    
+
     func loginApple() {
-        
+
     }
 
 }
