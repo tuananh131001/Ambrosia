@@ -14,7 +14,7 @@ class FirebaseService: ObservableObject {
     @Published var signUpMessage = ""
     @Published var signUpSuccess = false
     // Sign up function to use Firebase to create a new user account in Firebase
-    func signUp(email: String, password: String, passwordConfirmation: String,user:UserModel)  {
+    func signUp(email: String, password: String, passwordConfirmation: String,user:AuthenticationModel)  {
         if (email == "" || password == "" || passwordConfirmation == "") {
             self.signUpMessage = "Please fill in all the fields"
         }
