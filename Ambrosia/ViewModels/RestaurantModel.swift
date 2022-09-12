@@ -26,6 +26,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var type:String?
     @Published var restaurantSelected:Int?
     @Published var loginSuccess = false
+    @Published var currentRestaurantDetail:RestaurantDetail?
     
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -138,6 +139,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                                 self.updateOptions()
                                 self.updateRestaurantDetailDistance()
                                 self.getType()
+                                self.currentRestaurantDetail = restaurantDetail
                             }
                             else {
                                 print("notthing")
@@ -235,7 +237,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         let id = UUID()
         let date = Date.now
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
-        currentRestaurant?.review.append(newReview)
+        self.restaurantDetail?.reviews.append(newReview)
+        self.currentRestaurantDetail?.reviews.append(newReview)
     }
     
     func getType(){

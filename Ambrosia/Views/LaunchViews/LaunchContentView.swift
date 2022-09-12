@@ -15,7 +15,7 @@ import Firebase
 
 
 struct LaunchContentView: View {
-    @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var restaurantModel: RestaurantModel
     @EnvironmentObject var userModel: AuthenticationModel
     @EnvironmentObject var authModel: AuthenticationModel
     
@@ -190,7 +190,7 @@ struct LaunchContentView: View {
                     loginMessage = "Log in successfully"
                     authModel.loginSuccess = true
                     authModel.state = .signedIn
-                    model.requestGeolocationPermission()
+                    restaurantModel.requestGeolocationPermission()
 
                 }
             }

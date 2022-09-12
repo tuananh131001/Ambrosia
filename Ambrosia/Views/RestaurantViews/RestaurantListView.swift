@@ -34,7 +34,7 @@ struct RestaurantListView: View {
             return restaurantModel.restaurants
         } else {
             // search items that contain either title or address (Case insensitive) from user input
-            return restaurantModel.restaurants.filter { $0.name.localizedCaseInsensitiveContains(searchText)
+            return searchResults.filter { $0.name.localizedCaseInsensitiveContains(searchText)
                 
             }
         }
@@ -45,7 +45,7 @@ struct RestaurantListView: View {
                 // scroll view to show all the restaurants
                 ScrollView(showsIndicators: false){
                     LazyVStack(spacing:35) {
-                        ForEach(0..<searchResults.count){
+                        ForEach(0..<searchResults.count,id:\.self){
                             index in
                             // link to the restaurant detail
                             NavigationLink(tag: index, selection: $restaurantModel.restaurantSelected) {
@@ -73,8 +73,9 @@ struct RestaurantListView: View {
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())
-        .onAppear {
-//            restaurantModel.calculateDistanceRest()
+        .onChange(of: restaurantModel.restaurantDetail?.reviews.count) { newValue in
+            print(restaurantModel.restaurantDetail?.reviews)
+            print(restaurantModel.currentRestaurantDetail?.reviews)
         }
     }
     

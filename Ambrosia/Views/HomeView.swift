@@ -23,7 +23,7 @@ struct HomeViewContent: View {
     @Binding var searchQuery: String
     @Binding var tabSelection: Int
     
-    @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var restaurantModel: RestaurantModel
     var body: some View {
         TabView(selection: $tabSelection) {
             //  Main feature character view
@@ -62,7 +62,7 @@ struct HomeView: View {
     @State var searchQuery = ""
     @State private var tabSelection = 1
     
-    @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var restaurantModel: RestaurantModel
     
     init() {
         // Customize the tab bar for the whole app
@@ -72,20 +72,20 @@ struct HomeView: View {
     }
     
     var body: some View {
-        if model.authorizationState == .notDetermined {
+        if restaurantModel.authorizationState == .notDetermined {
             HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
                 .onAppear() {
-                    model.requestGeolocationPermission()
+                    restaurantModel.requestGeolocationPermission()
                 }
         }
         // user allow access to location
-        else if model.authorizationState == .authorizedAlways || model.authorizationState == .authorizedWhenInUse {
+        else if restaurantModel.authorizationState == .authorizedAlways || restaurantModel.authorizationState == .authorizedWhenInUse {
             
             HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
                 .onAppear() {
-                    model.chooseDefaultLocation()
-                    model.calculateDistanceRest()
-                    print(model.restaurants)
+                    restaurantModel.chooseDefaultLocation()
+                    restaurantModel.calculateDistanceRest()
+                    print(restaurantModel.restaurants)
                 }
             
         }

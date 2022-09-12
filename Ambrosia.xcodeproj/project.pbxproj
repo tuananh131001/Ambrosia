@@ -65,6 +65,9 @@
 		3DCB4F6528CB8497000EEBDA /* RestaurantCardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB4F6428CB8497000EEBDA /* RestaurantCardInfo.swift */; };
 		3DDCD18428CC936700B97159 /* RestaurantAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDCD18328CC936700B97159 /* RestaurantAsyncImage.swift */; };
 		3DF8693028CB049F00AB4363 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */; };
+		4404508728CF8E5400ACE954 /* pikachu.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4404508628CF8E5400ACE954 /* pikachu.gif */; };
+		4404508A28CF930900ACE954 /* nothing.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4404508828CF930900ACE954 /* nothing.gif */; };
+		4404508B28CF930900ACE954 /* waiting.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4404508928CF930900ACE954 /* waiting.gif */; };
 		442A4E7C28CDF72E00AD37E4 /* RestaurantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442A4E7B28CDF72E00AD37E4 /* RestaurantListView.swift */; };
 		442A4E8028CEF3DD00AD37E4 /* CalculateDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442A4E7F28CEF3DD00AD37E4 /* CalculateDistance.swift */; };
 		442A4E8428CF1D6E00AD37E4 /* Breadcrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442A4E8328CF1D6E00AD37E4 /* Breadcrumbs.swift */; };
@@ -127,6 +130,9 @@
 		3DCB4F6428CB8497000EEBDA /* RestaurantCardInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardInfo.swift; sourceTree = "<group>"; };
 		3DDCD18328CC936700B97159 /* RestaurantAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantAsyncImage.swift; sourceTree = "<group>"; };
 		3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4404508628CF8E5400ACE954 /* pikachu.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = pikachu.gif; path = ../../../../../Downloads/pikachu.gif; sourceTree = "<group>"; };
+		4404508828CF930900ACE954 /* nothing.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = nothing.gif; path = ../../../../../Downloads/nothing.gif; sourceTree = "<group>"; };
+		4404508928CF930900ACE954 /* waiting.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = waiting.gif; path = ../../../../../Downloads/waiting.gif; sourceTree = "<group>"; };
 		442A4E7B28CDF72E00AD37E4 /* RestaurantListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListView.swift; sourceTree = "<group>"; };
 		442A4E7F28CEF3DD00AD37E4 /* CalculateDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateDistance.swift; sourceTree = "<group>"; };
 		442A4E8328CF1D6E00AD37E4 /* Breadcrumbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breadcrumbs.swift; sourceTree = "<group>"; };
@@ -233,6 +239,9 @@
 		3D4705D8288DA1F600502DD1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4404508828CF930900ACE954 /* nothing.gif */,
+				4404508928CF930900ACE954 /* waiting.gif */,
+				4404508628CF8E5400ACE954 /* pikachu.gif */,
 				3D85B3E9289144FA001BF2AF /* restaurants.json */,
 				3D27582428A00FBC00C7DD6C /* cat-eat.gif */,
 			);
@@ -516,9 +525,12 @@
 			files = (
 				3DC2FC9E2886E18F003750D3 /* Preview Assets.xcassets in Resources */,
 				3D85B3EA289144FA001BF2AF /* restaurants.json in Resources */,
+				4404508B28CF930900ACE954 /* waiting.gif in Resources */,
 				3D27582528A00FBC00C7DD6C /* cat-eat.gif in Resources */,
 				3D275823289FCDBD00C7DD6C /* DontUse in Resources */,
 				3DC2FC9B2886E18F003750D3 /* Assets.xcassets in Resources */,
+				4404508728CF8E5400ACE954 /* pikachu.gif in Resources */,
+				4404508A28CF930900ACE954 /* nothing.gif in Resources */,
 				3DF8693028CB049F00AB4363 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

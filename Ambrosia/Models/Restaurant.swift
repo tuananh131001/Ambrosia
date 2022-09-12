@@ -75,7 +75,7 @@ struct RestaurantDetail:Codable{
     var rating:Double?
     var user_ratings_total:Int?
     var photos: [Photos]?
-    var review = Reviews()
+    var reviews = [Review]()
     var options = [String]()
     var geometry:Geometry?
     var distance: Double = 0
@@ -95,7 +95,9 @@ struct RestaurantDetail:Codable{
           case photos
           case geometry
        }
-
+    static func testRestaurantDetail() -> RestaurantDetail{
+        return RestaurantDetail(place_id: "1234", formatted_address: "23213", formatted_phone_number: "4324", name: "$3241", delivery: true, dine_in: true, opening_hours: OpeningHoursDetail(open_now: true, weekday_text: []), takeout: true, serves_wine: true, price_level: 2, rating: 4.2, user_ratings_total: 7, photos: [], reviews: [], options: [], geometry: Geometry(location: Location(lat: 32.12, lng: 110.21)), distance: 2.0)
+    }
     
 }
 
@@ -162,3 +164,9 @@ typealias Reviews = [Review]
 //struct RestaurantDetail: Codable {
 //    var result:Restaurant
 //}
+
+
+struct Point: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+}
