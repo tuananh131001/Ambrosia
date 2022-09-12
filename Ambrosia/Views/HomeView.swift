@@ -21,6 +21,7 @@ struct HomeView: View {
     @State private var tabSelection = 1
     
     @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var viewModel: AuthenticationModel
     
     init() {
         // Customize the tab bar for the whole app
@@ -29,7 +30,7 @@ struct HomeView: View {
         UITabBar.appearance().barTintColor = UIColor(Color("PrimaryColor"))
     }
     
-    @EnvironmentObject var viewModel: AuthenticationModel
+    
 
     var body: some View {
         TabView(selection:$tabSelection){

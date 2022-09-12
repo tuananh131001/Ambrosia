@@ -126,6 +126,7 @@ struct SignUpView: View {
                 } else {
                     signUpMessage = "Sign up successfully"
                     signUpSuccess = true
+                    dismiss()
                 }
             }
         }

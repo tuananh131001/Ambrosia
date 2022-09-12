@@ -42,11 +42,17 @@ struct LoginPhoneModal: View {
                             .bold()
                     }
                     .buttonStyle(ButtonStyleWhite())
+                    
+                    if (message != "") {
+                        Text(message)
+                    }
+                    
                 }
                 
                 if (checkCode) {
                     SecureField("Enter code", text: $code)
                         .modifier(TextFieldModifier())
+                    
                     
                     Button {
                         if (code != "") {
@@ -61,6 +67,10 @@ struct LoginPhoneModal: View {
                             .bold()
                     }
                     .buttonStyle(ButtonStyleWhite())
+                    
+                    if (message != "") {
+                        Text(message)
+                    }
                 }
 
                 
