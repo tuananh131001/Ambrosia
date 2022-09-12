@@ -15,6 +15,48 @@
 
 import SwiftUI
 
+import CoreLocation
+import MapKit
+
+struct HomeViewContent: View {
+    @Binding var isShowingMap: Bool
+    @Binding var searchQuery: String
+    @Binding var tabSelection: Int
+    
+    @EnvironmentObject var model: RestaurantModel
+    var body: some View {
+        TabView(selection:$tabSelection){
+            //  Main feature character view
+            RestaurantListView().tabItem {
+                VStack{
+                    Image(systemName: "house.circle")
+                        .resizable()
+                    Text("Home")
+                }
+            }.tag(1)
+            //  Comics display by list
+            FavouriteRestaurantView().tabItem {
+                VStack{
+                    Image(systemName: "heart.circle").foregroundColor(.red)
+                    Text("Favourite")
+               
+                    
+                }
+            }.tag(2)
+            // BookStore display by list
+            SettingView().tabItem {
+                VStack{
+                    Image(systemName:"gear.circle")
+                    Text("Profile")
+                }
+            }.tag(3)
+        }
+        .accentColor(Color("PrimaryColor"))
+        .onAppear() {
+            print("Swift HomeView test cho sir")
+        }
+    }
+}
 struct HomeView: View {
     @State var isShowingMap = false
     @State var searchQuery = ""
@@ -30,55 +72,39 @@ struct HomeView: View {
     }
     
     var body: some View {
-        
-        TabView(selection:$tabSelection){
-            //  Main feature character view
-            RestaurantListView().tabItem {
-                VStack{
-                    Image(systemName: "house.circle")
-                        .resizable()
-                    Text("Home")
+        if model.authorizationState == .notDetermined {
+            HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
+                .onAppear() {
+                    model.requestGeolocationPermission()
                 }
-            }.tag(1)
-            //  Comics display by list
-            FavouriteRestaurantView().tabItem {
-                VStack{
-                    Image(systemName: "heart.circle").foregroundColor(.red)
-                    Text("Favourite")
-                    
-                }
-            }.tag(2)
-            // BookStore display by list
-            SettingView().tabItem {
-                VStack{
-                    Image(systemName:"gear.circle")
-                    Text("Profile")
-                }
-            }.tag(3)
         }
-        .accentColor(Color("PrimaryColor"))
-        .onAppear() {
-            if model.authorizationState == .notDetermined {
-                model.requestGeolocationPermission()
-            }
-            // user allow access to location
-            else if model.authorizationState == .authorizedAlways || model.authorizationState == .authorizedWhenInUse {
-                
-                model.calculateDistanceRest()
-                
-            }
-            // user not allow -> open settings
-            else {
-//                // Open settings by getting the settings url
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    if UIApplication.shared.canOpenURL(url) {
-                        // If we can open this settings url, then open it
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        // user allow access to location
+        else if model.authorizationState == .authorizedAlways || model.authorizationState == .authorizedWhenInUse {
+            
+            HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
+                .onAppear() {
+                    model.chooseDefaultLocation()
+                    model.calculateDistanceRest()
+                    print(model.restaurants)
+                }
+            
+        }
+        // user not allow -> open settings
+        else {
+            
+            HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
+                .onAppear() {
+                    // Open settings by getting the settings url
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            // If we can open this settings url, then open it
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
                     }
+                    print("Settings")
                 }
-                print("Settings")
-            }
         }
+        
     }
     
     struct HomeView_Previews: PreviewProvider {

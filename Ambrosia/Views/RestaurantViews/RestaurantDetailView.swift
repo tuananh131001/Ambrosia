@@ -49,14 +49,19 @@ struct RestaurantDetailView: View {
                 }
                 VStack(alignment:.leading){
                     HStack{
+                       
                         Image(systemName:"star.fill").foregroundColor(Color("PrimaryColor"))
                         Text("\(restaurantModel.restaurantDetail?.rating ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                         Text("(\(restaurantModel.restaurantDetail?.user_ratings_total ?? 0 ))").font(.system(size: 14)).foregroundColor(Color("TextColor")).offset(x:-5)
                         Spacer()
-                        NavigationView(){
-                            
+//                        NavigationView(){
+//                            
+//                        }
+                        NavigationLink(destination: {
+                            Text("Hello")
+                        }) {
+                            Text("Read Reviews").foregroundColor(Color("SecondaryColor"))
                         }
-                        Text("Read Reviews").foregroundColor(Color("SecondaryColor"))
                         
                     }
                     Divider()
@@ -69,20 +74,28 @@ struct RestaurantDetailView: View {
                     Divider()
 
                     HStack{
-                        
+                        Image(systemName:"phone.circle.fill").foregroundColor(Color("PrimaryColor"))
+                        Text("Phone number: \(restaurantModel.restaurantDetail?.formatted_phone_number ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                        Spacer()
+                        Text("Call").foregroundColor(Color("SecondaryColor"))
                     }
+                    Breadcrumbs()
+
 
                 }.offset(y:100).padding()
                 
                 ZStack {
                     Rectangle().foregroundColor(.white).frame(width: geo.size.width-30, height: geo.size.height/3.5).cornerRadius(15).shadow(color: .black.opacity(0.5), radius: 5)
                     VStack(spacing:15){
-                        Text(restaurantModel.restaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 35)).multilineTextAlignment(.center)
-                        Text(restaurantModel.restaurantDetail?.formatted_address ?? "Sir street, Sir city, Sir ngu")
-                        Text(restaurantModel.restaurantDetail?.formatted_phone_number ?? "")
-                        Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "Open" : "Closed").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
-
-                    }.frame(width: geo.size.width-30)
+                        Text(restaurantModel.restaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 35)).multilineTextAlignment(.center).frame(width:geo.size.width-70)
+                        HStack{
+                            Text("•").foregroundColor(Color("SubTextColor"))
+//                            Text("\(restaurantModel.restaurantDetail,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
+                            Text(restaurantModel.restaurantDetail?.formatted_address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor"))
+                        }
+                    
+                        Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "Status: Open" : "Status: Closed").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
+                    }.frame(width: geo.size.width-30).padding()
                 }.offset(y:-400)
                
             }
