@@ -19,21 +19,21 @@ struct HomeView: View {
     @State var isShowingMap = false
     @State var searchQuery = ""
     @State private var tabSelection = 1
-    
+
     @EnvironmentObject var model: RestaurantModel
-    
+
     init() {
         // Customize the tab bar for the whole app
         UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
         UITabBar.appearance().unselectedItemTintColor = UIColor(Color("PlaceholderText"))
         UITabBar.appearance().barTintColor = UIColor(Color("PrimaryColor"))
     }
-    
+
     var body: some View {
-        TabView(selection:$tabSelection){
+        TabView(selection: $tabSelection) {
             //  Main feature character view
             RestaurantListView().tabItem {
-                VStack{
+                VStack {
                     Image(systemName: "house.circle")
                         .resizable()
                     Text("Home")
@@ -41,22 +41,22 @@ struct HomeView: View {
             }.tag(1)
             //  Comics display by list
             FavouriteRestaurantView().tabItem {
-                VStack{
+                VStack {
                     Image(systemName: "heart.circle").foregroundColor(.red)
                     Text("Favourite")
-                    
+
                 }
             }.tag(2)
             // BookStore display by list
             SettingView().tabItem {
-                VStack{
-                    Image(systemName:"gear.circle")
+                VStack {
+                    Image(systemName: "gear.circle")
                     Text("Profile")
                 }
             }.tag(3)
         }.accentColor(Color("PrimaryColor"))
     }
-    
+
     struct HomeView_Previews: PreviewProvider {
         static var previews: some View {
             HomeView()
