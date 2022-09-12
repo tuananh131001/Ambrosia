@@ -30,6 +30,7 @@ struct HomeView: View {
     }
     
     var body: some View {
+        
         TabView(selection:$tabSelection){
             //  Main feature character view
             RestaurantListView().tabItem {
@@ -54,7 +55,30 @@ struct HomeView: View {
                     Text("Profile")
                 }
             }.tag(3)
-        }.accentColor(Color("PrimaryColor"))
+        }
+        .accentColor(Color("PrimaryColor"))
+        .onAppear() {
+            if model.authorizationState == .notDetermined {
+                model.requestGeolocationPermission()
+            }
+            // user allow access to location
+            else if model.authorizationState == .authorizedAlways || model.authorizationState == .authorizedWhenInUse {
+                
+                model.calculateDistanceRest()
+                
+            }
+            // user not allow -> open settings
+            else {
+//                // Open settings by getting the settings url
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    if UIApplication.shared.canOpenURL(url) {
+                        // If we can open this settings url, then open it
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
+                }
+                print("Settings")
+            }
+        }
     }
     
     struct HomeView_Previews: PreviewProvider {

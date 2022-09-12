@@ -25,12 +25,14 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var error: RestaurantError?
 
     @Published var loginSuccess = false
+    
     // MARK: Location
     var locationManager = CLLocationManager()
     @Published var authorizationState = CLAuthorizationStatus.notDetermined
     // Current user region and coordinate
     @Published var userLocation = MKCoordinateRegion()
     @Published var currentUserCoordinate: CLLocationCoordinate2D?
+    
     // MARK: Current restaurant
     @Published var currentRestaurant: Restaurant?
     var currentRestaurantIndex = 0
@@ -48,6 +50,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         // Set content model as the delegate of the location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
         // set current random restaurant
@@ -72,41 +76,27 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     // MARK: Location manager
-    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    //        // stop auto zooming in apple map
-    //        manager.stopUpdatingLocation()
-    //        // store userLocation
-    //        locations.last.map {
-    //            currentUserCoordinate = CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)
-    //            userLocation = UltilityModel.createCoordinateRegion(currentUserCoordinate!)
-    //
-    //            // display recent restaurants inside the regions
-    ////            currentRegion = userLocation
-    //        }
-    //
-    //    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // stop auto zooming in apple map
+        manager.stopUpdatingLocation()
+        // store userLocation
+        locations.last.map {
+            currentUserCoordinate = CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)
+            userLocation = CalculateDistance.createCoordinateRegion(currentUserCoordinate!)
+
+        }
+        if currentUserCoordinate?.latitude == nil && ((currentUserCoordinate?.longitude) != nil) {
+            currentUserCoordinate = CLLocationCoordinate2D(latitude: Constants.DEFAULT_LOCATION_LAT, longitude: Constants.DEFAULT_LOCATION_LNG)
+            userLocation = CalculateDistance.createCoordinateRegion(currentUserCoordinate!)
+        }
+
+    }
     // MARK: Ask user location permission
     func requestGeolocationPermission() {
         // remember to open Info -> Target -> Info -> Below Bundle Version String -> Click add -> Type "Privacy - Location When In Use Usage Description" with value "Please allow us to access your location"
         // Request permission from the user
         locationManager.requestWhenInUseAuthorization()
     }
-
-    // open apple map to show routes to the user
-    //    func openAppleMap(endCoordinate: CLLocationCoordinate2D) {
-    //        // create url to open apple map having route from current location to place
-    //        let routeURL = "http://maps.apple.com/?saddr=\(UltilityModel.convertCoordinateString(currentUserCoordinate ?? CLLocationCoordinate2D()))&daddr=\(UltilityModel.convertCoordinateString(endCoordinate))"
-    //        // binding
-    //        guard let url = URL(string: routeURL) else {
-    //            return
-    //        }
-    //        // open apple map based on the ios version
-    //        if #available(iOS 10.0, *) {
-    //            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    //        } else {
-    //            UIApplication.shared.openURL(url)
-    //        }
-    //    }
 
 
     // MARK: Restaurant Navigation Method
@@ -144,7 +134,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data2 = data,
                             let restaurantArr2 = try? decoder2.decode(ResponseDetail.self, from: data2) {
-                            print(restaurantArr2)
                             self.restaurantDetail = restaurantArr2.result
                         }
                         else {
@@ -175,6 +164,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         if let data = data,
                             let restaurantArr = try? decoder.decode(Restaurants.self, from: data) {
                             self?.restaurants = restaurantArr.results
+    
+
                         }
                     }
                 }
@@ -182,6 +173,14 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             }.resume()
         }
     }
+    
+    func calculateDistanceRest()  {
+        print(currentUserCoordinate?.latitude, currentUserCoordinate?.longitude)
+        for var restaurant in restaurants {
+            restaurant.distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurant.geometry?.location?.lat ?? 0, lon2: restaurant.geometry?.location?.lng ?? 0)
+        }
+    }
+    
     // Function to get current restaurant
     func getCurrentRestaurant(id: String) {
         for index in 0..<restaurants.count {

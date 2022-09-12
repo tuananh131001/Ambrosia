@@ -48,9 +48,13 @@ struct RestaurantListView: View {
                         }
                     }
                     // add the search bar and set the mode to always display the search bar
-                }.navigationTitle("Restaurants").accentColor(.black).searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name")
+                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name")
+                    .navigationTitle("Restaurants").accentColor(Color("PrimaryColor"))
             }
-        }.padding()
+        }
+        .onAppear {
+//            restaurantModel.calculateDistanceRest()
+        }
     }
     
     
