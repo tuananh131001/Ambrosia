@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Firebase
+import FirebaseFirestore
+
 
 struct SignUpView: View {
     @Environment(\.dismiss) var dismiss
@@ -15,10 +17,8 @@ struct SignUpView: View {
     @State var password = ""
     @State var passwordConfirmation = ""
     
-    @State private var showSignUpMessage = false
-    @State private var signUpMessage = ""
-    @State var signUpSuccess = false
-    
+    @StateObject private var services = FirebaseService.services
+
     @FocusState private var emailIsFocused : Bool
     @FocusState private var passwordIsFocused : Bool
     @FocusState private var confirmPasswordIsFocused : Bool
@@ -61,9 +61,9 @@ struct SignUpView: View {
                     .multilineTextAlignment(.leading)
                     
                     // Sign up message after pressing the sign up button
-                    if (showSignUpMessage) {
-                        Text(signUpMessage)
-                            .foregroundColor(signUpSuccess ? .green : .red)
+                    if (services.showSignUpMessage) {
+                        Text(services.signUpMessage)
+                            .foregroundColor(services.signUpSuccess ? .green : .red)
                     }
                 }
                 
@@ -71,8 +71,8 @@ struct SignUpView: View {
                     
                     // Sign up button
                     Button(action: {
-                        signUp()
-                        showSignUpMessage = true
+                        FirebaseService.services.signUp(email: email, password: password, passwordConfirmation: passwordConfirmation)
+                        services.showSignUpMessage = true
                     }) {
                         Text("Sign Up")
                             .bold()
@@ -101,35 +101,6 @@ struct SignUpView: View {
         
     }
 
-    // Sign up function to use Firebase to create a new user account in Firebase
-    func signUp() {
-        signUpSuccess = false
-        if (email == "" || password == "" || passwordConfirmation == "") {
-            signUpMessage = "Please fill in all the fields"
-        }
-        else if (passwordConfirmation != password) {
-            signUpMessage = "Confirm password doesn't match"
-        }
-        else {
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if error != nil {
-                    let msg = error?.localizedDescription ?? ""
-                    if (msg.contains("email address is badly formatted")) {
-                        signUpMessage = "Invalid email address"
-                    }
-                    else if (msg.contains("email address is already in use")) {
-                        signUpMessage = "This email address is already in use"
-                    }
-                    else {
-                        signUpMessage = "Sign up unsuccessfully"
-                    }
-                } else {
-                    signUpMessage = "Sign up successfully"
-                    signUpSuccess = true
-                }
-            }
-        }
-    }
 }
 
 struct SignUpView_Previews: PreviewProvider {
