@@ -114,11 +114,16 @@ struct LaunchContentView: View {
                             }
                             .buttonStyle(ButtonStyleLightPrimary())
                             
-                            GoogleSignInBtn()
-                                .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH, minHeight: Constants.FIELD_HEIGHT)
-                                .onTapGesture {
-                                      authModel.GoogleSignIn()
+                            Button {
+                                authModel.GoogleSignIn()
+                            } label: {
+                                HStack {
+                                    Image("google-icon")
+                                    Text("Sign in with Google")
+                                        .bold()
                                 }
+                            }
+                            .buttonStyle(ButtonStyleLightPrimary())
                                 
                         }
                     }
