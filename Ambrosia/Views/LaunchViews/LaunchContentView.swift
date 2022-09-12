@@ -16,6 +16,7 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var userModel: AuthenticationModel
     @EnvironmentObject var authModel: AuthenticationModel
     
     @State var email = ""
@@ -36,8 +37,8 @@ struct LaunchContentView: View {
         ZStack (alignment: .center) {
             Rectangle()
                 .foregroundColor(Constants.PRIMARY_COLOR)
-            
-            
+
+
             // MARK: LOGIN PAGE CONTENT
             ZStack (alignment: .center) {
                 ZStack (alignment: .center) {
@@ -48,12 +49,12 @@ struct LaunchContentView: View {
                                 .bold()
                                 .font(Font(UIFont(name: "Chalkboard SE Bold", size: Constants.APP_NAME_LARGE_SIZE)! as CTFont))
                                 .foregroundColor(Constants.PRIMARY_COLOR)
-                            
+
                             // MARK: CAT GIF
                             GifView(name: "cat-eat")
                                 .frame(width: 130, height: 110)
                         }
-                        
+
                         VStack (spacing: 10) {
                             Group {
                                 TextField("Email", text: $email)
@@ -61,7 +62,7 @@ struct LaunchContentView: View {
                                 SecureField("Password", text: $password)
                                     .modifier(TextFieldModifier())
                             }
-                            .multilineTextAlignment(.leading)
+                                .multilineTextAlignment(.leading)
 
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
@@ -70,7 +71,7 @@ struct LaunchContentView: View {
                                     .foregroundColor(authModel.loginSuccess ? .green : .red)
                             }
                         }
-                        
+
                         VStack (spacing: 10) {
                             
                             // MARK: BTN FORGET
@@ -130,11 +131,11 @@ struct LaunchContentView: View {
                             
                         }
                     }
-                    .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
-                    .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Constants.PRIMARY_COLOR)
-                   
+                        .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
+                        .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Constants.PRIMARY_COLOR)
+
                 }
                 .background(.white)
                 .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
@@ -143,9 +144,9 @@ struct LaunchContentView: View {
                 .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
                 
             }
-            .foregroundColor(.white)
-            .multilineTextAlignment(.center)
-            
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+
             // MARK: MODAL PHONE LOGIN
             if (showLoginPhoneModal) {
                 LoginPhoneModal(showLoginPhoneModal: $showLoginPhoneModal)
@@ -187,6 +188,7 @@ struct LaunchContentView: View {
                     authModel.loginSuccess = true
                     authModel.state = .signedIn
                     model.requestGeolocationPermission()
+
                 }
             }
         }

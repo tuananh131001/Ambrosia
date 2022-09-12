@@ -29,18 +29,13 @@ struct AppNameView: View {
                 .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.5), radius: 10, x: -5, y: 5)
             
             
-            VStack (alignment: .center, spacing: 0) {
-                ForEach(["Eat", "Time"], id: \.self) { word in
-                    Text(word.uppercased())
-                        .font(Font.custom("GermaniaOne-Regular", size: 100))
-                        .tracking(2)
-                        .bold()
-                        .foregroundColor(txtColor)
-                        .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.5), radius: 10, x: -5, y: 5)
-                }
-                
-                
-            }
+            Text("Ambrosia".uppercased())
+                .font(Font.custom("Avenir", size: 100))
+                .tracking(2)
+                .bold()
+                .foregroundColor(txtColor)
+                .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.5), radius: 10, x: -5, y: 5)
+            
         }
     }
 }

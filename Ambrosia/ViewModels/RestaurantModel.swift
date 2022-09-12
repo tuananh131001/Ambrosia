@@ -24,43 +24,44 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var hasError = false
     @Published var error: RestaurantError?
 
-//    @Published var loginSuccess = false
     // MARK: Location
     var locationManager = CLLocationManager()
     @Published var authorizationState = CLAuthorizationStatus.notDetermined
     // Current user region and coordinate
     @Published var userLocation = MKCoordinateRegion()
     @Published var currentUserCoordinate: CLLocationCoordinate2D?
+    
     // MARK: Current restaurant
     @Published var currentRestaurant: Restaurant?
     var currentRestaurantIndex = 0
-
+    
     // MARK: Current Random Restaurant
     @Published var currentRandomRestaurant: Restaurant?
-
-
+    
+    
     // MARK: init
     override init() {
         // Init method of NSObject
         super.init()
         fetchRestaurant()
-
+        
         // Set content model as the delegate of the location manager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
-
+        
         // set current random restaurant
         currentRandomRestaurant = restaurants.randomElement()
     }
-
+    
     // MARK: - Location Methods
     //MARK:  Location Manager Delegate Methods
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-
+        
         // Update the authorizationState property
         authorizationState = locationManager.authorizationStatus
-
+        
         if locationManager.authorizationStatus == .authorizedAlways ||
             locationManager.authorizationStatus == .authorizedWhenInUse {
             // after getting permission
@@ -70,66 +71,52 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             print("No Permission")
         }
     }
-
+    
     // MARK: Location manager
-    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    //        // stop auto zooming in apple map
-    //        manager.stopUpdatingLocation()
-    //        // store userLocation
-    //        locations.last.map {
-    //            currentUserCoordinate = CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)
-    //            userLocation = UltilityModel.createCoordinateRegion(currentUserCoordinate!)
-    //
-    //            // display recent restaurants inside the regions
-    ////            currentRegion = userLocation
-    //        }
-    //
-    //    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // stop auto zooming in apple map
+        manager.stopUpdatingLocation()
+        // store userLocation
+        locations.last.map {
+            currentUserCoordinate = CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude)
+            userLocation = CalculateDistance.createCoordinateRegion(currentUserCoordinate!)
+            
+        }
+        if currentUserCoordinate?.latitude == nil && ((currentUserCoordinate?.longitude) != nil) {
+            currentUserCoordinate = CLLocationCoordinate2D(latitude: Constants.DEFAULT_LOCATION_LAT, longitude: Constants.DEFAULT_LOCATION_LNG)
+            userLocation = CalculateDistance.createCoordinateRegion(currentUserCoordinate!)
+        }
+        
+    }
     // MARK: Ask user location permission
     func requestGeolocationPermission() {
         // remember to open Info -> Target -> Info -> Below Bundle Version String -> Click add -> Type "Privacy - Location When In Use Usage Description" with value "Please allow us to access your location"
         // Request permission from the user
         locationManager.requestWhenInUseAuthorization()
     }
-
-    // open apple map to show routes to the user
-    //    func openAppleMap(endCoordinate: CLLocationCoordinate2D) {
-    //        // create url to open apple map having route from current location to place
-    //        let routeURL = "http://maps.apple.com/?saddr=\(UltilityModel.convertCoordinateString(currentUserCoordinate ?? CLLocationCoordinate2D()))&daddr=\(UltilityModel.convertCoordinateString(endCoordinate))"
-    //        // binding
-    //        guard let url = URL(string: routeURL) else {
-    //            return
-    //        }
-    //        // open apple map based on the ios version
-    //        if #available(iOS 10.0, *) {
-    //            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    //        } else {
-    //            UIApplication.shared.openURL(url)
-    //        }
-    //    }
-
-
+    
+    
     // MARK: Restaurant Navigation Method
     func navigateRestaurant(_ restId: String) {
         // find the index for the restaurant id
         currentRestaurantIndex = restaurants.firstIndex(where: {
             $0.place_id == restId
         }) ?? 0
-
+        
         // set the current restaurant
         currentRestaurant = restaurants[currentRestaurantIndex]
     }
-
+    
     // check if has popular restaurant
-//    func hasPopularRestaurant() -> Bool {
-//        for rest in restaurants {
-//            if (rest.isPopular()) {
-//                return true
-//            }
-//        }
-//        return false
-//    }
-
+    //    func hasPopularRestaurant() -> Bool {
+    //        for rest in restaurants {
+    //            if (rest.isPopular()) {
+    //                return true
+    //            }
+    //        }
+    //        return false
+    //    }
+    
     func fetchDetail(place_id: String) {
         let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
         print(urlString2)
@@ -137,51 +124,83 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             URLSession.shared
                 .dataTask(with: url2) { data, response, error in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
-                    if error != nil {
-                        print ("error")
-                    } else {
-                        let decoder2 = JSONDecoder()
-                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        if let data2 = data,
-                            let restaurantArr2 = try? decoder2.decode(ResponseDetail.self, from: data2) {
-                            print(restaurantArr2)
-                            self.restaurantDetail = restaurantArr2.result
-                        }
-                        else {
-                            print("notthing")
+                        if error != nil {
+                            print ("error")
+                        } else {
+                            let decoder2 = JSONDecoder()
+                            //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                            if let data2 = data,
+                               let restaurantArr2 = try? decoder2.decode(ResponseDetail.self, from: data2) {
+                                self.restaurantDetail = restaurantArr2.result
+                                self.updateOptions()
+                                print(restaurantDetail)
+                            }
+                            else {
+                                print("notthing")
+                            }
                         }
                     }
-                }
-            }.resume()
+                }.resume()
         }
     }
-
+    
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         hasError = false
-
+        
         let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
-
-
+        
+        
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    if error != nil {
-                    } else {
-                        let decoder = JSONDecoder()
-                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        if let data = data,
-                            let restaurantArr = try? decoder.decode(Restaurants.self, from: data) {
-                            self?.restaurants = restaurantArr.results
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        if error != nil {
+                        } else {
+                            let decoder = JSONDecoder()
+                            //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                            if let data = data,
+                               let restaurantArr = try? decoder.decode(Restaurants.self, from: data) {
+                                self?.restaurants = restaurantArr.results
+                                
+                                
+                            }
                         }
                     }
-                }
-
-            }.resume()
+                    
+                }.resume()
         }
     }
+    
+    func updateOptions() {
+        if restaurantDetail?.dine_in != nil {
+            restaurantDetail?.options.append("Dine in")
+        }
+        if restaurantDetail?.takeout != nil {
+            restaurantDetail?.options.append("Take out")
+        }
+        if restaurantDetail?.delivery != nil {
+            restaurantDetail?.options.append("Delivery")
+        }
+        if restaurantDetail?.serves_wine != nil {
+            restaurantDetail?.options.append("Serves wine")
+        }
+    }
+    
+    func chooseDefaultLocation() {
+        if currentUserCoordinate?.latitude == nil && ((currentUserCoordinate?.longitude) == nil) {
+            currentUserCoordinate = CLLocationCoordinate2D(latitude: Constants.DEFAULT_LOCATION_LAT, longitude: Constants.DEFAULT_LOCATION_LNG)
+            userLocation = CalculateDistance.createCoordinateRegion(currentUserCoordinate!)
+        }
+    }
+    
+    func calculateDistanceRest()  {
+        for index in 0..<restaurants.count {
+            restaurants[index].distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurants[index].geometry?.location?.lat ?? 0, lon2: restaurants[index].geometry?.location?.lng ?? 0)
+        }
+    }
+    
     // Function to get current restaurant
     func getCurrentRestaurant(id: String) {
         for index in 0..<restaurants.count {
@@ -192,7 +211,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
         currentRestaurant = restaurants[currentRestaurantIndex]
     }
-
+    
     // Function to update like for specific review
     func updateLikeForReview(id: UUID) {
         for i in 0..<(currentRestaurant?.review.count ?? 0) {
@@ -201,8 +220,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             }
         }
     }
-
-
+    
+    
     // Function to add new review from user
     func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, image: String) {
         let id = UUID()
@@ -210,7 +229,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
         currentRestaurant?.review.append(newReview)
     }
-
+    
 }
 extension RestaurantModel {
     enum RestaurantError: LocalizedError {

@@ -18,5 +18,10 @@
 	<array>
 		<string>GermaniaOne-Regular.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>Splash BckClr</string>
+	</dict>
 </dict>
 </plist>

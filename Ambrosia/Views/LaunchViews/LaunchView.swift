@@ -27,13 +27,15 @@ struct LaunchView: View {
 
             LaunchContentView(openSetting: true)
         }
-        // user allow access to location
-            else if authModel.loginSuccess {
+        else if authModel.loginSuccess && authModel.isNewUser{
+            EditInformation()
+        }
+        else if authModel.loginSuccess && !authModel.isNewUser {
+//                ReviewView(reviews: Review.testReviews())
             HomeView()
-
         }
         // user not allow -> open settings
-
+        
     }
-
+    
 }
