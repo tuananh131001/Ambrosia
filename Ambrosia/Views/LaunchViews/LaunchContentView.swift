@@ -22,14 +22,10 @@ struct LaunchContentView: View {
     @State var password = ""
     @State var phone = ""
     @State var code = ""
-    @State var appleName = ""
-    @State var appleEmail = ""
-    @State var appleID = ""
-    @State var appleIDPassword = ""
     @State var showLoginMessage = false
     @State var showingSignUpSheet = false
     @State var showLoginPhoneModal = false
-    @State var showLoginAppleModal = false
+    @State var showForgetPasswordModal = false
     @State var checkCode = false
     @State var showEnterCodeField = false
     
@@ -79,7 +75,15 @@ struct LaunchContentView: View {
                         }
                         
                         VStack (spacing: 10) {
-                            // MARK: LOGIN BUTTON
+                            
+                            // MARK: BTN FORGET
+                            Button {
+                                showForgetPasswordModal = true
+                            } label: {
+                                Text("Forget password?")
+                            }
+                            
+                            // MARK: BTN LOGIN
                             Button {
                                 login()
                                 showLoginMessage = true
@@ -89,20 +93,7 @@ struct LaunchContentView: View {
                             }
                             .buttonStyle(ButtonStylePrimary())
                             
-                            // MARK: REGISTER BUTTON
-                            // Button to show the sign up sheet
-                            Button {
-                                showingSignUpSheet.toggle()
-                            } label: {
-                                Text("Sign Up Here!")
-                            }
-                            
-                            Text("or")
-                                .foregroundColor(.gray)
-                            
-                            // MARK: ALTERNATIVE LOGIN
-                            
-                            // Button to login using phone
+                            // MARK: BTN PHONE
                             Button {
                                 showLoginPhoneModal = true
                             } label: {
@@ -112,8 +103,9 @@ struct LaunchContentView: View {
                                         .bold()
                                 }
                             }
-                            .buttonStyle(ButtonStyleLightPrimary())
+                            .buttonStyle(ButtonStylePrimary())
                             
+                            // MARK: BTN GOOGLE
                             Button {
                                 authModel.GoogleSignIn()
                             } label: {
@@ -123,8 +115,22 @@ struct LaunchContentView: View {
                                         .bold()
                                 }
                             }
+                            .buttonStyle(ButtonStylePrimary())
+                            
+                            Text("or")
+                                .foregroundColor(.gray)
+                            
+                            
+                            // MARK: BTN REGISTER
+                            // Button to show the sign up sheet
+                            Button {
+                                showingSignUpSheet.toggle()
+                            } label: {
+                                Text("Sign Up Here!")
+                                    .bold()
+                            }
                             .buttonStyle(ButtonStyleLightPrimary())
-                                
+                            
                         }
                     }
                     .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
@@ -145,7 +151,12 @@ struct LaunchContentView: View {
             
             // MARK: MODAL PHONE LOGIN
             if (showLoginPhoneModal) {
-                LoginPhoneModal(showLoginPhoneModal: $showLoginPhoneModal, checkCode: $checkCode, phone: $phone, code: $code)
+                LoginPhoneModal(showLoginPhoneModal: $showLoginPhoneModal)
+            }
+            
+            // MARK: MODAL FORGET PW
+            if (showForgetPasswordModal) {
+                ForgetPasswordModal(showForgetPasswordModal: $showForgetPasswordModal)
             }
         }.sheet(isPresented: $showingSignUpSheet) {
             SignUpView()
@@ -164,7 +175,11 @@ struct LaunchContentView: View {
         else {
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
-                    print(error?.localizedDescription ?? "")
+                    let err = error?.localizedDescription ?? ""
+                    print(err)
+                    if (err.contains("no user record")) {
+                        loginMessage = "This email hasn't register yet"
+                    }
                     loginMessage = "Invalid sign-in credentials"
                     authModel.loginSuccess = false
                 } else {

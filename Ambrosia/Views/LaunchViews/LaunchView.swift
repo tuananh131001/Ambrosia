@@ -23,7 +23,7 @@ struct LaunchView: View {
         if !authModel.loginSuccess {
             LaunchContentView()
         }
-        else if model.authorizationState == .notDetermined {
+        else if authModel.loginSuccess && model.authorizationState == .notDetermined {
 
             LaunchContentView(openSetting: true)
         }

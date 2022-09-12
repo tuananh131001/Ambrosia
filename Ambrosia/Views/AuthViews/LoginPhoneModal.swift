@@ -12,9 +12,10 @@ struct LoginPhoneModal: View {
     @EnvironmentObject var authModel: AuthenticationModel
     
     @Binding var showLoginPhoneModal: Bool
-    @Binding var checkCode: Bool
-    @Binding var phone: String
-    @Binding var code: String
+    @State var checkCode: Bool = false
+    @State var message: String = ""
+    @State var phone: String = ""
+    @State var code: String = ""
     
     
     var body: some View {
@@ -28,8 +29,14 @@ struct LoginPhoneModal: View {
                         .modifier(TextFieldModifier())
                     
                     Button {
+                        if (phone != "") {
                             sendCode()
+                            message = ""
                             checkCode = true
+                        }
+                        else {
+                            message = "Please enter phone number"
+                        }
                     } label: {
                         Text("Send code via SMS")
                             .bold()
@@ -38,11 +45,17 @@ struct LoginPhoneModal: View {
                 }
                 
                 if (checkCode) {
-                    TextField("Enter code", text: $code)
+                    SecureField("Enter code", text: $code)
                         .modifier(TextFieldModifier())
                     
                     Button {
-                        verifyPhoneLogin()
+                        if (code != "") {
+                            verifyPhoneLogin()
+                            message = ""
+                        }
+                        else {
+                            message = "Please enter code"
+                        }
                     } label: {
                         Text("Verify")
                             .bold()
@@ -61,6 +74,7 @@ struct LoginPhoneModal: View {
               Button(action: {
                   showLoginPhoneModal = false
                   checkCode = false
+                  code = ""
               }) {
                 Image(systemName: "xmark.circle")
                   .font(.title)
