@@ -77,6 +77,8 @@ struct RestaurantDetail:Codable{
     var photos: [Photos]?
     var review = Reviews()
     var options = [String]()
+    var geometry:Geometry?
+    var distance: Double = 0
     enum CodingKeys: String, CodingKey {
           case place_id
           case formatted_address
@@ -91,6 +93,7 @@ struct RestaurantDetail:Codable{
           case rating
           case user_ratings_total
           case photos
+          case geometry
        }
 
     
