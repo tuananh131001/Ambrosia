@@ -22,7 +22,8 @@ struct EatTime: App {
     var body: some Scene {
         
         WindowGroup {
-            LaunchView()
+//            LaunchView()
+            SplashView()
                 .environmentObject(RestaurantModel())
         }
     }

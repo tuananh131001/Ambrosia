@@ -26,4 +26,6 @@ enum Constants {
     static let FIELD_MIN_WIDTH: CGFloat = 230
     static let FIELD_MAX_WIDTH: CGFloat = 320
     static let CONRNER_RADIUS: CGFloat = 10
+    
+    static let SPLASH_CIRCLE_OPACITY: CGFloat = 0.4
 }
