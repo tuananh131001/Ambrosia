@@ -45,27 +45,34 @@ struct RestaurantListView: View {
                 // scroll view to show all the restaurants
                 ScrollView(showsIndicators: false){
                     LazyVStack(spacing:35) {
-                        ForEach(searchResults,id: \.place_id){
-                            r in
+                        ForEach(0..<searchResults.count){
+                            index in
                             // link to the restaurant detail
-                            NavigationLink {
+                            NavigationLink(tag: index, selection: $restaurantModel.restaurantSelected) {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
-                                    restaurantModel.fetchDetail(place_id: r.place_id)
+                                    restaurantModel.fetchDetail(place_id: searchResults[index].place_id)
 //                                    restaurantModel.getCurrentRestaurant(id: r.place_id)
                                 }
                                 
                             } label: {
                                 // Card to show restaurant
-                                RestaurantCardView(name: r.name, rating: r.rating ?? 5.0, status: r.opening_hours?.open_now ?? true, address: r.vicinity ?? "Sir city",photo_id: r.photos?[0].photo_reference ?? "testRestaurant",total_ratings: r.user_ratings_total ?? 1,distance: r.distance )
+                                RestaurantCardView(name: searchResults[index].name, rating: searchResults[index].rating ?? 5.0, status: searchResults[index].opening_hours?.open_now ?? true, address: searchResults[index].vicinity ?? "Sir city",photo_id: searchResults[index].photos?[0].photo_reference ?? "testRestaurant",total_ratings: searchResults[index].user_ratings_total ?? 1,distance: searchResults[index].distance )
                             }
                         }
                     }.padding()
                     // add the search bar and set the mode to always display the search bar
                 }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name")
                     .navigationTitle("Nearby Restaurants").accentColor(Color("PrimaryColor"))
+                    
+            } .onChange(of: restaurantModel.restaurantSelected) { newValue in
+                if (newValue ==
+                    nil) {
+                    restaurantModel.restaurantDetail = nil
+
+                }
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         .onAppear {
 //            restaurantModel.calculateDistanceRest()
         }

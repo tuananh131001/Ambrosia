@@ -13,24 +13,41 @@ struct ReviewView: View {
     var body: some View {
         GeometryReader {
             geo in
-            ZStack(alignment: .bottomTrailing) {
-                ScrollView(showsIndicators: false) {
-                    LazyVStack(alignment: .leading, spacing: 35) {
-                        ForEach(0..<reviews.count, id: \.self) {
-                            index in
-                            ReviewCard(rating: reviews[index].rating, review: reviews[index])
-                        }
+            if reviews.count == 0 {
+                VStack{
+                    GifView(name: "cat-eat")
+                    Button {
+                        isShowAddReview = true
+                    } label: {
+                        CircleButtonView(buttonImage: "square.and.pencil")
+
+                    }.sheet(isPresented: $isShowAddReview) {
+                        AddReviewView(restaurant: Restaurant.testRestaurant(), review: Review.testReviews()[0])
                     }
                 }
-                Button {
-                    isShowAddReview = true
-                } label: {
-                    CircleButtonView(buttonImage: "square.and.pencil")
+             
+            }
+            else{
+                ZStack(alignment: .bottomTrailing) {
+                    ScrollView(showsIndicators: false) {
+                        LazyVStack(alignment: .leading, spacing: 35) {
+                            ForEach(0..<reviews.count, id: \.self) {
+                                index in
+                                ReviewCard(rating: reviews[index].rating, review: reviews[index])
+                            }
+                        }
+                    }
+                    Button {
+                        isShowAddReview = true
+                    } label: {
+                        CircleButtonView(buttonImage: "square.and.pencil")
 
-                }.sheet(isPresented: $isShowAddReview) {
-                    AddReviewView(restaurant: Restaurant.testRestaurant(), review: Review.testReviews()[0])
-                }
-            }.padding([.trailing, .leading], 30)
+                    }.sheet(isPresented: $isShowAddReview) {
+                        AddReviewView(restaurant: Restaurant.testRestaurant(), review: Review.testReviews()[0])
+                    }
+                }.padding([.trailing, .leading], 30)
+            }
+        
 
         }.background(Color("CardBackgroundColor"))
 

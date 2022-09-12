@@ -70,6 +70,7 @@
 		442A4E8428CF1D6E00AD37E4 /* Breadcrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442A4E8328CF1D6E00AD37E4 /* Breadcrumbs.swift */; };
 		44453CB328CCCFD300C00F6D /* AddReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44453CB228CCCFD300C00F6D /* AddReviewView.swift */; };
 		44453CB528CCD01E00C00F6D /* CircleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44453CB428CCD01E00C00F6D /* CircleButtonView.swift */; };
+		445188B228CF7CFA0037AA65 /* OpeningHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445188B128CF7CFA0037AA65 /* OpeningHoursView.swift */; };
 		44969A1428CC9E9F00F7EDD4 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44969A1328CC9E9F00F7EDD4 /* ReviewView.swift */; };
 		44969A1628CCBB3500F7EDD4 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44969A1528CCBB3500F7EDD4 /* ReviewCard.swift */; };
 		44969A1828CCBE9E00F7EDD4 /* FormatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44969A1728CCBE9E00F7EDD4 /* FormatDate.swift */; };
@@ -131,6 +132,7 @@
 		442A4E8328CF1D6E00AD37E4 /* Breadcrumbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breadcrumbs.swift; sourceTree = "<group>"; };
 		44453CB228CCCFD300C00F6D /* AddReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReviewView.swift; sourceTree = "<group>"; };
 		44453CB428CCD01E00C00F6D /* CircleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonView.swift; sourceTree = "<group>"; };
+		445188B128CF7CFA0037AA65 /* OpeningHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningHoursView.swift; sourceTree = "<group>"; };
 		44969A1328CC9E9F00F7EDD4 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		44969A1528CCBB3500F7EDD4 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
 		44969A1728CCBE9E00F7EDD4 /* FormatDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatDate.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				44453CB228CCCFD300C00F6D /* AddReviewView.swift */,
 				44DFD4F028CDEBDA00E82F9F /* RestaurantCardView.swift */,
 				442A4E7B28CDF72E00AD37E4 /* RestaurantListView.swift */,
+				445188B128CF7CFA0037AA65 /* OpeningHoursView.swift */,
 			);
 			path = RestaurantViews;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				44969A1828CCBE9E00F7EDD4 /* FormatDate.swift in Sources */,
 				44453CB328CCCFD300C00F6D /* AddReviewView.swift in Sources */,
 				54585AF928CC501C003567D5 /* Constant.swift in Sources */,
+				445188B228CF7CFA0037AA65 /* OpeningHoursView.swift in Sources */,
 				44DFD4EF28CDE5F400E82F9F /* FavouriteRestaurantView.swift in Sources */,
 				3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */,
 				54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */,

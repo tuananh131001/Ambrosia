@@ -17,13 +17,10 @@
 import SwiftUI
 
 struct RestaurantDetailView: View {
- 
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    
-    
-    
     @EnvironmentObject var restaurantModel: RestaurantModel
+    @State var showOpenningHours = false
     var btnBack : some View { Button(action: {
         self.presentationMode.wrappedValue.dismiss()
     }) {
@@ -48,12 +45,20 @@ struct RestaurantDetailView: View {
                     else {
                         Image("testRestaurants").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.5).ignoresSafeArea()
                     }
+                    // MARK: Restaurant detail Vstack section
                     VStack(alignment:.leading){
                         HStack{
                             Image(systemName:"clock.circle").foregroundColor(Color("PrimaryColor"))
                             Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                             Spacer()
-                            Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                            Button {
+                                showOpenningHours = true
+                            } label: {
+                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                            }.sheet(isPresented: $showOpenningHours) {
+                                OpeningHoursView()
+                            }
+                            
                         }
                         
                         
@@ -62,7 +67,11 @@ struct RestaurantDetailView: View {
                             Image(systemName:"phone.circle.fill").foregroundColor(Color("TextColor"))
                             Text("Phone number: \(restaurantModel.restaurantDetail?.formatted_phone_number ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                             Spacer()
+                            
                             Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                            
+                            
+                            
                         }
                         Divider()
                         
@@ -73,7 +82,7 @@ struct RestaurantDetailView: View {
                             Text("(\(restaurantModel.restaurantDetail?.user_ratings_total ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
                             Spacer()
                             NavigationLink(destination: {
-                                Text("Hello")
+                                ReviewView(reviews: restaurantModel.restaurantDetail?.review ?? [])
                             }) {
                                 Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
                             }
@@ -90,6 +99,7 @@ struct RestaurantDetailView: View {
                         
                     }.offset(y:100).padding()
                     
+                    //MARK: Rectange Resutaurant Detail Card
                     ZStack {
                         Rectangle().foregroundColor(.white).frame(width: geo.size.width-30, height: geo.size.height/4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
                         VStack(spacing:5){

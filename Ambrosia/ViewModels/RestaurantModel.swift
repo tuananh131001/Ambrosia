@@ -24,7 +24,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var hasError = false
     @Published var error: RestaurantError?
     @Published var type:String?
-    
+    @Published var restaurantSelected:Int?
     @Published var loginSuccess = false
     
     // MARK: Location
@@ -138,7 +138,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                                 self.updateOptions()
                                 self.updateRestaurantDetailDistance()
                                 self.getType()
-                                print(restaurantDetail)
                             }
                             else {
                                 print("notthing")
