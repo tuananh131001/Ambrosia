@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 struct SignUpView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var userModel: AuthenticationModel
     @State var email = ""
     @State var password = ""
     @State var passwordConfirmation = ""

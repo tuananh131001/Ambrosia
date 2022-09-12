@@ -27,8 +27,8 @@ struct EatTime: App {
 //            LaunchView()
             SplashView()
                 .environmentObject(RestaurantModel())
-                .environmentObject(UserModel())
-                .environmentObject(authModel)
+                .environmentObject(AuthenticationModel())
+
         }
     }
 }

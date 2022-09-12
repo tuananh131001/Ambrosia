@@ -27,10 +27,10 @@ struct LaunchView: View {
 
             LaunchContentView(openSetting: true)
         }
-        else if userModel.loginSuccess && userModel.isNewUser{
+        else if authModel.loginSuccess && authModel.isNewUser{
             EditInformation()
         }
-        else if userModel.loginSuccess && !userModel.isNewUser {
+        else if authModel.loginSuccess && !authModel.isNewUser {
 //                ReviewView(reviews: Review.testReviews())
             HomeView()
         }

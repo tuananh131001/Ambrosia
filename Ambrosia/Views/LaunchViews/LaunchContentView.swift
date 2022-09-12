@@ -16,7 +16,7 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var userModel: AuthenticationModel
     @EnvironmentObject var authModel: AuthenticationModel
     
     @State var email = ""
