@@ -130,8 +130,8 @@ struct SignUpView: View {
                 }
             }
         }
-    }
     */
+    }
 
 }
 
