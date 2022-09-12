@@ -12,20 +12,26 @@
  */
 import SwiftUI
 import Firebase
+
+
 struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var authModel: AuthenticationModel
+    
     @State var email = ""
     @State var password = ""
     @State var phone = ""
     @State var code = ""
+    @State var appleName = ""
+    @State var appleEmail = ""
     @State var appleID = ""
     @State var appleIDPassword = ""
-    @State private var showLoginMessage = false
-    @State private var showingSignUpSheet = false
-    @State private var showLoginPhoneModal = false
-    @State private var showLoginAppleModal = false
-    @State private var checkCode = false
-    @State private var showEnterCodeField = false
+    @State var showLoginMessage = false
+    @State var showingSignUpSheet = false
+    @State var showLoginPhoneModal = false
+    @State var showLoginAppleModal = false
+    @State var checkCode = false
+    @State var showEnterCodeField = false
     
     @State private var loginMessage = ""
     
@@ -40,8 +46,8 @@ struct LaunchContentView: View {
             
             
             // MARK: LOGIN PAGE CONTENT
-            ZStack {
-                ZStack {
+            ZStack (alignment: .center) {
+                ZStack (alignment: .center) {
                     // MARK: LOGIN INPUT FIELDS
                     VStack (spacing: 20) {
                         VStack (spacing: 10) {
@@ -51,7 +57,8 @@ struct LaunchContentView: View {
                                 .foregroundColor(Constants.PRIMARY_COLOR)
                             
                             // MARK: CAT GIF
-                            GifView(name: "cat-eat")                            .frame(width: 130, height: 110)
+                            GifView(name: "cat-eat")
+                                .frame(width: 130, height: 110)
                         }
                         
                         VStack (spacing: 10) {
@@ -67,7 +74,7 @@ struct LaunchContentView: View {
                             // Login message after pressing the login button
                             if (showLoginMessage) {
                             Text(loginMessage)
-                                .foregroundColor(model.loginSuccess ? .green : .red)
+                                .foregroundColor(authModel.loginSuccess ? .green : .red)
                             }
                         }
                         
@@ -94,33 +101,26 @@ struct LaunchContentView: View {
                                 .foregroundColor(.gray)
                             
                             // MARK: ALTERNATIVE LOGIN
-                            Group {
-                                // Button to login using phone
-                                Button {
-                                    showLoginPhoneModal = true
-                                } label: {
-                                    HStack {
-                                        Image("phone-icon")
-                                        Text("Sign in with Phone")
-                                            .bold()
-                                    }
-                                }
-                                
-                                // Button to login using Apple
-                                Button {
-                                    showLoginAppleModal = true
-                                } label: {
-                                    HStack {
-                                        Image("apple-logo")
-                                        Text("Sign in with Apple ID")
-                                            .bold()
-                                    }
+                            
+                            // Button to login using phone
+                            Button {
+                                showLoginPhoneModal = true
+                            } label: {
+                                HStack {
+                                    Image("phone-icon")
+                                    Text("Sign in with Phone")
+                                        .bold()
                                 }
                             }
                             .buttonStyle(ButtonStyleLightPrimary())
+                            
+                            GoogleSignInBtn()
+                                .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH, minHeight: Constants.FIELD_HEIGHT)
+                                .onTapGesture {
+                                      authModel.GoogleSignIn()
+                                }
+                                
                         }
-                    
-
                     }
                     .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
                     .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
@@ -134,138 +134,13 @@ struct LaunchContentView: View {
                 .cornerRadius(Constants.CONRNER_RADIUS)
                 .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
                 
-
-//                // MARK: open setting button
-//                Button {
-//                    // open app setting
-//                    if openSetting {
-//                        // Open settings by getting the settings url
-//                        if let url = URL(string: UIApplication.openSettingsURLString) {
-//                            if UIApplication.shared.canOpenURL(url) {
-//                                // If we can open this settings url, then open it
-//                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//                            }
-//                        }
-//                    }
-//                    // ask user permission window (when not been ask before)
-//                        else {
-//                        model.requestGeolocationPermission()
-//                    }
-//
-//                } label: {
-//                    // display button to use app
-//                    ZStack {
-//                        Rectangle()
-//                            .foregroundColor(.black)
-//                            .frame(height: 50)
-//                            .cornerRadius(15)
-//                            .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.3), radius: 10, x: -5, y: 5)
-//
-//                        Text("Let's Eat")
-//                            .bold()
-//                            .foregroundColor(.white)
-//                            .padding()
-//                    }
-//
-//
-//                }
-
-
             }
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
             
             // MARK: MODAL PHONE LOGIN
             if (showLoginPhoneModal) {
-                ZStack {
-                    Color("Shadow")
-                        .edgesIgnoringSafeArea(.all)
-                    VStack {
-                        TextField("Enter phone number", text: $email)
-                            .modifier(TextFieldModifier())
-                        
-                        if (checkCode) {
-                            TextField("Enter code", text: $code)
-                                .modifier(TextFieldModifier())
-                        }
-                        
-                        Button {
-                            if (!checkCode) {
-                                checkCode = true
-                            }
-                            else {
-                                loginPhone()
-                            }
-                        } label: {
-                            Text(!checkCode ? "Send code via SMS" : "Verify")
-                                .bold()
-                        }
-                        .buttonStyle(ButtonStyleWhite())
-
-                        
-                    }
-                    .padding(15)
-                    .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
-                    .background(Constants.PRIMARY_COLOR)
-                    .foregroundColor(.white)
-                    .cornerRadius(Constants.CONRNER_RADIUS)
-                    .overlay(
-                      Button(action: {
-                          showLoginPhoneModal = false
-                          checkCode = false
-                      }) {
-                        Image(systemName: "xmark.circle")
-                          .font(.title)
-                      }
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                        .padding(.trailing, 20),
-                        alignment: .topTrailing
-                        )
-                }
-            }
-            
-            // MARK: MODAL APPLE LOGIN
-            if (showLoginAppleModal) {
-                ZStack {
-                    Color("Shadow")
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    VStack (spacing: 10) {
-                        TextField("Enter Apple ID", text: $appleID)
-                            .modifier(TextFieldModifier())
-                        
-                        TextField("Enter password", text: $appleIDPassword)
-                            .modifier(TextFieldModifier())
-                        
-                        
-                        Button {
-                            showLoginAppleModal = true
-                            appleIDPassword = ""
-                        } label: {
-                            Text("Sign in")
-                                .bold()
-                        }
-                        .buttonStyle(ButtonStyleWhite())
-                    }
-                    .padding()
-                    .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
-                    .background(Constants.PRIMARY_COLOR)
-                    .foregroundColor(.white)
-                    .cornerRadius(Constants.CONRNER_RADIUS)
-                    .overlay(
-                      Button(action: {
-                          showLoginAppleModal = false
-                      }) {
-                        Image(systemName: "xmark.circle")
-                          .font(.title)
-                      }
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                        .padding(.trailing, 20),
-                        alignment: .topTrailing
-                        )
-                }
+                LoginPhoneModal(showLoginPhoneModal: $showLoginPhoneModal, checkCode: $checkCode, phone: $phone, code: $code)
             }
         }.sheet(isPresented: $showingSignUpSheet) {
             SignUpView()
@@ -279,45 +154,23 @@ struct LaunchContentView: View {
     func login() {
         if (email == "" || password == "") {
             loginMessage = "Please enter email and password"
-            model.loginSuccess = false
+            authModel.loginSuccess = false
         }
         else {
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
-                    let msg = error?.localizedDescription ?? ""
-                    print(msg)
-                    if (msg.contains("no user record")) {
-                        loginMessage = "This email hasn't registered yet"
-                    }
-                    else {
-                        loginMessage = "Invalid sign-in credentials"
-                    }
-                    model.loginSuccess = false
+                    print(error?.localizedDescription ?? "")
+                    loginMessage = "Invalid sign-in credentials"
+                    authModel.loginSuccess = false
                 } else {
                     print("success")
                     loginMessage = "Log in successfully"
-                    model.loginSuccess = true
+                    authModel.loginSuccess = true
+                    authModel.state = .signedIn
                     model.requestGeolocationPermission()
                 }
             }
         }
     }
     
-    func loginPhone() {
-        PhoneAuthProvider.provider()
-          .verifyPhoneNumber(phone, uiDelegate: nil) { verificationID, error in
-              if let error = error {
-                  print(error.localizedDescription)
-//                self.showMessagePrompt(error.localizedDescription)
-                return
-              }
-              // Sign in using the verificationID and the code sent to the user
-              // ...
-          }
-    }
-    
-    func loginApple() {
-        
-    }
-
 }

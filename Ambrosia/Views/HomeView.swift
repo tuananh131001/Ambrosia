@@ -20,6 +20,7 @@ struct HomeView: View {
     @State var searchQuery = ""
 
     @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var viewModel: AuthenticationModel
 
     var body: some View {
         VStack {
@@ -54,6 +55,7 @@ struct HomeView: View {
         static var previews: some View {
             HomeView()
                 .environmentObject(RestaurantModel())
+                .environmentObject(AuthenticationModel())
         }
     }
 }

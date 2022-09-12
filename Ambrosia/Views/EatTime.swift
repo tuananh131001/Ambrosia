@@ -16,6 +16,8 @@ import Firebase
 
 @main
 struct EatTime: App {
+    
+    @StateObject var authModel = AuthenticationModel()
     init(){
         FirebaseApp.configure()
     }
@@ -23,6 +25,7 @@ struct EatTime: App {
         WindowGroup {
             LaunchView()
                 .environmentObject(RestaurantModel())
+                .environmentObject(authModel)
         }
     }
 }

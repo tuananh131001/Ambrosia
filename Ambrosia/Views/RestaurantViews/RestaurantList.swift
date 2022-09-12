@@ -26,7 +26,7 @@ struct RestaurantList: View {
         }
         .onAppear {
             restaurantModel.addReviewFromUser(reviewDescription: "như Sir", rating: 10,username: "Sir",email: "Sir@gmail.com")
-            print(restaurantModel.restaurants[0].review)
+//            print(restaurantModel.restaurants[0].review)
         }
     }
 }

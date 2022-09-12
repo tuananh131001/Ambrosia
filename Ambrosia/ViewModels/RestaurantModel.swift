@@ -23,7 +23,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var hasError  = false
     @Published var error: RestaurantError?
 
-    @Published var loginSuccess = false
+//    @Published var loginSuccess = false
     // MARK: Location
     var locationManager = CLLocationManager()
     @Published var authorizationState = CLAuthorizationStatus.notDetermined
@@ -166,7 +166,7 @@ class RestaurantModel : NSObject, CLLocationManagerDelegate, ObservableObject {
         let id = UUID()
         let date = Date.now
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: username,email: email)
-        restaurants[0].review.append(newReview)
+//        restaurants[0].review.append(newReview)
     }
 }
 
