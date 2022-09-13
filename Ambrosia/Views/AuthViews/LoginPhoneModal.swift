@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct LoginPhoneModal: View {
-    @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var authModel: UserModel
     
     @Binding var showLoginPhoneModal: Bool
     @State var checkCode: Bool = false

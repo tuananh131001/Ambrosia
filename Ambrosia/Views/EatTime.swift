@@ -17,7 +17,7 @@ import Firebase
 @main
 struct EatTime: App {
     
-    @StateObject var authModel = AuthenticationModel()
+    @StateObject var authModel = UserModel()
     init(){
         FirebaseApp.configure()
     }
@@ -27,7 +27,7 @@ struct EatTime: App {
 //            LaunchView()
             SplashView()
                 .environmentObject(RestaurantModel())
-                .environmentObject(AuthenticationModel())
+                .environmentObject(UserModel())
 
         }
     }

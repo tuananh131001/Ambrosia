@@ -121,7 +121,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //    }
     
     func fetchDetail(place_id: String) {
-        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
+//        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
+        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyDNI_ZWPqvdS6r6gPVO50I4TlYkfkZdXh8"
         print(urlString2)
         if let url2 = URL(string: urlString2) {
             URLSession.shared
@@ -152,8 +153,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         hasError = false
-        
-        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
+        // "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
+        let urlString = "https://puppychan.github.io/places.json"
         
         
         if let url = URL(string: urlString) {
@@ -208,6 +209,15 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     func updateRestaurantDetailDistance(){
         restaurantDetail?.distance =  CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurantDetail?.geometry?.location?.lat ?? 0, lon2: restaurantDetail?.geometry?.location?.lng ?? 0)
+    }
+    
+    func findRestaurantById(_ id: String) -> Restaurant? {
+        for index in 0..<restaurants.count {
+            if (restaurants[index].place_id == id) {
+                return restaurants[index]
+            }
+        }
+        return nil
     }
     
     // Function to get current restaurant

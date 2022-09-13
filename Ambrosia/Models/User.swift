@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct User: Decodable{
+struct User: Decodable {
     var id: String
     var name: String
     var dob:Date
     var selectedGender:Int
-    
+    var favouriteRestaurants: [Restaurant] = [Restaurant]()
 
 }
 

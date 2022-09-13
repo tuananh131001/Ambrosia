@@ -8,7 +8,7 @@
 import Firebase
 import GoogleSignIn
 
-class AuthenticationModel: ObservableObject {
+class UserModel: ObservableObject {
 
     // 1
     enum SignInState {
@@ -23,7 +23,12 @@ class AuthenticationModel: ObservableObject {
 
     @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0)
     let genders = ["Male", "Female"]
-
+    
+    func isRestaurantFavorite(restaurant: Restaurant) -> Int? {
+        return user.favouriteRestaurants.firstIndex { $0.place_id ==  restaurant.place_id}
+    }
+    
+    
     func GoogleSignIn() {
         // 1
         if GIDSignIn.sharedInstance.hasPreviousSignIn() {

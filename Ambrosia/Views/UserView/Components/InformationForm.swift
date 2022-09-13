@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct InformationForm: View {
-    @EnvironmentObject var userModel: AuthenticationModel
+    @EnvironmentObject var userModel: UserModel
     private var services = FirebaseService.services
 
     var body: some View {

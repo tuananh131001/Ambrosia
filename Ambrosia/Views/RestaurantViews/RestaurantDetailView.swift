@@ -22,8 +22,9 @@ struct RestaurantDetailView: View {
     
     
     
-    
     @EnvironmentObject var restaurantModel: RestaurantModel
+    @EnvironmentObject var userModel: UserModel
+    @StateObject var firebaseService: FirebaseService = FirebaseService.services
     var btnBack : some View { Button(action: {
         self.presentationMode.wrappedValue.dismiss()
     }) {
@@ -36,7 +37,23 @@ struct RestaurantDetailView: View {
     }
     
     
-    
+//    ZStack {
+//        // favorite
+//        Button(action: {
+//            clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: ""))
+//
+//        }, label: {
+//            Image(systemName: "heart\(clickFavourite ? "" : ".fill")")
+//                .resizable()
+//                .frame(width: 30, height: 30, alignment: .center)
+//                .foregroundColor(.red)
+//
+//        })
+//    }
+//    .onAppear() {
+//        clickFavourite = userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: "")) == nil ? false : true
+//        print("Sir favorite click", userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: "")))
+//    }
     var body: some View {
         if restaurantModel.restaurantDetail != nil {
             GeometryReader{
@@ -54,6 +71,7 @@ struct RestaurantDetailView: View {
                             Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                             Spacer()
                             Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                        
                         }
                         
                         

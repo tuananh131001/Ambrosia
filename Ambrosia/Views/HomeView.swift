@@ -52,9 +52,6 @@ struct HomeViewContent: View {
             }.tag(3)
         }
         .accentColor(Color("PrimaryColor"))
-        .onAppear() {
-            print("Swift HomeView test cho sir")
-        }
     }
 }
 struct HomeView: View {
@@ -63,7 +60,6 @@ struct HomeView: View {
     @State private var tabSelection = 1
     
     @EnvironmentObject var model: RestaurantModel
-    
     init() {
         // Customize the tab bar for the whole app
         UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
@@ -85,7 +81,6 @@ struct HomeView: View {
                 .onAppear() {
                     model.chooseDefaultLocation()
                     model.calculateDistanceRest()
-                    print(model.restaurants)
                 }
             
         }
@@ -111,7 +106,7 @@ struct HomeView: View {
         static var previews: some View {
             HomeView()
                 .environmentObject(RestaurantModel())
-                .environmentObject(AuthenticationModel())
+                .environmentObject(UserModel())
         }
     }
 }

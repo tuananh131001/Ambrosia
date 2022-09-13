@@ -16,8 +16,9 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var userModel: AuthenticationModel
-    @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var authModel: UserModel
+    
+    @StateObject var firebaseService = FirebaseService.services
     
     @State var email = ""
     @State var password = ""
@@ -170,6 +171,7 @@ struct LaunchContentView: View {
 
     // MARK: LOGIN LOGIC
     // Login function to use Firebase to check username and password to sign in
+    @MainActor
     func login() {
         if (email == "" || password == "") {
             loginMessage = "Please enter email and password"
@@ -189,11 +191,17 @@ struct LaunchContentView: View {
                     print("success")
                     loginMessage = "Log in successfully"
                     authModel.loginSuccess = true
+                    
+                    // fetch current user and store into auth model for later use
+                    firebaseService.fetchUser(uid: Auth.auth().currentUser!.uid, restaurantModel: model) { user in
+                        authModel.user = user ?? User(id: "", name: "Nothing", dob: Date.now, selectedGender: 0)
+                        
+                    }
                     authModel.state = .signedIn
                     model.requestGeolocationPermission()
-
                 }
             }
+            
         }
     }
     

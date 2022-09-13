@@ -15,7 +15,7 @@ import SwiftUI
 
 struct LaunchView: View {
     @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var authModel: UserModel
 
     // splashsreen here
     var body: some View {
@@ -26,8 +26,7 @@ struct LaunchView: View {
         else if authModel.loginSuccess && model.authorizationState == .notDetermined {
 
             LaunchContentView(openSetting: true)
-        }
-        else if authModel.loginSuccess && authModel.isNewUser{
+        }        else if authModel.loginSuccess && authModel.isNewUser{
             EditInformation()
         }
         else if authModel.loginSuccess && !authModel.isNewUser {
