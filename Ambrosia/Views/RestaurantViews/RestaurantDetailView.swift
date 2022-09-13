@@ -113,7 +113,7 @@ struct RestaurantDetailView: View {
                         VStack(spacing:5){
                             HStack{
                                 Text("⏰").font(.system(size: 12))
-                                Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(Color("PrimaryColor"))
+                                Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
                                 
                             }
                             Text(restaurantModel.restaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)

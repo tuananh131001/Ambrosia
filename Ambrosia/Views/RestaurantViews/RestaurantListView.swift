@@ -34,7 +34,7 @@ struct RestaurantListView: View {
             return restaurantModel.restaurants
         } else {
             // search items that contain either title or address (Case insensitive) from user input
-            return searchResults.filter { $0.name.localizedCaseInsensitiveContains(searchText)
+            return self.searchResults.filter { $0.name.localizedCaseInsensitiveContains(searchText)
                 
             }
         }
@@ -74,8 +74,6 @@ struct RestaurantListView: View {
             }
         }.navigationViewStyle(StackNavigationViewStyle())
         .onChange(of: restaurantModel.restaurantDetail?.reviews.count) { newValue in
-            print(restaurantModel.restaurantDetail?.reviews)
-            print(restaurantModel.currentRestaurantDetail?.reviews)
         }
     }
     

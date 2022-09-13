@@ -47,7 +47,6 @@ struct AddReviewView: View {
                     // Add Review from user
                     //TODO: Load restaurant from restaurant models
                     self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: "Sir", email: "Sir@gmail.com", image: "avatar1")
-                    print(restaurantModel.restaurantDetail?.reviews)
                 } label: {
                     RoundedButton(buttonText: "Submit", width: geo.size.width/1.1, height: 60)
                 }.padding(.horizontal)
