@@ -8,7 +8,7 @@
 import Firebase
 import GoogleSignIn
 
-class UserModel: ObservableObject {
+class AuthenticationModel: ObservableObject {
 
     // 1
     enum SignInState {

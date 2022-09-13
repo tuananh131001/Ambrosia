@@ -18,7 +18,7 @@ class FirebaseService: ObservableObject {
     var users: [User] = [User]()
 
     // Sign up function to use Firebase to create a new user account in Firebase
-    func signUp(email: String, password: String, passwordConfirmation: String, user: UserModel) {
+    func signUp(email: String, password: String, passwordConfirmation: String, user: AuthenticationModel) {
         if (email == "" || password == "" || passwordConfirmation == "") {
             self.signUpMessage = "Please fill in all the fields"
         }
@@ -72,7 +72,7 @@ class FirebaseService: ObservableObject {
         )
     }
     
-    func changeFavorites(userModel: UserModel, restaurant: Restaurant) -> Bool {
+    func changeFavorites(userModel: AuthenticationModel, restaurant: Restaurant) -> Bool {
         // return true -> remove favorite
         // return false -> add favorite
         let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)

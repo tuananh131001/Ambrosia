@@ -17,7 +17,7 @@ struct RestaurantCardView: View {
     var distance:Double
     
     @EnvironmentObject var restaurantModel: RestaurantModel
-    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var userModel: AuthenticationModel
     
     @StateObject var firebaseService = FirebaseService.services
     

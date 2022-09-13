@@ -16,7 +16,7 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var authModel: UserModel
+    @EnvironmentObject var authModel: AuthenticationModel
     
     @StateObject var firebaseService = FirebaseService.services
     

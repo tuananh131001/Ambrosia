@@ -15,7 +15,7 @@ import SwiftUI
 
 struct LaunchView: View {
     @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var authModel: UserModel
+    @EnvironmentObject var authModel: AuthenticationModel
 
     // splashsreen here
     var body: some View {
