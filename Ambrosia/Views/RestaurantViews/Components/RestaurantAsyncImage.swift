@@ -16,7 +16,7 @@ struct RestaurantAsyncImage: View {
     var body: some View {
         ZStack {
             // Image of each map
-            AsyncImage(url: URL(string: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=\(photo_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg")) { image in
+            AsyncImage(url: URL(string: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=\(photo_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU")) { image in
                 image.renderingMode(.original)
                 image.resizable()
                 image.aspectRatio(contentMode: .fit)

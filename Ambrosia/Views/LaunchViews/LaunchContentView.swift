@@ -16,7 +16,6 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
-    @EnvironmentObject var userModel: AuthenticationModel
     @EnvironmentObject var authModel: AuthenticationModel
     
     @State var email = ""
@@ -101,7 +100,7 @@ struct LaunchContentView: View {
                             Button {
                                 authModel.GoogleSignIn()
                                 if (authModel.loginSuccess) {
-                                    model.requestGeolocationPermission()
+                                    restaurantModel.requestGeolocationPermission()
                                 }
                             } label: {
                                 HStack {
@@ -117,7 +116,7 @@ struct LaunchContentView: View {
                             Button {
                                 authModel.MicrosoftSignIn()
                                 if (authModel.loginSuccess) {
-                                    model.requestGeolocationPermission()
+                                    restaurantModel.requestGeolocationPermission()
                                 }
                             } label: {
                                 HStack {
