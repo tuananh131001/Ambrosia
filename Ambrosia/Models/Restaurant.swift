@@ -13,7 +13,7 @@
 
 import Foundation
 import CoreLocation
-
+import FirebaseFirestoreSwift
 struct Restaurant: Codable {
     var place_id: String
     var name: String = ""
@@ -100,7 +100,6 @@ struct RestaurantDetail:Codable{
     }
     
 }
-
 struct Restaurants: Codable {
     var results:[Restaurant]
 }
@@ -128,8 +127,9 @@ struct Location:Codable{
     var lng:Double?
 }
 
-struct Review:Identifiable{
-    var id = UUID()
+struct Review:Identifiable,Decodable{
+    var id: UUID = UUID()
+    @DocumentID var documentId: String?
     var reviewDescription: String
     var dateCreated:Date
     var rating: Int
@@ -137,7 +137,16 @@ struct Review:Identifiable{
     var email:String
     var image:String
     var isLiked:Bool = false
-    
+    enum CodingKeys: String, CodingKey {
+        case documentId
+        case dateCreated
+        case email
+        case image
+        case isLiked
+        case rating
+        case reviewDescription
+        case username
+       }
     static func testReviews()->[Review]{
         let review1 = Review(reviewDescription: "hơi ngon", dateCreated: Date.now, rating: 4, username: "Sir", email: "Sir@gmail.com",image: "avatar1")
         let review2 = Review(reviewDescription: "hơi dở", dateCreated: Date.now, rating: 3, username: "Chó Sir", email: "ChóSir@gmail.com",image: "avatar2")

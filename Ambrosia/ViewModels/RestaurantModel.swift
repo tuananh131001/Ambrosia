@@ -18,6 +18,7 @@ import Foundation
 import CoreLocation
 import MapKit
 
+
 class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurants = [Restaurant]()
     @Published var restaurantDetail:RestaurantDetail?
@@ -28,6 +29,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var loginSuccess = false
     @Published var currentRestaurantDetail:RestaurantDetail?
     
+    var firebaseService:FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
     @Published var authorizationState = CLAuthorizationStatus.notDetermined
@@ -239,6 +241,12 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
         self.restaurantDetail?.reviews.append(newReview)
         self.currentRestaurantDetail?.reviews.append(newReview)
+        print(self.restaurantDetail as Any)
+        firebaseService.addReviewToFirebase(restaurant:  self.restaurantDetail ?? RestaurantDetail.testRestaurantDetail())
+    }
+    func updateReview(reviews:[Review]){
+        print(reviews)
+        self.restaurantDetail?.reviews = reviews
     }
     
     func getType(){
