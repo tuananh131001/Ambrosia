@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 struct SignUpView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var userModel: AuthenticationModel
+    @EnvironmentObject var userModel: FirebaseService
     @State var email = ""
     @State var password = ""
     @State var passwordConfirmation = ""
@@ -100,37 +100,6 @@ struct SignUpView: View {
             .cornerRadius(Constants.CONRNER_RADIUS)
 //        .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
 
-/*
-    // Sign up function to use Firebase to create a new user account in Firebase
-    func signUp() {
-        signUpSuccess = false
-        if (email == "" || password == "" || passwordConfirmation == "") {
-            signUpMessage = "Please fill in all the fields"
-        }
-        else if (passwordConfirmation != password) {
-            signUpMessage = "Confirm password doesn't match"
-        }
-        else {
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if error != nil {
-                    let msg = error?.localizedDescription ?? ""
-                    if (msg.contains("email address is badly formatted")) {
-                        signUpMessage = "Invalid email address"
-                    }
-                    else if (msg.contains("email address is already in use")) {
-                        signUpMessage = "This email address is already in use"
-                    }
-                    else {
-                        signUpMessage = "Sign up unsuccessfully"
-                    }
-                } else {
-                    signUpMessage = "Sign up successfully"
-                    signUpSuccess = true
-                    dismiss()
-                }
-            }
-        }
-    */
     }
 
 }

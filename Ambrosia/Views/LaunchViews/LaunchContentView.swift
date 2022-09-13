@@ -16,8 +16,7 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var userModel: AuthenticationModel
-    @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var userModel: FirebaseService
     
     @State var email = ""
     @State var password = ""
@@ -72,8 +71,8 @@ struct LaunchContentView: View {
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
                             if (showLoginMessage) {
-                                Text(authModel.loginMessage)
-                                    .foregroundColor(authModel.loginSuccess ? .green : .red)
+                                Text(userModel.loginMessage)
+                                    .foregroundColor(userModel.loginSuccess ? .green : .red)
                             }
                         }
 
@@ -99,8 +98,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN GOOGLE
                             Button {
-                                authModel.GoogleSignIn()
-                                if (authModel.loginSuccess) {
+                                userModel.GoogleSignIn()
+                                if (userModel.loginSuccess) {
                                     model.requestGeolocationPermission()
                                 }
                             } label: {
@@ -115,8 +114,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN MICROSOFT
                             Button {
-                                authModel.MicrosoftSignIn()
-                                if (authModel.loginSuccess) {
+                                userModel.MicrosoftSignIn()
+                                if (userModel.loginSuccess) {
                                     model.requestGeolocationPermission()
                                 }
                             } label: {
@@ -195,11 +194,11 @@ struct LaunchContentView: View {
     }
 
     
-    // MARK: LOGIN LOGIC
+    // MARK: NORMAL LOGIN LOGIC
     func NormalSignIn(email: String, password: String) {
         if (email == "" || password == "") {
-            authModel.loginMessage = "Please enter email and password"
-            authModel.loginSuccess = false
+            userModel.loginMessage = "Please enter email and password"
+            userModel.loginSuccess = false
         }
         else {
             Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
@@ -207,17 +206,17 @@ struct LaunchContentView: View {
                     let err = error?.localizedDescription ?? ""
                     print(err)
                     if (err.contains("no user record")) {
-                        authModel.loginMessage = "This email hasn't register yet"
+                        userModel.loginMessage = "This email hasn't registered yet"
                     }
                     else {
-                        authModel.loginMessage = "Invalid sign-in credentials"
+                        userModel.loginMessage = "Invalid sign-in credentials"
                     }
-                    authModel.loginSuccess = false
+                    userModel.loginSuccess = false
                 } else {
-                    authModel.loginMessage = "Login successfully"
-                    authModel.loginMethod = .normal
-                    authModel.loginSuccess = true
-                    authModel.state = .signedIn
+                    userModel.loginMethod = .normal
+                    userModel.loginMessage = "Login successfully"
+                    userModel.loginSuccess = true
+                    userModel.state = .signedIn
                     model.requestGeolocationPermission()
 
                 }
