@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
   @EnvironmentObject var authModel: AuthenticationModel
-  @EnvironmentObject var model: RestaurantModel
+  @EnvironmentObject var restaurantModel: RestaurantModel
 
   
   var body: some View {

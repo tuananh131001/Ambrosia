@@ -10,6 +10,7 @@ import Firebase
 
 struct LoginPhoneModal: View {
     @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var model: RestaurantModel
     
     @Binding var showLoginPhoneModal: Bool
     @State var checkCode: Bool = false
@@ -42,11 +43,17 @@ struct LoginPhoneModal: View {
                             .bold()
                     }
                     .buttonStyle(ButtonStyleWhite())
+                    
+                    if (message != "") {
+                        Text(message)
+                    }
+                    
                 }
                 
                 if (checkCode) {
                     SecureField("Enter code", text: $code)
                         .modifier(TextFieldModifier())
+                    
                     
                     Button {
                         if (code != "") {
@@ -61,6 +68,10 @@ struct LoginPhoneModal: View {
                             .bold()
                     }
                     .buttonStyle(ButtonStyleWhite())
+                    
+                    if (message != "") {
+                        Text(message)
+                    }
                 }
 
                 
@@ -88,8 +99,10 @@ struct LoginPhoneModal: View {
     }
     
     func sendCode() {
+        print(phone)
         PhoneAuthProvider.provider()
           .verifyPhoneNumber(phone, uiDelegate: nil) { verificationID, error in
+              
               if let error = error {
                   print("ERROR SEND CODE TO PHONE")
 //                  print(error.localizedDescription)
@@ -120,6 +133,7 @@ struct LoginPhoneModal: View {
             print("Sign in by PHONE is success")
             authModel.loginSuccess = true
             authModel.state = .signedIn
+            model.requestGeolocationPermission()
         
         }
     }

@@ -15,29 +15,29 @@ import Firebase
 
 
 struct LaunchContentView: View {
-    @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var restaurantModel: RestaurantModel
     @EnvironmentObject var authModel: AuthenticationModel
     
     @StateObject var firebaseService = FirebaseService.services
     
     @State var email = ""
     @State var password = ""
-    @State var phone = ""
-    @State var code = ""
-    @State var appleID = ""
-    @State var appleIDPassword = ""
     @State var showLoginMessage = false
     @State var showingSignUpSheet = false
     @State var showLoginPhoneModal = false
     @State var showForgetPasswordModal = false
-    @State var checkCode = false
     @State var showEnterCodeField = false
     
-    @State private var loginMessage = ""
-
-    @FocusState private var emailIsFocused: Bool
-    @FocusState private var passwordIsFocused: Bool
-
+//    @State var checkCode: Bool = false
+//    @State var message: String = ""
+//    @State var phone: String = ""
+//    @State var code: String = ""
+    
+//    @State private var loginMessage = ""
+    
+    @FocusState private var emailIsFocused : Bool
+    @FocusState private var passwordIsFocused : Bool
+    
     var openSetting = false
     var body: some View {
         ZStack (alignment: .center) {
@@ -73,8 +73,8 @@ struct LaunchContentView: View {
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
                             if (showLoginMessage) {
-                            Text(loginMessage)
-                                .foregroundColor(authModel.loginSuccess ? .green : .red)
+                                Text(authModel.loginMessage)
+                                    .foregroundColor(authModel.loginSuccess ? .green : .red)
                             }
                         }
 
@@ -89,7 +89,7 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN LOGIN
                             Button {
-                                login()
+                                NormalSignIn(email: email, password: password)
                                 showLoginMessage = true
                             } label: {
                                 Text("Sign In")
@@ -97,29 +97,53 @@ struct LaunchContentView: View {
                             }
                             .buttonStyle(ButtonStylePrimary())
                             
-                            // MARK: BTN PHONE
-                            Button {
-                                showLoginPhoneModal = true
-                            } label: {
-                                HStack {
-                                    Image("phone-icon")
-                                    Text("Sign in with Phone")
-                                        .bold()
-                                }
-                            }
-                            .buttonStyle(ButtonStylePrimary())
                             
                             // MARK: BTN GOOGLE
                             Button {
                                 authModel.GoogleSignIn()
+                                if (authModel.loginSuccess) {
+                                    restaurantModel.requestGeolocationPermission()
+                                }
                             } label: {
                                 HStack {
-                                    Image("google-icon")
+                                    Image("gg-icon")
                                     Text("Sign in with Google")
                                         .bold()
                                 }
                             }
                             .buttonStyle(ButtonStylePrimary())
+                            
+                            
+                            // MARK: BTN MICROSOFT
+                            Button {
+                                authModel.MicrosoftSignIn()
+                                if (authModel.loginSuccess) {
+                                    restaurantModel.requestGeolocationPermission()
+                                }
+                            } label: {
+                                HStack {
+                                    Image("microsoft-icon")
+                                    Text("Sign in with Microsoft")
+                                        .bold()
+                                }
+                            }
+                            .buttonStyle(ButtonStylePrimary())
+                            
+//                            // MARK: BTN PHONE
+//                            Button {
+//                                showLoginPhoneModal = true
+//                            } label: {
+//                                HStack {
+//                                    Image("phone-icon")
+//                                    Text("Sign in with Phone")
+//                                        .bold()
+//                                }
+//                            }
+//                            .buttonStyle(ButtonStylePrimary())
+                            
+                            
+                            
+                           
                             
                             Text("or")
                                 .foregroundColor(.gray)
@@ -162,6 +186,8 @@ struct LaunchContentView: View {
             if (showForgetPasswordModal) {
                 ForgetPasswordModal(showForgetPasswordModal: $showForgetPasswordModal)
             }
+            
+            
         }.sheet(isPresented: $showingSignUpSheet) {
             SignUpView()
         }
@@ -169,27 +195,28 @@ struct LaunchContentView: View {
 
     }
 
+    
     // MARK: LOGIN LOGIC
-    // Login function to use Firebase to check username and password to sign in
-    @MainActor
-    func login() {
+    func NormalSignIn(email: String, password: String) {
         if (email == "" || password == "") {
-            loginMessage = "Please enter email and password"
+            authModel.loginMessage = "Please enter email and password"
             authModel.loginSuccess = false
         }
         else {
-            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
                 if error != nil {
                     let err = error?.localizedDescription ?? ""
                     print(err)
                     if (err.contains("no user record")) {
-                        loginMessage = "This email hasn't register yet"
+                        authModel.loginMessage = "This email hasn't register yet"
                     }
-                    loginMessage = "Invalid sign-in credentials"
+                    else {
+                        authModel.loginMessage = "Invalid sign-in credentials"
+                    }
                     authModel.loginSuccess = false
                 } else {
-                    print("success")
-                    loginMessage = "Log in successfully"
+                    authModel.loginMessage = "Login successfully"
+                    authModel.loginMethod = .normal
                     authModel.loginSuccess = true
                     
                     // fetch current user and store into auth model for later use
@@ -198,11 +225,12 @@ struct LaunchContentView: View {
                         
                     }
                     authModel.state = .signedIn
-                    model.requestGeolocationPermission()
+                    restaurantModel.requestGeolocationPermission()
+
                 }
             }
             
         }
-    }
+    }//end of NormalLogin
     
 }

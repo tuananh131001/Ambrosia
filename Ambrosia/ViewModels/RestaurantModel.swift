@@ -24,8 +24,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var hasError = false
     @Published var error: RestaurantError?
     @Published var type:String?
-    
+    @Published var restaurantSelected:Int?
     @Published var loginSuccess = false
+    @Published var currentRestaurantDetail:RestaurantDetail?
     
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -121,8 +122,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //    }
     
     func fetchDetail(place_id: String) {
-//        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
-        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyDNI_ZWPqvdS6r6gPVO50I4TlYkfkZdXh8"
+        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
         print(urlString2)
         if let url2 = URL(string: urlString2) {
             URLSession.shared
@@ -139,7 +139,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                                 self.updateOptions()
                                 self.updateRestaurantDetailDistance()
                                 self.getType()
-                                print(restaurantDetail)
+                                self.currentRestaurantDetail = restaurantDetail
                             }
                             else {
                                 print("notthing")
@@ -156,6 +156,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         // "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
         let urlString = "https://puppychan.github.io/places.json"
         
+        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
         
         if let url = URL(string: urlString) {
             URLSession.shared
@@ -246,7 +247,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         let id = UUID()
         let date = Date.now
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
-        currentRestaurant?.review.append(newReview)
+        self.restaurantDetail?.reviews.append(newReview)
+        self.currentRestaurantDetail?.reviews.append(newReview)
     }
     
     func getType(){

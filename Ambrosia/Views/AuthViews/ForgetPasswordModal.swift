@@ -11,6 +11,8 @@ import Firebase
 struct ForgetPasswordModal: View {
     @Binding var showForgetPasswordModal: Bool
     @State var email: String = ""
+    @State var message: String = ""
+    @State var showMessage: Bool = false
     
     var body: some View {
         ZStack {
@@ -21,14 +23,23 @@ struct ForgetPasswordModal: View {
                     .modifier(TextFieldModifier())
                 
                 Button {
+                    if (email != "") {
+                        resetPassword()
+                    }
+                    else {
+                        message = "Please enter email"
+                    }
+                    showMessage = true
                     
                 } label: {
-                    Text("Next")
+                    Text("Send")
                         .bold()
                 }
                 .buttonStyle(ButtonStyleWhite())
                 
-
+                if (showMessage && message != "") {
+                    Text(message)
+                }
                 
             }
             .padding(15)
@@ -48,6 +59,21 @@ struct ForgetPasswordModal: View {
                 .padding(.trailing, 20),
                 alignment: .topTrailing
                 )
+        }
+    }
+    
+    func resetPassword() {
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+            if let error = error {
+                message = "Cannot send message to your email"
+                //show alert here
+                print(error.localizedDescription)
+            }
+            else {
+                //show alert here
+                message = "We sent you an email with instructions on how to reset your password"
+                print("We send you an email with instructions on how to reset your password.")
+            }
         }
     }
 }

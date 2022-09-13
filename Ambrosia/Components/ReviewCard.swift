@@ -14,13 +14,13 @@ struct ReviewCard: View {
     var body: some View {
         VStack (alignment:.leading,spacing:15){
             HStack{
-                Image(review.image).resizable().aspectRatio(contentMode: .fill).frame(width: 50, height: 50).clipShape(Circle())
+                Image(review.image).resizable().aspectRatio(contentMode: .fill).frame(width: 40, height: 40).clipShape(Circle())
                 Text(review.username).foregroundColor(Color("TextColor")).bold().font(.system(size: 20))
             }
             HStack{
                 RatingView(rating: $rating, tappable: false,width: 12,height: 12)
                 Text("•").foregroundColor(Color("TextColor")).bold().font(.system(size: 14))
-                Text(FormatDate.convertDateToString(formatDay: review.dateCreated)).foregroundColor(Color("TextColor")).font(.system(size: 14))
+                Text(FormatDate.convertDateToString(formatDay: review.dateCreated)).foregroundColor(Color("SubTextColor")).font(.system(size: 14))
             }
             Text(review.reviewDescription).foregroundColor(Color("TextColor")).font(.system(size: 17))
             HStack(spacing:10){
@@ -28,8 +28,8 @@ struct ReviewCard: View {
                     // TODO: Pass correct review from the restaurant detail list to use
                     restaurantModel.updateLikeForReview(id: review.id)
                 } label: {
-                    Image(systemName: !review.isLiked ? "hand.thumbsup" : "hand.thumbsup.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 20, height: 14)
-                    Text(!review.isLiked ? "Helpful?" : "").foregroundColor(Color("TextColor")).font(.system(size: 14))
+                    Image(systemName: !review.isLiked ? "hand.thumbsup" : "hand.thumbsup.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 20, height: 14).foregroundColor(Color("SecondaryColor"))
+                    Text(!review.isLiked ? "Helpful?" : "").foregroundColor(Color("SubTextColor")).font(.system(size: 14)).bold()
                 }
 
          

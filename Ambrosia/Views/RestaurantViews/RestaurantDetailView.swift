@@ -17,15 +17,15 @@
 import SwiftUI
 
 struct RestaurantDetailView: View {
- 
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    
-    
-    @EnvironmentObject var restaurantModel: RestaurantModel
+    @State var showReview = false
     @EnvironmentObject var userModel: AuthenticationModel
     @StateObject var firebaseService: FirebaseService = FirebaseService.services
     
+    @EnvironmentObject var restaurantModel: RestaurantModel
+    @State var showOpenningHours = false
+    @State var showReview = false
     var btnBack : some View { Button(action: {
         self.presentationMode.wrappedValue.dismiss()
     }) {
@@ -48,13 +48,20 @@ struct RestaurantDetailView: View {
                     else {
                         Image("testRestaurants").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.5).ignoresSafeArea()
                     }
+                    // MARK: Restaurant detail Vstack section
                     VStack(alignment:.leading){
                         HStack{
                             Image(systemName:"clock.circle").foregroundColor(Color("PrimaryColor"))
                             Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                             Spacer()
-                            Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-                        
+                            Button {
+                                showOpenningHours = true
+                            } label: {
+                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                            }.sheet(isPresented: $showOpenningHours) {
+                                OpeningHoursView()
+                            }
+                            
                         }
                         
                         
@@ -63,7 +70,11 @@ struct RestaurantDetailView: View {
                             Image(systemName:"phone.circle.fill").foregroundColor(Color("TextColor"))
                             Text("Phone number: \(restaurantModel.restaurantDetail?.formatted_phone_number ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                             Spacer()
+                            
                             Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                            
+                            
+                            
                         }
                         Divider()
                         
@@ -73,10 +84,17 @@ struct RestaurantDetailView: View {
                             Text("\(restaurantModel.restaurantDetail?.rating ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                             Text("(\(restaurantModel.restaurantDetail?.user_ratings_total ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
                             Spacer()
-                            NavigationLink(destination: {
-                                Text("Hello")
-                            }) {
-                                Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+//                            NavigationLink(destination: {
+//                                ReviewView()
+//                            }) {
+//                                Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+//                            }
+                            Button {
+                                showReview = true
+                            } label: {
+                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                            }.sheet(isPresented: $showReview) {
+                                ReviewView()
                             }
                             
                         }
@@ -91,12 +109,13 @@ struct RestaurantDetailView: View {
                         
                     }.offset(y:100).padding()
                     
+                    //MARK: Rectange Resutaurant Detail Card
                     ZStack {
                         Rectangle().foregroundColor(.white).frame(width: geo.size.width-30, height: geo.size.height/4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
                         VStack(spacing:5){
                             HStack{
-                                Image(systemName: "clock.fill").foregroundColor(Color("SecondaryColor"))
-                                Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "Status: CLOSED").font(.system(size: 14)).foregroundColor(Color("SecondaryColor")).bold()
+                                Text("⏰").font(.system(size: 12))
+                                Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
                                 
                             }
                             Text(restaurantModel.restaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
@@ -123,9 +142,16 @@ struct RestaurantDetailView: View {
             
         }
         else{
-            ProgressView()
+                ProgressView(){
+                    VStack{
+                        GifView(name: "nothing").offset(y:120)
+                    }
+                }.progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
+            
+          
+          }
         }
-    }
+    
     
     
     
@@ -162,25 +188,6 @@ struct RestaurantDetailView: View {
 //
 //}
 
-
-extension UINavigationController {
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //        let appearance = UINavigationBarAppearance()
-        //        appearance.configureWithTransparentBackground()
-        //        appearance.backgroundImage = UIImage(named: "testRestaurant")
-        //        appearance.backgroundImageContentMode = .scaleAspectFill
-        //
-        //        let appearance2 = UINavigationBarAppearance()
-        //
-        //
-        //        navigationBar.standardAppearance = appearance
-        //        navigationBar.compactAppearance = appearance
-        //        navigationBar.scrollEdgeAppearance = appearance
-        
-    }
-}
 
 struct RestaurantDetailPreview:PreviewProvider{
     static var previews: some View {
