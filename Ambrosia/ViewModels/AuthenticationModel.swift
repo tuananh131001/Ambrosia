@@ -10,13 +10,17 @@ import GoogleSignIn
 
 class AuthenticationModel: ObservableObject {
 
-    // 1
     enum SignInState {
         case signedIn
         case signedOut
     }
+    
+    enum SignInMethod {
+        case normal
+        case google
+        case phone
+    }
 
-    // 2
     @Published var state: SignInState = .signedOut
     @Published var loginSuccess: Bool = false
     @Published var isNewUser: Bool = false
@@ -24,6 +28,36 @@ class AuthenticationModel: ObservableObject {
     @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0)
     let genders = ["Male", "Female"]
 
+    @Published var loginMethod: SignInMethod = .normal
+    @Published var loginMessage = ""
+    
+//    func NormalSignIn(email: String, password: String) {
+//        if (email == "" || password == "") {
+//            self.loginMessage = "Please enter email and password"
+//            self.loginSuccess = false
+//        }
+//        else {
+//            Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
+//                if error != nil {
+//                    let err = error?.localizedDescription ?? ""
+//                    print(err)
+//                    if (err.contains("no user record")) {
+//                        self.loginMessage = "This email hasn't register yet"
+//                    }
+//                    else {
+//                        self.loginMessage = "Invalid sign-in credentials"
+//                    }
+//                    self.loginSuccess = false
+//                } else {
+//                    print("success")
+//                    self.loginMessage = "successfully"
+//                    self.loginSuccess = true
+//                }
+//            }
+//        }
+//    }
+    
+    
     func GoogleSignIn() {
         // 1
         if GIDSignIn.sharedInstance.hasPreviousSignIn() {
@@ -71,22 +105,45 @@ class AuthenticationModel: ObservableObject {
                 print(error.localizedDescription)
             } else {
                 loginSuccess = true
+                loginMethod = .google
                 self.state = .signedIn
             }
         }
     }
-
-    func GGSignOut() {
-        // 1
-        GIDSignIn.sharedInstance.signOut()
-
+    
+//    func GGSignOut() {
+//      GIDSignIn.sharedInstance.signOut()
+//      
+//      do {
+//            try Auth.auth().signOut()
+//            loginSuccess = false
+//            state = .signedOut
+//      } catch {
+//        print(error.localizedDescription)
+//      }
+//    }
+//    
+//    func NormalSignOut() {
+//        let firebaseAuth = Auth.auth()
+//        do {
+//            try firebaseAuth.signOut()
+//            loginSuccess = false
+//            state = .signedOut
+//        } catch let signOutError as NSError {
+//            print("Error signing out: %@", signOutError)
+//        }
+//    }
+    
+    func SignOut() {
+        if (loginMethod == .google) {
+            GIDSignIn.sharedInstance.signOut()
+        }
         do {
-            // 2
-            try Auth.auth().signOut()
-            loginSuccess = false
-            state = .signedOut
+              try Auth.auth().signOut()
+              loginSuccess = false
+              state = .signedOut
         } catch {
-            print(error.localizedDescription)
+          print(error.localizedDescription)
         }
     }
 }

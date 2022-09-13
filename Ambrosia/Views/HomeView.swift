@@ -23,7 +23,20 @@ struct HomeViewContent: View {
     @Binding var searchQuery: String
     @Binding var tabSelection: Int
     
-    @EnvironmentObject var restaurantModel: RestaurantModel
+    @EnvironmentObject var model: RestaurantModel
+
+    /*
+    @EnvironmentObject var viewModel: AuthenticationModel
+    
+    init() {
+        // Customize the tab bar for the whole app
+        UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color("PlaceholderText"))
+        UITabBar.appearance().barTintColor = UIColor(Color("PrimaryColor"))
+    }
+    */
+    
+    
     var body: some View {
         TabView(selection: $tabSelection) {
             //  Main feature character view

@@ -21,22 +21,17 @@ struct LaunchContentView: View {
     
     @State var email = ""
     @State var password = ""
-    @State var phone = ""
-    @State var code = ""
-    @State var appleID = ""
-    @State var appleIDPassword = ""
     @State var showLoginMessage = false
     @State var showingSignUpSheet = false
     @State var showLoginPhoneModal = false
     @State var showForgetPasswordModal = false
-    @State var checkCode = false
     @State var showEnterCodeField = false
     
-    @State private var loginMessage = ""
-
-    @FocusState private var emailIsFocused: Bool
-    @FocusState private var passwordIsFocused: Bool
-
+//    @State private var loginMessage = ""
+    
+    @FocusState private var emailIsFocused : Bool
+    @FocusState private var passwordIsFocused : Bool
+    
     var openSetting = false
     var body: some View {
         ZStack (alignment: .center) {
@@ -72,8 +67,8 @@ struct LaunchContentView: View {
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
                             if (showLoginMessage) {
-                            Text(loginMessage)
-                                .foregroundColor(authModel.loginSuccess ? .green : .red)
+                                Text(authModel.loginMessage)
+                                    .foregroundColor(authModel.loginSuccess ? .green : .red)
                             }
                         }
 
@@ -88,7 +83,7 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN LOGIN
                             Button {
-                                login()
+                                NormalSignIn(email: email, password: password)
                                 showLoginMessage = true
                             } label: {
                                 Text("Sign In")
@@ -168,26 +163,28 @@ struct LaunchContentView: View {
 
     }
 
+    
     // MARK: LOGIN LOGIC
-    // Login function to use Firebase to check username and password to sign in
-    func login() {
+    func NormalSignIn(email: String, password: String) {
         if (email == "" || password == "") {
-            loginMessage = "Please enter email and password"
+            authModel.loginMessage = "Please enter email and password"
             authModel.loginSuccess = false
         }
         else {
-            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
                 if error != nil {
                     let err = error?.localizedDescription ?? ""
                     print(err)
                     if (err.contains("no user record")) {
-                        loginMessage = "This email hasn't register yet"
+                        authModel.loginMessage = "This email hasn't register yet"
                     }
-                    loginMessage = "Invalid sign-in credentials"
+                    else {
+                        authModel.loginMessage = "Invalid sign-in credentials"
+                    }
                     authModel.loginSuccess = false
                 } else {
-                    print("success")
-                    loginMessage = "Log in successfully"
+                    authModel.loginMessage = "Login successfully"
+                    authModel.loginMethod = .normal
                     authModel.loginSuccess = true
                     authModel.state = .signedIn
                     restaurantModel.requestGeolocationPermission()
