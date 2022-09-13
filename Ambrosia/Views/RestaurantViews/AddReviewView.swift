@@ -9,10 +9,8 @@ import SwiftUI
 
 
 struct AddReviewView: View {
-    var restaurant:Restaurant
-    var review:Review
-    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var restaurantModel:RestaurantModel
+    @Environment(\.presentationMode) var presentationMode
     @State private var rating:Int = 0
     @State private var userReview = ""
     
@@ -21,9 +19,10 @@ struct AddReviewView: View {
             geo in
             VStack(alignment:.leading,spacing:20){
                 VStack(spacing:10){
-                    Image(restaurant.photos?[0].photo_reference ?? "testRestaurant").resizable().aspectRatio(contentMode: .fill).frame(width:geo.size.width,height: geo.size.height/3).ignoresSafeArea()
-                    Text(restaurant.name).foregroundColor(Color("TextColor"))
-                    Text(restaurant.formatted_address ?? "").foregroundColor(Color("SubTextColor"))
+                    RestaurantAsyncImage(photo_id: restaurantModel.restaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height/4)
+                    Spacer()
+                    Text(restaurantModel.restaurantDetail?.name ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16))
+                    Text(restaurantModel.restaurantDetail?.formatted_address ?? "").foregroundColor(Color("SubTextColor")).lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50,height: 50).font(.system(size: 14))
                 }
                 
                 VStack(alignment:.leading,spacing:20){
@@ -47,7 +46,7 @@ struct AddReviewView: View {
                     presentationMode.wrappedValue.dismiss()
                     // Add Review from user
                     //TODO: Load restaurant from restaurant models
-                    //                    restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: User.testUser().username, email: User.testUser().email, image: User.testUser().image)
+                    self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: "Sir", email: "Sir@gmail.com", image: "avatar1")
                 } label: {
                     RoundedButton(buttonText: "Submit", width: geo.size.width/1.1, height: 60)
                 }.padding(.horizontal)
@@ -59,6 +58,6 @@ struct AddReviewView: View {
 
 struct AddReview_Previews: PreviewProvider {
     static var previews: some View {
-        AddReviewView(restaurant: Restaurant.testRestaurant(),review:Review.testReviews()[1])
+        AddReviewView().environmentObject(RestaurantModel())
     }
 }
