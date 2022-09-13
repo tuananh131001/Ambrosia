@@ -220,7 +220,7 @@ struct LaunchContentView: View {
                     authModel.loginSuccess = true
                     
                     // fetch current user and store into auth model for later use
-                    firebaseService.fetchUser(uid: Auth.auth().currentUser!.uid, restaurantModel: model) { user in
+                    firebaseService.fetchUser(uid: Auth.auth().currentUser!.uid, restaurantModel: restaurantModel) { user in
                         authModel.user = user ?? User(id: "", name: "Nothing", dob: Date.now, selectedGender: 0)
                         
                     }

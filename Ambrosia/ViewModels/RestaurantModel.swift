@@ -154,8 +154,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func fetchRestaurant() {
         hasError = false
         // "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
-        let urlString = "https://puppychan.github.io/places.json"
-        
         let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
         
         if let url = URL(string: urlString) {

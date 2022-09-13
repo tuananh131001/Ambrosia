@@ -52,7 +52,7 @@ struct RestaurantListView: View {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
                                     restaurantModel.fetchDetail(place_id: searchResults[index].place_id)
-                                    restaurantModel.currentRestaurant = r
+                                    restaurantModel.currentRestaurant = searchResults[index]
                                 }
                                 
                             } label: {

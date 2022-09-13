@@ -19,7 +19,6 @@ import SwiftUI
 struct RestaurantDetailView: View {
 
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var showReview = false
     @EnvironmentObject var userModel: AuthenticationModel
     @StateObject var firebaseService: FirebaseService = FirebaseService.services
     
