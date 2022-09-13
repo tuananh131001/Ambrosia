@@ -36,12 +36,12 @@ struct RestaurantDetailView: View {
     
     
     var body: some View {
-        if restaurantModel.restaurantDetail != nil {
+        if restaurantModel.currentRestaurantDetail != nil {
             GeometryReader{
                 geo in
                 VStack{
-                    if (restaurantModel.restaurantDetail?.photos?[0].photo_reference != "") {
-                        RestaurantAsyncImage(photo_id: restaurantModel.restaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height/2.3)
+                    if (restaurantModel.currentRestaurantDetail?.photos?[0].photo_reference != "") {
+                        RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height/2.3)
                     }
                     else {
                         Image("testRestaurants").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.5).ignoresSafeArea()
@@ -66,7 +66,7 @@ struct RestaurantDetailView: View {
                         Divider()
                         HStack{
                             Image(systemName:"phone.circle.fill").foregroundColor(Color("TextColor"))
-                            Text("Phone number: \(restaurantModel.restaurantDetail?.formatted_phone_number ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                            Text("Phone number: \(restaurantModel.currentRestaurantDetail?.formatted_phone_number ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                             Spacer()
                             
                             Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -79,8 +79,8 @@ struct RestaurantDetailView: View {
                         HStack{
                             
                             Image(systemName:"star.fill").foregroundColor(.yellow)
-                            Text("\(restaurantModel.restaurantDetail?.rating ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                            Text("(\(restaurantModel.restaurantDetail?.user_ratings_total ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
+                            Text("\(restaurantModel.currentRestaurantDetail?.rating ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                            Text("(\(restaurantModel.currentRestaurantDetail?.user_ratings_total ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
                             Spacer()
 //                            NavigationLink(destination: {
 //                                ReviewView()
@@ -113,14 +113,14 @@ struct RestaurantDetailView: View {
                         VStack(spacing:5){
                             HStack{
                                 Text("⏰").font(.system(size: 12))
-                                Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
+                                Text(restaurantModel.currentRestaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
                                 
                             }
-                            Text(restaurantModel.restaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
+                            Text(restaurantModel.currentRestaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
                             HStack{
-                                Text("\(restaurantModel.restaurantDetail?.distance ?? 0,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                                Text("\(restaurantModel.currentRestaurantDetail?.distance ?? 0,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                                 Text("•").foregroundColor(Color("SubTextColor"))
-                                Text(restaurantModel.restaurantDetail?.formatted_address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
+                                Text(restaurantModel.currentRestaurantDetail?.formatted_address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
                                 
                             }.frame(width:geo.size.width-100)
                             HStack{

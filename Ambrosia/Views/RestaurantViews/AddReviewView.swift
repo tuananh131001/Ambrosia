@@ -19,10 +19,10 @@ struct AddReviewView: View {
             geo in
             VStack(alignment:.leading,spacing:20){
                 VStack(spacing:10){
-                    RestaurantAsyncImage(photo_id: restaurantModel.restaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height/4)
+                    RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height/4)
                     Spacer()
-                    Text(restaurantModel.restaurantDetail?.name ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16))
-                    Text(restaurantModel.restaurantDetail?.formatted_address ?? "").foregroundColor(Color("SubTextColor")).lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50,height: 50).font(.system(size: 14))
+                    Text(restaurantModel.currentRestaurantDetail?.name ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16))
+                    Text(restaurantModel.currentRestaurantDetail?.formatted_address ?? "").foregroundColor(Color("SubTextColor")).lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50,height: 50).font(.system(size: 14))
                 }
                 
                 VStack(alignment:.leading,spacing:20){

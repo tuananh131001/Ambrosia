@@ -21,7 +21,6 @@ import MapKit
 
 class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurants = [Restaurant]()
-    @Published var restaurantDetail:RestaurantDetail?
     @Published var hasError = false
     @Published var error: RestaurantError?
     @Published var type:String?
@@ -137,11 +136,10 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                             //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                             if let data2 = data,
                                let restaurantArr2 = try? decoder2.decode(ResponseDetail.self, from: data2) {
-                                self.restaurantDetail = restaurantArr2.result
+                                self.currentRestaurantDetail = restaurantArr2.result
                                 self.updateOptions()
                                 self.updateRestaurantDetailDistance()
                                 self.getType()
-                                self.currentRestaurantDetail = restaurantDetail
                             }
                             else {
                                 print("notthing")
@@ -182,17 +180,17 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     func updateOptions() {
-        if restaurantDetail?.dine_in != nil {
-            restaurantDetail?.options.append("Dine in")
+        if currentRestaurantDetail?.dine_in != nil {
+            currentRestaurantDetail?.options.append("Dine in")
         }
-        if restaurantDetail?.takeout != nil {
-            restaurantDetail?.options.append("Take out")
+        if currentRestaurantDetail?.takeout != nil {
+            currentRestaurantDetail?.options.append("Take out")
         }
-        if restaurantDetail?.delivery != nil {
-            restaurantDetail?.options.append("Delivery")
+        if currentRestaurantDetail?.delivery != nil {
+            currentRestaurantDetail?.options.append("Delivery")
         }
-        if restaurantDetail?.serves_wine != nil {
-            restaurantDetail?.options.append("Serves wine")
+        if currentRestaurantDetail?.serves_wine != nil {
+            currentRestaurantDetail?.options.append("Serves wine")
         }
     }
     
@@ -210,7 +208,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     func updateRestaurantDetailDistance(){
-        restaurantDetail?.distance =  CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurantDetail?.geometry?.location?.lat ?? 0, lon2: restaurantDetail?.geometry?.location?.lng ?? 0)
+        currentRestaurantDetail?.distance =  CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: currentRestaurantDetail?.geometry?.location?.lat ?? 0, lon2: currentRestaurantDetail?.geometry?.location?.lng ?? 0)
     }
     
     // Function to get current restaurant
@@ -239,30 +237,29 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         let id = UUID()
         let date = Date.now
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
-        self.restaurantDetail?.reviews.append(newReview)
         self.currentRestaurantDetail?.reviews.append(newReview)
-        print(self.restaurantDetail as Any)
-        firebaseService.addReviewToFirebase(restaurant:  self.restaurantDetail ?? RestaurantDetail.testRestaurantDetail())
+        print(self.currentRestaurantDetail as Any)
+        firebaseService.addReviewToFirebase(restaurant:  self.currentRestaurantDetail ?? RestaurantDetail.testRestaurantDetail())
     }
     func updateReview(reviews:[Review]){
         print(reviews)
-        self.restaurantDetail?.reviews = reviews
+        self.currentRestaurantDetail?.reviews = reviews
     }
     
     func getType(){
-        if (restaurantDetail?.price_level == 0){
+        if (currentRestaurantDetail?.price_level == 0){
             self.type = "Free"
         }
-        else if (restaurantDetail?.price_level == 1){
+        else if (currentRestaurantDetail?.price_level == 1){
             self.type = "Inexpensive"
         }
-        else if (restaurantDetail?.price_level == 2){
+        else if (currentRestaurantDetail?.price_level == 2){
             self.type = "Moderate"
         }
-        else if (restaurantDetail?.price_level == 3){
+        else if (currentRestaurantDetail?.price_level == 3){
             self.type = "Expensive"
         }
-        else if (restaurantDetail?.price_level == 4){
+        else if (currentRestaurantDetail?.price_level == 4){
             self.type = "Very Expensive"
         }
         else{

@@ -12,29 +12,24 @@ struct Breadcrumbs: View {
     var body: some View {
         ScrollView(.horizontal) {
             LazyHStack(spacing: 20) {
-                ForEach(0..<(restaurantModel.restaurantDetail?.options.count ?? 0),id: \.self) {
+                ForEach(0..<(restaurantModel.currentRestaurantDetail?.options.count ?? 0),id: \.self) {
                     index in
-
                     HStack{
-                        if (restaurantModel.restaurantDetail?.options[index] == "Dine in"){
+                        if (restaurantModel.currentRestaurantDetail?.options[index] == "Dine in"){
                             Text("🍔").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
                         }
-                        else if (restaurantModel.restaurantDetail?.options[index] == "Delivery"){
+                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Delivery"){
                             Text("🛵").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
                         }
-                        else if (restaurantModel.restaurantDetail?.options[index] == "Take out"){
+                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Take out"){
                             Text("🍱").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
                         }
-                        else if (restaurantModel.restaurantDetail?.options[index] == "Serves wine"){
+                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Serves wine"){
                             Text("🍷").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
                         }
-
-
-                        Text(restaurantModel.restaurantDetail?.options[index] ?? "").foregroundColor(Color("SubTextColor")).bold().font(.system(size: 14)).padding([.top,.bottom],7).padding(.trailing,17)
+                        Text(restaurantModel.currentRestaurantDetail?.options[index] ?? "").foregroundColor(Color("SubTextColor")).bold().font(.system(size: 14)).padding([.top,.bottom],7).padding(.trailing,17)
                     }.background(Color("SubTextColor").opacity(0.18))
                         .cornerRadius(20)
-
-
 
                 }
 

@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestoreSwift
 class FirebaseService: ObservableObject {
     static let services = FirebaseService()
-    @Published var reviewFetch: [Review] = []
+    
     @Published var showSignUpMessage = false
     @Published var signUpMessage = ""
     @Published var signUpSuccess = false
@@ -60,6 +60,7 @@ class FirebaseService: ObservableObject {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender], merge: true)
     }
     func addReviewToFirebase(restaurant: RestaurantDetail) {
+        Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").setData([ "created": true ], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
         for riviu in restaurant.reviews {
@@ -80,6 +81,7 @@ class FirebaseService: ObservableObject {
             }
             else {
                 if let document = document {
+                    var reviewFetch: [Review] = []
                     let data = document.data()
                     let reviews = data?["reviews"] as? [[String: Any]]
                     for review in reviews ?? [] {
@@ -93,10 +95,12 @@ class FirebaseService: ObservableObject {
                         let image: String = review["image"] as? String ?? ""
                         let isLiked: Bool = review["isLiked"] as? Bool ?? false
                         let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, username: username, email: email, image: image, isLiked: isLiked)
-                        self.reviewFetch.append(newReview)
+                        reviewFetch.append(newReview)
                     }
                     // assign to the reviews on local
-                    model.restaurantDetail?.reviews = self.reviewFetch
+//                    model.restaurantDetail?.reviews = self.reviewFetch
+                    model.currentRestaurantDetail?.reviews = reviewFetch
+                    //clear
                 }
             }
         }
