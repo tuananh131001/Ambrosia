@@ -21,36 +21,47 @@ struct RestaurantDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var userModel: AuthenticationModel
     @StateObject var firebaseService: FirebaseService = FirebaseService.services
-    
+
     @EnvironmentObject var restaurantModel: RestaurantModel
     @State var showOpenningHours = false
     @State var showReview = false
-    var btnBack : some View { Button(action: {
-        self.presentationMode.wrappedValue.dismiss()
-    }) {
-        HStack {
+    @State var clickFavourite = false
+    var btnBack: some View {
+        Button(action: {
+            self.presentationMode.wrappedValue.dismiss()
+        }) {
             CircleButtonView(buttonImage: "arrow.left")
-            CircleButtonView(buttonImage: "heart").offset(x:260)
-            
-        }
-    }.buttonStyle(PlainButtonStyle())
+        }.buttonStyle(PlainButtonStyle())
     }
     
+    var favouriteBtn: some View {
+        Button(action: {
+            clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: ""))
+        }, label: {
+            CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
+                .onAppear() {
+                    print("Sir favourite: ", userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: "click favorite")))
+                clickFavourite = userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: "click favorite")) == nil ? false : true
+            }
+        })
+        
+    }
+
     var body: some View {
         if restaurantModel.restaurantDetail != nil {
-            GeometryReader{
+            GeometryReader {
                 geo in
-                VStack{
+                VStack {
                     if (restaurantModel.restaurantDetail?.photos?[0].photo_reference != "") {
-                        RestaurantAsyncImage(photo_id: restaurantModel.restaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height/2.3)
+                        RestaurantAsyncImage(photo_id: restaurantModel.restaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height / 2.3)
                     }
                     else {
-                        Image("testRestaurants").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.5).ignoresSafeArea()
+                        Image("testRestaurants").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height / 2.5).ignoresSafeArea()
                     }
                     // MARK: Restaurant detail Vstack section
-                    VStack(alignment:.leading){
-                        HStack{
-                            Image(systemName:"clock.circle").foregroundColor(Color("PrimaryColor"))
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "clock.circle").foregroundColor(Color("PrimaryColor"))
                             Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                             Spacer()
                             Button {
@@ -60,28 +71,28 @@ struct RestaurantDetailView: View {
                             }.sheet(isPresented: $showOpenningHours) {
                                 OpeningHoursView()
                             }
-                            
+
                         }
-                        
-                        
+
+
                         Divider()
-                        HStack{
-                            Image(systemName:"phone.circle.fill").foregroundColor(Color("TextColor"))
+                        HStack {
+                            Image(systemName: "phone.circle.fill").foregroundColor(Color("TextColor"))
                             Text("Phone number: \(restaurantModel.restaurantDetail?.formatted_phone_number ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                             Spacer()
-                            
+
                             Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-                            
-                            
-                            
+
+
+
                         }
                         Divider()
-                        
-                        HStack{
-                            
-                            Image(systemName:"star.fill").foregroundColor(.yellow)
-                            Text("\(restaurantModel.restaurantDetail?.rating ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                            Text("(\(restaurantModel.restaurantDetail?.user_ratings_total ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
+
+                        HStack {
+
+                            Image(systemName: "star.fill").foregroundColor(.yellow)
+                            Text("\(restaurantModel.restaurantDetail?.rating ?? 0, specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                            Text("(\(restaurantModel.restaurantDetail?.user_ratings_total ?? 0))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
                             Spacer()
 //                            NavigationLink(destination: {
 //                                ReviewView()
@@ -95,65 +106,67 @@ struct RestaurantDetailView: View {
                             }.sheet(isPresented: $showReview) {
                                 ReviewView()
                             }
-                            
+
                         }
                         Divider()
-                        
-                        VStack(alignment:.leading){
+
+                        VStack(alignment: .leading) {
                             Text("🎁 Special Services").foregroundColor(Color("PrimaryColor")).font(.system(size: 16))
-                            Breadcrumbs().offset(y:-20)
-                            
+                            Breadcrumbs().offset(y: -20)
+
                         }
-                        
-                        
-                    }.offset(y:100).padding()
-                    
+
+
+                    }.offset(y: 100).padding()
+
                     //MARK: Rectange Resutaurant Detail Card
                     ZStack {
-                        Rectangle().foregroundColor(.white).frame(width: geo.size.width-30, height: geo.size.height/4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
-                        VStack(spacing:5){
-                            HStack{
+                        Rectangle().foregroundColor(.white).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
+                        VStack(spacing: 5) {
+                            HStack {
                                 Text("⏰").font(.system(size: 12))
                                 Text(restaurantModel.restaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
-                                
+
                             }
-                            Text(restaurantModel.restaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
-                            HStack{
-                                Text("\(restaurantModel.restaurantDetail?.distance ?? 0,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                            Text(restaurantModel.restaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width: geo.size.width - 70).lineLimit(2)
+                            HStack {
+                                Text("\(restaurantModel.restaurantDetail?.distance ?? 0, specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                                 Text("•").foregroundColor(Color("SubTextColor"))
                                 Text(restaurantModel.restaurantDetail?.formatted_address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
-                                
-                            }.frame(width:geo.size.width-100)
-                            HStack{
+
+                            }.frame(width: geo.size.width - 100)
+                            HStack {
                                 Text("Price:").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
-                                
+
                                 Text(restaurantModel.type ?? "Inexpensive").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                             }
-                            
-                        }.frame(width: geo.size.width-30).padding()
-                    }.offset(y:-400)
-                    
+
+                        }.frame(width: geo.size.width - 30).padding()
+                    }.offset(y: -400)
+
                 }
-            }.ignoresSafeArea()
+            }
+                .ignoresSafeArea()
                 .navigationBarBackButtonHidden(true)
-                .navigationBarItems(leading: btnBack)
-            
-            
+                .navigationBarItems(leading: btnBack, trailing: favouriteBtn)
+
+
         }
-        else{
-                ProgressView(){
-                    VStack{
-                        GifView(name: "nothing").offset(y:120)
-                    }
-                }.progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
-            
-          
-          }
+        else {
+            ProgressView() {
+                VStack {
+                    GifView(name: "nothing").offset(y: 120)
+                }
+            }
+                .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
+
+
         }
-    
-    
-    
-    
+    }
+
+
+
+
 }
 
 //struct RestaurantDetailImage: View {
@@ -188,7 +201,7 @@ struct RestaurantDetailView: View {
 //}
 
 
-struct RestaurantDetailPreview:PreviewProvider{
+struct RestaurantDetailPreview: PreviewProvider {
     static var previews: some View {
         RestaurantDetailView()
             .environmentObject(RestaurantModel())

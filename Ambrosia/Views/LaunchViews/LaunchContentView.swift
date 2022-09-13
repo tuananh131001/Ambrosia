@@ -221,8 +221,7 @@ struct LaunchContentView: View {
                     
                     // fetch current user and store into auth model for later use
                     firebaseService.fetchUser(uid: Auth.auth().currentUser!.uid, restaurantModel: restaurantModel) { user in
-                        authModel.user = user ?? User(id: "", name: "Nothing", dob: Date.now, selectedGender: 0)
-                        
+                        authModel.user = user ?? User(id: "", name: "Nothing", dob: Date.now, selectedGender: 0)  
                     }
                     authModel.state = .signedIn
                     restaurantModel.requestGeolocationPermission()

@@ -18,16 +18,18 @@ struct FavouriteRestaurantView: View {
                                 HStack {
                                     RestaurantAsyncImage(photo_id: r.photos?[0].photo_reference ?? "testRestaurant").frame(width: geo.size.width / 3, height: geo.size.width / 3).cornerRadius(10)
                                     VStack(alignment: .leading) {
-                                        RatingView(rating: $rating, tappable: false, width: geo.size.width / 20, height: geo.size.width / 20)
+                                        RatingView(rating: $rating, tappable: false, width: geo.size.width / 25, height: geo.size.width / 25)
                                         Text(r.name)
                                             .lineLimit(1)
                                         
                                         HStack {
-                                            Image(systemName: "mappin.and.ellipse")
+                                            Image(systemName: "car.fill")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: geo.size.width / 25)
-                                            Text(r.vicinity ?? "Address Unupdated")
+                                            Text("\(r.distance)km")
+                                                
+                                            
                                         }
                                         
                                         
@@ -37,7 +39,7 @@ struct FavouriteRestaurantView: View {
                                 }
                                 .onAppear() {
                                     rating = Int(r.rating ?? 0)
-                                    print(r)
+                                    print("User model in favorite page sir:", authModel.user)
                                 }
                                 
                             }
@@ -56,5 +58,6 @@ struct FavouriteRestaurantView_Previews: PreviewProvider {
     static var previews: some View {
         FavouriteRestaurantView()
             .environmentObject(RestaurantModel())
+            .environmentObject(AuthenticationModel())
     }
 }

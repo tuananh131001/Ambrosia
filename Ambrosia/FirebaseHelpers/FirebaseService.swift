@@ -73,18 +73,20 @@ class FirebaseService: ObservableObject {
     }
     
     func changeFavorites(userModel: AuthenticationModel, restaurant: Restaurant) -> Bool {
-        // return true -> remove favorite
-        // return false -> add favorite
+        // return false -> remove favorite
+        // return true -> add favorite
         let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
         if restaurantIndex != nil {
             userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
             removeFavorites(user: userModel.user, restaurant: restaurant)
-            return true
+            print("remove favourite sir")
+            return false
         }
         else {
+            print("add favourite sir")
             addToFavorites(user: userModel.user, restaurant: restaurant)
             userModel.user.favouriteRestaurants.append(restaurant)
-            return false
+            return true
         }
     }
 
@@ -100,15 +102,19 @@ class FirebaseService: ObservableObject {
             let dob = data["dob"] as? Date ?? Date()
             let selectedGender = data["selectedGender"] as? Int ?? 0
             let restaurantsId = data["favouriteRestaurants"] as? [String] ?? [String]()
-            var favouriteRestaurants = [Restaurant]()
-            for id in restaurantsId {
-                let rest = restaurantModel.findRestaurantById(id)
-                if let newRest = rest {
-                    favouriteRestaurants.append(newRest)
-                }
-            }
-
+//            var favouriteRestaurants = [Restaurant]()
+//            for id in restaurantsId {
+//                let rest = restaurantModel.findRestaurantById(id)
+//                if let newRest = rest {
+//                    favouriteRestaurants.append(newRest)
+//                }
+//            }
+            let favouriteRestaurants = restaurantsId.compactMap({ id in
+                restaurantModel.restaurants.first(where: { $0.place_id == id })
+            })
+            print(favouriteRestaurants)
             let newUser = User(id: uid, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants)
+            print("Sir new user", newUser)
             completion(newUser)
         }
 
