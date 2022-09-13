@@ -27,6 +27,11 @@ struct LaunchContentView: View {
     @State var showForgetPasswordModal = false
     @State var showEnterCodeField = false
     
+//    @State var checkCode: Bool = false
+//    @State var message: String = ""
+//    @State var phone: String = ""
+//    @State var code: String = ""
+    
 //    @State private var loginMessage = ""
     
     @FocusState private var emailIsFocused : Bool
@@ -91,29 +96,53 @@ struct LaunchContentView: View {
                             }
                             .buttonStyle(ButtonStylePrimary())
                             
-                            // MARK: BTN PHONE
-                            Button {
-                                showLoginPhoneModal = true
-                            } label: {
-                                HStack {
-                                    Image("phone-icon")
-                                    Text("Sign in with Phone")
-                                        .bold()
-                                }
-                            }
-                            .buttonStyle(ButtonStylePrimary())
                             
                             // MARK: BTN GOOGLE
                             Button {
                                 authModel.GoogleSignIn()
+                                if (authModel.loginSuccess) {
+                                    model.requestGeolocationPermission()
+                                }
                             } label: {
                                 HStack {
-                                    Image("google-icon")
+                                    Image("gg-icon")
                                     Text("Sign in with Google")
                                         .bold()
                                 }
                             }
                             .buttonStyle(ButtonStylePrimary())
+                            
+                            
+                            // MARK: BTN MICROSOFT
+                            Button {
+                                authModel.MicrosoftSignIn()
+                                if (authModel.loginSuccess) {
+                                    model.requestGeolocationPermission()
+                                }
+                            } label: {
+                                HStack {
+                                    Image("microsoft-icon")
+                                    Text("Sign in with Microsoft")
+                                        .bold()
+                                }
+                            }
+                            .buttonStyle(ButtonStylePrimary())
+                            
+//                            // MARK: BTN PHONE
+//                            Button {
+//                                showLoginPhoneModal = true
+//                            } label: {
+//                                HStack {
+//                                    Image("phone-icon")
+//                                    Text("Sign in with Phone")
+//                                        .bold()
+//                                }
+//                            }
+//                            .buttonStyle(ButtonStylePrimary())
+                            
+                            
+                            
+                           
                             
                             Text("or")
                                 .foregroundColor(.gray)
@@ -156,6 +185,8 @@ struct LaunchContentView: View {
             if (showForgetPasswordModal) {
                 ForgetPasswordModal(showForgetPasswordModal: $showForgetPasswordModal)
             }
+            
+            
         }.sheet(isPresented: $showingSignUpSheet) {
             SignUpView()
         }
@@ -192,6 +223,6 @@ struct LaunchContentView: View {
                 }
             }
         }
-    }
+    }//end of NormalLogin
     
 }
