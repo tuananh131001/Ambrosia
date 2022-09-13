@@ -54,8 +54,6 @@ struct ReviewView: View {
                     }
                 }.padding([.trailing, .leading], 30).padding(.top,30)
             }
-        
-
         }.background(Color("CardBackgroundColor")).onAppear(perform: {
             print("appear")
             restaurantModel.firebaseService.fetchReviewFromFirebase(restaurant: restaurantModel.currentRestaurantDetail!,model:restaurantModel)

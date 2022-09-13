@@ -12,8 +12,7 @@ struct User: Decodable{
     var name: String
     var dob:Date
     var selectedGender:Int
-    
-
+    var email:String
 }
 
 

@@ -18,24 +18,27 @@ class AuthenticationModel: ObservableObject {
         case signedIn
         case signedOut
     }
-    
     enum SignInMethod {
         case normal
         case google
         case phone
         case microsoft
     }
-
     @Published var state: SignInState = .signedOut
     @Published var loginSuccess: Bool = false
     @Published var isNewUser: Bool = false
 
-    @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0)
+    @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0,email: "")
     let genders = ["Male", "Female"]
 
     @Published var loginMethod: SignInMethod = .normal
     @Published var loginMessage = ""
     
+
+    func fetchUserInfo(id:String,authModel:AuthenticationModel){
+        let services = FirebaseService.services
+        services.getUserFirebase(id: id,authModel: authModel)
+    }
 //    func NormalSignIn(email: String, password: String) {
 //        if (email == "" || password == "") {
 //            self.loginMessage = "Please enter email and password"

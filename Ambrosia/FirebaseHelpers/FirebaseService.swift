@@ -98,12 +98,33 @@ class FirebaseService: ObservableObject {
                         reviewFetch.append(newReview)
                     }
                     // assign to the reviews on local
-//                    model.restaurantDetail?.reviews = self.reviewFetch
                     model.currentRestaurantDetail?.reviews = reviewFetch
                     //clear
                 }
             }
         }
 
+    }
+    func getUserFirebase(id:String,authModel:AuthenticationModel){
+        let docRef = Firestore.firestore().collection("user").document(id )
+        //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
+        docRef.getDocument { document, error in
+            if let error = error as NSError? {
+                print("Error getting document: \(error.localizedDescription)")
+            }
+            else {
+                if let document = document {
+                    let data = document.data()
+                    let id: String = data?["id"]  as? String ?? ""
+                    let name: String = data?["name"] as? String ?? ""
+                    let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
+                    let dob: Date = timestamp.dateValue()
+                    let selectedGender:Int = data?["selectedGender"]  as? Int ?? 1
+                    let email:String = data?["email"]  as? String ?? ""
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, email: email)
+                    authModel.user = newUser
+                }
+            }
+        }
     }
 }

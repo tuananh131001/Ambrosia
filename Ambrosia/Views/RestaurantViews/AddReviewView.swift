@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddReviewView: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
+    @EnvironmentObject var authModel:AuthenticationModel
     @Environment(\.presentationMode) var presentationMode
     @State private var rating:Int = 0
     @State private var userReview = ""
@@ -46,7 +47,7 @@ struct AddReviewView: View {
                     presentationMode.wrappedValue.dismiss()
                     // Add Review from user
                     //TODO: Load restaurant from restaurant models
-                    self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: "Sir", email: "Sir@gmail.com", image: "avatar1")
+                    self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: authModel.user.name, email: authModel.user.email, image: "avatar1")
                 } label: {
                     RoundedButton(buttonText: "Submit", width: geo.size.width/1.1, height: 60)
                 }.padding(.horizontal)

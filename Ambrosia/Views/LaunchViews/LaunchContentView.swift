@@ -213,7 +213,10 @@ struct LaunchContentView: View {
                     }
                     authModel.loginSuccess = false
                 } else {
+                    
                     authModel.loginMessage = "Login successfully"
+                    print(result?.user.uid)
+                    authModel.fetchUserInfo(id: result?.user.uid ?? "",authModel:authModel)
                     authModel.loginMethod = .normal
                     authModel.loginSuccess = true
                     authModel.state = .signedIn
