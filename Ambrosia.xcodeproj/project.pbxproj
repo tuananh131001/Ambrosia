@@ -144,6 +144,7 @@
 		54585AFC28CC52DA003567D5 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordModal.swift; sourceTree = "<group>"; };
+		54646D4728CF6FBB0052A3AA /* AmbrosiaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AmbrosiaRelease.entitlements; sourceTree = "<group>"; };
 		54BE932828CEF32100CD21CD /* GoogleSignInBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInBtn.swift; sourceTree = "<group>"; };
 		54BE932A28CEF41600CD21CD /* AuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
 		54BE932C28CEF73800CD21CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -328,6 +329,7 @@
 		3DC2FC952886E18E003750D3 /* Ambrosia */ = {
 			isa = PBXGroup;
 			children = (
+				54646D4728CF6FBB0052A3AA /* AmbrosiaRelease.entitlements */,
 				3D48566A28CEEDDD001D7DAE /* FirebaseHelpers */,
 				3DF8692F28CB049F00AB4363 /* GoogleService-Info.plist */,
 				3D83712028939CF30067C946 /* Info.plist */,
@@ -706,7 +708,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Ambrosia/Preview Content\"";
-				DEVELOPMENT_TEAM = 5HA7S7MUDX;
+				DEVELOPMENT_TEAM = 2LMG5Z7V7C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatToEatToday/Info.plist;
@@ -722,7 +724,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ambrosia.app;
+				PRODUCT_BUNDLE_IDENTIFIER = rmit.ambrosia.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -736,10 +738,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Ambrosia/AmbrosiaRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Ambrosia/Preview Content\"";
-				DEVELOPMENT_TEAM = 5HA7S7MUDX;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatToEatToday/Info.plist;
@@ -755,8 +759,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ambrosia.app;
+				PRODUCT_BUNDLE_IDENTIFIER = rmit.ambrosia.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
