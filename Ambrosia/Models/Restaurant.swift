@@ -129,7 +129,6 @@ struct Location:Codable{
 
 struct Review:Identifiable,Decodable{
     var id: UUID = UUID()
-    @DocumentID var documentId: String?
     var reviewDescription: String
     var dateCreated:Date
     var rating: Int
@@ -138,7 +137,6 @@ struct Review:Identifiable,Decodable{
     var image:String
     var isLiked:Bool = false
     enum CodingKeys: String, CodingKey {
-        case documentId
         case dateCreated
         case email
         case image
