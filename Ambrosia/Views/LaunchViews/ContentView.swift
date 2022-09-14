@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ContentView: View {
-  @EnvironmentObject var userModel: FirebaseService
+  @EnvironmentObject var userModel: UserModel
   @EnvironmentObject var model: RestaurantModel
 
   

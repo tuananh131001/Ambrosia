@@ -12,12 +12,10 @@ import FirebaseFirestore
 
 struct SignUpView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var userModel: FirebaseService
+    @EnvironmentObject var userModel: UserModel
     @State var email = ""
     @State var password = ""
     @State var passwordConfirmation = ""
-
-    @StateObject private var services = FirebaseService.services
 
     @FocusState private var emailIsFocused: Bool
     @FocusState private var passwordIsFocused: Bool
@@ -61,9 +59,9 @@ struct SignUpView: View {
                         .multilineTextAlignment(.leading)
 
                     // Sign up message after pressing the sign up button
-                    if (services.showSignUpMessage) {
-                        Text(services.signUpMessage)
-                            .foregroundColor(services.signUpSuccess ? .green : .red)
+                    if (userModel.firebaseService.showSignUpMessage) {
+                        Text(userModel.firebaseService.signUpMessage)
+                            .foregroundColor(userModel.firebaseService.signUpSuccess ? .green : .red)
                     }
                 }
 
@@ -71,7 +69,7 @@ struct SignUpView: View {
                     // Sign up button
                     Button(action: {
                         FirebaseService.services.signUp(email: email, password: password, passwordConfirmation: passwordConfirmation,user:userModel)
-                        services.showSignUpMessage = true
+                        userModel.firebaseService.showSignUpMessage = true
                         // signUp()
                         // showSignUpMessage = true
                     }) {

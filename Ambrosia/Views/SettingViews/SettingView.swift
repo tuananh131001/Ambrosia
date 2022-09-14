@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    @EnvironmentObject var userModel: FirebaseService
+    @EnvironmentObject var userModel: UserModel
     
     var body: some View {
         VStack {

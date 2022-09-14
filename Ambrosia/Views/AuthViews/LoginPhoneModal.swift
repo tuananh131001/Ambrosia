@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct LoginPhoneModal: View {
-    @EnvironmentObject var userModel: FirebaseService
+    @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var model: RestaurantModel
     
     @Binding var showLoginPhoneModal: Bool

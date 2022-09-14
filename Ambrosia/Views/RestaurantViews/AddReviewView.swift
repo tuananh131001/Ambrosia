@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AddReviewView: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
-    @EnvironmentObject var authModel:AuthenticationModel
+    @EnvironmentObject var authModel:UserModel
     @Environment(\.presentationMode) var presentationMode
     @State private var rating:Int = 0
     @State private var userReview = ""

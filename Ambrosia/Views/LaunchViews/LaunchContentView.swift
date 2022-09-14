@@ -16,9 +16,7 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
-    @EnvironmentObject var authModel: AuthenticationModel
-    @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var userModel: FirebaseService
+    @EnvironmentObject var userModel: UserModel
     
     @State var email = ""
     @State var password = ""
@@ -27,13 +25,6 @@ struct LaunchContentView: View {
     @State var showLoginPhoneModal = false
     @State var showForgetPasswordModal = false
     @State var showEnterCodeField = false
-    
-//    @State var checkCode: Bool = false
-//    @State var message: String = ""
-//    @State var phone: String = ""
-//    @State var code: String = ""
-    
-//    @State private var loginMessage = ""
     
     @FocusState private var emailIsFocused : Bool
     @FocusState private var passwordIsFocused : Bool
@@ -100,8 +91,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN GOOGLE
                             Button {
-                                authModel.GoogleSignIn()
-                                if (authModel.loginSuccess) {
+                                userModel.GoogleSignIn()
+                                if (userModel.loginSuccess) {
                                     restaurantModel.requestGeolocationPermission()
                                 }
                             } label: {
@@ -116,8 +107,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN MICROSOFT
                             Button {
-                                authModel.MicrosoftSignIn()
-                                if (authModel.loginSuccess) {
+                                userModel.MicrosoftSignIn()
+                                if (userModel.loginSuccess) {
                                     restaurantModel.requestGeolocationPermission()
                                 }
                             } label: {
@@ -216,12 +207,12 @@ struct LaunchContentView: View {
                     userModel.loginSuccess = false
                 } else {
                     
-                    authModel.loginMessage = "Login successfully"
-                    print(result?.user.uid)
-                    authModel.fetchUserInfo(id: result?.user.uid ?? "",authModel:authModel)
-                    authModel.loginMethod = .normal
-                    authModel.loginSuccess = true
-                    authModel.state = .signedIn
+                    userModel.loginMessage = "Login successfully"
+                    // Get User Info from firebase
+                    userModel.fetchUserInfo(id: result?.user.uid ?? "",userModel:userModel)
+                    userModel.loginMethod = .normal
+                    userModel.loginSuccess = true
+                    userModel.state = .signedIn
                     restaurantModel.requestGeolocationPermission()
 
                 }

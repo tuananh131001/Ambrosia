@@ -27,9 +27,8 @@ struct EatTime: App {
         WindowGroup {
 //            LaunchView()
             SplashView()
-                .environmentObject(AuthenticationModel())
+                .environmentObject(UserModel())
                 .environmentObject(RestaurantModel())
-                .environmentObject(FirebaseService())
 
         }
     }

@@ -14,10 +14,8 @@
 import SwiftUI
 
 struct LaunchView: View {
-    @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var userModel: FirebaseService
+    @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var restaurantModel: RestaurantModel
-    @EnvironmentObject var authModel: AuthenticationModel
 
     // splashsreen here
     var body: some View {
@@ -25,11 +23,11 @@ struct LaunchView: View {
         if !userModel.loginSuccess {
             LaunchContentView()
         }
-        else if userModel.loginSuccess && model.authorizationState == .notDetermined {
+        else if userModel.loginSuccess && restaurantModel.authorizationState == .notDetermined {
 
             LaunchContentView(openSetting: true)
         }
-        else if userModel.loginSuccess && userModel.isNewUser{
+        else if userModel.loginSuccess && userModel.isNewUser {
             EditInformation()
         }
         else if userModel.loginSuccess && !userModel.isNewUser {
@@ -37,7 +35,7 @@ struct LaunchView: View {
             HomeView()
         }
         // user not allow -> open settings
-        
+
     }
-    
+
 }

@@ -9,8 +9,7 @@ import SwiftUI
 import Firebase
 
 struct InformationForm: View {
-    @EnvironmentObject var userModel: FirebaseService
-    private var services = FirebaseService.services
+    @EnvironmentObject var userModel: UserModel
 
     var body: some View {
         // MARK: LOGIN PAGE CONTENT
