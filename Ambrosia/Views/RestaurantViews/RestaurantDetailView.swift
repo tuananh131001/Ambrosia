@@ -19,6 +19,9 @@ import SwiftUI
 struct RestaurantDetailView: View {
 
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var userModel: AuthenticationModel
+    @StateObject var firebaseService: FirebaseService = FirebaseService.services
+    
     @EnvironmentObject var restaurantModel: RestaurantModel
     @State var showOpenningHours = false
     @State var showReview = false
@@ -32,8 +35,6 @@ struct RestaurantDetailView: View {
         }
     }.buttonStyle(PlainButtonStyle())
     }
-    
-    
     
     var body: some View {
         if restaurantModel.currentRestaurantDetail != nil {

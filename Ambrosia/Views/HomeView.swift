@@ -65,9 +65,6 @@ struct HomeViewContent: View {
             }.tag(3)
         }
         .accentColor(Color("PrimaryColor"))
-        .onAppear() {
-            print("Swift HomeView test cho sir")
-        }
     }
 }
 struct HomeView: View {

@@ -4,6 +4,7 @@ import SwiftUI
 
 struct FavouriteRestaurantView: View {
     @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var authModel: AuthenticationModel
     
     @State var rating: Int = 3
     
@@ -13,7 +14,7 @@ struct FavouriteRestaurantView: View {
                 VStack {
                     ScrollView(.vertical) {
                         VStack {
-                            ForEach(model.restaurants, id: \.place_id) { r in
+                            ForEach(authModel.user.favouriteRestaurants, id: \.place_id) { r in
                                 HStack {
                                     RestaurantAsyncImage(photo_id: r.photos?[0].photo_reference ?? "testRestaurant").frame(width: geo.size.width / 3, height: geo.size.width / 3).cornerRadius(10)
                                     VStack(alignment: .leading) {

@@ -153,9 +153,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         hasError = false
-        
+        // "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyAhWsgin5okyUJJNlbeOWLiP88p5bB5whg"
         let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-        
         
         if let url = URL(string: urlString) {
             URLSession.shared
@@ -209,6 +208,15 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     func updateRestaurantDetailDistance(){
         currentRestaurantDetail?.distance =  CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: currentRestaurantDetail?.geometry?.location?.lat ?? 0, lon2: currentRestaurantDetail?.geometry?.location?.lng ?? 0)
+    }
+    
+    func findRestaurantById(_ id: String) -> Restaurant? {
+        for index in 0..<restaurants.count {
+            if (restaurants[index].place_id == id) {
+                return restaurants[index]
+            }
+        }
+        return nil
     }
     
     // Function to get current restaurant

@@ -15,6 +15,12 @@ struct RestaurantCardView: View {
     var photo_id:String
     var total_ratings:Int
     var distance:Double
+    
+    @EnvironmentObject var restaurantModel: RestaurantModel
+    @EnvironmentObject var userModel: AuthenticationModel
+    
+    @StateObject var firebaseService = FirebaseService.services
+    
     var body: some View {
         VStack(spacing:10){
             HStack(spacing:15){
@@ -36,7 +42,6 @@ struct RestaurantCardView: View {
                         Text("(\(total_ratings))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-1)
                         Text("•").foregroundColor(Color("SubTextColor"))
                             Text("\(distance,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
-                        
                         
                     }
                     Spacer()

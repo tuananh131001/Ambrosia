@@ -3,7 +3,7 @@
 //  Ambrosia
 //
 //  Created by William on 12/09/2022.
-//
+// https://stackoverflow.com/questions/60225869/how-do-i-return-an-object-from-a-document-stored-in-firestore-swift
 
 import Foundation
 import Firebase
@@ -135,5 +135,25 @@ class FirebaseService: ObservableObject {
                 }
             }
         }
+    }
+    func changeFavorites(userModel: AuthenticationModel, restaurant: Restaurant) -> Bool {
+        let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
+        if restaurantIndex != nil {
+            userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+            return true
+        }
+        else {
+            addToFavorites(user: userModel.user, restaurant: restaurant)
+            userModel.user.favouriteRestaurants.append(restaurant)
+            return false
+    }
+        }
+    func addToFavorites(user: User, restaurant: Restaurant) {
+        )
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.place_id])]
+    }
+    func removeFavorites(user: User, restaurant: Restaurant ) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])]
+        )
     }
 }

@@ -18,6 +18,8 @@ struct LaunchContentView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
     @EnvironmentObject var userModel: UserModel
     
+    @StateObject var firebaseService = FirebaseService.services
+    
     @State var email = ""
     @State var password = ""
     @State var showLoginMessage = false
@@ -217,6 +219,7 @@ struct LaunchContentView: View {
 
                 }
             }
+            
         }
     }//end of NormalLogin
     
