@@ -155,8 +155,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func fetchRestaurant() {
         hasError = false
 
-        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-//        let urlString = "https://puppychan.github.io/places.json"
+//        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
+        let urlString = "https://puppychan.github.io/places.json"
         
         if let url = URL(string: urlString) {
             URLSession.shared
@@ -260,7 +260,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         // if price lv is default -> use restaurant detail's, else use custom
         let priceLevel: Int?
         if priceLv == -1 {
-             priceLevel = restaurantDetail?.price_level
+             priceLevel = currentRestaurantDetail?.price_level
         }
         else {
             priceLevel = priceLv

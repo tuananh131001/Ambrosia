@@ -35,7 +35,7 @@ class UserModel: ObservableObject {
     // Favorite
     func isRestaurantFavorite(restaurant: Restaurant) -> Int? {
             return user.favouriteRestaurants.firstIndex { $0.place_id ==  restaurant.place_id}
-        }
+    }
     
     //Fetch User
     func fetchUserInfo(id:String,userModel:UserModel,restaurantModel: RestaurantModel){
