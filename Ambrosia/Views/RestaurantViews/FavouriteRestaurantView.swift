@@ -4,7 +4,7 @@ import SwiftUI
 
 struct FavouriteRestaurantView: View {
     @EnvironmentObject var model: RestaurantModel
-    @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var authModel: UserModel
     
     @State var rating: Int = 3
     @State var isOpen: Bool = false

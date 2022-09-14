@@ -16,9 +16,7 @@ import Firebase
 
 struct LaunchContentView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
-    @EnvironmentObject var authModel: AuthenticationModel
-    
-    @StateObject var firebaseService = FirebaseService.services
+    @EnvironmentObject var userModel: UserModel
     
     @State var email = ""
     @State var password = ""
@@ -27,13 +25,6 @@ struct LaunchContentView: View {
     @State var showLoginPhoneModal = false
     @State var showForgetPasswordModal = false
     @State var showEnterCodeField = false
-    
-//    @State var checkCode: Bool = false
-//    @State var message: String = ""
-//    @State var phone: String = ""
-//    @State var code: String = ""
-    
-//    @State private var loginMessage = ""
     
     @FocusState private var emailIsFocused : Bool
     @FocusState private var passwordIsFocused : Bool
@@ -73,8 +64,8 @@ struct LaunchContentView: View {
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
                             if (showLoginMessage) {
-                                Text(authModel.loginMessage)
-                                    .foregroundColor(authModel.loginSuccess ? .green : .red)
+                                Text(userModel.loginMessage)
+                                    .foregroundColor(userModel.loginSuccess ? .green : .red)
                             }
                         }
 
@@ -100,8 +91,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN GOOGLE
                             Button {
-                                authModel.GoogleSignIn()
-                                if (authModel.loginSuccess) {
+                                userModel.GoogleSignIn()
+                                if (userModel.loginSuccess) {
                                     restaurantModel.requestGeolocationPermission()
                                 }
                             } label: {
@@ -116,8 +107,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN MICROSOFT
                             Button {
-                                authModel.MicrosoftSignIn()
-                                if (authModel.loginSuccess) {
+                                userModel.MicrosoftSignIn()
+                                if (userModel.loginSuccess) {
                                     restaurantModel.requestGeolocationPermission()
                                 }
                             } label: {
@@ -196,11 +187,11 @@ struct LaunchContentView: View {
     }
 
     
-    // MARK: LOGIN LOGIC
+    // MARK: NORMAL LOGIN LOGIC
     func NormalSignIn(email: String, password: String) {
         if (email == "" || password == "") {
-            authModel.loginMessage = "Please enter email and password"
-            authModel.loginSuccess = false
+            userModel.loginMessage = "Please enter email and password"
+            userModel.loginSuccess = false
         }
         else {
             Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
@@ -208,22 +199,20 @@ struct LaunchContentView: View {
                     let err = error?.localizedDescription ?? ""
                     print(err)
                     if (err.contains("no user record")) {
-                        authModel.loginMessage = "This email hasn't register yet"
+                        userModel.loginMessage = "This email hasn't registered yet"
                     }
                     else {
-                        authModel.loginMessage = "Invalid sign-in credentials"
+                        userModel.loginMessage = "Invalid sign-in credentials"
                     }
-                    authModel.loginSuccess = false
+                    userModel.loginSuccess = false
                 } else {
-                    authModel.loginMessage = "Login successfully"
-                    authModel.loginMethod = .normal
-                    authModel.loginSuccess = true
                     
-                    // fetch current user and store into auth model for later use
-                    firebaseService.fetchUser(uid: Auth.auth().currentUser!.uid, restaurantModel: restaurantModel) { user in
-                        authModel.user = user ?? User(id: "", name: "Nothing", dob: Date.now, selectedGender: 0)  
-                    }
-                    authModel.state = .signedIn
+                    userModel.loginMessage = "Login successfully"
+                    // Get User Info from firebase
+                    userModel.fetchUserInfo(id: result?.user.uid ?? "",userModel:userModel,restaurantModel:restaurantModel)
+                    userModel.loginMethod = .normal
+                    userModel.loginSuccess = true
+                    userModel.state = .signedIn
                     restaurantModel.requestGeolocationPermission()
 
                 }

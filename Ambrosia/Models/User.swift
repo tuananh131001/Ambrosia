@@ -13,7 +13,7 @@ struct User: Decodable {
     var dob:Date
     var selectedGender:Int
     var favouriteRestaurants: [Restaurant] = [Restaurant]()
-
+    var email:String
 }
 
 

@@ -8,17 +8,22 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
+
+
+var provider: OAuthProvider?
+var authMicrosoft: Auth?
+
+
 class FirebaseService: ObservableObject {
     static let services = FirebaseService()
+
     @Published var showSignUpMessage = false
     @Published var signUpMessage = ""
     @Published var signUpSuccess = false
-    @Published var user: User?
-
-    var users: [User] = [User]()
 
     // Sign up function to use Firebase to create a new user account in Firebase
-    func signUp(email: String, password: String, passwordConfirmation: String, user: AuthenticationModel) {
+
+    func signUp(email: String, password: String, passwordConfirmation: String, user: UserModel) {
         if (email == "" || password == "" || passwordConfirmation == "") {
             self.signUpMessage = "Please fill in all the fields"
         }
@@ -59,13 +64,86 @@ class FirebaseService: ObservableObject {
             }
         }
     }
+
+
     func updateUser(user: User) {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": [String]()], merge: true)
     }
+    func addReviewToFirebase(restaurant: RestaurantDetail) {
+        Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").setData(["created": true], merge: true)
+        var newReviewList: [[String: Any]] = []
+        // get each reviews put in dictionary for uploading
+        for riviu in restaurant.reviews {
+            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "username": riviu.username, "email": riviu.email, "image": riviu.image, "isLiked": riviu.isLiked] as [String: Any]
+            newReviewList.append(newReview)
+        }
+        // assign new data to firestore
+        Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").updateData([
+            "reviews": newReviewList
+            ])
+    }
+    func fetchReviewFromFirebase(restaurant: RestaurantDetail, model: RestaurantModel) {
+        let docRef = Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "")
+        //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
+        docRef.getDocument { document, error in
+            if let error = error as NSError? {
+                print("Error getting document: \(error.localizedDescription)")
+            }
+            else {
+                if let document = document {
+                    var reviewFetch: [Review] = []
+                    let data = document.data()
+                    let reviews = data?["reviews"] as? [[String: Any]]
+                    for review in reviews ?? [] {
+                        //https://stackoverflow.com/questions/42186398/swift-firebase-could-not-cast-value-of-type-nsdictionarym
+                        let reviewDescription: String = review["reviewDescription"] as? String ?? ""
+                        let timestamp: Timestamp = review["dateCreated"] as? Timestamp ?? Timestamp()
+                        let dateCreated: Date = timestamp.dateValue()
+                        let rating: Int = review["rating"] as? Int ?? 1
+                        let username: String = review["username"] as? String ?? ""
+                        let email: String = review["email"] as? String ?? ""
+                        let image: String = review["image"] as? String ?? ""
+                        let isLiked: Bool = review["isLiked"] as? Bool ?? false
+                        let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, username: username, email: email, image: image, isLiked: isLiked)
+                        reviewFetch.append(newReview)
+                    }
+                    // assign to the reviews on local
+                    model.currentRestaurantDetail?.reviews = reviewFetch
+                    //clear
+                }
+            }
+        }
+    }
+    func getUserFirebase(id: String, userModel: UserModel,restaurantModel:RestaurantModel) {
+        let docRef = Firestore.firestore().collection("user").document(id)
+        //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
+        docRef.getDocument { document, error in
+            if let error = error as NSError? {
+                print("Error getting document: \(error.localizedDescription)")
+            }
+            else {
+                if let document = document {
+                    let data = document.data()
+                    let id: String = data?["id"] as? String ?? ""
+                    let name: String = data?["name"] as? String ?? ""
+                    let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
+                    let dob: Date = timestamp.dateValue()
+                    let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
+                    let email: String = data?["email"] as? String ?? ""
+                    let restaurantsId = data?["favouriteRestaurants"] as? [String] ?? [String]()
+                    var favouriteRestaurants = [Restaurant]()
+                    for id in restaurantsId {
+                        let rest = restaurantModel.findRestaurantById(id)
+                        if let newRest = rest {
+                            favouriteRestaurants.append(newRest)
+                        }
+                    }
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email)
 
-    func addToFavorites(user: User, restaurant: Restaurant) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.place_id])]
-        )
+                    userModel.user = newUser
+                }
+            }
+        }
     }
     func removeFavorites(user: User, restaurant: Restaurant ) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])]
@@ -89,30 +167,11 @@ class FirebaseService: ObservableObject {
             return true
         }
     }
-
-    func fetchUser(uid: String, restaurantModel: RestaurantModel, completion: @escaping((User?) -> ())) {
-
-        Firestore.firestore().collection("user").document(uid).getDocument { (snapshot, error) in
-            if let error = error {
-                print("Failed to fetch current user:", error)
-                return
-            }
-            guard let data = snapshot?.data() else { return }
-            let name = data["name"] as? String ?? ""
-            let dob = data["dob"] as? Date ?? Date()
-            let selectedGender = data["selectedGender"] as? Int ?? 0
-            
-            let restaurantsId = data["favoriteRestaurants"] as? [String] ?? [String]()
-            let favouriteRestaurants = restaurantsId.compactMap({ id in
-                restaurantModel.restaurants.first(where: { $0.place_id == id })
-            })
-
-            let newUser = User(id: uid, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants)
-            
-            // return new user
-            completion(newUser)
-        }
-
+    func addToFavorites(user: User, restaurant: Restaurant) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.place_id])])
+    }
+    func removeFavorites(user: User, restaurant: Restaurant) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])])
 
     }
 }

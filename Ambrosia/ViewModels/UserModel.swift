@@ -1,19 +1,19 @@
 //
-//  AuthenticationViewModel.swift
+//  UserModel.swift
 //  Ambrosia
 //
-//  Created by Khanh Tran Nguyen Ha on 12/09/2022.
+//  Created by William on 14/09/2022.
 //
 
+import Foundation
 import Firebase
+import FirebaseFirestoreSwift
 import GoogleSignIn
-
-
-var provider: OAuthProvider?
-var authMicrosoft: Auth?
-
-class AuthenticationModel: ObservableObject {
-
+class UserModel: ObservableObject {
+    @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0, email: "")
+    let genders = ["Male", "Female"]
+    @Published var firebaseService = FirebaseService.services
+    
     enum SignInState {
         case signedIn
         case signedOut
@@ -29,54 +29,32 @@ class AuthenticationModel: ObservableObject {
     @Published var state: SignInState = .signedOut
     @Published var loginSuccess: Bool = false
     @Published var isNewUser: Bool = false
-
-    @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0)
-    let genders = ["Male", "Female"]
-
     @Published var loginMethod: SignInMethod = .normal
     @Published var loginMessage = ""
     
-//    func NormalSignIn(email: String, password: String) {
-//        if (email == "" || password == "") {
-//            self.loginMessage = "Please enter email and password"
-//            self.loginSuccess = false
-//        }
-//        else {
-//            Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
-//                if error != nil {
-//                    let err = error?.localizedDescription ?? ""
-//                    print(err)
-//                    if (err.contains("no user record")) {
-//                        self.loginMessage = "This email hasn't register yet"
-//                    }
-//                    else {
-//                        self.loginMessage = "Invalid sign-in credentials"
-//                    }
-//                    self.loginSuccess = false
-//                } else {
-//                    print("success")
-//                    self.loginMessage = "successfully"
-//                    self.loginSuccess = true
-//                }
-//            }
-//        }
-//    }
+    // Favorite
+    func isRestaurantFavorite(restaurant: Restaurant) -> Int? {
+            return user.favouriteRestaurants.firstIndex { $0.place_id ==  restaurant.place_id}
+        }
+    
+    //Fetch User
+    func fetchUserInfo(id:String,userModel:UserModel,restaurantModel: RestaurantModel){
+        firebaseService.getUserFirebase(id: id,userModel: userModel,restaurantModel: restaurantModel)
+    }
+    
     func MicrosoftSignIn() {
         provider = OAuthProvider(providerID: "microsoft.com")
         provider?.customParameters = [
-          "prompt": "consent",
-          "login_hint": ""
+            "prompt": "consent",
+            "login_hint": ""
         ]
-         
-//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-//        guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-        
+
         provider?.getCredentialWith(nil) { credential, error in
-          if error != nil {
-              print(error?.localizedDescription ?? "FAILED GET CREDENTAIL MICROSOFT")
-          }
-            
-          
+            if error != nil {
+                print(error?.localizedDescription ?? "FAILED GET CREDENTAIL MICROSOFT")
+            }
+
+
             if let x = credential {
                 Auth.auth().signIn(with: x) { authResult, error in
                     if error != nil {
@@ -96,15 +74,9 @@ class AuthenticationModel: ObservableObject {
                 print("FAILED GET CREDENTAIL MICROSOFT")
             }
         }
-        
+
     }
-    
-    
-    func isRestaurantFavorite(restaurant: Restaurant) -> Int? {
-        return user.favouriteRestaurants.firstIndex { $0.place_id ==  restaurant.place_id}
-    }
-    
-    
+
     func GoogleSignIn() {
         if GIDSignIn.sharedInstance.hasPreviousSignIn() {
             GIDSignIn.sharedInstance.restorePreviousSignIn { [unowned self] user, error in
@@ -150,41 +122,19 @@ class AuthenticationModel: ObservableObject {
             }
         }
     }
-    
-//    func GGSignOut() {
-//      GIDSignIn.sharedInstance.signOut()
-//      
-//      do {
-//            try Auth.auth().signOut()
-//            loginSuccess = false
-//            state = .signedOut
-//      } catch {
-//        print(error.localizedDescription)
-//      }
-//    }
-//    
-//    func NormalSignOut() {
-//        let firebaseAuth = Auth.auth()
-//        do {
-//            try firebaseAuth.signOut()
-//            loginSuccess = false
-//            state = .signedOut
-//        } catch let signOutError as NSError {
-//            print("Error signing out: %@", signOutError)
-//        }
-//    }
-    
+
+
     func SignOut() {
         if (loginMethod == .google) {
             GIDSignIn.sharedInstance.signOut()
         }
         do {
-            
-              try Auth.auth().signOut()
-              loginSuccess = false
-              state = .signedOut
+
+            try Auth.auth().signOut()
+            loginSuccess = false
+            state = .signedOut
         } catch {
-          print(error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
 }

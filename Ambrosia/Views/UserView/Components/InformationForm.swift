@@ -9,8 +9,7 @@ import SwiftUI
 import Firebase
 
 struct InformationForm: View {
-    @EnvironmentObject var userModel: AuthenticationModel
-    private var services = FirebaseService.services
+    @EnvironmentObject var userModel: UserModel
 
     var body: some View {
         // MARK: LOGIN PAGE CONTENT
@@ -28,10 +27,10 @@ struct InformationForm: View {
                             TextField("Name", text: $userModel.user.name)
                                 .modifier(TextFieldModifier())
                             DatePicker(selection: $userModel.user.dob, in: ...Date(), displayedComponents: .date) {
-                                Text("Select your birthday")
+                                Text("Birthday")
                             }
                             HStack {
-                                Text("Select Gender")
+                                Text("Gender")
                                 Picker("", selection: $userModel.user.selectedGender) {
                                     ForEach(0..<userModel.genders.count, id: \.self) { index in
                                         Text(userModel.genders[index]).tag(index).font(.title)

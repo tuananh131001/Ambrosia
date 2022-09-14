@@ -68,12 +68,12 @@ struct RestaurantListView: View {
             } .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==
                     nil) {
-                    restaurantModel.restaurantDetail = nil
+                    restaurantModel.currentRestaurantDetail = nil
 
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())
-        .onChange(of: restaurantModel.restaurantDetail?.reviews.count) { newValue in
+        .onChange(of: restaurantModel.currentRestaurantDetail?.reviews.count) { newValue in
         }
     }
     
