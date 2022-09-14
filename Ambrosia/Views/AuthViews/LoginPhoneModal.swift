@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct LoginPhoneModal: View {
-    @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var userModel: FirebaseService
     @EnvironmentObject var model: RestaurantModel
     
     @Binding var showLoginPhoneModal: Bool
@@ -124,15 +124,15 @@ struct LoginPhoneModal: View {
         
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
-                authModel.loginSuccess = false
+                userModel.loginSuccess = false
 //                print("signin err: ", error.localizedDescription)
                 return
             }
         
             // User is signed in
             print("Sign in by PHONE is success")
-            authModel.loginSuccess = true
-            authModel.state = .signedIn
+            userModel.loginSuccess = true
+            userModel.state = .signedIn
             model.requestGeolocationPermission()
         
         }

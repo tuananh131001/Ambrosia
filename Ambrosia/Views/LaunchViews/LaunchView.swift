@@ -14,23 +14,25 @@
 import SwiftUI
 
 struct LaunchView: View {
+    @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var userModel: FirebaseService
     @EnvironmentObject var restaurantModel: RestaurantModel
     @EnvironmentObject var authModel: AuthenticationModel
 
     // splashsreen here
     var body: some View {
         // if app has not ask user permission to access location
-        if !authModel.loginSuccess {
+        if !userModel.loginSuccess {
             LaunchContentView()
         }
-        else if authModel.loginSuccess && restaurantModel.authorizationState == .notDetermined {
+        else if userModel.loginSuccess && model.authorizationState == .notDetermined {
 
             LaunchContentView(openSetting: true)
         }
-        else if authModel.loginSuccess && authModel.isNewUser{
+        else if userModel.loginSuccess && userModel.isNewUser{
             EditInformation()
         }
-        else if authModel.loginSuccess && !authModel.isNewUser {
+        else if userModel.loginSuccess && !userModel.isNewUser {
 //                ReviewView(reviews: Review.testReviews())
             HomeView()
         }

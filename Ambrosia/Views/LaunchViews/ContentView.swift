@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 
 struct ContentView: View {
-  @EnvironmentObject var authModel: AuthenticationModel
-  @EnvironmentObject var restaurantModel: RestaurantModel
+  @EnvironmentObject var userModel: FirebaseService
+  @EnvironmentObject var model: RestaurantModel
 
   
   var body: some View {
-    switch authModel.state {
+    switch userModel.state {
       case .signedIn: LaunchContentView()
       case .signedOut: LaunchContentView()
     }

@@ -11,7 +11,7 @@ import Firebase
 struct EditInformation: View {
     @Environment(\.dismiss) var dismiss
     private var services = FirebaseService.services
-    @EnvironmentObject var userModel: AuthenticationModel
+    @EnvironmentObject var userModel: FirebaseService
     
     @State var email = ""
     @State var password = ""
