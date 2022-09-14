@@ -19,7 +19,7 @@ import SwiftUI
 struct RestaurantDetailView: View {
 
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var userModel: AuthenticationModel
+    @EnvironmentObject var userModel: UserModel
     @StateObject var firebaseService: FirebaseService = FirebaseService.services
     
     @EnvironmentObject var restaurantModel: RestaurantModel

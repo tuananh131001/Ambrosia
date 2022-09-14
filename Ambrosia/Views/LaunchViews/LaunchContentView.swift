@@ -18,8 +18,6 @@ struct LaunchContentView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
     @EnvironmentObject var userModel: UserModel
     
-    @StateObject var firebaseService = FirebaseService.services
-    
     @State var email = ""
     @State var password = ""
     @State var showLoginMessage = false
@@ -211,7 +209,7 @@ struct LaunchContentView: View {
                     
                     userModel.loginMessage = "Login successfully"
                     // Get User Info from firebase
-                    userModel.fetchUserInfo(id: result?.user.uid ?? "",userModel:userModel)
+                    userModel.fetchUserInfo(id: result?.user.uid ?? "",userModel:userModel,restaurantModel:restaurantModel)
                     userModel.loginMethod = .normal
                     userModel.loginSuccess = true
                     userModel.state = .signedIn

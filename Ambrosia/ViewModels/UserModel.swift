@@ -32,8 +32,14 @@ class UserModel: ObservableObject {
     @Published var loginMethod: SignInMethod = .normal
     @Published var loginMessage = ""
     
-    func fetchUserInfo(id:String,userModel:UserModel){
-        firebaseService.getUserFirebase(id: id,userModel: userModel)
+    // Favorite
+    func isRestaurantFavorite(restaurant: Restaurant) -> Int? {
+            return user.favouriteRestaurants.firstIndex { $0.place_id ==  restaurant.place_id}
+        }
+    
+    //Fetch User
+    func fetchUserInfo(id:String,userModel:UserModel,restaurantModel: RestaurantModel){
+        firebaseService.getUserFirebase(id: id,userModel: userModel,restaurantModel: restaurantModel)
     }
     
     func MicrosoftSignIn() {

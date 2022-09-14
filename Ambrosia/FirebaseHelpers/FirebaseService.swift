@@ -114,7 +114,7 @@ class FirebaseService: ObservableObject {
             }
         }
     }
-    func getUserFirebase(id: String, userModel: UserModel) {
+    func getUserFirebase(id: String, userModel: UserModel,restaurantModel:RestaurantModel) {
         let docRef = Firestore.firestore().collection("user").document(id)
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
@@ -130,13 +130,22 @@ class FirebaseService: ObservableObject {
                     let dob: Date = timestamp.dateValue()
                     let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
                     let email: String = data?["email"] as? String ?? ""
-                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, email: email)
+                    let restaurantsId = data?["favouriteRestaurants"] as? [String] ?? [String]()
+                    var favouriteRestaurants = [Restaurant]()
+                    for id in restaurantsId {
+                        let rest = restaurantModel.findRestaurantById(id)
+                        if let newRest = rest {
+                            favouriteRestaurants.append(newRest)
+                        }
+                    }
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email)
+
                     userModel.user = newUser
                 }
             }
         }
     }
-    func changeFavorites(userModel: AuthenticationModel, restaurant: Restaurant) -> Bool {
+    func changeFavorites(userModel: UserModel, restaurant: Restaurant) -> Bool {
         let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
         if restaurantIndex != nil {
             userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
@@ -146,14 +155,13 @@ class FirebaseService: ObservableObject {
             addToFavorites(user: userModel.user, restaurant: restaurant)
             userModel.user.favouriteRestaurants.append(restaurant)
             return false
-    }
         }
-    func addToFavorites(user: User, restaurant: Restaurant) {
-        )
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.place_id])]
     }
-    func removeFavorites(user: User, restaurant: Restaurant ) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])]
-        )
+    func addToFavorites(user: User, restaurant: Restaurant) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.place_id])])
+    }
+    func removeFavorites(user: User, restaurant: Restaurant) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])])
+
     }
 }
