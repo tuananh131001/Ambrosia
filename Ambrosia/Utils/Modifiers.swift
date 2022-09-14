@@ -8,9 +8,9 @@
 import SwiftUI
 
 
-struct TextFieldModifier: ViewModifier{
+struct TextFieldModifier: ViewModifier {
     @Environment(\.isFocused) private var isFocused: Bool
-    
+
     func body(content: Content) -> some View {
         content
             .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH, minHeight: Constants.FIELD_HEIGHT)

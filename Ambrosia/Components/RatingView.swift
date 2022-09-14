@@ -31,8 +31,8 @@ struct RatingView: View {
     var onImage = Image(systemName: "star.fill")
 
     // Assign the color for image before and after rating
-    var onColor = UIColor(Color("PrimaryColor"))
-    var offColor = UIColor(Color("PlaceholderText"))
+    var onColor = UIColor(Color("Star On Color"))
+    var offColor = UIColor(Color("Star Off Color"))
     
     
     var body: some View {
