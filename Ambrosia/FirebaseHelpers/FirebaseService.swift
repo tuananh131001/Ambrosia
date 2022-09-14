@@ -10,10 +10,6 @@ import Firebase
 import FirebaseFirestoreSwift
 
 
-var provider: OAuthProvider?
-var authMicrosoft: Auth?
-
-
 class FirebaseService: ObservableObject {
     static let services = FirebaseService()
 
@@ -69,6 +65,7 @@ class FirebaseService: ObservableObject {
     func updateUser(user: User) {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": [String]()], merge: true)
     }
+    
     func addReviewToFirebase(restaurant: RestaurantDetail) {
         Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
@@ -114,6 +111,8 @@ class FirebaseService: ObservableObject {
             }
         }
     }
+    
+    
     func getUserFirebase(id: String, userModel: UserModel, restaurantModel:RestaurantModel) {
         let docRef = Firestore.firestore().collection("user").document(id)
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
@@ -143,6 +142,8 @@ class FirebaseService: ObservableObject {
             }
         }
     }
+    
+    
     func removeFavorites(user: User, restaurant: Restaurant ) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])]
         )
