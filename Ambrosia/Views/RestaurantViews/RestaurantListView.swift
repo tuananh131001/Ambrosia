@@ -52,7 +52,7 @@ struct RestaurantListView: View {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
                                     restaurantModel.fetchDetail(place_id: searchResults[index].place_id)
-//                                    restaurantModel.getCurrentRestaurant(id: r.place_id)
+                                    restaurantModel.currentRestaurant = searchResults[index]
                                 }
                                 
                             } label: {
@@ -68,12 +68,12 @@ struct RestaurantListView: View {
             } .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==
                     nil) {
-                    restaurantModel.restaurantDetail = nil
+                    restaurantModel.currentRestaurantDetail = nil
 
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())
-        .onChange(of: restaurantModel.restaurantDetail?.reviews.count) { newValue in
+        .onChange(of: restaurantModel.currentRestaurantDetail?.reviews.count) { newValue in
         }
     }
     

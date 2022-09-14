@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct SettingView: View {
-    @EnvironmentObject var authModel: AuthenticationModel
+    @EnvironmentObject var userModel: UserModel
     
     var body: some View {
         VStack {
             Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             Button {
-                authModel.SignOut()
+                userModel.SignOut()
             } label: {
                 Text("SIGN OUT")
                     .bold()

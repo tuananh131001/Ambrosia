@@ -10,8 +10,7 @@ import Firebase
 
 struct EditInformation: View {
     @Environment(\.dismiss) var dismiss
-    private var services = FirebaseService.services
-    @EnvironmentObject var userModel: AuthenticationModel
+    @EnvironmentObject var userModel: UserModel
     
     @State var email = ""
     @State var password = ""
@@ -28,7 +27,7 @@ struct EditInformation: View {
                 Button {
                     guard let userId = Auth.auth().currentUser?.uid else { return }
                     userModel.user.id = userId
-                    services.updateUser(user: userModel.user)
+                    userModel.firebaseService.updateUser(user: userModel.user)
                     userModel.isNewUser = false
                     
                 } label: {

@@ -65,9 +65,6 @@ struct HomeViewContent: View {
             }.tag(3)
         }
         .accentColor(Color("PrimaryColor"))
-        .onAppear() {
-            print("Swift HomeView test cho sir")
-        }
     }
 }
 struct HomeView: View {
@@ -124,7 +121,7 @@ struct HomeView: View {
         static var previews: some View {
             HomeView()
                 .environmentObject(RestaurantModel())
-                .environmentObject(AuthenticationModel())
+                .environmentObject(FirebaseService())
         }
     }
 }
