@@ -40,7 +40,6 @@ struct RestaurantDetailView: View {
         }, label: {
             CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
                 .onAppear() {
-                    print("Sir favourite: ", userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: "click favorite")))
                 clickFavourite = userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: "click favorite")) == nil ? false : true
             }
         })

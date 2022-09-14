@@ -28,6 +28,7 @@ enum Constants {
     static let CONRNER_RADIUS: CGFloat = 10
     
     static let SPLASH_CIRCLE_OPACITY: CGFloat = 0.4
+    static let SPLASH_ANIMATION_ARRAY: Int = 10
     
     static let DEFAULT_LOCATION_LAT = 10.729746193761306
     static let DEFAULT_LOCATION_LNG = 106.6930755973141

@@ -122,8 +122,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //    }
     
     func fetchDetail(place_id: String) {
-//        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-        let urlString2 = "https://puppychan.github.io/placeDetail.json"
+        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
+//        let urlString2 = "https://puppychan.github.io/placeDetail.json"
         print(urlString2)
         if let url2 = URL(string: urlString2) {
             URLSession.shared
@@ -155,8 +155,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func fetchRestaurant() {
         hasError = false
 
-//        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-        let urlString = "https://puppychan.github.io/places.json"
+        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
+//        let urlString = "https://puppychan.github.io/places.json"
         
         if let url = URL(string: urlString) {
             URLSession.shared
@@ -251,20 +251,30 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         self.currentRestaurantDetail?.reviews.append(newReview)
     }
     
-    func getType(){
-        if (restaurantDetail?.price_level == 0){
+    func getType(_ priceLv: Int? = -1){
+        // if price lv is default -> use restaurant detail's, else use custom
+        let priceLevel: Int?
+        if priceLv == -1 {
+             priceLevel = restaurantDetail?.price_level
+        }
+        else {
+            priceLevel = priceLv
+        }
+        
+        // define restaurant type based on price level
+        if (priceLevel == 0){
             self.type = "Free"
         }
-        else if (restaurantDetail?.price_level == 1){
+        else if (priceLevel == 1){
             self.type = "Inexpensive"
         }
-        else if (restaurantDetail?.price_level == 2){
+        else if (priceLevel == 2){
             self.type = "Moderate"
         }
-        else if (restaurantDetail?.price_level == 3){
+        else if (priceLevel == 3){
             self.type = "Expensive"
         }
-        else if (restaurantDetail?.price_level == 4){
+        else if (priceLevel == 4){
             self.type = "Very Expensive"
         }
         else{

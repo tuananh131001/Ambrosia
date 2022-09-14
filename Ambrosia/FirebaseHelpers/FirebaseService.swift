@@ -60,7 +60,7 @@ class FirebaseService: ObservableObject {
         }
     }
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favouriteRestaurants": [String]()], merge: true)
+        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": [String]()], merge: true)
     }
 
     func addToFavorites(user: User, restaurant: Restaurant) {
@@ -79,11 +79,11 @@ class FirebaseService: ObservableObject {
         if restaurantIndex != nil {
             userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
             removeFavorites(user: userModel.user, restaurant: restaurant)
-            print("remove favourite sir")
+            print("remove favorite sir")
             return false
         }
         else {
-            print("add favourite sir")
+            print("add favorite sir")
             addToFavorites(user: userModel.user, restaurant: restaurant)
             userModel.user.favouriteRestaurants.append(restaurant)
             return true
@@ -101,20 +101,15 @@ class FirebaseService: ObservableObject {
             let name = data["name"] as? String ?? ""
             let dob = data["dob"] as? Date ?? Date()
             let selectedGender = data["selectedGender"] as? Int ?? 0
-            let restaurantsId = data["favouriteRestaurants"] as? [String] ?? [String]()
-//            var favouriteRestaurants = [Restaurant]()
-//            for id in restaurantsId {
-//                let rest = restaurantModel.findRestaurantById(id)
-//                if let newRest = rest {
-//                    favouriteRestaurants.append(newRest)
-//                }
-//            }
+            
+            let restaurantsId = data["favoriteRestaurants"] as? [String] ?? [String]()
             let favouriteRestaurants = restaurantsId.compactMap({ id in
                 restaurantModel.restaurants.first(where: { $0.place_id == id })
             })
-            print(favouriteRestaurants)
+
             let newUser = User(id: uid, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants)
-            print("Sir new user", newUser)
+            
+            // return new user
             completion(newUser)
         }
 
