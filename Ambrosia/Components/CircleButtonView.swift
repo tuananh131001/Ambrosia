@@ -9,11 +9,15 @@ import SwiftUI
 
 struct CircleButtonView: View {
     var buttonImage:String
+    var color: Color = Color.white
     var body: some View {
         ZStack{
             Rectangle().frame(width: 40, height: 40).foregroundColor(Color("PrimaryColor")).clipShape(Circle())
-            Image(systemName: buttonImage).resizable().frame(width: 20, height: 20).aspectRatio(contentMode: .fit)
-                .foregroundColor(.white)
+            Image(systemName: buttonImage)
+                .resizable()
+                .frame(width: 20, height: 20)
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(color)
             
         }
     }
