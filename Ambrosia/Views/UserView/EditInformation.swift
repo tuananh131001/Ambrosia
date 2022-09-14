@@ -16,6 +16,9 @@ struct EditInformation: View {
     @State var password = ""
 
     @State var loginSuccess = false
+    
+    @State var message = ""
+    @State var showMessage = false
 
     var body: some View {
         ZStack (alignment: .center) {
@@ -30,9 +33,17 @@ struct EditInformation: View {
                     userModel.firebaseService.updateUser(user: userModel.user)
                     userModel.isNewUser = false
                     
+                    message = "Profile is updated successfully ✅"
+                    showMessage = true
                 } label: {
                     Text("Confirm Changes").bold()
-                }.buttonStyle(ButtonStyleWhite())
+                }
+                .buttonStyle(ButtonStyleWhite())
+                
+                if(showMessage) {
+                    Text(message)
+                        .foregroundColor(.yellow)
+                }
             }
         }
     }
