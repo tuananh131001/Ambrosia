@@ -25,6 +25,9 @@ struct EditInformation: View {
                 InformationForm()
                 // MARK: LOGIN BUTTON
                 Button {
+                    // add sound effect when click button
+                    SoundModel.clickButtonSound()
+                    
                     guard let userId = Auth.auth().currentUser?.uid else { return }
                     userModel.user.id = userId
                     userModel.firebaseService.updateUser(user: userModel.user)

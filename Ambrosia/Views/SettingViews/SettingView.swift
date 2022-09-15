@@ -17,6 +17,8 @@ struct SettingView: View {
                 userModel.SignOut()
                 // background music
                 SoundModel.startBackgroundMusic(bckName: "login")
+                // sound effect
+                SoundModel.clickCardSound()
             } label: {
                 Text("SIGN OUT")
                     .bold()

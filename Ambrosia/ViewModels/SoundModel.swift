@@ -62,4 +62,23 @@ struct SoundModel {
         guard let audioPlayer = effectAudio else { return }
         audioPlayer.stop()
     }
+    
+    // MARK: - sound with name
+    static func clickButtonSound() {
+        startEffectSound(sound: "button-click", type: "mp3")
+    }
+    
+    static func clickCardSound() {
+//        stopSoundEffect()
+        startEffectSound(sound: "card-click", type: "mp3")
+    }
+    
+    static func clickTabSound() {
+//        stopSoundEffect()
+        startEffectSound(sound: "tab-click", type: "mp3")
+    }
+    
+    static func clickOtherSound() {
+        startEffectSound(sound: "other-click", type: "mp3")
+    }
 }
