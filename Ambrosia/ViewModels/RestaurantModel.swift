@@ -123,8 +123,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //    }
     
     func fetchDetail(place_id: String) {
-        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-//        let urlString2 = "https://puppychan.github.io/placeDetail.json"
+//        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
+        let urlString2 = "https://puppychan.github.io/placeDetail.json"
         print(urlString2)
         if let url2 = URL(string: urlString2) {
             URLSession.shared

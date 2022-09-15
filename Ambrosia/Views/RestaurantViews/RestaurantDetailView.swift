@@ -29,6 +29,8 @@ struct RestaurantDetailView: View {
     var btnBack: some View {
         Button(action: {
             self.presentationMode.wrappedValue.dismiss()
+            // background music
+            SoundModel.startBackgroundMusic(bckName: "home")
         }) {
             CircleButtonView(buttonImage: "arrow.left")
         }.buttonStyle(PlainButtonStyle())
@@ -37,6 +39,7 @@ struct RestaurantDetailView: View {
     var favouriteBtn: some View {
         Button(action: {
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: ""))
+
         }, label: {
             CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
                 .onAppear() {
@@ -158,6 +161,14 @@ struct RestaurantDetailView: View {
                 }
             }
                 .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
+                .onAppear() {
+                    // background music
+                    SoundModel.startBackgroundMusic(bckName: "detail")
+                }
+                .onDisappear() {
+                    // background music
+                    SoundModel.startBackgroundMusic(bckName: "home")
+                }
 
 
         }

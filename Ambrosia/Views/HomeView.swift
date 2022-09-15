@@ -65,6 +65,10 @@ struct HomeViewContent: View {
             }.tag(3)
         }
         .accentColor(Color("PrimaryColor"))
+        .onAppear() {
+            // background music
+            SoundModel.startBackgroundMusic(bckName: "home")
+        }
     }
 }
 struct HomeView: View {

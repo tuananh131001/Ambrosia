@@ -15,6 +15,8 @@ struct SettingView: View {
             Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             Button {
                 userModel.SignOut()
+                // background music
+                SoundModel.startBackgroundMusic(bckName: "login")
             } label: {
                 Text("SIGN OUT")
                     .bold()

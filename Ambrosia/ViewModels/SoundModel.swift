@@ -36,7 +36,7 @@ struct SoundModel {
     }
 
     // MARK: play background music (infinite loop)
-    static func startBackgroundMusic(bckName: String, type: String) {
+    static func startBackgroundMusic(bckName: String, type: String = "mp3") {
         if let bundle = Bundle.main.path(forResource: "bck-\(bckName)", ofType: type) {
             let backgroundMusic = NSURL(fileURLWithPath: bundle)
             do {
