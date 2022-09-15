@@ -73,6 +73,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN FORGET
                             Button {
+                                SoundModel.clickOtherSound()
+                                
                                 showForgetPasswordModal = true
                             } label: {
                                 Text("Forget password?")
@@ -80,6 +82,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN LOGIN
                             Button {
+                                SoundModel.clickButtonSound()
+                                // add sound effect when click button
 //                                NormalSignIn(email: email, password: password)
 //                                showLoginMessage = true
                                 login(type: .normal)
@@ -92,6 +96,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN GOOGLE
                             Button {
+                                // add sound effect when click button
+                                SoundModel.clickButtonSound()
 //                                userModel.GoogleSignIn()
 //                                if (userModel.loginSuccess) {
 //                                    restaurantModel.requestGeolocationPermission()
@@ -109,6 +115,8 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN MICROSOFT
                             Button {
+                                // add sound effect when click button
+                                SoundModel.clickButtonSound()
 //                                userModel.MicrosoftSignIn()
 //                                if (userModel.loginSuccess) {
 //                                    restaurantModel.requestGeolocationPermission()
@@ -130,6 +138,9 @@ struct LaunchContentView: View {
                             // MARK: BTN REGISTER
                             // Button to show the sign up sheet
                             Button {
+                                // add sound effect when click button
+                                SoundModel.clickButtonSound()
+                    
                                 showingSignUpSheet.toggle()
                             } label: {
                                 Text("Sign Up Here!")

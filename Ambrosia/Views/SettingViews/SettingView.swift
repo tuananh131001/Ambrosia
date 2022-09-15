@@ -20,14 +20,18 @@ struct SettingView: View {
                 // MARK: EDIT INFO BTN
                 Button {
                     showEditInfo = true
-                } label: {
                     Text("Edit Profile")
+                } label: {
                         .bold()
                 }
                 .buttonStyle(ButtonStylePrimary())
                 
                 // MARK: SIGN OUT BTN
                 Button {
+                // background music
+                SoundModel.startBackgroundMusic(bckName: "login")
+                // sound effect
+                SoundModel.clickCardSound()
                     userModel.SignOut()
                 } label: {
                     Text("Sign Out")

@@ -28,15 +28,40 @@ struct RestaurantDetailView: View {
     @State var clickFavourite = false
     var btnBack: some View {
         Button(action: {
+            // Sound effect
+            SoundModel.clickOtherSound()
+            
             self.presentationMode.wrappedValue.dismiss()
+            // background music
+            SoundModel.startBackgroundMusic(bckName: "home")
         }) {
             CircleButtonView(buttonImage: "arrow.left")
+        }.buttonStyle(PlainButtonStyle())
+    }
+    
+    var btnBackProgress: some View {
+        Button(action: {
+            // Sound effect
+            SoundModel.clickOtherSound()
+            
+            self.presentationMode.wrappedValue.dismiss()
+            // background music
+            SoundModel.startBackgroundMusic(bckName: "home")
+        }) {
+            HStack(spacing: 10) {
+                ImageSystemHier(name: "chevron.backward", color: "PrimaryColor", size: 12)
+                Text("Home")
+                    .font(.system(size: 16))
+                    .foregroundColor(Color("PrimaryColor"))
+            }
+
         }.buttonStyle(PlainButtonStyle())
     }
     
     var favouriteBtn: some View {
         Button(action: {
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: ""))
+
         }, label: {
             CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
                 .onAppear() {
@@ -158,6 +183,19 @@ struct RestaurantDetailView: View {
                 }
             }
                 .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: btnBackProgress)
+                .onAppear() {
+                    // background music
+                    SoundModel.startBackgroundMusic(bckName: "detail")
+                }
+//                .onDisappear() {
+////                    // Back button sound effect
+////                    SoundModel.clickOtherSound()
+//
+//                    // background music
+//                    SoundModel.startBackgroundMusic(bckName: "home")
+//                }
 
 
         }
