@@ -68,6 +68,9 @@ struct SignUpView: View {
                 VStack (spacing: 10) {
                     // Sign up button
                     Button(action: {
+                        // add sound effect when click button
+                        SoundModel.clickButtonSound()
+                        
                         FirebaseService.services.signUp(email: email, password: password, passwordConfirmation: passwordConfirmation,user:userModel)
                         userModel.firebaseService.showSignUpMessage = true
                         // signUp()
@@ -81,6 +84,8 @@ struct SignUpView: View {
 
                     // Button to dismiss sign up sheet and go back to sign in page
                     Button {
+                        SoundModel.clickOtherSound()
+                        
                         dismiss()
                     } label: {
                         Text("Back to Sign In Page")

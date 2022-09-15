@@ -29,13 +29,13 @@ struct FavouriteRestaurantView: View {
                 VStack {
                     ScrollView(.vertical) {
                         VStack {
-                            ForEach(userModel.user.favouriteRestaurants, id: \.place_id) { r in
+                            ForEach(userModel.user.favouriteRestaurants, id: \.placeId) { r in
                                 HStack {
-                                    RestaurantAsyncImage(photo_id: r.photos?[0].photo_reference ?? "testRestaurant").frame(width: imageSize, height: imageSize).cornerRadius(10)
+                                    RestaurantAsyncImage(photo_id: r.imageUrls?[0] ?? "testRestaurant").frame(width: imageSize, height: imageSize).cornerRadius(10)
                                     VStack(alignment: .leading, spacing: 4) {
                                         // MARK: rating
                                         HStack {
-                                            Text("\(r.rating ?? 5.0, specifier: "%.1f")")
+                                            Text("\(r.totalScore ?? 5.0, specifier: "%.1f")")
                                                 .font(.system(size: starSize + 4))
                                                 .foregroundColor(Color("Fv Special Clr 2"))
                                             ImageSystemHier(name: "star.fill", color: "Star On Color", size: starSize)
@@ -58,52 +58,52 @@ struct FavouriteRestaurantView: View {
                                         }
 
                                         // MARK: name
-                                        Text(r.name)
+                                        Text(r.title ?? "SAMPLE TITLE")
                                             .lineLimit(1)
                                             .foregroundColor(Color("Fv Title Clr"))
                                             .font(.system(size: titleSize))
 
                                         // MARK: side info
-                                        HStack(spacing: 5) {
-                                            // MARK: Restaurant type
-                                            Text("\(model.type ?? "Inexpensive")")
-                                                .foregroundColor(Color("Fv Subtitle Clr"))
-                                                .padding(.trailing, 3)
-                                                .onAppear() {
-                                                    model.getType(r.price_level)
-                                                }
-
-                                            Text("✼")
-                                                .font(.system(size: distanceSize + 1))
-                                                .foregroundColor(Color("Fv Special Clr"))
-                                                .bold()
-
-                                            // MARK: Restaurant distance
-                                            HStack {
-                                                ImageSystemHier(name: "car.fill", color: "Fv Subtitle Clr 2", size: distanceSize + 1)
-                                                Text("\(r.distance, specifier: "%.2f")km")
-                                                    .foregroundColor(Color("Fv Subtitle Clr 2"))
-                                            }
-                                        }
-                                            .font(.system(size: distanceSize))
-                                            .padding(.top, 3)
+//                                        HStack(spacing: 5) {
+//                                            // MARK: Restaurant type
+//                                            Text("\(model.type ?? "Inexpensive")")
+//                                                .foregroundColor(Color("Fv Subtitle Clr"))
+//                                                .padding(.trailing, 3)
+//                                                .onAppear() {
+//                                                    model.getType(r.price_level)
+//                                                }
+//
+//                                            Text("✼")
+//                                                .font(.system(size: distanceSize + 1))
+//                                                .foregroundColor(Color("Fv Special Clr"))
+//                                                .bold()
+//
+//                                            // MARK: Restaurant distance
+//                                            HStack {
+//                                                ImageSystemHier(name: "car.fill", color: "Fv Subtitle Clr 2", size: distanceSize + 1)
+//                                                Text("\(r.distance, specifier: "%.2f")km")
+//                                                    .foregroundColor(Color("Fv Subtitle Clr 2"))
+//                                            }
+//                                        }
+//                                            .font(.system(size: distanceSize))
+//                                            .padding(.top, 3)
 
                                         Spacer()
 
                                         // MARK: Open State
-                                        HStack(spacing: 3) {
-                                            let isOpen = r.opening_hours?.open_now ?? true
-                                            ImageSystemHier(name: "clock.badge.checkmark.fill", color: "Fv Subtitle Clr 2", size: openSize + 1)
-                                            Text(isOpen ? "OPEN" : "CLOSED")
-                                                .foregroundColor(Color("\(isOpen ? "Open" : "Close") Color"))
-                                                .font(.system(size: openSize))
-                                        }
+//                                        HStack(spacing: 3) {
+//                                            let isOpen = r.opening_hours?.open_now ?? true
+//                                            ImageSystemHier(name: "clock.badge.checkmark.fill", color: "Fv Subtitle Clr 2", size: openSize + 1)
+//                                            Text(isOpen ? "OPEN" : "CLOSED")
+//                                                .foregroundColor(Color("\(isOpen ? "Open" : "Close") Color"))
+//                                                .font(.system(size: openSize))
+//                                        }
                                     }
                                     Spacer()
                                 }
                                 .opacity(clickFavourite ? 1 : 0.5)
                                     .onAppear() {
-                                    model.getType(r.price_level)
+//                                    model.getType(r.price_level)
                                     imageSize = geo.size.width / 3
                                     starSize = geo.size.width / 30
                                     distanceSize = geo.size.width / 27
