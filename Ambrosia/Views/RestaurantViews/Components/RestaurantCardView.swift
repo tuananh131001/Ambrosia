@@ -10,7 +10,6 @@ import SwiftUI
 struct RestaurantCardView: View {
     var name:String
     var rating:Double
-    var status:Bool
     var address:String
     var photo_id:String
     var total_ratings:Int
@@ -59,7 +58,7 @@ struct RestaurantCardView: View {
 
 struct RestaurantCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RestaurantCardView(name: "Mì Sinh Đôi", rating: 4.2, status: true, address: "70 Nguyễn Văn linh, Ward 3, District Go Vap",photo_id: "AeJbb3d0ekH078McekC_3v4lVCjIoxH2QvIURkmLrEEdonPFjT_wFfx8GkOPax_FnNPN_VPM2BHtIjALJl2deLtNZdbqb1IBR66bgQClHCsAcR-Vp0DcYEaH8ZyWiiVly_P0rVqFl1uLc67FMR2hHlSq9-OXhyb5G5o1yqUujJNasT6w6IoK",total_ratings: 14,distance: 0.5)
+        RestaurantCardView(name: "Mì Sinh Đôi", rating: 4.2, address: "70 Nguyễn Văn linh, Ward 3, District Go Vap",photo_id: "AeJbb3d0ekH078McekC_3v4lVCjIoxH2QvIURkmLrEEdonPFjT_wFfx8GkOPax_FnNPN_VPM2BHtIjALJl2deLtNZdbqb1IBR66bgQClHCsAcR-Vp0DcYEaH8ZyWiiVly_P0rVqFl1uLc67FMR2hHlSq9-OXhyb5G5o1yqUujJNasT6w6IoK",total_ratings: 14,distance: 0.5)
         
     }
 }

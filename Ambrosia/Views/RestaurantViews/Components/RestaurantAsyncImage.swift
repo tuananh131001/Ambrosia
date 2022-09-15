@@ -17,7 +17,8 @@ struct RestaurantAsyncImage: View {
         ZStack {
             // Image of each map
 //            AsyncImage(url: URL(string: "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=\(photo_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU")) { image in
-            AsyncImage(url: URL(string: "https://unsplash.com/s/photos/restaurant-food")) { image in
+//            AsyncImage(url: URL(string: "https://unsplash.com/s/photos/restaurant-food")) { image in
+            AsyncImage(url: URL(string: "\(photo_id)")) { image in
                 image.renderingMode(.original)
                 image.resizable()
                 image.aspectRatio(contentMode: .fit)

@@ -16,7 +16,7 @@ struct RestaurantCardInfo: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 // MARK: restaurant name
-                Text(rest.name)
+                Text(rest.title)
                     .font(displayType == "all" ? .title2 : .title3)
                     .bold()
                     .lineLimit(1)

@@ -66,8 +66,8 @@ class FirebaseService: ObservableObject {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": [String]()], merge: true)
     }
     
-    func addReviewToFirebase(restaurant: RestaurantDetail) {
-        Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").setData(["created": true], merge: true)
+    func addReviewToFirebase(restaurant: Restaurant) {
+        Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
         for riviu in restaurant.reviews {
@@ -75,12 +75,12 @@ class FirebaseService: ObservableObject {
             newReviewList.append(newReview)
         }
         // assign new data to firestore
-        Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").updateData([
+        Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").updateData([
             "reviews": newReviewList
             ])
     }
-    func fetchReviewFromFirebase(restaurant: RestaurantDetail, model: RestaurantModel) {
-        let docRef = Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "")
+    func fetchReviewFromFirebase(restaurant: Restaurant, model: RestaurantModel) {
+        let docRef = Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "")
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
             if let error = error as NSError? {
@@ -145,7 +145,7 @@ class FirebaseService: ObservableObject {
     
     
     func removeFavorites(user: User, restaurant: Restaurant ) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])]
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId])]
         )
     }
     
@@ -165,6 +165,6 @@ class FirebaseService: ObservableObject {
         }
     }
     func addToFavorites(user: User, restaurant: Restaurant) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.place_id])])
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId])])
     }
 }
