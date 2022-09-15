@@ -82,11 +82,11 @@ struct LaunchContentView: View {
                             
                             // MARK: BTN LOGIN
                             Button {
-                                // add sound effect when click button
                                 SoundModel.clickButtonSound()
-                                
-                                NormalSignIn(email: email, password: password)
-                                showLoginMessage = true
+                                // add sound effect when click button
+//                                NormalSignIn(email: email, password: password)
+//                                showLoginMessage = true
+                                login(type: .normal)
                             } label: {
                                 Text("Sign In")
                                     .bold()
@@ -98,11 +98,11 @@ struct LaunchContentView: View {
                             Button {
                                 // add sound effect when click button
                                 SoundModel.clickButtonSound()
-                                
-                                userModel.GoogleSignIn()
-                                if (userModel.loginSuccess) {
-                                    restaurantModel.requestGeolocationPermission()
-                                }
+//                                userModel.GoogleSignIn()
+//                                if (userModel.loginSuccess) {
+//                                    restaurantModel.requestGeolocationPermission()
+//                                }
+                                login(type: .google)
                             } label: {
                                 HStack {
                                     Image("gg-icon")
@@ -117,11 +117,11 @@ struct LaunchContentView: View {
                             Button {
                                 // add sound effect when click button
                                 SoundModel.clickButtonSound()
-                                
-                                userModel.MicrosoftSignIn()
-                                if (userModel.loginSuccess) {
-                                    restaurantModel.requestGeolocationPermission()
-                                }
+//                                userModel.MicrosoftSignIn()
+//                                if (userModel.loginSuccess) {
+//                                    restaurantModel.requestGeolocationPermission()
+//                                }
+                                login(type: .microsoft)
                             } label: {
                                 HStack {
                                     Image("microsoft-icon")
@@ -130,22 +130,6 @@ struct LaunchContentView: View {
                                 }
                             }
                             .buttonStyle(ButtonStylePrimary())
-                            
-//                            // MARK: BTN PHONE
-//                            Button {
-//                                showLoginPhoneModal = true
-//                            } label: {
-//                                HStack {
-//                                    Image("phone-icon")
-//                                    Text("Sign in with Phone")
-//                                        .bold()
-//                                }
-//                            }
-//                            .buttonStyle(ButtonStylePrimary())
-                            
-                            
-                            
-                           
                             
                             Text("or")
                                 .foregroundColor(.gray)
@@ -197,42 +181,59 @@ struct LaunchContentView: View {
             SignUpView()
         }
             .ignoresSafeArea(.all, edges: .all)
-
+            .onAppear(perform: {
+                if (UserDefaults.standard.string(forKey: "loginType") == "normal") {
+                 userModel.autoLoginNormal(restaurantModel: restaurantModel)
+                 if (userModel.loginSuccess) {
+                     userModel.state = .signedIn
+                     restaurantModel.requestGeolocationPermission()
+                 }
+                }
+             })
     }
 
     
-    // MARK: NORMAL LOGIN LOGIC
-    func NormalSignIn(email: String, password: String) {
-        if (email == "" || password == "") {
-            userModel.loginMessage = "Please enter email and password"
-            userModel.loginSuccess = false
+    func login(type: SignInMethod) {
+        userModel.loginMessage = ""
+        if (type == .google) {
+            userModel.GoogleSignIn(restaurantModel: restaurantModel)
+            afterCheckLogin()
+        }
+        else if (type == .microsoft) {
+            userModel.MicrosoftSignIn(restaurantModel: restaurantModel)
+            afterCheckLogin()
         }
         else {
-            Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
-                if error != nil {
-                    let err = error?.localizedDescription ?? ""
-                    print(err)
-                    if (err.contains("no user record")) {
-                        userModel.loginMessage = "This email hasn't registered yet"
-                    }
-                    else {
-                        userModel.loginMessage = "Invalid sign-in credentials"
-                    }
-                    userModel.loginSuccess = false
-                } else {
-                    
-                    userModel.loginMessage = "Login successfully"
-                    // Get User Info from firebase
-                    userModel.fetchUserInfo(id: result?.user.uid ?? "",userModel:userModel,restaurantModel:restaurantModel)
-                    userModel.loginMethod = .normal
-                    userModel.loginSuccess = true
-                    userModel.state = .signedIn
-                    restaurantModel.requestGeolocationPermission()
+             let group = DispatchGroup()
+             let queueVerify = DispatchQueue(label: "verify")
+             let queueRequest = DispatchQueue(label: "request")
 
-                }
-            }
+             group.enter()
+             queueVerify.async (group: group) {
+                 userModel.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
+                 group.leave()
+             }
             
+             group.enter()
+             queueRequest.asyncAfter(deadline: .now() + 0.5) {
+                 afterCheckLogin()
+                 group.leave()
+             }
         }
-    }//end of NormalLogin
+    }
     
+    func afterCheckLogin() {
+        if (userModel.loginMessage != "") {
+            showLoginMessage = true
+        }
+        else {
+            showLoginMessage = false
+        }
+        if (userModel.loginSuccess) {
+            userModel.state = .signedIn
+            restaurantModel.requestGeolocationPermission()
+        }
+    }
+    
+
 }

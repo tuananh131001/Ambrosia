@@ -102,8 +102,6 @@
 		54646D4628CF44510052A3AA /* ForgetPasswordModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */; };
 		54BE932528CEEE6200CD21CD /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 54BE932428CEEE6200CD21CD /* GoogleSignIn */; };
 		54BE932728CEEE6200CD21CD /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 54BE932628CEEE6200CD21CD /* GoogleSignInSwift */; };
-		54BE932928CEF32100CD21CD /* GoogleSignInBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BE932828CEF32100CD21CD /* GoogleSignInBtn.swift */; };
-		54BE932D28CEF73800CD21CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BE932C28CEF73800CD21CD /* ContentView.swift */; };
 		54BE932F28CEF8D800CD21CD /* LoginPhoneModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BE932E28CEF8D800CD21CD /* LoginPhoneModal.swift */; };
 /* End PBXBuildFile section */
 
@@ -178,8 +176,6 @@
 		54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordModal.swift; sourceTree = "<group>"; };
 		54646D4728CF6FBB0052A3AA /* AmbrosiaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AmbrosiaRelease.entitlements; sourceTree = "<group>"; };
-		54BE932828CEF32100CD21CD /* GoogleSignInBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInBtn.swift; sourceTree = "<group>"; };
-		54BE932C28CEF73800CD21CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		54BE932E28CEF8D800CD21CD /* LoginPhoneModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPhoneModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -269,7 +265,6 @@
 			children = (
 				3D83711E289397340067C946 /* LaunchView.swift */,
 				3D837144289410650067C946 /* LaunchContentView.swift */,
-				54BE932C28CEF73800CD21CD /* ContentView.swift */,
 			);
 			path = LaunchViews;
 			sourceTree = "<group>";
@@ -340,7 +335,6 @@
 				44969A1528CCBB3500F7EDD4 /* ReviewCard.swift */,
 				44453CB428CCD01E00C00F6D /* CircleButtonView.swift */,
 				44FDA24728CDBD2C0039C46C /* RoundedButton.swift */,
-				54BE932828CEF32100CD21CD /* GoogleSignInBtn.swift */,
 				3D4D1B2128CEE53F00034146 /* BackgroundImage.swift */,
 				442A4E8328CF1D6E00AD37E4 /* Breadcrumbs.swift */,
 				3DB2C8E628D19718000B4EA6 /* GeneralBackground.swift */,
@@ -626,7 +620,6 @@
 				54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */,
 				3DF148A628D1B70800FFF220 /* SoundModel.swift in Sources */,
 				3DB2C8E928D19CE0000B4EA6 /* SplashTitle.swift in Sources */,
-				54BE932928CEF32100CD21CD /* GoogleSignInBtn.swift in Sources */,
 				3D4D1B2228CEE53F00034146 /* BackgroundImage.swift in Sources */,
 				3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */,
 				54646D4628CF44510052A3AA /* ForgetPasswordModal.swift in Sources */,
@@ -645,7 +638,6 @@
 				3D837145289410650067C946 /* LaunchContentView.swift in Sources */,
 				3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */,
 				3D42C21A2896D931005BA233 /* NavigateLink.swift in Sources */,
-				54BE932D28CEF73800CD21CD /* ContentView.swift in Sources */,
 				44FDA24828CDBD2C0039C46C /* RoundedButton.swift in Sources */,
 				44453CB528CCD01E00C00F6D /* CircleButtonView.swift in Sources */,
 				3D48566F28CEF595001D7DAE /* EditInformation.swift in Sources */,

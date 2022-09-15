@@ -4,26 +4,45 @@
 //
 //  Created by Võ Quốc Huy on 11/09/2022.
 //
-
 import SwiftUI
+import Firebase
 
 struct SettingView: View {
     @EnvironmentObject var userModel: UserModel
+    @State var showEditInfo : Bool = false
     
     var body: some View {
-        VStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            Button {
-                userModel.SignOut()
+        ZStack {
+            VStack (spacing: 10) {
+                Text("Hello \(userModel.user.name)!")
+                
+                
+                // MARK: EDIT INFO BTN
+                Button {
+                    showEditInfo = true
+                    Text("Edit Profile")
+                } label: {
+                        .bold()
+                }
+                .buttonStyle(ButtonStylePrimary())
+                
+                // MARK: SIGN OUT BTN
+                Button {
                 // background music
                 SoundModel.startBackgroundMusic(bckName: "login")
                 // sound effect
                 SoundModel.clickCardSound()
-            } label: {
-                Text("SIGN OUT")
-                    .bold()
+                    userModel.SignOut()
+                } label: {
+                    Text("Sign Out")
+                        .bold()
+                }
+                .buttonStyle(ButtonStylePrimary())
             }
-            .buttonStyle(ButtonStylePrimary())
+            
+        }
+        .sheet(isPresented: $showEditInfo){
+            EditInformation()
         }
         
     }
