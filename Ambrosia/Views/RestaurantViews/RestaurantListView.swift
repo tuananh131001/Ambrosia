@@ -35,7 +35,7 @@ struct RestaurantListView: View {
             return restaurantModel.restaurants
         } else {
             // search items that contain either title or address (Case insensitive) from user input
-            return self.searchResults.filter { $0.name.localizedCaseInsensitiveContains(searchText)
+            return self.searchResults.filter { $0.title.localizedCaseInsensitiveContains(searchText)
 
             }
         }
@@ -54,13 +54,14 @@ struct RestaurantListView: View {
                                 selection: $restaurantModel.restaurantSelected) {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
-                                    restaurantModel.fetchDetail(place_id: searchResults[index].place_id)
+                                    restaurantModel.fetchDetail(restaurant: searchResults[index])
+                                
                                     restaurantModel.currentRestaurant = searchResults[index]
                                 }
 
                             } label: {
                                 // Card to show restaurant
-                                RestaurantCardView(name: searchResults[index].name, rating: searchResults[index].rating ?? 5.0, status: searchResults[index].opening_hours?.open_now ?? true, address: searchResults[index].vicinity ?? "Sir city", photo_id: searchResults[index].photos?[0].photo_reference ?? "testRestaurant", total_ratings: searchResults[index].user_ratings_total ?? 1, distance: searchResults[index].distance)
+                                RestaurantCardView(name: searchResults[index].title,rating: searchResults[index].totalScore ?? 5.0, address:searchResults[index].address ?? "", photo_id: searchResults[index].imageUrls?[0] ?? "" , total_ratings: searchResults[index].rank ?? 1, distance: searchResults[index].distance )
                             }
                                 .simultaneousGesture(TapGesture().onEnded {
                                     SoundModel.clickCardSound()

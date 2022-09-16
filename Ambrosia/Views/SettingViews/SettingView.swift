@@ -20,9 +20,9 @@ struct SettingView: View {
                 // MARK: EDIT INFO BTN
                 Button {
                     showEditInfo = true
+
                 } label: {
-                    Text("Edit Profile")
-                        .bold()
+                    Text("Edit Profile").bold()
                 }
                     .buttonStyle(ButtonStylePrimary())
 

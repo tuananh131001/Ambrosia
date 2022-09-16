@@ -65,9 +65,9 @@ class FirebaseService: ObservableObject {
     func updateUser(user: User) {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants], merge: true)
     }
-
-    func addReviewToFirebase(restaurant: RestaurantDetail) {
-        Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").setData(["created": true], merge: true)
+    
+    func addReviewToFirebase(restaurant: Restaurant) {
+        Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
         for riviu in restaurant.reviews {
@@ -75,12 +75,12 @@ class FirebaseService: ObservableObject {
             newReviewList.append(newReview)
         }
         // assign new data to firestore
-        Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "").updateData([
+        Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").updateData([
             "reviews": newReviewList
             ])
     }
-    func fetchReviewFromFirebase(restaurant: RestaurantDetail, model: RestaurantModel) {
-        let docRef = Firestore.firestore().collection("restaurant").document(restaurant.place_id ?? "")
+    func fetchReviewFromFirebase(restaurant: Restaurant, model: RestaurantModel) {
+        let docRef = Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "")
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
             if let error = error as NSError? {
@@ -144,59 +144,10 @@ class FirebaseService: ObservableObject {
             }
         }
     }
-    func fetchUser(uid: String, restaurantModel: RestaurantModel, completion: @escaping((User?) -> ())) {
-//        Firestore.firestore().settings({ timestampsInSnapshots: true });
-        
-        Firestore.firestore().collection("user").document(uid).getDocument { (snapshot, error) in
-            if let error = error {
-                print("Failed to fetch current user:", error)
-                return
-            }
-            guard let data = snapshot?.data() else { return }
-            let name = data["name"] as? String ?? ""
-            
-            // Date
-            let ts = data["dob"] as! Timestamp
-            let dob: Date = ts.dateValue()
-            
-            let selectedGender = data["selectedGender"] as? Int ?? 0
-            let restaurantsId = data["favoriteRestaurants"] as? [String] ?? [String]()
-            print("Fetch user sir favorite restaurant", restaurantsId)
-            var favouriteRestaurants = [Restaurant]()
-            for id in restaurantsId {
-                let rest = restaurantModel.findRestaurantById(id)
-                if let newRest = rest {
-                    favouriteRestaurants.append(newRest)
-                }
-            }
-            let email = data["email"] as? String ?? String()
-            let newUser = User(id: uid, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email)
-            print("Fetch user sir favorite new user", newUser)
-            completion(newUser)
-        }
-
-
-    }
-
-//    func saveChanges(id: String, userModel: UserModel, restaurantModel: RestaurantModel) async throws -> User? {
-////        Thread.sleep(forTimeInterval: 2)
-////        var user: User?
-////        try await getUserFirebase(id: id, userModel: userModel, restaurantModel: restaurantModel, completion: { newUser in
-////            user = newUser
-////        })
-////        return user
-//
-//        await withCheckedContinuation { cotinuation in
-//            getUserFirebase(id: id, userModel: userModel, restaurantModel: restaurantModel) { user in
-//                cotinuation.resume(returning: user)
-//            }
-//        }
-//    }
-
-
-
-    func removeFavorites(user: User, restaurant: Restaurant) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.place_id])]
+    
+    
+    func removeFavorites(user: User, restaurant: Restaurant ) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId])]
         )
     }
 
@@ -216,6 +167,6 @@ class FirebaseService: ObservableObject {
         }
     }
     func addToFavorites(user: User, restaurant: Restaurant) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.place_id])])
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId])])
     }
 }
