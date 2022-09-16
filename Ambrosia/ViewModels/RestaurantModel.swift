@@ -27,10 +27,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
     @Published var currentRestaurantDetail: Restaurant?
-    @Published var serviceOptions:[ServiceOptions]?
-    @Published var diningOptions:[DiningOptions]?
-    @Published var payments:[Payments]?
-    @Published var planning:[Planning]?
+ 
 
     
 
@@ -144,7 +141,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 //                            if let data2 = data,
 //                               let restaurantArr2 = try? decoder2.decode(Restaurant.self, from: data2) {
         self.currentRestaurantDetail = restaurant
-        self.updateOptions()
         self.updateRestaurantDetailDistance()
         self.getType()
 
@@ -166,9 +162,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
                             let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            print(restaurantArr[0])
                             self?.restaurants = restaurantArr
                             self?.calculateDistanceRest()
+                            
 
                         } else {
                             print("Cannot fetch all restaurant")
@@ -180,21 +176,76 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
     }
 
-    func updateOptions() {
-        for index in 0..<restaurants.count{
-            self.serviceOptions = restaurants[index].additionalInfo?.serviceOptions
-            self.diningOptions = restaurants[index].additionalInfo?.diningOptions
-            self.planning = restaurants[index].additionalInfo?.planning
-            self.payments = restaurants[index].additionalInfo?.payments
-        }
-    }
+ 
     
     func getServiceOptions(){
-        for index in 0..<(serviceOptions?.count ?? 0){
-            if serviceOptions?[index].delivery ?? false {
-                
+        for index in 0..<(currentRestaurant?.additionalInfo?.serviceOptions?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.serviceOptions?[index].delivery != nil {
+                    currentRestaurant?.serviceOptionsArr.append("Delivery")
+                }
+            if currentRestaurant?.additionalInfo?.serviceOptions?[index].dineIn != nil {
+                    currentRestaurant?.serviceOptionsArr.append("Dine in")
+
+                }
+            if currentRestaurant?.additionalInfo?.serviceOptions?[index].takeout != nil {
+                    currentRestaurant?.serviceOptionsArr.append("Take out")
+
+                }
+
             }
-        }
+       
+    }
+    
+    func getDiningOptions(){
+        for index in 0..<(currentRestaurant?.additionalInfo?.diningOptions?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.diningOptions?[index].Breakfast != nil {
+                    currentRestaurant?.diningOptionsArr.append("Breakfast")
+                }
+            else if currentRestaurant?.additionalInfo?.diningOptions?[index].Dessert != nil {
+                    currentRestaurant?.diningOptionsArr.append("Dessert")
+
+                }
+            else if currentRestaurant?.additionalInfo?.diningOptions?[index].Dinner != nil {
+                    currentRestaurant?.diningOptionsArr.append("Dinner")
+
+                }
+            else if currentRestaurant?.additionalInfo?.diningOptions?[index].Lunch != nil {
+                    currentRestaurant?.diningOptionsArr.append("Lunch")
+
+                }
+
+            }
+       
+    }
+    
+    func getPaymentOptions(){
+        for index in 0..<(currentRestaurant?.additionalInfo?.payments?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.payments?[index].cashOnly != nil {
+                    currentRestaurant?.paymentsArr.append("Cash Only")
+                }
+            else if currentRestaurant?.additionalInfo?.payments?[index].creditCards != nil {
+                    currentRestaurant?.paymentsArr.append("Credit Cards")
+
+                }
+            else if currentRestaurant?.additionalInfo?.payments?[index].debitCards != nil {
+                    currentRestaurant?.paymentsArr.append("Debit Cards")
+
+                }
+
+            }
+       
+    }
+    
+    func getPlaningOptions(){
+        for index in 0..<(currentRestaurant?.additionalInfo?.planning?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.planning?[index].acceptReservations != nil {
+                    currentRestaurant?.planingArr.append("Accept Reservations")
+                }
+            else if currentRestaurant?.additionalInfo?.planning?[index].reservationRequired != nil {
+                    currentRestaurant?.planingArr.append("Reservation Required")
+                }
+            }
+       
     }
 
     func chooseDefaultLocation() {
@@ -207,7 +258,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func calculateDistanceRest() {
         for index in 0..<restaurants.count {
             restaurants[index].distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurants[index].location?.lat ?? 0, lon2: restaurants[index].location?.lng ?? 0)
-            print(restaurants[index])
         }
     }
 
