@@ -16,24 +16,15 @@ struct FavoriteSideInfo: View {
             // MARK: Restaurant distance
             Label {
                 Text("\(restaurant.distance, specifier: "%.2f")km")
+                    .font(.subheadline)
                     .foregroundColor(Color("Fv Subtitle Clr 2"))
             } icon: {
                 ImageSystemHier(name: "car.fill", color: "Fv Subtitle Clr 2", size: distanceSize + 1)
             }
-//
-//            Text("✼")
-//                .font(.system(size: distanceSize + 1))
-//                .foregroundColor(Color("Fv Special Clr"))
-//                .bold()
-//
-//            // MARK: Restaurant address
-//            Text(restaurant.address ?? "")
-//                .foregroundColor(Color("Fv Subtitle Clr"))
-//                .lineLimit(1)
-//                .padding(.leading, 3)
-
         }
-            .font(.system(size: distanceSize))
+        .multilineTextAlignment(.leading)
+        .font(.subheadline)
+//            .font(.system(size: distanceSize))
             .padding(.top, 3)
     }
 }
