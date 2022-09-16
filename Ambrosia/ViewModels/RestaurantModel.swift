@@ -12,6 +12,7 @@
  - https://stackoverflow.com/questions/24534229/swift-modifying-arrays-inside-dictionaries
  - https://stackoverflow.com/questions/37517829/get-distinct-elements-in-an-array-by-object-property
  - https://stackoverflow.com/questions/21983559/opens-apple-maps-app-from-ios-app-with-directions
+ - https://stackoverflow.com/questions/32364055/formatting-phone-number-in-swift
  */
 
 import Foundation
@@ -291,6 +292,17 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func calculateDistanceRest() {
         for index in 0..<restaurants.count {
             restaurants[index].distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurants[index].location?.lat ?? 0, lon2: restaurants[index].location?.lng ?? 0)
+        }
+    }
+    
+    // MARK: function for calling restaurant
+    func callRest() {
+        // if have phone -> call action
+//        if  != nil && !(restaurantModel.currentRestaurant?.phone!.matches("^[a-zA-Z]$") ?? false) {
+        if let phone = self.currentRestaurant?.phone {
+            let formattedString = "tel://" + phone.replacingOccurrences(of: "+84", with: "0").replacingOccurrences(of: " ", with: "-")
+            guard let url = URL(string: formattedString) else { return }
+            UIApplication.shared.open(url)
         }
     }
 
