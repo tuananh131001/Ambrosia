@@ -18,6 +18,6 @@ struct ImageSystemHier: View {
             .scaledToFit()
             .symbolRenderingMode(.hierarchical)
             .foregroundStyle(Color(color))
-            .frame(width: size)
+            .frame(width: size, height: size)
     }
 }

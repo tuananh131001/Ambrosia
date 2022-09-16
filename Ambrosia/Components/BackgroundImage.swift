@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct BackgroundImage: View {
+    var name: String = "launch"
     var body: some View {
         Color.clear.overlay(
-            Image("launch")
+            Image(name)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .brightness(-0.75)
