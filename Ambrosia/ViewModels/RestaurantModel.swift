@@ -27,6 +27,12 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
     @Published var currentRestaurantDetail: Restaurant?
+    @Published var serviceOptions:[ServiceOptions]?
+    @Published var diningOptions:[DiningOptions]?
+    @Published var payments:[Payments]?
+    @Published var planning:[Planning]?
+
+    
 
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
@@ -177,18 +183,20 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     func updateOptions() {
-//        if currentRestaurantDetail?.dine_in != nil {
-//            currentRestaurantDetail?.options.append("Dine in")
-//        }
-//        if currentRestaurantDetail?.takeout != nil {
-//            currentRestaurantDetail?.options.append("Take out")
-//        }
-//        if currentRestaurantDetail?.delivery != nil {
-//            currentRestaurantDetail?.options.append("Delivery")
-//        }
-//        if currentRestaurantDetail?.serves_wine != nil {
-//            currentRestaurantDetail?.options.append("Serves wine")
-//        }
+        for index in 0..<restaurants.count{
+            self.serviceOptions = restaurants[index].additionalInfo?.serviceOptions
+            self.diningOptions = restaurants[index].additionalInfo?.diningOptions
+            self.planning = restaurants[index].additionalInfo?.planning
+            self.payments = restaurants[index].additionalInfo?.payments
+        }
+    }
+    
+    func getServiceOptions(){
+        for index in 0..<(serviceOptions?.count ?? 0){
+            if serviceOptions?[index].delivery ?? false {
+                
+            }
+        }
     }
 
     func chooseDefaultLocation() {
