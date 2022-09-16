@@ -24,7 +24,7 @@ struct HomeViewContent: View {
     @Binding var tabSelection: Int
     
     @EnvironmentObject var model: RestaurantModel
-
+    
     /*
     @EnvironmentObject var viewModel: AuthenticationModel
     
@@ -39,7 +39,7 @@ struct HomeViewContent: View {
     
     var body: some View {
         TabView(selection: $tabSelection) {
-            //  Main feature character view
+            // MARK: Main feature character view
             RestaurantListView().tabItem {
                 VStack {
                     Image(systemName: "house.circle")
@@ -47,16 +47,16 @@ struct HomeViewContent: View {
                     Text("Home")
                 }
             }.tag(1)
-            //  Comics display by list
+            
+            // MARK:  Comics display by list
             FavouriteRestaurantView().tabItem {
                 VStack {
                     Image(systemName: "heart.circle").foregroundColor(.red)
                     Text("Favourite")
-               
-                    
                 }
             }.tag(2)
-            // BookStore display by list
+            
+            // MARK:  BookStore display by list
             SettingView().tabItem {
                 VStack {
                     Image(systemName: "gear.circle")
@@ -65,6 +65,13 @@ struct HomeViewContent: View {
             }.tag(3)
         }
         .accentColor(Color("PrimaryColor"))
+        .onAppear() {
+            // background music
+            SoundModel.startBackgroundMusic(bckName: "home")
+        }
+        .onChange(of: tabSelection) { newValue in
+            SoundModel.clickTabSound()
+        }
     }
 }
 struct HomeView: View {

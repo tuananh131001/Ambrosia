@@ -34,6 +34,13 @@
 		3D1B2F0F28C735940091BD2F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2F0E28C735940091BD2F /* FirebaseStorage */; };
 		3D1B2F1128C735940091BD2F /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1B2F1028C735940091BD2F /* FirebaseStorageCombine-Community */; };
 		3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1B2F1228C737790091BD2F /* SignUpView.swift */; };
+		3D1D7B3528D31FAA0038A5B7 /* bck-home.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1D7B3228D31FAA0038A5B7 /* bck-home.mp3 */; };
+		3D1D7B3628D31FAA0038A5B7 /* bck-login.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1D7B3328D31FAA0038A5B7 /* bck-login.mp3 */; };
+		3D1D7B3828D326BB0038A5B7 /* bck-detail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1D7B3728D326BB0038A5B7 /* bck-detail.mp3 */; };
+		3D1D7B3A28D32BA20038A5B7 /* button-click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1D7B3928D32BA20038A5B7 /* button-click.mp3 */; };
+		3D1D7B3C28D3338D0038A5B7 /* card-click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1D7B3B28D3338D0038A5B7 /* card-click.mp3 */; };
+		3D1D7B3E28D337220038A5B7 /* tab-click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1D7B3D28D337210038A5B7 /* tab-click.mp3 */; };
+		3D1D7B4028D33AD40038A5B7 /* other-click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3D1D7B3F28D33AD40038A5B7 /* other-click.mp3 */; };
 		3D26754A28D18ED000E4302D /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26754928D18ED000E4302D /* UserModel.swift */; };
 		3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D275820289FC4BA00C7DD6C /* ImageShadowView.swift */; };
 		3D275823289FCDBD00C7DD6C /* DontUse in Resources */ = {isa = PBXBuildFile; fileRef = 3D275822289FCDBD00C7DD6C /* DontUse */; };
@@ -100,6 +107,13 @@
 
 /* Begin PBXFileReference section */
 		3D1B2F1228C737790091BD2F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		3D1D7B3228D31FAA0038A5B7 /* bck-home.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bck-home.mp3"; sourceTree = "<group>"; };
+		3D1D7B3328D31FAA0038A5B7 /* bck-login.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bck-login.mp3"; sourceTree = "<group>"; };
+		3D1D7B3728D326BB0038A5B7 /* bck-detail.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "bck-detail.mp3"; sourceTree = "<group>"; };
+		3D1D7B3928D32BA20038A5B7 /* button-click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "button-click.mp3"; sourceTree = "<group>"; };
+		3D1D7B3B28D3338D0038A5B7 /* card-click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "card-click.mp3"; sourceTree = "<group>"; };
+		3D1D7B3D28D337210038A5B7 /* tab-click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tab-click.mp3"; sourceTree = "<group>"; };
+		3D1D7B3F28D33AD40038A5B7 /* other-click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "other-click.mp3"; sourceTree = "<group>"; };
 		3D26754928D18ED000E4302D /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		3D275820289FC4BA00C7DD6C /* ImageShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageShadowView.swift; sourceTree = "<group>"; };
 		3D275822289FCDBD00C7DD6C /* DontUse */ = {isa = PBXFileReference; lastKnownFileType = text; path = DontUse; sourceTree = "<group>"; };
@@ -204,6 +218,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D1D7B3028D31F900038A5B7 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				3D1D7B3228D31FAA0038A5B7 /* bck-home.mp3 */,
+				3D1D7B3328D31FAA0038A5B7 /* bck-login.mp3 */,
+				3D1D7B3728D326BB0038A5B7 /* bck-detail.mp3 */,
+				3D1D7B3928D32BA20038A5B7 /* button-click.mp3 */,
+				3D1D7B3B28D3338D0038A5B7 /* card-click.mp3 */,
+				3D1D7B3F28D33AD40038A5B7 /* other-click.mp3 */,
+				3D1D7B3D28D337210038A5B7 /* tab-click.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		3D304AF4289CB77B00B269ED /* RestaurantViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +437,7 @@
 		444B4F7228D04D1100B76114 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3D1D7B3028D31F900038A5B7 /* Sounds */,
 				444B4F7C28D04DDD00B76114 /* cat-eat.gif */,
 				444B4F7D28D04DDD00B76114 /* nothing.gif */,
 				444B4F7B28D04DDD00B76114 /* pikachu.gif */,
@@ -536,10 +565,17 @@
 			files = (
 				3DC2FC9E2886E18F003750D3 /* Preview Assets.xcassets in Resources */,
 				444B4F8128D04DDD00B76114 /* nothing.gif in Resources */,
+				3D1D7B3C28D3338D0038A5B7 /* card-click.mp3 in Resources */,
 				444B4F8228D04DDD00B76114 /* waiting.gif in Resources */,
 				444B4F7F28D04DDD00B76114 /* pikachu.gif in Resources */,
+				3D1D7B4028D33AD40038A5B7 /* other-click.mp3 in Resources */,
+				3D1D7B3528D31FAA0038A5B7 /* bck-home.mp3 in Resources */,
+				3D1D7B3828D326BB0038A5B7 /* bck-detail.mp3 in Resources */,
 				444B4F8028D04DDD00B76114 /* cat-eat.gif in Resources */,
+				3D1D7B3628D31FAA0038A5B7 /* bck-login.mp3 in Resources */,
+				3D1D7B3E28D337220038A5B7 /* tab-click.mp3 in Resources */,
 				3D275823289FCDBD00C7DD6C /* DontUse in Resources */,
+				3D1D7B3A28D32BA20038A5B7 /* button-click.mp3 in Resources */,
 				3DC2FC9B2886E18F003750D3 /* Assets.xcassets in Resources */,
 				3DF8693028CB049F00AB4363 /* GoogleService-Info.plist in Resources */,
 			);

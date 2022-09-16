@@ -28,19 +28,44 @@ struct RestaurantDetailView: View {
     @State var clickFavourite = false
     var btnBack: some View {
         Button(action: {
+            // Sound effect
+            SoundModel.clickOtherSound()
+            
             self.presentationMode.wrappedValue.dismiss()
+            // background music
+            SoundModel.startBackgroundMusic(bckName: "home")
         }) {
             CircleButtonView(buttonImage: "arrow.left")
         }.buttonStyle(PlainButtonStyle())
     }
     
+    var btnBackProgress: some View {
+        Button(action: {
+            // Sound effect
+            SoundModel.clickOtherSound()
+            
+            self.presentationMode.wrappedValue.dismiss()
+            // background music
+            SoundModel.startBackgroundMusic(bckName: "home")
+        }) {
+            HStack(spacing: 10) {
+                ImageSystemHier(name: "chevron.backward", color: "PrimaryColor", size: 12)
+                Text("Home")
+                    .font(.system(size: 16))
+                    .foregroundColor(Color("PrimaryColor"))
+            }
+
+        }.buttonStyle(PlainButtonStyle())
+    }
+    
     var favouriteBtn: some View {
         Button(action: {
-            clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: ""))
+            clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: ""))
+
         }, label: {
             CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
                 .onAppear() {
-                clickFavourite = userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: "click favorite")) == nil ? false : true
+                    clickFavourite = userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: "click favorite")) == nil ? false : true
             }
         })
         
@@ -51,8 +76,8 @@ struct RestaurantDetailView: View {
             GeometryReader{
                 geo in
                 VStack{
-                    if (restaurantModel.currentRestaurantDetail?.photos?[0].photo_reference != "") {
-                        RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurantDetail?.photos?[0].photo_reference ?? "").frame(width: geo.size.width, height: geo.size.height/2.3)
+                    if (restaurantModel.currentRestaurantDetail?.imageUrls?[0] != "") {
+                        RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurantDetail?.imageUrls?[0] ?? "").frame(width: geo.size.width, height: geo.size.height/2.3)
                     }
                     else {
                         Image("testRestaurants").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height / 2.5).ignoresSafeArea()
@@ -77,7 +102,7 @@ struct RestaurantDetailView: View {
                         Divider()
                         HStack{
                             Image(systemName:"phone.circle.fill").foregroundColor(Color("TextColor"))
-                            Text("Phone number: \(restaurantModel.currentRestaurantDetail?.formatted_phone_number ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                            Text("Phone number: \(restaurantModel.currentRestaurantDetail?.phone ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                             Spacer()
 
                             Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -90,8 +115,8 @@ struct RestaurantDetailView: View {
                         HStack{
                             
                             Image(systemName:"star.fill").foregroundColor(.yellow)
-                            Text("\(restaurantModel.currentRestaurantDetail?.rating ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                            Text("(\(restaurantModel.currentRestaurantDetail?.user_ratings_total ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
+                            Text("\(restaurantModel.currentRestaurantDetail?.totalScore ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                            Text("(\(restaurantModel.currentRestaurantDetail?.rank ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
                             Spacer()
 //                            NavigationLink(destination: {
 //                                ReviewView()
@@ -122,16 +147,16 @@ struct RestaurantDetailView: View {
                     ZStack {
                         Rectangle().foregroundColor(.white).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
                         VStack(spacing: 5) {
-                            HStack {
-                                Text("⏰").font(.system(size: 12))
-                                Text(restaurantModel.currentRestaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
-                                
-                            }
-                            Text(restaurantModel.currentRestaurantDetail?.name ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
+//                            HStack {
+//                                Text("⏰").font(.system(size: 12))
+//                                Text(restaurantModel.currentRestaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
+//
+//                            }
+                            Text(restaurantModel.currentRestaurantDetail?.title ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
                             HStack{
                                 Text("\(restaurantModel.currentRestaurantDetail?.distance ?? 0,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                                 Text("•").foregroundColor(Color("SubTextColor"))
-                                Text(restaurantModel.currentRestaurantDetail?.formatted_address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
+                                Text(restaurantModel.currentRestaurantDetail?.address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
                                 
                             }.frame(width:geo.size.width-100)
                             HStack{
@@ -158,6 +183,19 @@ struct RestaurantDetailView: View {
                 }
             }
                 .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: btnBackProgress)
+                .onAppear() {
+                    // background music
+                    SoundModel.startBackgroundMusic(bckName: "detail")
+                }
+//                .onDisappear() {
+////                    // Back button sound effect
+////                    SoundModel.clickOtherSound()
+//
+//                    // background music
+//                    SoundModel.startBackgroundMusic(bckName: "home")
+//                }
 
 
         }

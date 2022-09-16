@@ -36,7 +36,7 @@ struct SoundModel {
     }
 
     // MARK: play background music (infinite loop)
-    static func startBackgroundMusic(bckName: String, type: String) {
+    static func startBackgroundMusic(bckName: String, type: String = "mp3") {
         if let bundle = Bundle.main.path(forResource: "bck-\(bckName)", ofType: type) {
             let backgroundMusic = NSURL(fileURLWithPath: bundle)
             do {
@@ -61,5 +61,24 @@ struct SoundModel {
     static func stopSoundEffect() {
         guard let audioPlayer = effectAudio else { return }
         audioPlayer.stop()
+    }
+    
+    // MARK: - sound with name
+    static func clickButtonSound() {
+        startEffectSound(sound: "button-click", type: "mp3")
+    }
+    
+    static func clickCardSound() {
+//        stopSoundEffect()
+        startEffectSound(sound: "card-click", type: "mp3")
+    }
+    
+    static func clickTabSound() {
+//        stopSoundEffect()
+        startEffectSound(sound: "tab-click", type: "mp3")
+    }
+    
+    static func clickOtherSound() {
+        startEffectSound(sound: "other-click", type: "mp3")
     }
 }
