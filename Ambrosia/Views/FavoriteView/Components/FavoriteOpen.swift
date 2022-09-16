@@ -14,7 +14,8 @@ struct FavoriteOpen: View {
         Label {
             Text(isOpen ? "OPEN" : "CLOSED")
                 .foregroundColor(Color("\(isOpen ? "Open" : "Close") Color"))
-                .font(.system(size: openSize))
+                .font(.headline)
+//                .font(.system(size: openSize))
         } icon: {
             ImageSystemHier(name: "clock.badge.checkmark.fill", color: "Fv Subtitle Clr 2", size: openSize + 1)
         }

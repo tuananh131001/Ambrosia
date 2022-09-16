@@ -14,6 +14,7 @@ struct User: Decodable {
     var selectedGender:Int
     var favouriteRestaurants: [Restaurant] = [Restaurant]()
     var email:String
+    var reviewRestaurant:[Restaurant] = [Restaurant]()
 }
 
 
