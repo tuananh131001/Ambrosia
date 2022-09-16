@@ -41,39 +41,52 @@ struct RestaurantListView: View {
         }
     }
     var body: some View {
-        NavigationView {
-            VStack {
-                // scroll view to show all the restaurants
-                ScrollView(showsIndicators: false) {
-                    LazyVStack(spacing: 35) {
-                        ForEach(0..<searchResults.count, id: \.self) {
-                            index in
-                            // link to the restaurant detail
-                            NavigationLink(
-                                tag: index,
-                                selection: $restaurantModel.restaurantSelected) {
-                                // find the current restaurant and display when the view appear
-                                RestaurantDetailView().onAppear {
-                                    restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
-                                    restaurantModel.getServiceOptions()
-                                    restaurantModel.getDiningOptions()
-                                    restaurantModel.getPlaningOptions()
-                                    restaurantModel.getPaymentOptions()
+            NavigationView {
+                ScrollView {
+                    HorizontalListView(sectionTitle: "Suggestion Restaurants")
+                    VStack (alignment:.leading){
+                        Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
+                    // scroll view to show all the restaurants
+                    ScrollView(showsIndicators: false) {
+                          
+                            LazyVStack(spacing: 35) {
+                                ForEach(0..<searchResults.count, id: \.self) {
+                                    index in
+                                    // link to the restaurant detail
+                                    NavigationLink(
+                                        tag: index,
+                                        selection: $restaurantModel.restaurantSelected) {
+                                        // find the current restaurant and display when the view appear
+                                        RestaurantDetailView().onAppear {
+                                            restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
+                                            restaurantModel.getServiceOptions()
+                                            restaurantModel.getDiningOptions()
+                                            restaurantModel.getPlaningOptions()
+                                            restaurantModel.getPaymentOptions()
+                                        }
+
+                                    } label: {
+                                        // Card to show restaurant
+                                        RestaurantCardView(name: searchResults[index].title,rating: searchResults[index].totalScore ?? 5.0, address:searchResults[index].address ?? "", photo_id: searchResults[index].imageUrls?[0] ?? "" , total_ratings: searchResults[index].rank ?? 1, distance: searchResults[index].distance )
+                                    }
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                            SoundModel.clickCardSound()
+                                        })
+                                    
                                 }
-
-                            } label: {
-                                // Card to show restaurant
-                                RestaurantCardView(name: searchResults[index].title,rating: searchResults[index].totalScore ?? 5.0, address:searchResults[index].address ?? "", photo_id: searchResults[index].imageUrls?[0] ?? "" , total_ratings: searchResults[index].rank ?? 1, distance: searchResults[index].distance )
                             }
-                                .simultaneousGesture(TapGesture().onEnded {
-                                    SoundModel.clickCardSound()
-                                })
-                            
-                        }
-                    }.padding()
-                    // add the search bar and set the mode to always display the search bar
-                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Nearby Restaurants").accentColor(Color("PrimaryColor"))
 
+                        }
+                       
+
+                        // add the search bar and set the mode to always display the search bar
+                    }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
+
+                } .onChange(of: restaurantModel.restaurantSelected) { newValue in
+                    if (newValue ==
+                            nil) {
+                        restaurantModel.currentRestaurant = nil
+                    }
             }
             .background(Constants.BCK_COLOR)
             .onChange(of: restaurantModel.restaurantSelected) { newValue in
@@ -81,11 +94,12 @@ struct RestaurantListView: View {
                         nil) {
                     restaurantModel.currentRestaurant = nil
                 }
+            }.navigationViewStyle(StackNavigationViewStyle())
+                .onChange(of: restaurantModel.currentRestaurant?.reviews.count) { newValue in
             }
-        }.navigationViewStyle(StackNavigationViewStyle())
-            .onChange(of: restaurantModel.currentRestaurant?.reviews.count) { newValue in
         }
-    }
+     
+    
 
 
 }
