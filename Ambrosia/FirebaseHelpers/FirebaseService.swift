@@ -140,7 +140,6 @@ class FirebaseService: ObservableObject {
                             }
                         }
                         let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email)
-                        print("Sir new user fetch", newUser)
                         userModel.user = newUser
 //                    completion(newUser)
                     }

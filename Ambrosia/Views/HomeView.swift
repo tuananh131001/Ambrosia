@@ -101,7 +101,6 @@ struct HomeView: View {
                 .onAppear() {
                     restaurantModel.chooseDefaultLocation()
                     restaurantModel.calculateDistanceRest()
-                    print(restaurantModel.restaurants)
                 }
             
         }

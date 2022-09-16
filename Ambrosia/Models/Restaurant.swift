@@ -75,6 +75,9 @@ struct Restaurant: Codable {
     var location: Geometry?
     var imageUrls:[String]?
     var distance: Double = 0
+    
+    var isFavorite: Bool = true
+    
     enum CodingKeys: String, CodingKey {
         case placeId
         case address

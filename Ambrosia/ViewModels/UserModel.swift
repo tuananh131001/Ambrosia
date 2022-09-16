@@ -113,10 +113,6 @@ class UserModel: ObservableObject {
                     self.loginMethod = .normal
                     self.loginSuccess = true
                     self.saveCurrentLoginNormal(email: email, password: password)
-//                    DispatchQueue.main.async {
-//
-//                    }
-                    print("Login sir normal", self.user)
                 }
             }
         }
