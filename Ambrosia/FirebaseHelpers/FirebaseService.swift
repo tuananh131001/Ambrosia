@@ -128,7 +128,8 @@ class FirebaseService: ObservableObject {
                     let dob: Date = timestamp.dateValue()
                     let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
                     let email: String = data?["email"] as? String ?? ""
-                    let restaurantsId = data?["favoriteRestaurants"] as? [String] ?? [String]()
+                    let restaurantsId:[String] = data?["favoriteRestaurants"] as? [String] ?? [String]()
+                    print(restaurantsId)
                     var favouriteRestaurants = [Restaurant]()
                     for id in restaurantsId {
                         let rest = restaurantModel.findRestaurantById(id)

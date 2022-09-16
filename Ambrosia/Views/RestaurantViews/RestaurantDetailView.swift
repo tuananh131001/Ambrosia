@@ -61,7 +61,7 @@ struct RestaurantDetailView: View {
     var favouriteBtn: some View {
         Button(action: {
             SoundModel.clickCardSound()
-            clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: ""))
+            clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: ""))
 
         }, label: {
             CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
