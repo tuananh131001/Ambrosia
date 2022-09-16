@@ -53,7 +53,6 @@ struct SettingView: View {
                 ToggleTheme
                 
                 
-                
                 Button {
                     showReview = true
                 } label: {
