@@ -26,10 +26,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var type: String?
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
-    @Published var currentRestaurantDetail: Restaurant?
- 
-
-    
 
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
@@ -140,7 +136,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 //                            //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
 //                            if let data2 = data,
 //                               let restaurantArr2 = try? decoder2.decode(Restaurant.self, from: data2) {
-        self.currentRestaurantDetail = restaurant
+        self.currentRestaurant = restaurant
         self.updateRestaurantDetailDistance()
         self.getType()
 
@@ -262,7 +258,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     func updateRestaurantDetailDistance() {
-        currentRestaurantDetail?.distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: currentRestaurantDetail?.location?.lat ?? 0, lon2: currentRestaurantDetail?.location?.lng ?? 0)
+        currentRestaurant?.distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: currentRestaurant?.location?.lat ?? 0, lon2: currentRestaurant?.location?.lng ?? 0)
     }
     func findRestaurantIndexById(_ id: String) -> Int {
         if let index = restaurants.firstIndex(where: {$0.placeId == id}) {
@@ -308,17 +304,16 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
 
     // Function to add new review from user
-    func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, image: String) {
+    func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String,userId: String, image: String) {
         let id = UUID()
         let date = Date.now
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
-        self.currentRestaurantDetail?.reviews.append(newReview)
-        print(self.currentRestaurantDetail as Any)
-        firebaseService.addReviewToFirebase(restaurant: self.currentRestaurantDetail ?? Restaurant.testRestaurantDetail())
+        self.currentRestaurant?.reviews.append(newReview)
+        firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(),userId: userId)
     }
     func updateReview(reviews: [Review]) {
         print(reviews)
-        self.currentRestaurantDetail?.reviews = reviews
+        self.currentRestaurant?.reviews = reviews
     }
 
     func getType(_ priceLv: Int? = -1) {

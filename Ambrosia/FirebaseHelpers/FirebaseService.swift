@@ -66,7 +66,7 @@ class FirebaseService: ObservableObject {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants], merge: true)
     }
 
-    func addReviewToFirebase(restaurant: Restaurant) {
+    func addReviewToFirebase(restaurant: Restaurant,userId:String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
@@ -78,6 +78,8 @@ class FirebaseService: ObservableObject {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").updateData([
             "reviews": newReviewList
             ])
+        // update user review of that restaurant
+        Firestore.firestore().collection("user").document(userId).updateData(["reviewRestaurant": FieldValue.arrayUnion([restaurant.placeId ?? ""])])
     }
     func fetchReviewFromFirebase(restaurant: Restaurant, model: RestaurantModel) {
         let docRef = Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "")
@@ -106,7 +108,7 @@ class FirebaseService: ObservableObject {
                         reviewFetch.append(newReview)
                     }
                     // assign to the reviews on local
-                    model.currentRestaurantDetail?.reviews = reviewFetch
+                    model.currentRestaurant?.reviews = reviewFetch
                     //clear
                 }
             }
@@ -130,8 +132,9 @@ class FirebaseService: ObservableObject {
                         let dob: Date = timestamp.dateValue()
                         let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
                         let email: String = data?["email"] as? String ?? ""
+                        //favorite
                         let restaurantsId: [String] = data?["favoriteRestaurants"] as? [String] ?? [String]()
-                        
+
                         var favouriteRestaurants = [Restaurant]()
                         for id in restaurantsId {
                             let rest = restaurantModel.findRestaurantById(id)
@@ -139,7 +142,16 @@ class FirebaseService: ObservableObject {
                                 favouriteRestaurants.append(newRest)
                             }
                         }
-                        let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email)
+                        // review
+                        var savedReview = [Restaurant]()
+                        let reviewsRestaurant: [String] = data?["reviewRestaurant"] as? [String] ?? [String]()
+                        for id in reviewsRestaurant {
+                            let rest = restaurantModel.findRestaurantById(id)
+                            if let newRest = rest {
+                                savedReview.append(newRest)
+                            }
+                        }
+                        let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants,email: email, reviewRestaurant:savedReview)
                         userModel.user = newUser
 
                     }
