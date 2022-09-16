@@ -153,11 +153,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
-
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     if error != nil {
                     } else {
-
                         let decoder = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
@@ -207,10 +205,16 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     func findRestaurantById(_ id: String) -> Restaurant? {
-        for index in 0..<restaurants.count {
-            if (restaurants[index].placeId == id) {
-                return restaurants[index]
-            }
+
+//        if (restaurants[index].placeId == id) {
+//            return restaurants[index]
+//        }
+        if let index = restaurants.first(where: {$0.placeId == id}) {
+           // do something with foo
+            return index
+        } else {
+           // item could not be found
+            print("cannot find")
         }
         return nil
     }
