@@ -243,6 +243,26 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             }
        
     }
+    
+    func calculateNumber(number: Int) -> CGFloat {
+        var value:CGFloat = 0
+        if (number == 5) {
+            value = CGFloat(currentRestaurant?.reviewsDistribution?.fiveStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+        }
+        else if (number == 4){
+            value = CGFloat(currentRestaurant?.reviewsDistribution?.fourStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+        }
+        else if (number == 3){
+            value = CGFloat(currentRestaurant?.reviewsDistribution?.threeStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+        }
+        else if (number == 2){
+            value = CGFloat(currentRestaurant?.reviewsDistribution?.twoStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+        }
+        else if (number == 1){
+            value = CGFloat(currentRestaurant?.reviewsDistribution?.oneStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+        }
+        return value
+    }
 
     func chooseDefaultLocation() {
         if currentUserCoordinate?.latitude == nil && ((currentUserCoordinate?.longitude) == nil) {
