@@ -41,12 +41,12 @@ struct RestaurantListView: View {
         }
     }
     var body: some View {
-            NavigationView {
-                ScrollView {
-                    HorizontalListView(sectionTitle: "Suggestion Restaurants",type: "suggestion")
-                    HorizontalListView(sectionTitle: "Nearby Restaurants",type: "nearby")
-                    VStack (alignment:.leading){
-                        Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
+        NavigationView {
+            ScrollView {
+                HorizontalListView(sectionTitle: "Suggestion Restaurants", type: "suggestion")
+                HorizontalListView(sectionTitle: "Nearby Restaurants", type: "nearby")
+                VStack (alignment: .leading) {
+                    Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
                     // scroll view to show all the restaurants
                     ScrollView(showsIndicators: false) {
 
@@ -103,9 +103,6 @@ struct RestaurantListView: View {
     }
 }
 
-
-    }
-}
 
 struct RestaurantListView_Previews: PreviewProvider {
     static var previews: some View {
