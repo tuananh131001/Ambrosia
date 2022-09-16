@@ -143,18 +143,18 @@ struct RestaurantDetailView: View {
                                     Text("\(restaurantModel.currentRestaurant?.totalScore ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                                     Text("(\(restaurantModel.currentRestaurant?.rank ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
                                     Spacer()
-        //                            NavigationLink(destination: {
-        //                                ReviewView()
-        //                            }) {
-        //                                Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-        //                            }
-                                    Button {
-                                        showReview = true
-                                    } label: {
-                                        Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-                                    }.sheet(isPresented: $showReview) {
+                                    NavigationLink(destination: {
                                         ReviewView()
+                                    }) {
+                                        Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
                                     }
+//                                    Button {
+//                                        showReview = true
+//                                    } label: {
+//                                        Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+//                                    }.sheet(isPresented: $showReview) {
+//                                        ReviewView()
+//                                    }
 
                                 }
                                 Divider()

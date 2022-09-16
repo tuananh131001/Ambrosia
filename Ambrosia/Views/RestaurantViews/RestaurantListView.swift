@@ -80,7 +80,6 @@ struct RestaurantListView: View {
                 if (newValue ==
                         nil) {
                     restaurantModel.currentRestaurant = nil
-                    print(restaurantModel.currentRestaurant)
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())
