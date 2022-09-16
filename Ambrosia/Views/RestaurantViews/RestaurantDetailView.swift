@@ -60,6 +60,7 @@ struct RestaurantDetailView: View {
     
     var favouriteBtn: some View {
         Button(action: {
+            SoundModel.clickCardSound()
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(place_id: ""))
 
         }, label: {
@@ -189,15 +190,6 @@ struct RestaurantDetailView: View {
                     // background music
                     SoundModel.startBackgroundMusic(bckName: "detail")
                 }
-//                .onDisappear() {
-////                    // Back button sound effect
-////                    SoundModel.clickOtherSound()
-//
-//                    // background music
-//                    SoundModel.startBackgroundMusic(bckName: "home")
-//                }
-
-
         }
     }
 

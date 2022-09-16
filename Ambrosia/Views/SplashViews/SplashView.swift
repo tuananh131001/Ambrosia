@@ -43,6 +43,8 @@ struct SplashView: View {
             }
             .ignoresSafeArea()
             .onAppear() {
+                // background music
+                SoundModel.startBackgroundMusic(bckName: "login")
                 // MARK: - animation
                 withAnimation(.interpolatingSpring(mass: 0.4, stiffness: 20, damping: 2, initialVelocity: 7)) {
                     // inner icon
@@ -82,8 +84,7 @@ struct SplashView: View {
                         // end splash screen
                         withAnimation(.easeInOut(duration: 0.5).delay(0.8)) {
                             animationValues[nearFinalIndex] = true
-                            // background music
-                            SoundModel.startBackgroundMusic(bckName: "login")
+
                         }
                         
                         // for removing splash view after 2s

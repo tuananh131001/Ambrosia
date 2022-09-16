@@ -17,23 +17,40 @@ struct LaunchView: View {
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var restaurantModel: RestaurantModel
 
-    // splashsreen here
+    @StateObject var firebaseService = FirebaseService.services
+
+    @State var isLogging = false
     var body: some View {
         // if app has not ask user permission to access location
         if !userModel.loginSuccess {
             LaunchContentView()
+                .onAppear() {
+                print("Un login sir")
+            }
         }
         else if userModel.loginSuccess && restaurantModel.authorizationState == .notDetermined {
             LaunchContentView(openSetting: true)
         }
         else if userModel.loginSuccess && userModel.isNewUser {
             EditInformation()
+                .onAppear() {
+                print("Edit ingo sir")
+            }
         }
         else if userModel.loginSuccess && !userModel.isNewUser {
-//                ReviewView(reviews: Review.testReviews())
+
             HomeView()
+                .onAppear() {
+                print("home view sir")
+                // fetch current user and store into auth model for later use
+//                firebaseService.fetchUser(uid: userModel.userId, restaurantModel: restaurantModel) { user in
+//                    userModel.user = user ?? User(id: "", name: "Nothing", dob: Date.now, selectedGender: 0, email: "")
+//                }
+//                    print("Home view sir", userModel.user)
+                // background music
+                SoundModel.startBackgroundMusic(bckName: "home")
+            }
         }
-        // user not allow -> open settings
 
     }
 
