@@ -214,12 +214,18 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func updateRestaurantDetailDistance() {
         currentRestaurantDetail?.distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: currentRestaurantDetail?.location?.lat ?? 0, lon2: currentRestaurantDetail?.location?.lng ?? 0)
     }
-
+    func findRestaurantIndexById(_ id: String) -> Int {
+        if let index = restaurants.firstIndex(where: {$0.placeId == id}) {
+           // do something with foo
+            return index
+        } else {
+           // item could not be found
+            print("cannot find")
+        }
+        return 0
+    }
     func findRestaurantById(_ id: String) -> Restaurant? {
 
-//        if (restaurants[index].placeId == id) {
-//            return restaurants[index]
-//        }
         if let index = restaurants.first(where: {$0.placeId == id}) {
            // do something with foo
             return index

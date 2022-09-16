@@ -49,6 +49,9 @@
 		3D379D7328D42A84008FF117 /* FavoriteRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7228D42A84008FF117 /* FavoriteRating.swift */; };
 		3D379D7728D42AFB008FF117 /* FavoriteSideInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */; };
 		3D379D7928D42B0F008FF117 /* FavoriteOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7828D42B0F008FF117 /* FavoriteOpen.swift */; };
+		3D379D7B28D44C6E008FF117 /* FavoriteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7A28D44C6E008FF117 /* FavoriteImage.swift */; };
+		3D379D7D28D456A3008FF117 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7C28D456A3008FF117 /* FavoriteButton.swift */; };
+		3D379D7F28D46936008FF117 /* FavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7E28D46936008FF117 /* FavoriteContent.swift */; };
 		3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42C2172896D680005BA233 /* NotFoundView.swift */; };
 		3D42C21A2896D931005BA233 /* NavigateLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42C2192896D931005BA233 /* NavigateLink.swift */; };
 		3D4705DB288E4C0400502DD1 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4705DA288E4C0400502DD1 /* Restaurant.swift */; };
@@ -125,6 +128,9 @@
 		3D379D7228D42A84008FF117 /* FavoriteRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRating.swift; sourceTree = "<group>"; };
 		3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSideInfo.swift; sourceTree = "<group>"; };
 		3D379D7828D42B0F008FF117 /* FavoriteOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteOpen.swift; sourceTree = "<group>"; };
+		3D379D7A28D44C6E008FF117 /* FavoriteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImage.swift; sourceTree = "<group>"; };
+		3D379D7C28D456A3008FF117 /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
+		3D379D7E28D46936008FF117 /* FavoriteContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteContent.swift; sourceTree = "<group>"; };
 		3D42C2172896D680005BA233 /* NotFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundView.swift; sourceTree = "<group>"; };
 		3D42C2192896D931005BA233 /* NavigateLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateLink.swift; sourceTree = "<group>"; };
 		3D4705DA288E4C0400502DD1 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
@@ -289,6 +295,9 @@
 				3D379D7228D42A84008FF117 /* FavoriteRating.swift */,
 				3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */,
 				3D379D7828D42B0F008FF117 /* FavoriteOpen.swift */,
+				3D379D7A28D44C6E008FF117 /* FavoriteImage.swift */,
+				3D379D7C28D456A3008FF117 /* FavoriteButton.swift */,
+				3D379D7E28D46936008FF117 /* FavoriteContent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -616,6 +625,7 @@
 				3D379D7728D42AFB008FF117 /* FavoriteSideInfo.swift in Sources */,
 				3DF148A428D1B1E400FFF220 /* ImageSystemHier.swift in Sources */,
 				3DC2FC972886E18E003750D3 /* EatTime.swift in Sources */,
+				3D379D7D28D456A3008FF117 /* FavoriteButton.swift in Sources */,
 				442A4E8028CEF3DD00AD37E4 /* CalculateDistance.swift in Sources */,
 				3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */,
 				44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */,
@@ -625,6 +635,7 @@
 				3D8371312893B9CC0067C946 /* RatingView.swift in Sources */,
 				3DDCD18428CC936700B97159 /* RestaurantAsyncImage.swift in Sources */,
 				3D4D1B2728CEF2D200034146 /* GeneralLogoView.swift in Sources */,
+				3D379D7B28D44C6E008FF117 /* FavoriteImage.swift in Sources */,
 				3DDCD18428CC936700B97159 /* RestaurantAsyncImage.swift in Sources */,
 				442A4E7C28CDF72E00AD37E4 /* RestaurantListView.swift in Sources */,
 				3D48566C28CEEDF0001D7DAE /* FirebaseService.swift in Sources */,
@@ -661,6 +672,7 @@
 				3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */,
 				3D4D1B1E28CC9ADB00034146 /* SplashView.swift in Sources */,
 				3D48567228CEF6D8001D7DAE /* InformationForm.swift in Sources */,
+				3D379D7F28D46936008FF117 /* FavoriteContent.swift in Sources */,
 				3D837119289389830067C946 /* GifView.swift in Sources */,
 				3D837145289410650067C946 /* LaunchContentView.swift in Sources */,
 				3D1B2F1328C737790091BD2F /* SignUpView.swift in Sources */,

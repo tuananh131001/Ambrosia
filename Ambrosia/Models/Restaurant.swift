@@ -81,8 +81,6 @@ struct Restaurant: Codable {
     var planingArr:[String]?
 
     
-    var isFavorite: Bool = true
-    
     enum CodingKeys: String, CodingKey {
         case placeId
         case address

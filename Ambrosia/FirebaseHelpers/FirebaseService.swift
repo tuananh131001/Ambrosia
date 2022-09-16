@@ -141,7 +141,7 @@ class FirebaseService: ObservableObject {
                         }
                         let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email)
                         userModel.user = newUser
-//                    completion(newUser)
+
                     }
                 }
             } }
@@ -149,7 +149,7 @@ class FirebaseService: ObservableObject {
 
 
     func removeFavorites(user: User, restaurant: Restaurant) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId])]
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId!])]
         )
     }
 
@@ -169,6 +169,6 @@ class FirebaseService: ObservableObject {
         }
     }
     func addToFavorites(user: User, restaurant: Restaurant) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId])])
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId!])])
     }
 }
