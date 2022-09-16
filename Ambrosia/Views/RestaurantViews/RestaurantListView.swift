@@ -54,9 +54,7 @@ struct RestaurantListView: View {
                                 selection: $restaurantModel.restaurantSelected) {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
-                                    restaurantModel.fetchDetail(restaurant: searchResults[index])
-                                
-                                    restaurantModel.currentRestaurant = searchResults[index]
+                                    restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
                                 }
 
                             } label: {
@@ -65,7 +63,9 @@ struct RestaurantListView: View {
                             }
                                 .simultaneousGesture(TapGesture().onEnded {
                                     SoundModel.clickCardSound()
-                                }) }
+                                })
+                            
+                        }
                     }.padding()
                     // add the search bar and set the mode to always display the search bar
                 }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name")
@@ -74,12 +74,12 @@ struct RestaurantListView: View {
             } .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==
                         nil) {
-                    restaurantModel.currentRestaurantDetail = nil
+                    restaurantModel.currentRestaurant = nil
 
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())
-            .onChange(of: restaurantModel.currentRestaurantDetail?.reviews.count) { newValue in
+            .onChange(of: restaurantModel.currentRestaurant?.reviews.count) { newValue in
         }
     }
 

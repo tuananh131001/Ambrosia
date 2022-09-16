@@ -1,56 +1,56 @@
+////
+////  BreadCrumbs.swift
+////  Ambrosia
+////
+////  Created by Võ Quốc Huy on 12/09/2022.
+////
 //
-//  BreadCrumbs.swift
-//  Ambrosia
+//import SwiftUI
 //
-//  Created by Võ Quốc Huy on 12/09/2022.
+//struct Breadcrumbs: View {
+//    @EnvironmentObject var restaurantModel: RestaurantModel
+//    var body: some View {
+//        ScrollView(.horizontal) {
+//            LazyHStack(spacing: 20) {
+//                ForEach(0..<(restaurantModel.currentRestaurantDetail?.options.count ?? 0),id: \.self) {
+//                    index in
+//                    HStack{
+//                        if (restaurantModel.currentRestaurantDetail?.options[index] == "Dine in"){
+//                            Text("🍔").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
+//                        }
+//                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Delivery"){
+//                            Text("🛵").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
+//                        }
+//                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Take out"){
+//                            Text("🍱").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
+//                        }
+//                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Serves wine"){
+//                            Text("🍷").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
+//                        }
+//                        Text(restaurantModel.currentRestaurantDetail?.options[index] ?? "").foregroundColor(Color("SubTextColor")).bold().font(.system(size: 14)).padding([.top,.bottom],7).padding(.trailing,17)
+//                    }.background(Color("SubTextColor").opacity(0.18))
+//                        .cornerRadius(20)
 //
-
-import SwiftUI
-
-struct Breadcrumbs: View {
-    @EnvironmentObject var restaurantModel: RestaurantModel
-    var body: some View {
-        ScrollView(.horizontal) {
-            LazyHStack(spacing: 20) {
-                ForEach(0..<(restaurantModel.currentRestaurantDetail?.options.count ?? 0),id: \.self) {
-                    index in
-                    HStack{
-                        if (restaurantModel.currentRestaurantDetail?.options[index] == "Dine in"){
-                            Text("🍔").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
-                        }
-                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Delivery"){
-                            Text("🛵").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
-                        }
-                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Take out"){
-                            Text("🍱").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
-                        }
-                        else if (restaurantModel.currentRestaurantDetail?.options[index] == "Serves wine"){
-                            Text("🍷").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
-                        }
-                        Text(restaurantModel.currentRestaurantDetail?.options[index] ?? "").foregroundColor(Color("SubTextColor")).bold().font(.system(size: 14)).padding([.top,.bottom],7).padding(.trailing,17)
-                    }.background(Color("SubTextColor").opacity(0.18))
-                        .cornerRadius(20)
-
-                }
-
-            }
-        }
-//        HStack{
-//           
-//            Text("🍔").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
-//            
-//           
-//            
-//            
-//            Text("Dine in").foregroundColor(Color("SubTextColor")).bold().font(.system(size: 14)).padding([.top,.bottom],7).padding(.trailing,17)
-//        }.background(Color("SubTextColor").opacity(0.18))
-//            .cornerRadius(20)
-    }
-}
-
-struct BreadCrumbs_Previews: PreviewProvider {
-    static var previews: some View {
-        Breadcrumbs()
-            .environmentObject(RestaurantModel())
-    }
-}
+//                }
+//
+//            }
+//        }
+////        HStack{
+////           
+////            Text("🍔").font(.system(size: 14)).padding([.top,.bottom],7).padding(.leading,17)
+////            
+////           
+////            
+////            
+////            Text("Dine in").foregroundColor(Color("SubTextColor")).bold().font(.system(size: 14)).padding([.top,.bottom],7).padding(.trailing,17)
+////        }.background(Color("SubTextColor").opacity(0.18))
+////            .cornerRadius(20)
+//    }
+//}
+//
+//struct BreadCrumbs_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Breadcrumbs()
+//            .environmentObject(RestaurantModel())
+//    }
+//}

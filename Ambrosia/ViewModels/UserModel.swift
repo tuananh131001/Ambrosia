@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 import GoogleSignIn
+import FirebaseMLModelDownloader
 
 var provider: OAuthProvider?
 var authMicrosoft: Auth?
@@ -24,7 +25,7 @@ class UserModel: ObservableObject {
     @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0, email: "")
     let genders = ["Male", "Female"]
     @Published var firebaseService = FirebaseService.services
-    
+
     enum SignInState {
         case signedIn
         case signedOut
@@ -35,32 +36,31 @@ class UserModel: ObservableObject {
     @Published var isNewUser: Bool = false
     @Published var loginMethod: SignInMethod = .normal
     @Published var loginMessage = ""
-    
+    @Published var userId: String = ""
+
     // Favorite
     func isRestaurantFavorite(restaurant: Restaurant) -> Int? {
             return user.favouriteRestaurants.firstIndex { $0.placeId ==  restaurant.placeId}
     }
-    
+
     //Fetch User
     func fetchUserInfo(id:String,userModel:UserModel,restaurantModel: RestaurantModel){
         firebaseService.getUserFirebase(id: id,userModel: userModel,restaurantModel: restaurantModel)
     }
-    
-    
-    
+
     func saveCurrentLoginNormal(email: String, password: String) {
-         let userDefaults = UserDefaults.standard
-         userDefaults.setValue(email, forKey: "email")
-         userDefaults.setValue(password, forKey: "password")
-         userDefaults.setValue(Auth.auth().currentUser?.uid ?? "error", forKey: "uid")
-     }
-    
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue(email, forKey: "email")
+        userDefaults.setValue(password, forKey: "password")
+        userDefaults.setValue(Auth.auth().currentUser?.uid ?? "error", forKey: "uid")
+    }
+
     func saveCurrentLoginMicrosoft(credential: String) {
-         let userDefaults = UserDefaults.standard
-         userDefaults.setValue(Auth.auth().currentUser?.uid ?? "error", forKey: "uid")
-     }
-    
-    
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue(Auth.auth().currentUser?.uid ?? "error", forKey: "uid")
+    }
+
+
     func autoLoginNormal(restaurantModel: RestaurantModel) {
         let userDefaults = UserDefaults.standard
         if userDefaults.string(forKey: "email") != nil {
@@ -69,7 +69,7 @@ class UserModel: ObservableObject {
             self.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
         }
     }
-    
+
     func autoLoginMicrosoft(restaurantModel: RestaurantModel) {
         let userDefaults = UserDefaults.standard
         if userDefaults.string(forKey: "email") != nil {
@@ -78,58 +78,60 @@ class UserModel: ObservableObject {
             self.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
         }
     }
-    
+
     func removeCurrentLogin() {
-         let userDefaults = UserDefaults.standard
-         userDefaults.setValue("", forKey: "loginType")
-         userDefaults.setValue("", forKey: "email")
-         userDefaults.setValue("", forKey: "password")
+        let userDefaults = UserDefaults.standard
+        userDefaults.setValue("", forKey: "loginType")
+        userDefaults.setValue("", forKey: "email")
+        userDefaults.setValue("", forKey: "password")
         userDefaults.setValue("", forKey: "uid")
-     }
-    
+    }
+
     func NormalSignIn(email: String, password: String, restaurantModel: RestaurantModel) {
-         if (email == "" || password == "") {
-             self.loginMessage = "Please enter email and password"
-             self.loginSuccess = false
-         }
-         else {
-             Auth.auth().signIn(withEmail: email, password: password){ (result, error) in
-                 if error != nil {
-                     let err = error?.localizedDescription ?? ""
-                     print("NORMAL LOGIN ERROR: ", err)
-                     if (err.contains("no user record")) {
-                         self.loginMessage = "This email hasn't register yet"
-                     }
-                     else {
-                         self.loginMessage = "Invalid sign-in credentials"
-                     }
-                     self.loginSuccess = false
-                 } else {
-                     UserDefaults.standard.setValue("normal", forKey: "loginType")
-                     self.fetchUserInfo(id: result?.user.uid ?? "",userModel: self, restaurantModel: restaurantModel)
-                     self.loginMessage = "Login successfully. Redirecting..."
-                     self.loginMethod = .normal
-                     self.loginSuccess = true
-                     self.saveCurrentLoginNormal(email: email, password: password)
-                 }
-             }
-         }
-     }
-    
+        if (email == "" || password == "") {
+            self.loginMessage = "Please enter email and password"
+            self.loginSuccess = false
+        }
+        else {
+            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+                if error != nil {
+                    let err = error?.localizedDescription ?? ""
+                    print("NORMAL LOGIN ERROR: ", err)
+                    if (err.contains("no user record")) {
+                        self.loginMessage = "This email hasn't register yet"
+                    }
+                    else {
+                        self.loginMessage = "Invalid sign-in credentials"
+                    }
+                    self.loginSuccess = false
+                } else {
+                    UserDefaults.standard.setValue("normal", forKey: "loginType")
+                    self.fetchUserInfo(id: result?.user.uid ?? "", userModel: self, restaurantModel: restaurantModel)
+//                    self.firebaseService.getUserFirebase(id: result?.user.uid ?? "Bug Normal Login",userModel: self,restaurantModel: restaurantModel)
+                    self.userId = result?.user.uid ?? ""
+                    self.loginMessage = "Login successfully. Redirecting..."
+                    self.loginMethod = .normal
+                    self.loginSuccess = true
+                    self.saveCurrentLoginNormal(email: email, password: password)
+                }
+            }
+        }
+    }
+
     func MicrosoftSignIn(restaurantModel: RestaurantModel) {
         provider = OAuthProvider(providerID: "microsoft.com")
         provider?.customParameters = [
             "prompt": "consent",
             "login_hint": ""
         ]
-        
+
         provider?.scopes = ["mail.read"]
 
         provider?.getCredentialWith(nil) { credential, error in
             if error != nil {
                 print(error?.localizedDescription ?? "FAILED GET CREDENTIAL MICROSOFT")
             }
-            
+
             if let x = credential {
                 Auth.auth().signIn(with: x) { result, error in
                     if error != nil {
