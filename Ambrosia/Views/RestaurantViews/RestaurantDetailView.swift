@@ -84,7 +84,7 @@ struct RestaurantDetailView: View {
                     VStack(spacing:20){
 
                         ZStack {
-                            Rectangle().foregroundColor(.white).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
+                            Rectangle().foregroundColor(Constants.CARD_BCK_COLOR).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
                             VStack(spacing: 5) {
                                 HStack {
                                     Text("⏰").font(.system(size: 12))
@@ -186,6 +186,7 @@ struct RestaurantDetailView: View {
                             }
                         
                     }.padding().offset(y:-100)
+                        .background(Constants.BCK_COLOR)
           
 
                 }
