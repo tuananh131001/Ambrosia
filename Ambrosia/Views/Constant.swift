@@ -15,6 +15,7 @@ enum Constants {
     static let LIGH_PRIMARY_COLOR : Color = Color("LightPrimary")
     static let LIGH_PRIMARY_COLOR_UI : UIColor = UIColor(named: "LightPrimary")!
     static let BCK_COLOR: Color = Color("BackgroundViewColor")
+    static let CARD_BCK_COLOR: Color = Color("CardBackgroundColor")
     
     static let APP_NAME_LARGE_SIZE : CGFloat = 45
     static let FORM_PADDING_VERTICAL : CGFloat = 30
@@ -24,7 +25,7 @@ enum Constants {
     
     
     static let FIELD_PADDING : CGFloat = 10
-    static let FIELD_HEIGHT: CGFloat = 44
+    static let FIELD_HEIGHT: CGFloat = 42
     static let FIELD_MIN_WIDTH: CGFloat = 230
     static let FIELD_MAX_WIDTH: CGFloat = 320
     static let CONRNER_RADIUS: CGFloat = 10

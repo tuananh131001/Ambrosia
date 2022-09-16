@@ -26,7 +26,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var type: String?
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
-
+    @Published var sortedByRankRestaurants: [Restaurant] = [Restaurant]()
+    @Published var sortedByDistanceRestaurants:[Restaurant] = [Restaurant]()
+    
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -122,26 +124,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //        return false
     //    }
 
-    func fetchDetail(restaurant: Restaurant) {
-//        let urlString2 = "https://maps.googleapis.com/maps/api/place/details/json?place_id=\(place_id)&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-//        let urlString2 = "https://tuananh131001.github.io/ambrosia_data.json"
-//        print(urlString2)
-//        if let url2 = URL(string: urlString2) {
-//            URLSession.shared
-//                .dataTask(with: url2) { data, response, error in
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
-//                        if error != nil {
-//                            print ("error")
-//                        } else {
-//                            let decoder2 = JSONDecoder()
-//                            //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                            if let data2 = data,
-//                               let restaurantArr2 = try? decoder2.decode(Restaurant.self, from: data2) {
-        self.currentRestaurant = restaurant
-        self.updateRestaurantDetailDistance()
-        self.getType()
 
-    }
 
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
@@ -161,8 +144,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                             let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
                             self?.restaurants = restaurantArr
                             self?.calculateDistanceRest()
-
-
+                            self?.sortRestaurant()
+                            self?.sortRestaurantDistance()
                         } else {
                             print("Cannot fetch all restaurant")
                         }
@@ -270,6 +253,39 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             currentUserCoordinate = CLLocationCoordinate2D(latitude: Constants.DEFAULT_LOCATION_LAT, longitude: Constants.DEFAULT_LOCATION_LNG)
             userLocation = CalculateDistance.createCoordinateRegion(currentUserCoordinate!)
         }
+    }
+    
+    func sortRestaurant(){
+        let temp:[Restaurant]
+        temp = restaurants.sorted{
+            $0.rank ?? 0 > $1.rank ?? 0
+        }
+        for t in temp {
+            if (sortedByRankRestaurants.count <= 20){
+                sortedByRankRestaurants.append(t)
+            }
+        }
+        sortedByRankRestaurants = sortedByRankRestaurants.sorted{
+            $0.rank ?? 0 > $1.rank ?? 0
+        }
+
+    }
+    
+    func sortRestaurantDistance(){
+        let temp:[Restaurant]
+        temp = restaurants.sorted{
+            $0.distance < $1.distance
+        }
+        for t in temp {
+            if (sortedByDistanceRestaurants.count <= 20){
+                sortedByDistanceRestaurants.append(t)
+            }
+        }
+        sortedByDistanceRestaurants = sortedByDistanceRestaurants.sorted{
+            $0.distance < $1.distance
+        }
+        print(sortedByDistanceRestaurants)
+
     }
 
     func calculateDistanceRest() {

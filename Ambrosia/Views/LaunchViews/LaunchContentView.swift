@@ -34,8 +34,9 @@ struct LaunchContentView: View {
     var openSetting = false
     var body: some View {
         ZStack (alignment: .center) {
-            Rectangle()
-                .foregroundColor(Constants.PRIMARY_COLOR)
+//            Rectangle()
+//                .foregroundColor(Constants.PRIMARY_COLOR)
+            GeneralBackground()
 
 
             // MARK: LOGIN PAGE CONTENT
@@ -43,18 +44,19 @@ struct LaunchContentView: View {
                 ZStack (alignment: .center) {
                     // MARK: LOGIN INPUT FIELDS
                     VStack (spacing: 20) {
-                        VStack (spacing: 10) {
+                        VStack (spacing: 6) {
                             Text("AMBROSIA")
-                                .bold()
                                 .font(Font(UIFont(name: "Chalkboard SE Bold", size: Constants.APP_NAME_LARGE_SIZE)! as CTFont))
-                                .foregroundColor(Constants.PRIMARY_COLOR)
+                                
+                            Text("It's eat time !")
+                                .font(Font(UIFont(name: "Chalkboard SE", size: Constants.APP_NAME_LARGE_SIZE-18)! as CTFont))
 
                             // MARK: CAT GIF
                             GifView(name: "cat-eat")
                                 .frame(width: 130, height: 110)
                         }
 
-                        VStack (spacing: 10) {
+                        VStack (spacing: 8) {
                             Group {
                                 TextField("Email", text: $email)
                                     .modifier(TextFieldModifier())
@@ -71,12 +73,11 @@ struct LaunchContentView: View {
                             }
                         }
 
-                        VStack (spacing: 10) {
-
+                        VStack (spacing: 8) {
+                            
                             // MARK: BTN FORGET
                             Button {
-                                SoundModel.clickOtherSound()
-
+                                SoundModel.clickOtherSound() // sound effect when click button
                                 showForgetPasswordModal = true
                             } label: {
                                 Text("Forget password?")
@@ -84,8 +85,7 @@ struct LaunchContentView: View {
 
                             // MARK: BTN LOGIN
                             Button {
-                                // add sound effect when click button
-                                SoundModel.clickButtonSound()
+                                SoundModel.clickButtonSound() // sound effect when click button
                                 login(type: .normal)
                             } label: {
                                 Text("Sign In")
@@ -96,8 +96,7 @@ struct LaunchContentView: View {
 
                             // MARK: BTN GOOGLE
                             Button {
-                                // add sound effect when click button
-                                SoundModel.clickButtonSound()
+                                SoundModel.clickButtonSound() // sound effect when click button
                                 login(type: .google)
                             } label: {
                                 HStack {
@@ -111,12 +110,7 @@ struct LaunchContentView: View {
 
                             // MARK: BTN MICROSOFT
                             Button {
-                                // add sound effect when click button
-                                SoundModel.clickButtonSound()
-//                                userModel.MicrosoftSignIn()
-//                                if (userModel.loginSuccess) {
-//                                    restaurantModel.requestGeolocationPermission()
-//                                }
+                                SoundModel.clickButtonSound() // sound effect when click button
                                 login(type: .microsoft)
                             } label: {
                                 HStack {
@@ -177,19 +171,21 @@ struct LaunchContentView: View {
         }
             .ignoresSafeArea(.all, edges: .all)
             .onAppear(perform: {
-            if (UserDefaults.standard.string(forKey: "loginType") == "normal") {
-                DispatchQueue.main.async {
-                    userModel.autoLoginNormal(restaurantModel: restaurantModel)
+                let userDefaults = UserDefaults.standard
+                if let loginType = userDefaults.string(forKey: "loginType") {
+                    userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
                     if (userModel.loginSuccess) {
-                        print("Login sir")
-                        
-                        print("Inside launch sir", userModel.userId, userModel.user)
                         userModel.state = .signedIn
                         restaurantModel.requestGeolocationPermission()
                     }
                 }
-            }
-        })
+             })
+            .onDisappear(perform: {
+                if let uid = Auth.auth().currentUser?.uid {
+                    userModel.fetchUserInfo(id: uid, userModel: userModel, restaurantModel: restaurantModel)
+                }
+                print(userModel.user.email)
+            })
     }
 
 
@@ -197,42 +193,31 @@ struct LaunchContentView: View {
         userModel.loginMessage = ""
         if (type == .google) {
             userModel.GoogleSignIn(restaurantModel: restaurantModel)
-            afterCheckLogin()
+            afterVerify()
         }
         else if (type == .microsoft) {
             userModel.MicrosoftSignIn(restaurantModel: restaurantModel)
-            afterCheckLogin()
+            afterVerify()
         }
         else {
-            let group = DispatchGroup()
-            let queueVerify = DispatchQueue(label: "verify")
-            let queueRequest = DispatchQueue(label: "request")
-
-            group.enter()
-            queueVerify.async (group: group) {
+            DispatchQueue.main.async {
                 userModel.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
-                group.leave()
             }
-
-            group.enter()
-            queueRequest.asyncAfter(deadline: .now() + 0.5) {
-                afterCheckLogin()
-                group.leave()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                afterVerify()
             }
         }
     }
-
-    func afterCheckLogin() {
-        if (userModel.loginMessage != "") {
-            showLoginMessage = true
-        }
-        else {
-            showLoginMessage = false
-        }
+        
+    func afterVerify() {
+        showLoginMessage = userModel.loginMessage != "" ? true : false
         if (userModel.loginSuccess) {
             userModel.state = .signedIn
-            restaurantModel.requestGeolocationPermission()
+            userModel.fetchUserInfo(id: Auth.auth().currentUser?.uid ?? "uid error", userModel: userModel, restaurantModel: restaurantModel)
+                restaurantModel.requestGeolocationPermission()
         }
+        
     }
 
 
