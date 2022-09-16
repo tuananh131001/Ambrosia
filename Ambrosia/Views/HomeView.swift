@@ -25,6 +25,7 @@ struct HomeViewContent: View {
     
     @EnvironmentObject var model: RestaurantModel
     
+//    @AppStorage("isDarkMode") private var isDarkMode = false
     /*
     @EnvironmentObject var viewModel: AuthenticationModel
     
@@ -71,6 +72,7 @@ struct HomeViewContent: View {
         .onChange(of: tabSelection) { newValue in
             SoundModel.clickTabSound()
         }
+//        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 struct HomeView: View {
