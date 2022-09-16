@@ -42,7 +42,7 @@ struct DistrictFilterView: View {
                     .toggleStyle(.button)
                     .tint(.mint).onChange(of: isDistrictGoVap) { value in
                         print(isDistrictGoVap)
-                        filterRestaurant = (value) ? model.restaurants.filter { $0.state == "District 7, Ho Chi Minh City" } : model.restaurants
+                        filterRestaurant = (value) ? model.restaurants.filter { $0.state == "Gò Vấp, Ho Chi Minh City" } : model.restaurants
                 }
 
             }
