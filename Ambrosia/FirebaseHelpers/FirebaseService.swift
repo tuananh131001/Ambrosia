@@ -127,37 +127,36 @@ class FirebaseService: ObservableObject {
             else {
                 if let document = document {
                     let data = document.data()
-                    let avatar: String = data?["photoUrl"] as? String ?? ""
+                    
                     let name: String = data?["name"] as? String ?? ""
                     let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
                     let dob: Date = timestamp.dateValue()
                     let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
                     let email: String = data?["email"] as? String ?? ""
                     let restaurantsId = data?["favoriteRestaurants"] as? [String] ?? [String]()
+                    
                     var favouriteRestaurants = [Restaurant]()
                     for id in restaurantsId {
                         let rest = restaurantModel.findRestaurantById(id)
                         if let newRest = rest {
                             favouriteRestaurants.append(newRest)
                         }
-                        // review
-                        var savedReview = [Restaurant]()
-                        let reviewsRestaurant: [String] = data?["reviewRestaurant"] as? [String] ?? [String]()
-                        for id in reviewsRestaurant {
-                            let rest = restaurantModel.findRestaurantById(id)
-                            if let newRest = rest {
-                                savedReview.append(newRest)
-                            }
-                        }
-                        
-                        // dark mode save
-                        let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
-                        
-                        let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants,email: email, reviewRestaurant:savedReview, isDarkModeOn: isDarkModeOn)
-                        userModel.user = newUser
-
                     }
-                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatar)
+                    // review
+                    var savedReview = [Restaurant]()
+                    let reviewsRestaurant: [String] = data?["reviewRestaurant"] as? [String] ?? [String]()
+                    for id in reviewsRestaurant {
+                        let rest = restaurantModel.findRestaurantById(id)
+                        if let newRest = rest {
+                            savedReview.append(newRest)
+                        }
+                    }
+                    
+                    // dark mode save
+                    let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
+                    let avatar: String = data?["photoUrl"] as? String ?? ""
+                    
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatar, isDarkModeOn: isDarkModeOn)
                     userModel.user = newUser
                 }
             } }

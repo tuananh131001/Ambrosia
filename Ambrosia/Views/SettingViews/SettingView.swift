@@ -94,6 +94,7 @@ struct SettingView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height*0.3)
                 
                     VStack (spacing: 10) {
+                        ToggleTheme
                         Form {
                             Section(header:
                                       Text("Profile Information")

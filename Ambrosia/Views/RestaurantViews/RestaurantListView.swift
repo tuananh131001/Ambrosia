@@ -104,9 +104,6 @@ struct RestaurantListView: View {
 }
 
 
-    }
-}
-
 struct RestaurantListView_Previews: PreviewProvider {
     static var previews: some View {
         RestaurantListView()
