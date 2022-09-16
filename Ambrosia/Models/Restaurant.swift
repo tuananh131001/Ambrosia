@@ -23,6 +23,7 @@ struct Restaurant: Codable {
     var phone: String?
     var categories:[String]?
     var categoryName:String?
+    var state:String?
     var additionalInfo:AdditionalInfo?
     var openingHours:[OpeningHours]?
     var totalScore: Double?
@@ -47,6 +48,7 @@ struct Restaurant: Codable {
         case title
         case categories
         case categoryName
+        case state
         case additionalInfo
         case openingHours
         case totalScore

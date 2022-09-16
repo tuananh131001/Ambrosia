@@ -15,6 +15,7 @@ struct User: Decodable {
     var favouriteRestaurants: [Restaurant] = [Restaurant]()
     var email:String
     var reviewRestaurant:[Restaurant] = [Restaurant]()
+    var isDarkModeOn: Bool = false
 }
 
 

@@ -16,9 +16,6 @@ struct FavouriteRestaurantView: View {
     @State var openSize: CGFloat = 0.0
     @State var titleSize: CGFloat = 0.0
 
-//    @State var clickFavourite: Bool = false
-    @State var clickFavourites: [Bool] = [Bool]()
-
 
 
     var body: some View {
@@ -39,7 +36,7 @@ struct FavouriteRestaurantView: View {
                                 } label: {
                                     ZStack {
                                         Rectangle()
-                                            .foregroundColor(.white)
+                                            .foregroundColor(Color("CardBackgroundColor"))
                                             .modifier(LightShadowModifier())
 
                                         FavoriteContent(imageSize: imageSize, titleSize: titleSize, starSize: starSize, distanceSize: distanceSize, openSize: openSize, contentWidth: contentWidth, rest: rest)
@@ -70,13 +67,13 @@ struct FavouriteRestaurantView: View {
                     }
                 }
 
-                    .background(Color("PlaceholderText"))
+                    .background(Constants.BCK_COLOR)
                     .navigationBarBackButtonHidden(true)
                     .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Text("Your Favorite".uppercased())
                             .font(.title)
-                            .foregroundColor(Color("PrimaryColor"))
+                            .foregroundColor(Constants.PRIMARY_COLOR)
                     }
                 }
             }
@@ -85,9 +82,4 @@ struct FavouriteRestaurantView: View {
         }
     }
 
-}
-struct FavoriteRestauratnView_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("Hello, world!")
-    }
 }

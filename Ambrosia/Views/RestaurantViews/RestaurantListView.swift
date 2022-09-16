@@ -87,6 +87,12 @@ struct RestaurantListView: View {
                             nil) {
                         restaurantModel.currentRestaurant = nil
                     }
+            }
+            .background(Constants.BCK_COLOR)
+            .onChange(of: restaurantModel.restaurantSelected) { newValue in
+                if (newValue ==
+                        nil) {
+                    restaurantModel.currentRestaurant = nil
                 }
             }.navigationViewStyle(StackNavigationViewStyle())
                 .onChange(of: restaurantModel.currentRestaurant?.reviews.count) { newValue in

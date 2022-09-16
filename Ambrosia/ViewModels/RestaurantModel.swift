@@ -20,7 +20,7 @@ import MapKit
 
 
 class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
-    @Published var restaurants = [Restaurant]()
+    @Published var restaurants: [Restaurant] = [Restaurant]()
     @Published var hasError = false
     @Published var error: RestaurantError?
     @Published var type: String?
@@ -42,6 +42,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
     // MARK: Current Random Restaurant
     @Published var currentRandomRestaurant: Restaurant?
+    
 
 
     // MARK: init
@@ -144,6 +145,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                             self?.calculateDistanceRest()
                             self?.sortRestaurant()
 
+
                         } else {
                             print("Cannot fetch all restaurant")
                         }
@@ -154,93 +156,93 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
     }
 
- 
-    
-    func getServiceOptions(){
-        for index in 0..<(currentRestaurant?.additionalInfo?.serviceOptions?.count ?? 0){
+
+
+    func getServiceOptions() {
+        for index in 0..<(currentRestaurant?.additionalInfo?.serviceOptions?.count ?? 0) {
             if currentRestaurant?.additionalInfo?.serviceOptions?[index].delivery != nil {
-                    currentRestaurant?.serviceOptionsArr.append("Delivery")
-                }
+                currentRestaurant?.serviceOptionsArr.append("Delivery")
+            }
             if currentRestaurant?.additionalInfo?.serviceOptions?[index].dineIn != nil {
-                    currentRestaurant?.serviceOptionsArr.append("Dine in")
+                currentRestaurant?.serviceOptionsArr.append("Dine in")
 
-                }
+            }
             if currentRestaurant?.additionalInfo?.serviceOptions?[index].takeout != nil {
-                    currentRestaurant?.serviceOptionsArr.append("Take out")
-
-                }
+                currentRestaurant?.serviceOptionsArr.append("Take out")
 
             }
-       
+
+        }
+
     }
-    
-    func getDiningOptions(){
-        for index in 0..<(currentRestaurant?.additionalInfo?.diningOptions?.count ?? 0){
+
+    func getDiningOptions() {
+        for index in 0..<(currentRestaurant?.additionalInfo?.diningOptions?.count ?? 0) {
             if currentRestaurant?.additionalInfo?.diningOptions?[index].Breakfast != nil {
-                    currentRestaurant?.diningOptionsArr.append("Breakfast")
-                }
+                currentRestaurant?.diningOptionsArr.append("Breakfast")
+            }
             else if currentRestaurant?.additionalInfo?.diningOptions?[index].Dessert != nil {
-                    currentRestaurant?.diningOptionsArr.append("Dessert")
+                currentRestaurant?.diningOptionsArr.append("Dessert")
 
-                }
+            }
             else if currentRestaurant?.additionalInfo?.diningOptions?[index].Dinner != nil {
-                    currentRestaurant?.diningOptionsArr.append("Dinner")
+                currentRestaurant?.diningOptionsArr.append("Dinner")
 
-                }
+            }
             else if currentRestaurant?.additionalInfo?.diningOptions?[index].Lunch != nil {
-                    currentRestaurant?.diningOptionsArr.append("Lunch")
-
-                }
+                currentRestaurant?.diningOptionsArr.append("Lunch")
 
             }
-       
+
+        }
+
     }
-    
-    func getPaymentOptions(){
-        for index in 0..<(currentRestaurant?.additionalInfo?.payments?.count ?? 0){
+
+    func getPaymentOptions() {
+        for index in 0..<(currentRestaurant?.additionalInfo?.payments?.count ?? 0) {
             if currentRestaurant?.additionalInfo?.payments?[index].cashOnly != nil {
-                    currentRestaurant?.paymentsArr.append("Cash Only")
-                }
+                currentRestaurant?.paymentsArr.append("Cash Only")
+            }
             else if currentRestaurant?.additionalInfo?.payments?[index].creditCards != nil {
-                    currentRestaurant?.paymentsArr.append("Credit Cards")
+                currentRestaurant?.paymentsArr.append("Credit Cards")
 
-                }
+            }
             else if currentRestaurant?.additionalInfo?.payments?[index].debitCards != nil {
-                    currentRestaurant?.paymentsArr.append("Debit Cards")
-
-                }
+                currentRestaurant?.paymentsArr.append("Debit Cards")
 
             }
-       
+
+        }
+
     }
-    
-    func getPlaningOptions(){
-        for index in 0..<(currentRestaurant?.additionalInfo?.planning?.count ?? 0){
+
+    func getPlaningOptions() {
+        for index in 0..<(currentRestaurant?.additionalInfo?.planning?.count ?? 0) {
             if currentRestaurant?.additionalInfo?.planning?[index].acceptReservations != nil {
-                    currentRestaurant?.planingArr.append("Accept Reservations")
-                }
-            else if currentRestaurant?.additionalInfo?.planning?[index].reservationRequired != nil {
-                    currentRestaurant?.planingArr.append("Reservation Required")
-                }
+                currentRestaurant?.planingArr.append("Accept Reservations")
             }
-       
+            else if currentRestaurant?.additionalInfo?.planning?[index].reservationRequired != nil {
+                currentRestaurant?.planingArr.append("Reservation Required")
+            }
+        }
+
     }
-    
+
     func calculateNumber(number: Int) -> CGFloat {
-        var value:CGFloat = 0
+        var value: CGFloat = 0
         if (number == 5) {
             value = CGFloat(currentRestaurant?.reviewsDistribution?.fiveStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
         }
-        else if (number == 4){
+        else if (number == 4) {
             value = CGFloat(currentRestaurant?.reviewsDistribution?.fourStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
         }
-        else if (number == 3){
+        else if (number == 3) {
             value = CGFloat(currentRestaurant?.reviewsDistribution?.threeStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
         }
-        else if (number == 2){
+        else if (number == 2) {
             value = CGFloat(currentRestaurant?.reviewsDistribution?.twoStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
         }
-        else if (number == 1){
+        else if (number == 1) {
             value = CGFloat(currentRestaurant?.reviewsDistribution?.oneStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
         }
         return value
@@ -279,22 +281,22 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         currentRestaurant?.distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: currentRestaurant?.location?.lat ?? 0, lon2: currentRestaurant?.location?.lng ?? 0)
     }
     func findRestaurantIndexById(_ id: String) -> Int {
-        if let index = restaurants.firstIndex(where: {$0.placeId == id}) {
-           // do something with foo
+        if let index = restaurants.firstIndex(where: { $0.placeId == id }) {
+            // do something with foo
             return index
         } else {
-           // item could not be found
+            // item could not be found
             print("cannot find")
         }
         return 0
     }
     func findRestaurantById(_ id: String) -> Restaurant? {
 
-        if let index = restaurants.first(where: {$0.placeId == id}) {
-           // do something with foo
+        if let index = restaurants.first(where: { $0.placeId == id }) {
+            // do something with foo
             return index
         } else {
-           // item could not be found
+            // item could not be found
             print("cannot find")
         }
         return nil
@@ -322,12 +324,12 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
 
     // Function to add new review from user
-    func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String,userId: String, image: String) {
+    func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, userId: String, image: String) {
         let id = UUID()
         let date = Date.now
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
         self.currentRestaurant?.reviews.append(newReview)
-        firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(),userId: userId)
+        firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(), userId: userId)
     }
     func updateReview(reviews: [Review]) {
         print(reviews)
