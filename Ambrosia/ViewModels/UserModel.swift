@@ -38,12 +38,17 @@ class UserModel: ObservableObject {
     @Published var loginMessage = ""
     @Published var userId: String = ""
 
-    // Favorite
+    // MARK: Favorite
     func isRestaurantFavorite(restaurant: Restaurant) -> Int? {
             return user.favouriteRestaurants.firstIndex { $0.placeId ==  restaurant.placeId}
     }
+    
+    // MARK: is dark mode on
+    func updateUserThemeMode() {
+        firebaseService.updateThemeMode(user: self.user)
+    }
 
-    //Fetch User
+    // MARK: Fetch User
     func fetchUserInfo(id:String,userModel:UserModel,restaurantModel: RestaurantModel){
         firebaseService.getUserFirebase(id: id,userModel: userModel,restaurantModel: restaurantModel)
     }

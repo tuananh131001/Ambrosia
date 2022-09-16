@@ -63,7 +63,7 @@ class FirebaseService: ObservableObject {
 
 
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants], merge: true)
+        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn], merge: true)
     }
 
     func addReviewToFirebase(restaurant: Restaurant,userId:String) {
@@ -115,7 +115,7 @@ class FirebaseService: ObservableObject {
         }
     }
 
-
+    // MARK: get user
     func getUserFirebase(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         let docRef = Firestore.firestore().collection("user").document(id)
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
@@ -151,7 +151,11 @@ class FirebaseService: ObservableObject {
                                 savedReview.append(newRest)
                             }
                         }
-                        let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants,email: email, reviewRestaurant:savedReview)
+                        
+                        // dark mode save
+                        let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
+                        
+                        let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants,email: email, reviewRestaurant:savedReview, isDarkModeOn: isDarkModeOn)
                         userModel.user = newUser
 
                     }
@@ -159,12 +163,14 @@ class FirebaseService: ObservableObject {
             } }
     }
 
-
+    // MARK: user favorite restaurants
+    // remove
     func removeFavorites(user: User, restaurant: Restaurant) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId!])]
         )
     }
 
+    // change
     func changeFavorites(userModel: UserModel, restaurant: Restaurant) -> Bool {
         // return false -> remove favorite
         // return true -> add favorite
@@ -180,7 +186,14 @@ class FirebaseService: ObservableObject {
             return true
         }
     }
+    
+    // add
     func addToFavorites(user: User, restaurant: Restaurant) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId!])])
+    }
+    
+    // MARK: dark light mode switch user
+    func updateThemeMode(user: User) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["isDarkModeOn": user.isDarkModeOn])
     }
 }

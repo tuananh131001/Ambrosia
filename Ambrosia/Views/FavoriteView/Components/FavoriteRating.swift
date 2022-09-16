@@ -21,7 +21,7 @@ struct FavoriteRating: View {
             let totalScore = restaurant.totalScore ?? 5.0
             Text("\(totalScore, specifier: "%.1f")")
                 .font(.system(size: starSize + 4))
-                .foregroundColor(Color("Fv Special Clr 2"))
+                .foregroundColor(Color("SubTextColor"))
             HStack {
                 ForEach(0..<5) { index in
                     ImageSystemHier(name: "star.fill", color: "Star \(index <= Int(totalScore) ? "On" : "Off") Color", size: starSize)

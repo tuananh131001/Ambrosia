@@ -52,6 +52,7 @@
 		3D379D7B28D44C6E008FF117 /* FavoriteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7A28D44C6E008FF117 /* FavoriteImage.swift */; };
 		3D379D7D28D456A3008FF117 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7C28D456A3008FF117 /* FavoriteButton.swift */; };
 		3D379D7F28D46936008FF117 /* FavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7E28D46936008FF117 /* FavoriteContent.swift */; };
+		3D379D8128D4946F008FF117 /* UserDefaultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D8028D4946F008FF117 /* UserDefaultUtils.swift */; };
 		3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42C2172896D680005BA233 /* NotFoundView.swift */; };
 		3D42C21A2896D931005BA233 /* NavigateLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42C2192896D931005BA233 /* NavigateLink.swift */; };
 		3D4705DB288E4C0400502DD1 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4705DA288E4C0400502DD1 /* Restaurant.swift */; };
@@ -135,6 +136,7 @@
 		3D379D7A28D44C6E008FF117 /* FavoriteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteImage.swift; sourceTree = "<group>"; };
 		3D379D7C28D456A3008FF117 /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		3D379D7E28D46936008FF117 /* FavoriteContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteContent.swift; sourceTree = "<group>"; };
+		3D379D8028D4946F008FF117 /* UserDefaultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultUtils.swift; sourceTree = "<group>"; };
 		3D42C2172896D680005BA233 /* NotFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundView.swift; sourceTree = "<group>"; };
 		3D42C2192896D931005BA233 /* NavigateLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateLink.swift; sourceTree = "<group>"; };
 		3D4705DA288E4C0400502DD1 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				44969A1728CCBE9E00F7EDD4 /* FormatDate.swift */,
 				540BDDB528CE002500A2B45B /* LoginUtils.swift */,
 				442A4E7F28CEF3DD00AD37E4 /* CalculateDistance.swift */,
+				3D379D8028D4946F008FF117 /* UserDefaultUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -659,6 +662,7 @@
 				3DDCD18428CC936700B97159 /* RestaurantAsyncImage.swift in Sources */,
 				442A4E7C28CDF72E00AD37E4 /* RestaurantListView.swift in Sources */,
 				3D48566C28CEEDF0001D7DAE /* FirebaseService.swift in Sources */,
+				3D379D8128D4946F008FF117 /* UserDefaultUtils.swift in Sources */,
 				3D304AFD289CBFB700B269ED /* AssignGradientColor.swift in Sources */,
 				3D83711F289397340067C946 /* LaunchView.swift in Sources */,
 				442A4E8428CF1D6E00AD37E4 /* Breadcrumbs.swift in Sources */,

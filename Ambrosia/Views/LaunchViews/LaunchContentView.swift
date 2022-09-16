@@ -84,10 +84,8 @@ struct LaunchContentView: View {
 
                             // MARK: BTN LOGIN
                             Button {
-                                SoundModel.clickButtonSound()
                                 // add sound effect when click button
-//                                NormalSignIn(email: email, password: password)
-//                                showLoginMessage = true
+                                SoundModel.clickButtonSound()
                                 login(type: .normal)
                             } label: {
                                 Text("Sign In")
@@ -100,10 +98,6 @@ struct LaunchContentView: View {
                             Button {
                                 // add sound effect when click button
                                 SoundModel.clickButtonSound()
-//                                userModel.GoogleSignIn()
-//                                if (userModel.loginSuccess) {
-//                                    restaurantModel.requestGeolocationPermission()
-//                                }
                                 login(type: .google)
                             } label: {
                                 HStack {
@@ -158,9 +152,8 @@ struct LaunchContentView: View {
                         .foregroundColor(Constants.PRIMARY_COLOR)
 
                 }
-                    .background(.white)
+                    .background(Constants.BCK_COLOR)
                     .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
-                    .foregroundColor(.white)
                     .cornerRadius(Constants.CONRNER_RADIUS)
                     .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
 
