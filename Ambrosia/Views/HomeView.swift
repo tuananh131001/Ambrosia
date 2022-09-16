@@ -100,7 +100,8 @@ struct HomeView: View {
             HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
                 .onAppear() {
                     restaurantModel.chooseDefaultLocation()
-                    restaurantModel.calculateDistanceRest()
+//                    restaurantModel.calculateDistanceRest()
+                    print(restaurantModel.restaurants)
                 }
             
         }

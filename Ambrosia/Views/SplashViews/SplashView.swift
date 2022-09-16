@@ -29,6 +29,7 @@ struct SplashView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .offset(y: animationValues[nearFinalIndex] ? 0 : (geo.size.height + 50))
                 
+                
                 if !animationValues[finalIndex] {
                     // MARK: - Splash View
                     StaticSplashView(animationValues: animationValues, outerCircle: outerCircle, titleSize: titleSize, footerSize: footerSize, title: title, title2: title2, footer: footer)
