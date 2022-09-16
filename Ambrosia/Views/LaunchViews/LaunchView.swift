@@ -17,7 +17,9 @@ struct LaunchView: View {
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var restaurantModel: RestaurantModel
 
-    // splashsreen here
+    @StateObject var firebaseService = FirebaseService.services
+
+    @State var isLogging = false
     var body: some View {
         // if app has not ask user permission to access location
         if !userModel.loginSuccess {
@@ -30,10 +32,13 @@ struct LaunchView: View {
             EditInformation()
         }
         else if userModel.loginSuccess && !userModel.isNewUser {
-//                ReviewView(reviews: Review.testReviews())
+
             HomeView()
+                .onAppear() {
+                // background music
+                SoundModel.startBackgroundMusic(bckName: "home")
+            }
         }
-        // user not allow -> open settings
 
     }
 

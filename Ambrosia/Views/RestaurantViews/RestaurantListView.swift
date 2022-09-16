@@ -35,8 +35,8 @@ struct RestaurantListView: View {
             return restaurantModel.restaurants
         } else {
             // search items that contain either title or address (Case insensitive) from user input
-            return self.searchResults.filter { $0.title.localizedCaseInsensitiveContains(searchText)
-
+            return restaurantModel.restaurants.filter { $0.title.localizedCaseInsensitiveContains(searchText)
+                
             }
         }
     }
@@ -54,9 +54,11 @@ struct RestaurantListView: View {
                                 selection: $restaurantModel.restaurantSelected) {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
-                                    restaurantModel.fetchDetail(restaurant: searchResults[index])
-                                
-                                    restaurantModel.currentRestaurant = searchResults[index]
+                                    restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
+                                    restaurantModel.getServiceOptions()
+                                    restaurantModel.getDiningOptions()
+                                    restaurantModel.getPlaningOptions()
+                                    restaurantModel.getPaymentOptions()
                                 }
 
                             } label: {
@@ -65,21 +67,22 @@ struct RestaurantListView: View {
                             }
                                 .simultaneousGesture(TapGesture().onEnded {
                                     SoundModel.clickCardSound()
-                                }) }
+                                })
+                            
+                        }
                     }.padding()
                     // add the search bar and set the mode to always display the search bar
-                }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name")
-                    .navigationTitle("Nearby Restaurants").accentColor(Color("PrimaryColor"))
+                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Nearby Restaurants").accentColor(Color("PrimaryColor"))
 
             } .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==
                         nil) {
-                    restaurantModel.currentRestaurantDetail = nil
-
+                    restaurantModel.currentRestaurant = nil
+                    print(restaurantModel.currentRestaurant)
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())
-            .onChange(of: restaurantModel.currentRestaurantDetail?.reviews.count) { newValue in
+            .onChange(of: restaurantModel.currentRestaurant?.reviews.count) { newValue in
         }
     }
 

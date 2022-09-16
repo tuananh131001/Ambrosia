@@ -27,8 +27,8 @@ struct EatTime: App {
         WindowGroup {
 //            LaunchView()
             SplashView()
-                .environmentObject(UserModel())
                 .environmentObject(RestaurantModel())
+                .environmentObject(UserModel())
 
         }
     }

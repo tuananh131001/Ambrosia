@@ -27,6 +27,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
     @Published var currentRestaurantDetail: Restaurant?
+ 
+
+    
 
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
@@ -138,7 +141,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 //                            if let data2 = data,
 //                               let restaurantArr2 = try? decoder2.decode(Restaurant.self, from: data2) {
         self.currentRestaurantDetail = restaurant
-        self.updateOptions()
         self.updateRestaurantDetailDistance()
         self.getType()
 
@@ -153,17 +155,17 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         if let url = URL(string: urlString) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
-
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     if error != nil {
                     } else {
-
                         let decoder = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
                             let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            print(restaurantArr)
                             self?.restaurants = restaurantArr
+                            self?.calculateDistanceRest()
+                            
+
                         } else {
                             print("Cannot fetch all restaurant")
                         }
@@ -174,19 +176,76 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
     }
 
-    func updateOptions() {
-//        if currentRestaurantDetail?.dine_in != nil {
-//            currentRestaurantDetail?.options.append("Dine in")
-//        }
-//        if currentRestaurantDetail?.takeout != nil {
-//            currentRestaurantDetail?.options.append("Take out")
-//        }
-//        if currentRestaurantDetail?.delivery != nil {
-//            currentRestaurantDetail?.options.append("Delivery")
-//        }
-//        if currentRestaurantDetail?.serves_wine != nil {
-//            currentRestaurantDetail?.options.append("Serves wine")
-//        }
+ 
+    
+    func getServiceOptions(){
+        for index in 0..<(currentRestaurant?.additionalInfo?.serviceOptions?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.serviceOptions?[index].delivery != nil {
+                    currentRestaurant?.serviceOptionsArr.append("Delivery")
+                }
+            if currentRestaurant?.additionalInfo?.serviceOptions?[index].dineIn != nil {
+                    currentRestaurant?.serviceOptionsArr.append("Dine in")
+
+                }
+            if currentRestaurant?.additionalInfo?.serviceOptions?[index].takeout != nil {
+                    currentRestaurant?.serviceOptionsArr.append("Take out")
+
+                }
+
+            }
+       
+    }
+    
+    func getDiningOptions(){
+        for index in 0..<(currentRestaurant?.additionalInfo?.diningOptions?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.diningOptions?[index].Breakfast != nil {
+                    currentRestaurant?.diningOptionsArr.append("Breakfast")
+                }
+            else if currentRestaurant?.additionalInfo?.diningOptions?[index].Dessert != nil {
+                    currentRestaurant?.diningOptionsArr.append("Dessert")
+
+                }
+            else if currentRestaurant?.additionalInfo?.diningOptions?[index].Dinner != nil {
+                    currentRestaurant?.diningOptionsArr.append("Dinner")
+
+                }
+            else if currentRestaurant?.additionalInfo?.diningOptions?[index].Lunch != nil {
+                    currentRestaurant?.diningOptionsArr.append("Lunch")
+
+                }
+
+            }
+       
+    }
+    
+    func getPaymentOptions(){
+        for index in 0..<(currentRestaurant?.additionalInfo?.payments?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.payments?[index].cashOnly != nil {
+                    currentRestaurant?.paymentsArr.append("Cash Only")
+                }
+            else if currentRestaurant?.additionalInfo?.payments?[index].creditCards != nil {
+                    currentRestaurant?.paymentsArr.append("Credit Cards")
+
+                }
+            else if currentRestaurant?.additionalInfo?.payments?[index].debitCards != nil {
+                    currentRestaurant?.paymentsArr.append("Debit Cards")
+
+                }
+
+            }
+       
+    }
+    
+    func getPlaningOptions(){
+        for index in 0..<(currentRestaurant?.additionalInfo?.planning?.count ?? 0){
+            if currentRestaurant?.additionalInfo?.planning?[index].acceptReservations != nil {
+                    currentRestaurant?.planingArr.append("Accept Reservations")
+                }
+            else if currentRestaurant?.additionalInfo?.planning?[index].reservationRequired != nil {
+                    currentRestaurant?.planingArr.append("Reservation Required")
+                }
+            }
+       
     }
 
     func chooseDefaultLocation() {
@@ -207,18 +266,24 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     func findRestaurantById(_ id: String) -> Restaurant? {
-        for index in 0..<restaurants.count {
-            if (restaurants[index].placeId == id) {
-                return restaurants[index]
-            }
+
+//        if (restaurants[index].placeId == id) {
+//            return restaurants[index]
+//        }
+        if let index = restaurants.first(where: {$0.placeId == id}) {
+           // do something with foo
+            return index
+        } else {
+           // item could not be found
+            print("cannot find")
         }
         return nil
     }
 
     // Function to get current restaurant
-    func getCurrentRestaurant(id: String) {
+    func getCurrentRestaurant(placeId: String) {
         for index in 0..<restaurants.count {
-            if (restaurants[index].placeId == id) {
+            if (restaurants[index].placeId == placeId) {
                 currentRestaurantIndex = index
                 break
             }
