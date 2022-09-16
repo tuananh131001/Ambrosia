@@ -76,7 +76,7 @@ struct FavouriteRestaurantView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Text("Your Favorite".uppercased())
                             .font(.title)
-//                            .foregroundColor(Co)
+                            .foregroundColor(Color("PrimaryColor"))
                     }
                 }
             }
