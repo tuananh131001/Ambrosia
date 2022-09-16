@@ -162,8 +162,10 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
                             let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            print(restaurantArr)
+                            print(restaurantArr[0])
                             self?.restaurants = restaurantArr
+                            self?.calculateDistanceRest()
+
                         } else {
                             print("Cannot fetch all restaurant")
                         }
@@ -199,6 +201,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func calculateDistanceRest() {
         for index in 0..<restaurants.count {
             restaurants[index].distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurants[index].location?.lat ?? 0, lon2: restaurants[index].location?.lng ?? 0)
+            print(restaurants[index])
         }
     }
 
@@ -216,9 +219,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
     // Function to get current restaurant
-    func getCurrentRestaurant(id: String) {
+    func getCurrentRestaurant(placeId: String) {
         for index in 0..<restaurants.count {
-            if (restaurants[index].placeId == id) {
+            if (restaurants[index].placeId == placeId) {
                 currentRestaurantIndex = index
                 break
             }

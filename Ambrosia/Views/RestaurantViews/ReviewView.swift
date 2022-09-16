@@ -13,7 +13,7 @@ struct ReviewView: View {
     var body: some View {
         GeometryReader {
             geo in
-            if restaurantModel.currentRestaurantDetail?.reviews.count == 0 {
+            if restaurantModel.currentRestaurant?.reviews.count == 0 {
                 ZStack(alignment: .bottomTrailing){
                     ZStack{
                         GifView(name: "waiting")
@@ -38,9 +38,9 @@ struct ReviewView: View {
                 ZStack(alignment: .bottomTrailing) {
                     ScrollView(showsIndicators: false) {
                         LazyVStack(alignment: .leading, spacing: 35) {
-                            ForEach(0..<(restaurantModel.currentRestaurantDetail?.reviews.count ?? 0), id: \.self) {
+                            ForEach(0..<(restaurantModel.currentRestaurant?.reviews.count ?? 0), id: \.self) {
                                 index in
-                                ReviewCard(rating: restaurantModel.currentRestaurantDetail?.reviews[index].rating ?? 5, review: restaurantModel.currentRestaurantDetail?.reviews[index] ?? Review.testReviews()[0])
+                                ReviewCard(rating: restaurantModel.currentRestaurant?.reviews[index].rating ?? 5, review: restaurantModel.currentRestaurant?.reviews[index] ?? Review.testReviews()[0])
                             }
                         }
                     }
@@ -56,7 +56,7 @@ struct ReviewView: View {
             }
         }.background(Color("CardBackgroundColor")).onAppear(perform: {
             print("appear")
-            restaurantModel.firebaseService.fetchReviewFromFirebase(restaurant: restaurantModel.currentRestaurantDetail!,model:restaurantModel)
+            restaurantModel.firebaseService.fetchReviewFromFirebase(restaurant: restaurantModel.currentRestaurant ?? Restaurant.testRestaurantDetail(),model:restaurantModel)
 
         })
 
