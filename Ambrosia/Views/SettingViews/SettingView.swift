@@ -10,14 +10,22 @@ import Firebase
 struct SettingView: View {
     @EnvironmentObject var userModel: UserModel
     @State var showEditInfo: Bool = false
-
+    @State var showReviewList: Bool = false
+    
     var body: some View {
         ZStack {
             Constants.BCK_COLOR
             VStack (spacing: 10) {
                 Text("Hello \(userModel.user.name)!")
 
+                // MARK: EDIT INFO BTN
+                Button {
+                    showReviewList = true
 
+                } label: {
+                    Text("Show recent review").bold()
+                }
+                    .buttonStyle(ButtonStylePrimary())
                 // MARK: EDIT INFO BTN
                 Button {
                     showEditInfo = true
@@ -45,6 +53,9 @@ struct SettingView: View {
             .sheet(isPresented: $showEditInfo) {
             EditInformation()
         }
+            .sheet(isPresented: $showReviewList){
+                RecentReviews()
+            }
 
     }
 }

@@ -174,9 +174,17 @@ struct RestaurantDetailView: View {
                                     }
 
                                 }
+                                
+                                Divider()
+                                
+                                VStack(alignment:.leading){
+                                    Text("🎖 User Ratings:")
+                                    RatingContributionView(rating: Int(restaurantModel.currentRestaurant?.totalScore ?? 0))
 
+                                }
 
                             }
+                        
                     }.padding().offset(y:-100)
           
 
@@ -210,9 +218,9 @@ struct RestaurantDetailView: View {
 }
 
 
-struct RestaurantDetailPreview: PreviewProvider {
-    static var previews: some View {
-        RestaurantDetailView()
-            .environmentObject(RestaurantModel())
-    }
-}
+//struct RestaurantDetailPreview: PreviewProvider {
+//    static var previews: some View {
+//        RestaurantDetailView()
+//            .environmentObject(RestaurantModel())
+//    }
+//}

@@ -18,7 +18,7 @@ struct Breadcrumbs: View {
 
             }
 
-            ScrollView(.horizontal) {
+            ScrollView(.horizontal, showsIndicators:false) {
                 LazyHStack(spacing: 20) {
                     if options == "Service"{
                         ForEach(0..<(restaurantModel.currentRestaurant?.serviceOptionsArr.count ?? 0),id: \.self) {
