@@ -22,7 +22,7 @@ enum Constants {
     
     
     static let FIELD_PADDING : CGFloat = 10
-    static let FIELD_HEIGHT: CGFloat = 44
+    static let FIELD_HEIGHT: CGFloat = 42
     static let FIELD_MIN_WIDTH: CGFloat = 230
     static let FIELD_MAX_WIDTH: CGFloat = 320
     static let CONRNER_RADIUS: CGFloat = 10

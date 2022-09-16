@@ -8,7 +8,8 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
-
+import FirebaseStorage
+import FirebaseDatabase
 
 class FirebaseService: ObservableObject {
     static let services = FirebaseService()
@@ -63,7 +64,7 @@ class FirebaseService: ObservableObject {
 
 
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": [String]()], merge: true)
+        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "avatarStr": user.avatarStr, "favoriteRestaurants": [String]()], merge: true)
     }
     
     func addReviewToFirebase(restaurant: Restaurant) {
@@ -123,6 +124,7 @@ class FirebaseService: ObservableObject {
             else {
                 if let document = document {
                     let data = document.data()
+                    let avatar: String = data?["photoUrl"] as? String ?? ""
                     let name: String = data?["name"] as? String ?? ""
                     let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
                     let dob: Date = timestamp.dateValue()
@@ -136,7 +138,7 @@ class FirebaseService: ObservableObject {
                             favouriteRestaurants.append(newRest)
                         }
                     }
-                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email)
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatar)
                     userModel.user = newUser
                 }
             }
@@ -166,5 +168,47 @@ class FirebaseService: ObservableObject {
     }
     func addToFavorites(user: User, restaurant: Restaurant) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId])])
+    }
+    
+    static func uploadImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {
+        // 1
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else {
+            return completion(nil)
+        }
+
+        // 2
+        reference.putData(imageData, metadata: nil, completion: { (metadata, error) in
+            // 3
+            if let error = error {
+                assertionFailure(error.localizedDescription)
+                return completion(nil)
+            }
+
+            // 4
+            reference.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    assertionFailure(error.localizedDescription)
+                    return completion(nil)
+                }
+                completion(url)
+            })
+        })
+    }
+    
+    static func createPost(name: String, userModel: UserModel, for image: UIImage) {
+        let imageRef = Storage.storage().reference().child("\(name).jpg")
+        uploadImage(image, at: imageRef) { (downloadURL) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            guard let downloadURL = downloadURL else {
+                print(downloadURL)
+                return
+            }
+
+            let urlString = downloadURL.absoluteString
+            userModel.user.avatarStr = urlString
+            print("image url: \(userModel.user.avatarStr)")
+        }
+        }
+//
     }
 }

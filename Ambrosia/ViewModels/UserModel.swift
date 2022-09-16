@@ -16,12 +16,11 @@ var authMicrosoft: Auth?
 enum SignInMethod {
     case normal
     case google
-    case phone
     case microsoft
 }
 
 class UserModel: ObservableObject {
-    @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0, email: "")
+    @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0, email: "", avatarStr: "")
     let genders = ["Male", "Female"]
     @Published var firebaseService = FirebaseService.services
     
@@ -44,6 +43,14 @@ class UserModel: ObservableObject {
     //Fetch User
     func fetchUserInfo(id:String,userModel:UserModel,restaurantModel: RestaurantModel){
         firebaseService.getUserFirebase(id: id,userModel: userModel,restaurantModel: restaurantModel)
+        if (self.user.email == "") {
+            if (self.loginMethod == .normal) {
+                self.user.email = Auth.auth().currentUser?.email ?? "email error"
+            }
+            else {
+                self.user.email = Auth.auth().currentUser?.providerData[0].email ?? "email error"
+            }
+        }
     }
     
     
@@ -61,31 +68,46 @@ class UserModel: ObservableObject {
      }
     
     
-    func autoLoginNormal(restaurantModel: RestaurantModel) {
-        let userDefaults = UserDefaults.standard
-        if userDefaults.string(forKey: "email") != nil {
+    func autoLogin(restaurantModel: RestaurantModel, loginType: String) {
+        if (loginType == "normal") {
+            let userDefaults = UserDefaults.standard
             let email = userDefaults.string(forKey: "email") ?? ""
             let password = userDefaults.string(forKey: "password") ?? ""
             self.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
+        }
+        else if (loginType == "google") {
+            self.GoogleSignIn(restaurantModel: restaurantModel)
         }
     }
     
-    func autoLoginMicrosoft(restaurantModel: RestaurantModel) {
-        let userDefaults = UserDefaults.standard
-        if userDefaults.string(forKey: "email") != nil {
-            let email = userDefaults.string(forKey: "email") ?? ""
-            let password = userDefaults.string(forKey: "password") ?? ""
-            self.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
-        }
+//    func autoLoginMicrosoft(restaurantModel: RestaurantModel) {
+//        let userDefaults = UserDefaults.standard
+//        if userDefaults.string(forKey: "email") != nil {
+//            let email = userDefaults.string(forKey: "email") ?? ""
+//            let password = userDefaults.string(forKey: "password") ?? ""
+//            self.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
+//        }
+//    }
+    
+    
+    func resetDefaultAfterLogin(loginMethod: SignInMethod) {
+        UserDefaults.standard.setValue("", forKey: "email")
+        UserDefaults.standard.setValue("", forKey: "password")
+        UserDefaults.standard.setValue(Auth.auth().currentUser?.uid ?? "uid error", forKey: "uid")
+        self.loginMessage = "Login successfully. Redirecting..."
+        self.loginMethod = loginMethod
+        self.loginSuccess = true
     }
+    
     
     func removeCurrentLogin() {
          let userDefaults = UserDefaults.standard
          userDefaults.setValue("", forKey: "loginType")
          userDefaults.setValue("", forKey: "email")
          userDefaults.setValue("", forKey: "password")
-        userDefaults.setValue("", forKey: "uid")
+         userDefaults.setValue("", forKey: "uid")
      }
+    
     
     func NormalSignIn(email: String, password: String, restaurantModel: RestaurantModel) {
          if (email == "" || password == "") {
@@ -105,11 +127,8 @@ class UserModel: ObservableObject {
                      }
                      self.loginSuccess = false
                  } else {
+                     self.resetDefaultAfterLogin(loginMethod: .normal)
                      UserDefaults.standard.setValue("normal", forKey: "loginType")
-                     self.fetchUserInfo(id: result?.user.uid ?? "",userModel: self, restaurantModel: restaurantModel)
-                     self.loginMessage = "Login successfully. Redirecting..."
-                     self.loginMethod = .normal
-                     self.loginSuccess = true
                      self.saveCurrentLoginNormal(email: email, password: password)
                  }
              }
@@ -122,8 +141,6 @@ class UserModel: ObservableObject {
             "prompt": "consent",
             "login_hint": ""
         ]
-        
-        provider?.scopes = ["mail.read"]
 
         provider?.getCredentialWith(nil) { credential, error in
             if error != nil {
@@ -137,11 +154,9 @@ class UserModel: ObservableObject {
                         print(error?.localizedDescription ?? "FAILED LOGIN MICROSOFT")
                     }
                     else {
+                        self.resetDefaultAfterLogin(loginMethod: .microsoft)
                         UserDefaults.standard.setValue("microsoft", forKey: "loginType")
-                        self.fetchUserInfo(id: Auth.auth().currentUser?.uid ?? "error",userModel: self, restaurantModel: restaurantModel)
-                        self.loginMessage = "Login successfully. Redirecting..."
-                        self.loginMethod = .microsoft
-                        self.loginSuccess = true
+                        
                     }
 
                 }
@@ -151,6 +166,7 @@ class UserModel: ObservableObject {
         }
 
     }
+
 
     func GoogleSignIn(restaurantModel: RestaurantModel) {
         if GIDSignIn.sharedInstance.hasPreviousSignIn() {
@@ -190,14 +206,12 @@ class UserModel: ObservableObject {
                 loginSuccess = false
                 print(error.localizedDescription)
             } else {
+                resetDefaultAfterLogin(loginMethod: .google)
                 UserDefaults.standard.setValue("google", forKey: "loginType")
-                self.fetchUserInfo(id: Auth.auth().currentUser?.uid ?? "error", userModel: self, restaurantModel: restaurantModel)
-                loginMethod = .google
-                self.loginMessage = "Login successfully. Redirecting..."
-                loginSuccess = true
             }
         }
     }
+    
 
 
     func SignOut() {
