@@ -75,6 +75,11 @@ struct Restaurant: Codable {
     var temporarilyClosed:Bool?
     var reviewsCount:Int?
     var reviewsDistribution:ReviewsDistribution?
+    var serviceOptionsArr:[String]?
+    var diningOptionsArr:[String]?
+    var paymentsArr:[String]?
+    var planingArr:[String]?
+
     
     var isFavorite: Bool = true
     
