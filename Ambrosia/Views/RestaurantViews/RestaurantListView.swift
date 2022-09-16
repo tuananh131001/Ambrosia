@@ -35,8 +35,8 @@ struct RestaurantListView: View {
             return restaurantModel.restaurants
         } else {
             // search items that contain either title or address (Case insensitive) from user input
-            return self.searchResults.filter { $0.title.localizedCaseInsensitiveContains(searchText)
-
+            return restaurantModel.restaurants.filter { $0.title.localizedCaseInsensitiveContains(searchText)
+                
             }
         }
     }
@@ -55,6 +55,10 @@ struct RestaurantListView: View {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
                                     restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
+                                    restaurantModel.getServiceOptions()
+                                    restaurantModel.getDiningOptions()
+                                    restaurantModel.getPlaningOptions()
+                                    restaurantModel.getPaymentOptions()
                                 }
 
                             } label: {
@@ -68,14 +72,13 @@ struct RestaurantListView: View {
                         }
                     }.padding()
                     // add the search bar and set the mode to always display the search bar
-                }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name")
-                    .navigationTitle("Nearby Restaurants").accentColor(Color("PrimaryColor"))
+                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Nearby Restaurants").accentColor(Color("PrimaryColor"))
 
             } .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==
                         nil) {
                     restaurantModel.currentRestaurant = nil
-
+                    print(restaurantModel.currentRestaurant)
                 }
             }
         }.navigationViewStyle(StackNavigationViewStyle())

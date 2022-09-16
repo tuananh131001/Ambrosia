@@ -75,10 +75,10 @@ struct Restaurant: Codable {
     var temporarilyClosed:Bool?
     var reviewsCount:Int?
     var reviewsDistribution:ReviewsDistribution?
-    var serviceOptionsArr:[String]?
-    var diningOptionsArr:[String]?
-    var paymentsArr:[String]?
-    var planingArr:[String]?
+    var serviceOptionsArr = [String]()
+    var diningOptionsArr = [String]()
+    var paymentsArr = [String]()
+    var planingArr = [String]()
 
     
     var isFavorite: Bool = true
@@ -121,8 +121,6 @@ struct OpeningHours: Codable {
 
 
 struct AdditionalInfo:Codable{
-    var atmosphere:[Atmosphere]?
-    var crowd:[Crowd]?
     var serviceOptions: [ServiceOptions]?
     var diningOptions: [DiningOptions]?
     var planning:[Planning]?
@@ -131,12 +129,10 @@ struct AdditionalInfo:Codable{
         case planning = "Planning"
         case diningOptions = "Dining options"
         case serviceOptions = "Service options"
-        case atmosphere = "Atmosphere"
-        case crowd = "Crowd"
         case payments = "Payments"
     }
     static func testAdditionalInfo() -> AdditionalInfo{
-        return AdditionalInfo(atmosphere: [Atmosphere.testAtmosphere()], crowd: [Crowd.testCrowd()], serviceOptions: [ServiceOptions.testServiceOptions()], diningOptions: [DiningOptions.testDiningOptions()], planning: [Planning.testPlanning()], payments: [Payments.testPayments()])
+        return AdditionalInfo(serviceOptions: [ServiceOptions.testServiceOptions()], diningOptions: [DiningOptions.testDiningOptions()], planning: [Planning.testPlanning()], payments: [Payments.testPayments()])
     }
 }
 
@@ -181,25 +177,13 @@ struct DiningOptions:Codable {
 
 struct Planning: Codable{
     var acceptReservations:Bool?
+    var reservationRequired:Bool?
     enum CodingKeys: String, CodingKey {
         case acceptReservations = "Accepts reservations"
+        case reservationRequired = "Reservations required"
     }
     static func testPlanning() -> Planning{
         return Planning(acceptReservations: true)
-    }
-}
-
-struct Crowd:Codable {
-    var Groups:Bool?
-    static func testCrowd() -> Crowd{
-        return Crowd(Groups: true)
-    }
-}
-
-struct Atmosphere:Codable{
-    var Casual: Bool?
-    static func testAtmosphere() -> Atmosphere{
-        return Atmosphere(Casual:true)
     }
 }
 
