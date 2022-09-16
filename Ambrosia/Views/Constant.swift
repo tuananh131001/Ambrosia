@@ -34,4 +34,7 @@ enum Constants {
     
     static let DEFAULT_LOCATION_LAT = 10.729746193761306
     static let DEFAULT_LOCATION_LNG = 106.6930755973141
+    
+    static let DARK_MODE = "DARK_MODE"
+    static let LIGHT_MODE = "LIGHT_MODE"
 }
