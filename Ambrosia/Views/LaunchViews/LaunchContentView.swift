@@ -176,7 +176,7 @@ struct LaunchContentView: View {
                     userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
                     if (userModel.loginSuccess) {
                         userModel.state = .signedIn
-                        restaurantModel.requestGeolocationPermission()
+//                        restaurantModel.requestGeolocationPermission()
                     }
                 }
              })
@@ -215,7 +215,7 @@ struct LaunchContentView: View {
         if (userModel.loginSuccess) {
             userModel.state = .signedIn
             userModel.fetchUserInfo(id: Auth.auth().currentUser?.uid ?? "uid error", userModel: userModel, restaurantModel: restaurantModel)
-                restaurantModel.requestGeolocationPermission()
+//                restaurantModel.requestGeolocationPermission()
         }
         
     }

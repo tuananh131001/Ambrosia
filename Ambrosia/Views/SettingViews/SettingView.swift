@@ -3,7 +3,7 @@
 //  Ambrosia
 //
 //  Created by Võ Quốc Huy on 11/09/2022.
-//
+// https://betterprogramming.pub/swiftui-app-theme-switch-241a79574b87
 import SwiftUI
 import Firebase
 
@@ -17,39 +17,6 @@ struct SettingView: View {
     @State var showPickImageModal = false
     @State var avatar : Image? = Image("default-avatar")
     
-
-    // for dark light mode
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    // MARK: set theme dark light mode
-    func setAppTheme() {
-        //MARK: use saved device theme from toggle
-        userModel.user.isDarkModeOn = UserDefaultsUtils.shared.getDarkMode()
-        changeDarkMode(state: userModel.user.isDarkModeOn)
-        //MARK: or use device theme
-        if (colorScheme == .dark)
-        {
-            userModel.user.isDarkModeOn = true
-        }
-        else {
-            userModel.user.isDarkModeOn = false
-        }
-        changeDarkMode(state: userModel.user.isDarkModeOn)
-    }
-    func changeDarkMode(state: Bool) {
-        (UIApplication.shared.connectedScenes.first as?
-            UIWindowScene)?.windows.first!.overrideUserInterfaceStyle = state ? .dark : .light
-        UserDefaultsUtils.shared.setDarkMode(enable: state)
-    }
-    var ToggleTheme: some View {
-        Toggle("Dark Mode", isOn: $userModel.user.isDarkModeOn)
-            .foregroundColor(Color("TextColor"))
-            .onChange(of: userModel.user.isDarkModeOn) { (state) in
-            changeDarkMode(state: state)
-            userModel.updateUserThemeMode()
-        }.labelsHidden()
-    }
-
-    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -59,29 +26,32 @@ struct SettingView: View {
                     VStack (spacing: 10) {
                         Spacer()
                         
-                        ZStack (alignment: .bottomTrailing) {
-                            Group {
-//                                if (userModel.user.avatarStr != "") {
-//                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
-//                                        image.resizable()
-//                                        image.scaledToFill()
-//                                        image.modifier(AvatarModifier())
-//
-//                                    } placeholder: {
-//                                        Image("default-avatar")
-//                                    }
-//                                }
-//                                else {
-                                    avatar?
-                                        .resizable()
-                                        .scaledToFill()
-                                        .modifier(AvatarModifier())                            }
-//                            }
-                            
-                            Button(action: {
-                                showPickImageModal = true
-                            }) {
-                              Image("camera-icon")
+                        ZStack {
+                            ZStack (alignment: .bottomTrailing) {
+                                Group {
+    //                                if (userModel.user.avatarStr != "") {
+    //                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
+    //                                        image.resizable()
+    //                                        image.scaledToFill()
+    //                                        image.modifier(AvatarModifier())
+    //
+    //                                    } placeholder: {
+    //                                        Image("default-avatar")
+    //                                    }
+    //                                }
+    //                                else {
+                                        avatar?
+                                            .resizable()
+                                            .scaledToFill()
+                                            .modifier(AvatarModifier())                            }
+    //                            }
+                                
+                                Button(action: {
+                                    showPickImageModal = true
+                                }) {
+                                  Image("camera-icon")
+                                }
+                                
                             }
                         }
                         
@@ -94,7 +64,6 @@ struct SettingView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height*0.3)
                 
                     VStack (spacing: 10) {
-                        ToggleTheme
                         Form {
                             Section(header:
                                       Text("Profile Information")
@@ -118,6 +87,18 @@ struct SettingView: View {
                                     Spacer()
                                       Text(userModel.user.selectedGender == 0 ? "Male" : "Female")
                                   }
+                            }
+                            
+                            Section(header:
+                                      Text("Settings")
+                                      .font(.system(size: 15))
+                                      .fontWeight(.semibold)
+                            ) {
+                                HStack {
+                                  Text("Appearance")
+                                  Spacer()
+                                    ToggleTheme()
+                                }
                             }
                         }
                         .font(.system(.body, design: .rounded))
@@ -165,7 +146,6 @@ struct SettingView: View {
                 }.sheet(isPresented: $showReview) {
                     RecentReviews()
                 }
-                ToggleTheme
                 }
 
             }
@@ -195,7 +175,7 @@ struct SettingView: View {
             RecentReviews()
         }
             .onAppear(perform: {
-            setAppTheme()
+                ThemeViewUtil.setAppTheme(userModel)
         })
     }
     
