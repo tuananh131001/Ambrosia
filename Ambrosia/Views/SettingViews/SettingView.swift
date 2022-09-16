@@ -53,7 +53,7 @@ struct SettingView: View {
             EditInformation()
         }
             .sheet(isPresented: $showReviewList){
-                RecentReviews()
+                DistrictFilterView()
             }
 
     }

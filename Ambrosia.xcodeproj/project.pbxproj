@@ -79,6 +79,7 @@
 		3DC2FC9E2886E18F003750D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */; };
 		3DC2FCA62886E1E3003750D3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2FCA52886E1E3003750D3 /* HomeView.swift */; };
 		3DC8C66B28D483D6008CC339 /* RecentReviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC8C66A28D483D6008CC339 /* RecentReviews.swift */; };
+		3DC8C66E28D490E2008CC339 /* DistrictFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC8C66D28D490E2008CC339 /* DistrictFilterView.swift */; };
 		3DCB4F6528CB8497000EEBDA /* RestaurantCardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB4F6428CB8497000EEBDA /* RestaurantCardInfo.swift */; };
 		3DDCD18428CC936700B97159 /* RestaurantAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDCD18328CC936700B97159 /* RestaurantAsyncImage.swift */; };
 		3DF148A428D1B1E400FFF220 /* ImageSystemHier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF148A328D1B1E400FFF220 /* ImageSystemHier.swift */; };
@@ -163,6 +164,7 @@
 		3DC2FC9D2886E18F003750D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3DC2FCA52886E1E3003750D3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3DC8C66A28D483D6008CC339 /* RecentReviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentReviews.swift; sourceTree = "<group>"; };
+		3DC8C66D28D490E2008CC339 /* DistrictFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistrictFilterView.swift; sourceTree = "<group>"; };
 		3DCB4F6428CB8497000EEBDA /* RestaurantCardInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardInfo.swift; sourceTree = "<group>"; };
 		3DDCD18328CC936700B97159 /* RestaurantAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantAsyncImage.swift; sourceTree = "<group>"; };
 		3DF148A328D1B1E400FFF220 /* ImageSystemHier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSystemHier.swift; sourceTree = "<group>"; };
@@ -458,9 +460,18 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		3DC8C66C28D490D0008CC339 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				3DC8C66D28D490E2008CC339 /* DistrictFilterView.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
 		3DCB4F6328CB8477000EEBDA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				3DC8C66C28D490D0008CC339 /* Filter */,
 				44DFD4F028CDEBDA00E82F9F /* RestaurantCardView.swift */,
 				3DCB4F6428CB8497000EEBDA /* RestaurantCardInfo.swift */,
 				3DDCD18328CC936700B97159 /* RestaurantAsyncImage.swift */,
@@ -670,6 +681,7 @@
 				3DF148A628D1B70800FFF220 /* SoundModel.swift in Sources */,
 				3DB2C8E928D19CE0000B4EA6 /* SplashTitle.swift in Sources */,
 				3D4D1B2228CEE53F00034146 /* BackgroundImage.swift in Sources */,
+				3DC8C66E28D490E2008CC339 /* DistrictFilterView.swift in Sources */,
 				3D83713D2893F6E40067C946 /* AppNameView.swift in Sources */,
 				54646D4628CF44510052A3AA /* ForgetPasswordModal.swift in Sources */,
 				3D4D1B2428CEE7D600034146 /* SplashIconImage.swift in Sources */,
