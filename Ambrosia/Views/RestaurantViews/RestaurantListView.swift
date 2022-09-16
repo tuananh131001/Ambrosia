@@ -74,7 +74,9 @@ struct RestaurantListView: View {
                     // add the search bar and set the mode to always display the search bar
                 }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Nearby Restaurants").accentColor(Color("PrimaryColor"))
 
-            } .onChange(of: restaurantModel.restaurantSelected) { newValue in
+            }
+            .background(Constants.BCK_COLOR)
+            .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==
                         nil) {
                     restaurantModel.currentRestaurant = nil

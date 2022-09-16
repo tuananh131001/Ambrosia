@@ -13,6 +13,7 @@ struct SettingView: View {
 
     var body: some View {
         ZStack {
+            Constants.BCK_COLOR
             VStack (spacing: 10) {
                 Text("Hello \(userModel.user.name)!")
 

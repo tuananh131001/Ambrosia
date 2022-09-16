@@ -17,7 +17,7 @@ struct FavoriteSideInfo: View {
             Label {
                 Text("\(restaurant.distance, specifier: "%.2f")km")
                     .font(.subheadline)
-                    .foregroundColor(Color("Fv Subtitle Clr 2"))
+                    .foregroundColor(Color("SubTextColor2"))
             } icon: {
                 ImageSystemHier(name: "car.fill", color: "Fv Subtitle Clr 2", size: distanceSize + 1)
             }

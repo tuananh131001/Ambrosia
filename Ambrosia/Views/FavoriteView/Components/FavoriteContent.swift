@@ -32,7 +32,7 @@ struct FavoriteContent: View {
                 Text(rest.title)
                     .lineLimit(1)
                     .multilineTextAlignment(.leading)
-                    .foregroundColor(Color("Fv Title Clr"))
+                    .foregroundColor(Color("TextColor"))
 //                    .font(.system(size: titleSize))
                     .font(.title3)
 

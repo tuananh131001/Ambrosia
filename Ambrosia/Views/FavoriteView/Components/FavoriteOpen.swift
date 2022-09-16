@@ -17,7 +17,7 @@ struct FavoriteOpen: View {
                 .font(.headline)
 //                .font(.system(size: openSize))
         } icon: {
-            ImageSystemHier(name: "clock.badge.checkmark.fill", color: "Fv Subtitle Clr 2", size: openSize + 1)
+            ImageSystemHier(name: "clock.badge.checkmark.fill", color: "SubTextColor2", size: openSize + 1)
         }
 
     }
