@@ -153,7 +153,7 @@ class FirebaseService: ObservableObject {
                         // dark mode save
                         let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
                         
-                        let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants,email: email, reviewRestaurant:savedReview, isDarkModeOn: isDarkModeOn)
+                        let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants,email: email,avatarStr: avatar ,reviewRestaurant:savedReview, isDarkModeOn: isDarkModeOn)
                         userModel.user = newUser
 
                     }
