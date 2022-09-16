@@ -11,29 +11,42 @@ struct SettingView: View {
     @EnvironmentObject var userModel: UserModel
     @State var showEditInfo: Bool = false
     @State var showReviewList: Bool = false
-    
+    @State var showReview:Bool = false
     var body: some View {
         ZStack {
             VStack (spacing: 10) {
+                
+                
+                Button {
+                    showReview = true
+                } label: {
+                    Text("Recent Reivews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                }.sheet(isPresented: $showReview) {
+                    RecentReviews()
+                }
+                
                 Text("Hello \(userModel.user.name)!")
-
+                
                 // MARK: EDIT INFO BTN
                 Button {
                     showReviewList = true
-
+                    
                 } label: {
                     Text("Show recent review").bold()
                 }
-                    .buttonStyle(ButtonStylePrimary())
+                .buttonStyle(ButtonStylePrimary())
                 // MARK: EDIT INFO BTN
                 Button {
                     showEditInfo = true
-
+                    
                 } label: {
                     Text("Edit Profile").bold()
                 }
-                    .buttonStyle(ButtonStylePrimary())
-
+                .buttonStyle(ButtonStylePrimary())
+                
+               
+               
+                
                 // MARK: SIGN OUT BTN
                 Button {
                     // background music
@@ -45,17 +58,17 @@ struct SettingView: View {
                     Text("Sign Out")
                         .bold()
                 }
-                    .buttonStyle(ButtonStylePrimary())
+                .buttonStyle(ButtonStylePrimary())
             }
-
+            
         }
-            .sheet(isPresented: $showEditInfo) {
+        .sheet(isPresented: $showEditInfo) {
             EditInformation()
         }
-            .sheet(isPresented: $showReviewList){
-                RecentReviews()
-            }
-
+        .sheet(isPresented: $showReviewList){
+            RecentReviews()
+        }
+        
     }
 }
 
