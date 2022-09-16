@@ -27,6 +27,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
     @Published var sortedByRankRestaurants: [Restaurant] = [Restaurant]()
+    @Published var sortedByDistanceRestaurants:[Restaurant] = [Restaurant]()
     
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
@@ -144,8 +145,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                             self?.restaurants = restaurantArr
                             self?.calculateDistanceRest()
                             self?.sortRestaurant()
-
-
+                            self?.sortRestaurantDistance()
                         } else {
                             print("Cannot fetch all restaurant")
                         }
@@ -268,6 +268,23 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         sortedByRankRestaurants = sortedByRankRestaurants.sorted{
             $0.rank ?? 0 > $1.rank ?? 0
         }
+
+    }
+    
+    func sortRestaurantDistance(){
+        let temp:[Restaurant]
+        temp = restaurants.sorted{
+            $0.distance < $1.distance
+        }
+        for t in temp {
+            if (sortedByDistanceRestaurants.count <= 20){
+                sortedByDistanceRestaurants.append(t)
+            }
+        }
+        sortedByDistanceRestaurants = sortedByDistanceRestaurants.sorted{
+            $0.distance < $1.distance
+        }
+        print(sortedByDistanceRestaurants)
 
     }
 
