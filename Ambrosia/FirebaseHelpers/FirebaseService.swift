@@ -8,7 +8,8 @@
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
-
+import FirebaseStorage
+import FirebaseDatabase
 
 class FirebaseService: ObservableObject {
     static let services = FirebaseService()
@@ -63,7 +64,7 @@ class FirebaseService: ObservableObject {
 
 
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn], merge: true)
+        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn,"avatarStr": user.avatarStr], merge: true)
     }
 
     func addReviewToFirebase(restaurant: Restaurant,userId:String) {
@@ -119,28 +120,25 @@ class FirebaseService: ObservableObject {
     func getUserFirebase(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         let docRef = Firestore.firestore().collection("user").document(id)
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
-        docRef.getDocument { (document, error) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                if let error = error as NSError? {
-                    print("Error getting document: \(error.localizedDescription)")
-                }
-                else {
-                    if let document = document {
-                        let data = document.data()
-                        let name: String = data?["name"] as? String ?? ""
-                        let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
-                        let dob: Date = timestamp.dateValue()
-                        let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
-                        let email: String = data?["email"] as? String ?? ""
-                        //favorite
-                        let restaurantsId: [String] = data?["favoriteRestaurants"] as? [String] ?? [String]()
-
-                        var favouriteRestaurants = [Restaurant]()
-                        for id in restaurantsId {
-                            let rest = restaurantModel.findRestaurantById(id)
-                            if let newRest = rest {
-                                favouriteRestaurants.append(newRest)
-                            }
+        docRef.getDocument { document, error in
+            if let error = error as NSError? {
+                print("Error getting document: \(error.localizedDescription)")
+            }
+            else {
+                if let document = document {
+                    let data = document.data()
+                    let avatar: String = data?["photoUrl"] as? String ?? ""
+                    let name: String = data?["name"] as? String ?? ""
+                    let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
+                    let dob: Date = timestamp.dateValue()
+                    let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
+                    let email: String = data?["email"] as? String ?? ""
+                    let restaurantsId = data?["favoriteRestaurants"] as? [String] ?? [String]()
+                    var favouriteRestaurants = [Restaurant]()
+                    for id in restaurantsId {
+                        let rest = restaurantModel.findRestaurantById(id)
+                        if let newRest = rest {
+                            favouriteRestaurants.append(newRest)
                         }
                         // review
                         var savedReview = [Restaurant]()
@@ -159,6 +157,8 @@ class FirebaseService: ObservableObject {
                         userModel.user = newUser
 
                     }
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatar)
+                    userModel.user = newUser
                 }
             } }
     }
@@ -195,5 +195,47 @@ class FirebaseService: ObservableObject {
     // MARK: dark light mode switch user
     func updateThemeMode(user: User) {
         Firestore.firestore().collection("user").document(user.id).updateData(["isDarkModeOn": user.isDarkModeOn])
+    }
+    
+    static func uploadImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {
+        // 1
+        guard let imageData = image.jpegData(compressionQuality: 0.1) else {
+            return completion(nil)
+        }
+
+        // 2
+        reference.putData(imageData, metadata: nil, completion: { (metadata, error) in
+            // 3
+            if let error = error {
+                assertionFailure(error.localizedDescription)
+                return completion(nil)
+            }
+
+            // 4
+            reference.downloadURL(completion: { (url, error) in
+                if let error = error {
+                    assertionFailure(error.localizedDescription)
+                    return completion(nil)
+                }
+                completion(url)
+            })
+        })
+    }
+    
+    static func createPost(name: String, userModel: UserModel, for image: UIImage) {
+        let imageRef = Storage.storage().reference().child("\(name).jpg")
+        uploadImage(image, at: imageRef) { (downloadURL) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            guard let downloadURL = downloadURL else {
+                print(downloadURL)
+                return
+            }
+
+            let urlString = downloadURL.absoluteString
+            userModel.user.avatarStr = urlString
+            print("image url: \(userModel.user.avatarStr)")
+        }
+        }
+//
     }
 }

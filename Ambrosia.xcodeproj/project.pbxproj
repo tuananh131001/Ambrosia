@@ -110,6 +110,8 @@
 		54585AF928CC501C003567D5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AF828CC501C003567D5 /* Constant.swift */; };
 		54585AFD28CC52DA003567D5 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFC28CC52DA003567D5 /* Modifiers.swift */; };
 		54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */; };
+		5458967028D4741100263F3F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5458966F28D4741100263F3F /* ImagePicker.swift */; };
+		5458967228D4761100263F3F /* PickImageModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5458967128D4761100263F3F /* PickImageModal.swift */; };
 		54646D4628CF44510052A3AA /* ForgetPasswordModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */; };
 		54BE932528CEEE6200CD21CD /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 54BE932428CEEE6200CD21CD /* GoogleSignIn */; };
 		54BE932728CEEE6200CD21CD /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 54BE932628CEEE6200CD21CD /* GoogleSignInSwift */; };
@@ -196,6 +198,8 @@
 		54585AF828CC501C003567D5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		54585AFC28CC52DA003567D5 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
+		5458966F28D4741100263F3F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		5458967128D4761100263F3F /* PickImageModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickImageModal.swift; sourceTree = "<group>"; };
 		54646D4528CF44510052A3AA /* ForgetPasswordModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordModal.swift; sourceTree = "<group>"; };
 		54646D4728CF6FBB0052A3AA /* AmbrosiaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AmbrosiaRelease.entitlements; sourceTree = "<group>"; };
 		54BE932E28CEF8D800CD21CD /* LoginPhoneModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPhoneModal.swift; sourceTree = "<group>"; };
@@ -277,6 +281,7 @@
 				44969A1728CCBE9E00F7EDD4 /* FormatDate.swift */,
 				540BDDB528CE002500A2B45B /* LoginUtils.swift */,
 				442A4E7F28CEF3DD00AD37E4 /* CalculateDistance.swift */,
+				5458966F28D4741100263F3F /* ImagePicker.swift */,
 				3D379D8028D4946F008FF117 /* UserDefaultUtils.swift */,
 			);
 			path = Utils;
@@ -516,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				44DFD4EC28CDE5AF00E82F9F /* SettingView.swift */,
+				5458967128D4761100263F3F /* PickImageModal.swift */,
 				3DC8C66A28D483D6008CC339 /* RecentReviews.swift */,
 			);
 			path = SettingViews;
@@ -674,6 +680,7 @@
 				3DCB4F6528CB8497000EEBDA /* RestaurantCardInfo.swift in Sources */,
 				3D4705DB288E4C0400502DD1 /* Restaurant.swift in Sources */,
 				44969A1828CCBE9E00F7EDD4 /* FormatDate.swift in Sources */,
+				5458967228D4761100263F3F /* PickImageModal.swift in Sources */,
 				44453CB328CCCFD300C00F6D /* AddReviewView.swift in Sources */,
 				54585AF928CC501C003567D5 /* Constant.swift in Sources */,
 				44F1A3D828D473AC0017A7CA /* ProgressSlider.swift in Sources */,
@@ -699,6 +706,7 @@
 				3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */,
 				44F1A3D628D471290017A7CA /* RatingContributionView.swift in Sources */,
 				3D4D1B1E28CC9ADB00034146 /* SplashView.swift in Sources */,
+				5458967028D4741100263F3F /* ImagePicker.swift in Sources */,
 				3D48567228CEF6D8001D7DAE /* InformationForm.swift in Sources */,
 				3D379D7F28D46936008FF117 /* FavoriteContent.swift in Sources */,
 				3D837119289389830067C946 /* GifView.swift in Sources */,
