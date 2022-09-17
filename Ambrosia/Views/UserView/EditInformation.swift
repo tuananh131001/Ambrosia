@@ -22,8 +22,9 @@ struct EditInformation: View {
 
     var body: some View {
         ZStack (alignment: .center) {
-            Rectangle()
-                .foregroundColor(Constants.PRIMARY_COLOR)
+//            Rectangle()
+//                .foregroundColor(Constants.PRIMARY_COLOR)
+            GeneralBackground()
             VStack {
                 InformationForm()
                 // MARK: LOGIN BUTTON

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct User: Decodable {
     var id: String
@@ -14,6 +15,9 @@ struct User: Decodable {
     var selectedGender:Int
     var favouriteRestaurants: [Restaurant] = [Restaurant]()
     var email:String
+    var avatarStr: String = ""
+    var reviewRestaurant:[Restaurant] = [Restaurant]()
+    var isDarkModeOn: Bool = false
 }
 
 

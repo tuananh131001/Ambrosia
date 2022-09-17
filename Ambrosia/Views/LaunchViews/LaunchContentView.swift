@@ -18,6 +18,8 @@ struct LaunchContentView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
     @EnvironmentObject var userModel: UserModel
     
+    @StateObject var firebaseService = FirebaseService.services
+
     @State var email = ""
     @State var password = ""
     @State var showLoginMessage = false
@@ -25,15 +27,16 @@ struct LaunchContentView: View {
     @State var showLoginPhoneModal = false
     @State var showForgetPasswordModal = false
     @State var showEnterCodeField = false
-    
-    @FocusState private var emailIsFocused : Bool
-    @FocusState private var passwordIsFocused : Bool
-    
+
+    @FocusState private var emailIsFocused: Bool
+    @FocusState private var passwordIsFocused: Bool
+
     var openSetting = false
     var body: some View {
         ZStack (alignment: .center) {
-            Rectangle()
-                .foregroundColor(Constants.PRIMARY_COLOR)
+//            Rectangle()
+//                .foregroundColor(Constants.PRIMARY_COLOR)
+            GeneralBackground()
 
 
             // MARK: LOGIN PAGE CONTENT
@@ -41,18 +44,19 @@ struct LaunchContentView: View {
                 ZStack (alignment: .center) {
                     // MARK: LOGIN INPUT FIELDS
                     VStack (spacing: 20) {
-                        VStack (spacing: 10) {
+                        VStack (spacing: 6) {
                             Text("AMBROSIA")
-                                .bold()
                                 .font(Font(UIFont(name: "Chalkboard SE Bold", size: Constants.APP_NAME_LARGE_SIZE)! as CTFont))
-                                .foregroundColor(Constants.PRIMARY_COLOR)
+                                
+                            Text("It's eat time !")
+                                .font(Font(UIFont(name: "Chalkboard SE", size: Constants.APP_NAME_LARGE_SIZE-18)! as CTFont))
 
                             // MARK: CAT GIF
                             GifView(name: "cat-eat")
                                 .frame(width: 130, height: 110)
                         }
 
-                        VStack (spacing: 10) {
+                        VStack (spacing: 8) {
                             Group {
                                 TextField("Email", text: $email)
                                     .modifier(TextFieldModifier())
@@ -69,39 +73,30 @@ struct LaunchContentView: View {
                             }
                         }
 
-                        VStack (spacing: 10) {
+                        VStack (spacing: 8) {
                             
                             // MARK: BTN FORGET
                             Button {
-                                SoundModel.clickOtherSound()
-                                
+                                SoundModel.clickOtherSound() // sound effect when click button
                                 showForgetPasswordModal = true
                             } label: {
                                 Text("Forget password?")
                             }
-                            
+
                             // MARK: BTN LOGIN
                             Button {
-                                SoundModel.clickButtonSound()
-                                // add sound effect when click button
-//                                NormalSignIn(email: email, password: password)
-//                                showLoginMessage = true
+                                SoundModel.clickButtonSound() // sound effect when click button
                                 login(type: .normal)
                             } label: {
                                 Text("Sign In")
                                     .bold()
                             }
-                            .buttonStyle(ButtonStylePrimary())
-                            
-                            
+                                .buttonStyle(ButtonStylePrimary())
+
+
                             // MARK: BTN GOOGLE
                             Button {
-                                // add sound effect when click button
-                                SoundModel.clickButtonSound()
-//                                userModel.GoogleSignIn()
-//                                if (userModel.loginSuccess) {
-//                                    restaurantModel.requestGeolocationPermission()
-//                                }
+                                SoundModel.clickButtonSound() // sound effect when click button
                                 login(type: .google)
                             } label: {
                                 HStack {
@@ -110,17 +105,12 @@ struct LaunchContentView: View {
                                         .bold()
                                 }
                             }
-                            .buttonStyle(ButtonStylePrimary())
-                            
-                            
+                                .buttonStyle(ButtonStylePrimary())
+
+
                             // MARK: BTN MICROSOFT
                             Button {
-                                // add sound effect when click button
-                                SoundModel.clickButtonSound()
-//                                userModel.MicrosoftSignIn()
-//                                if (userModel.loginSuccess) {
-//                                    restaurantModel.requestGeolocationPermission()
-//                                }
+                                SoundModel.clickButtonSound() // sound effect when click button
                                 login(type: .microsoft)
                             } label: {
                                 HStack {
@@ -129,25 +119,25 @@ struct LaunchContentView: View {
                                         .bold()
                                 }
                             }
-                            .buttonStyle(ButtonStylePrimary())
-                            
+                                .buttonStyle(ButtonStylePrimary())
+
                             Text("or")
                                 .foregroundColor(.gray)
-                            
-                            
+
+
                             // MARK: BTN REGISTER
                             // Button to show the sign up sheet
                             Button {
                                 // add sound effect when click button
                                 SoundModel.clickButtonSound()
-                    
+
                                 showingSignUpSheet.toggle()
                             } label: {
                                 Text("Sign Up Here!")
                                     .bold()
                             }
-                            .buttonStyle(ButtonStyleLightPrimary())
-                            
+                                .buttonStyle(ButtonStyleLightPrimary())
+
                         }
                     }
                         .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
@@ -156,12 +146,11 @@ struct LaunchContentView: View {
                         .foregroundColor(Constants.PRIMARY_COLOR)
 
                 }
-                .background(.white)
-                .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
-                .foregroundColor(.white)
-                .cornerRadius(Constants.CONRNER_RADIUS)
-                .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
-                
+                    .background(Constants.BCK_COLOR)
+                    .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
+                    .cornerRadius(Constants.CONRNER_RADIUS)
+                    .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
+
             }
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
@@ -170,70 +159,64 @@ struct LaunchContentView: View {
             if (showLoginPhoneModal) {
                 LoginPhoneModal(showLoginPhoneModal: $showLoginPhoneModal)
             }
-            
+
             // MARK: MODAL FORGET PW
             if (showForgetPasswordModal) {
                 ForgetPasswordModal(showForgetPasswordModal: $showForgetPasswordModal)
             }
-            
-            
+
+
         }.sheet(isPresented: $showingSignUpSheet) {
             SignUpView()
         }
             .ignoresSafeArea(.all, edges: .all)
             .onAppear(perform: {
-                if (UserDefaults.standard.string(forKey: "loginType") == "normal") {
-                 userModel.autoLoginNormal(restaurantModel: restaurantModel)
-                 if (userModel.loginSuccess) {
-                     userModel.state = .signedIn
-                     restaurantModel.requestGeolocationPermission()
-                 }
+                let userDefaults = UserDefaults.standard
+                if let loginType = userDefaults.string(forKey: "loginType") {
+                    userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
+                    afterVerify()
                 }
              })
+            .onDisappear(perform: {
+                if let uid = Auth.auth().currentUser?.uid {
+                    userModel.fetchUserInfo(id: uid, userModel: userModel, restaurantModel: restaurantModel)
+                }
+                print(userModel.user.email)
+            })
     }
 
-    
+
     func login(type: SignInMethod) {
         userModel.loginMessage = ""
         if (type == .google) {
             userModel.GoogleSignIn(restaurantModel: restaurantModel)
-            afterCheckLogin()
+            afterVerify()
         }
         else if (type == .microsoft) {
             userModel.MicrosoftSignIn(restaurantModel: restaurantModel)
-            afterCheckLogin()
+            afterVerify()
         }
         else {
-             let group = DispatchGroup()
-             let queueVerify = DispatchQueue(label: "verify")
-             let queueRequest = DispatchQueue(label: "request")
-
-             group.enter()
-             queueVerify.async (group: group) {
-                 userModel.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
-                 group.leave()
-             }
+            DispatchQueue.main.async {
+                userModel.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
+            }
             
-             group.enter()
-             queueRequest.asyncAfter(deadline: .now() + 0.5) {
-                 afterCheckLogin()
-                 group.leave()
-             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                afterVerify()
+            }
         }
     }
-    
-    func afterCheckLogin() {
-        if (userModel.loginMessage != "") {
-            showLoginMessage = true
-        }
-        else {
-            showLoginMessage = false
-        }
+        
+    func afterVerify() {
+        showLoginMessage = true
+//        showLoginMessage = userModel.loginMessage != "" ? true : false
         if (userModel.loginSuccess) {
             userModel.state = .signedIn
-            restaurantModel.requestGeolocationPermission()
+            userModel.fetchUserInfo(id: Auth.auth().currentUser?.uid ?? "uid error", userModel: userModel, restaurantModel: restaurantModel)
+//                restaurantModel.requestGeolocationPermission()
         }
+        
     }
-    
+
 
 }
