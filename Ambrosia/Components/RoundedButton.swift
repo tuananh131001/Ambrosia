@@ -13,8 +13,8 @@ struct RoundedButton: View {
     var height:CGFloat
     var body: some View {
         ZStack{
-            Rectangle().frame(width: width, height: height).foregroundColor(Color("PrimaryColor")).clipShape(RoundedRectangle(cornerRadius: 10))
-            Text(buttonText).foregroundColor(Color("ButtonTextColor")).bold()
+            Rectangle().frame(width: width, height: height).foregroundColor(Color("PrimaryColor"))   .clipShape(RoundedRectangle(cornerRadius: 10))
+            Text(buttonText).foregroundColor(Color("ButtonTextColor")).bold().font(.system(size: 12))
         }
 
     }

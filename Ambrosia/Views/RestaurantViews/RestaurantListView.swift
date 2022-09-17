@@ -42,7 +42,11 @@ struct RestaurantListView: View {
     }
     var body: some View {
         NavigationView {
+            
             ScrollView {
+                HStack{
+                    DistrictFilterView()
+                }
                 HorizontalListView(sectionTitle: "Suggestion Restaurants", type: "suggestion")
                 HorizontalListView(sectionTitle: "Nearby Restaurants", type: "nearby")
                 VStack (alignment: .leading) {
@@ -90,7 +94,7 @@ struct RestaurantListView: View {
                 }
             }
             .background(Constants.BCK_COLOR)
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
         
     }
 }
