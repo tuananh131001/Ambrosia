@@ -12,6 +12,7 @@
  - https://stackoverflow.com/questions/24534229/swift-modifying-arrays-inside-dictionaries
  - https://stackoverflow.com/questions/37517829/get-distinct-elements-in-an-array-by-object-property
  - https://stackoverflow.com/questions/21983559/opens-apple-maps-app-from-ios-app-with-directions
+ - https://stackoverflow.com/questions/32364055/formatting-phone-number-in-swift
  */
 
 import Foundation
@@ -27,9 +28,11 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
     @Published var sortedByRankRestaurants: [Restaurant] = [Restaurant]()
-    @Published var sortedByDistanceRestaurants:[Restaurant] = [Restaurant]()
-    @Published var districtRestaurants:[Restaurant] = [Restaurant]()
-    @Published var firstTwentyRestaurants:[Restaurant] = [Restaurant]()
+    @Published var sortedByDistanceRestaurants: [Restaurant] = [Restaurant]()
+    @Published var districtRestaurants: [Restaurant] = [Restaurant]()
+    @Published var firstTwentyRestaurants: [Restaurant] = [Restaurant]()
+
+    var tempRestaurant: [Restaurant] = [Restaurant]()
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -44,7 +47,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
     // MARK: Current Random Restaurant
     @Published var currentRandomRestaurant: Restaurant?
-    
+
 
 
     // MARK: init
@@ -125,40 +128,122 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //        return false
     //    }
 
-
-
-    // Method to fetch all nearby restaurants
-    func fetchRestaurant() {
-        hasError = false
-//        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-        let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
-
-        if let url = URL(string: urlString) {
-            URLSession.shared
-                .dataTask(with: url) { [weak self] data, response, error in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    if error != nil {
-                    } else {
-                        let decoder = JSONDecoder()
-                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        if let data = data,
-                            let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            self?.restaurants = restaurantArr
-                            self?.calculateDistanceRest()
-                            self?.sortRestaurant()
-                            self?.sortRestaurantDistance()
-                            self?.getFirstTwentyRestaurants()
-                        } else {
-                            print("Cannot fetch all restaurant")
-                        }
+    func fetchImageRestaurant() {
+        let pathString = Bundle.main.path(forResource: "jsonformatter", ofType: "json")
+        if let path = pathString {
+            // Create a url object
+            let url = URL(fileURLWithPath: path)
+            //Error handling
+            do {
+                let data = try Data(contentsOf: url)
+                //Parse the data
+                let decoder = JSONDecoder()
+                do {
+                    let placeArr = try decoder.decode(Place.self, from: data)
+                    for index in self.restaurants.indices {
+                        let obj = placeArr.first(where: { $0.placeID == self.restaurants[index].placeId })
+//                        var link = obj["placeID"]
+                        print(obj?.thumnail)
+                        self.restaurants[index].imageLink = obj?.thumnail ?? "https://i.pinimg.com/200x/ff/50/2c/ff502c2d46373cc9908091efec8cfb11.jpg"
+//                        print(link)
                     }
+                    
+                    self.restaurants = self.restaurants
+                    self.calculateDistanceRest()
+                    self.sortRestaurantDistance()
+                    self.sortRestaurant()
+                    self.getTwentyRestaurant()
+                } catch {
+                    print(error)
                 }
+            }
+            catch {
+                // execution will come here if an error is thrown
+                print(error)
+            }
 
-            }.resume()
         }
     }
+    func fetchRestaurant() {
+        let pathString = Bundle.main.path(forResource: "ambrosia_data", ofType: "json")
+        if let path = pathString {
+            // Create a url object
+            let url = URL(fileURLWithPath: path)
+            //Error handling
+            do {
+                let data = try Data(contentsOf: url)
+                //Parse the data
+                let decoder = JSONDecoder()
+                do {
+                    let restaurantArr = try decoder.decode([Restaurant].self, from: data)
+                    self.restaurants = restaurantArr
+                  
+                    self.fetchImageRestaurant()
+                } catch {
+                    print(error)
+                }
+            }
+            catch {
+                // execution will come here if an error is thrown
+                print(error)
+            }
 
+        }
+    }
+//    func fetchRestaurant() {
+//        let testUrl = "https://tuananh131001.github.io/ambrosia_data.json"
+//        //        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
+//        hasError = false
+//        //        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
+//        let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
+//
+//        if let url = URL(string: urlString) {
+//            URLSession.shared
+//                .dataTask(with: url) { [weak self] data, response, error in
+//                DispatchQueue.global(qos: .userInitiated).async {
+//                    if error != nil {
+//                    } else {
+//                        let decoder = JSONDecoder()
+//                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                        if let data = data,
+//                            var restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
+//                            self?.tempRestaurant = restaurantArr
+//                            DispatchQueue.main.async {
+//                                print("sjdjsdj")
+//                                self?.firebaseService.fetchImageResFromFirebase(self!.tempRestaurant, completion: { newRestaurants in
+//                                    self?.restaurants = newRestaurants
+//                                    for i in 0..<20 {
+//                                        self?.firstTwentyRestaurants.append(self?.restaurants[i])
+//                                    }
+////                                    self?.sortRestaurant()
+////                                    self?.sortRestaurantDistance()
+////                                    self?.getFirstTwentyRestaurants()
+//                                    print("assign")
+////                                    self?.getFirstTwentyRestaurants(newRestaurants:newRestaurants)
+//                                })
+//                                self?.calculateDistanceRest()
+////                                self?.getFirstTwentyRestaurants()
+//
+//
+//
+//                            }
+//                        } else {
+//                            print("Cannot fetch all restaurant")
+//                        }
+//                    }
+//                }
+//
+//            }.resume()
+//        }
+//    }
 
+    func getTwentyRestaurant(){
+        for r in restaurants{
+            if firstTwentyRestaurants.count < 20 {
+                firstTwentyRestaurants.append(r)
+            }
+        }
+    }
 
     func getServiceOptions() {
         for index in 0..<(currentRestaurant?.additionalInfo?.serviceOptions?.count ?? 0) {
@@ -177,9 +262,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
-    
-    func getFirstTwentyRestaurants(){
-        for r in restaurants{
+
+    func getFirstTwentyRestaurants(newRestaurants: [Restaurant]) {
+        for r in newRestaurants {
             if firstTwentyRestaurants.count <= 20 {
                 firstTwentyRestaurants.append(r)
             }
@@ -207,9 +292,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
-    
-    func filterRestaurantByDistrict(district:String){
-        districtRestaurants = restaurants.filter{
+
+    func filterRestaurantByDistrict(district: String) {
+        districtRestaurants = restaurants.filter {
             $0.state == "\(district), Ho Chi Minh City"
         }
     }
@@ -270,34 +355,34 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             userLocation = CalculateDistance.createCoordinateRegion(currentUserCoordinate!)
         }
     }
-    
-    func sortRestaurant(){
-        let temp:[Restaurant]
-        temp = restaurants.sorted{
+
+    func sortRestaurant() {
+        let temp: [Restaurant]
+        temp = restaurants.sorted {
             $0.rank ?? 0 > $1.rank ?? 0
         }
         for t in temp {
-            if (sortedByRankRestaurants.count <= 20){
+            if (sortedByRankRestaurants.count <= 20) {
                 sortedByRankRestaurants.append(t)
             }
         }
-        sortedByRankRestaurants = sortedByRankRestaurants.sorted{
+        sortedByRankRestaurants = sortedByRankRestaurants.sorted {
             $0.rank ?? 0 > $1.rank ?? 0
         }
 
     }
-    
-    func sortRestaurantDistance(){
-        let temp:[Restaurant]
-        temp = restaurants.sorted{
+
+    func sortRestaurantDistance() {
+        let temp: [Restaurant]
+        temp = restaurants.sorted {
             $0.distance < $1.distance
         }
         for t in temp {
-            if (sortedByDistanceRestaurants.count <= 20){
+            if (sortedByDistanceRestaurants.count <= 20) {
                 sortedByDistanceRestaurants.append(t)
             }
         }
-        sortedByDistanceRestaurants = sortedByDistanceRestaurants.sorted{
+        sortedByDistanceRestaurants = sortedByDistanceRestaurants.sorted {
             $0.distance < $1.distance
         }
         print(sortedByDistanceRestaurants)
@@ -307,6 +392,17 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func calculateDistanceRest() {
         for index in 0..<restaurants.count {
             restaurants[index].distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurants[index].location?.lat ?? 0, lon2: restaurants[index].location?.lng ?? 0)
+        }
+    }
+
+    // MARK: function for calling restaurant
+    func callRest() {
+        // if have phone -> call action
+//        if  != nil && !(restaurantModel.currentRestaurant?.phone!.matches("^[a-zA-Z]$") ?? false) {
+        if let phone = self.currentRestaurant?.phone {
+            let formattedString = "tel://" + phone.replacingOccurrences(of: "+84", with: "0").replacingOccurrences(of: " ", with: "-")
+            guard let url = URL(string: formattedString) else { return }
+            UIApplication.shared.open(url)
         }
     }
 
@@ -346,7 +442,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         currentRestaurant = restaurants[currentRestaurantIndex]
     }
 
-    func getCurrentRestaurantByDistance(placeId:String){
+    func getCurrentRestaurantByDistance(placeId: String) {
         for index in 0..<districtRestaurants.count {
             if (districtRestaurants[index].placeId == placeId) {
                 currentRestaurantIndex = index
@@ -356,7 +452,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         currentRestaurant = districtRestaurants[currentRestaurantIndex]
 
     }
-    
+
     // Function to update like for specific review
     func updateLikeForReview(id: UUID) {
         for i in 0..<(currentRestaurant?.reviews.count ?? 0) {

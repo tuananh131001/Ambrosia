@@ -16,6 +16,7 @@ struct SignUpView: View {
     @State var email = ""
     @State var password = ""
     @State var passwordConfirmation = ""
+    @State var showMessage : Bool = false
 
     @FocusState private var emailIsFocused: Bool
     @FocusState private var passwordIsFocused: Bool
@@ -23,7 +24,7 @@ struct SignUpView: View {
 
     var body: some View {
         ZStack (alignment: .center) {
-            VStack (spacing: 30) {
+            VStack (spacing: 20) {
 
                 VStack (spacing: 10) {
                     Group {
@@ -37,9 +38,10 @@ struct SignUpView: View {
                     // MARK: CAT GIF
                     GifView(name: "cat-eat") .frame(width: 130, height: 110)
                 }
+                .padding(.bottom, 10)
 
 
-                VStack (spacing: 10) {
+                VStack (spacing: 8) {
 
                     // Sign up fields to sign up for a new account
                     Group {
@@ -59,7 +61,7 @@ struct SignUpView: View {
                         .multilineTextAlignment(.leading)
 
                     // Sign up message after pressing the sign up button
-                    if (userModel.firebaseService.showSignUpMessage) {
+                    if (showMessage) {
                         Text(userModel.firebaseService.signUpMessage)
                             .foregroundColor(userModel.firebaseService.signUpSuccess ? .green : .red)
                     }
@@ -72,9 +74,7 @@ struct SignUpView: View {
                         SoundModel.clickButtonSound()
                         
                         FirebaseService.services.signUp(email: email, password: password, passwordConfirmation: passwordConfirmation,user:userModel)
-                        userModel.firebaseService.showSignUpMessage = true
-                        // signUp()
-                        // showSignUpMessage = true
+                        showMessage = true
                     }) {
                         Text("Sign Up")
                             .bold()
@@ -101,7 +101,6 @@ struct SignUpView: View {
             .background(.white)
             .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
             .cornerRadius(Constants.CONRNER_RADIUS)
-//        .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
 
     }
 

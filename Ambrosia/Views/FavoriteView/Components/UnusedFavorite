@@ -1,23 +1,19 @@
-//
-//  FavoriteContent.swift
-//  Ambrosia
-//
-//  Created by Nhung Tran on 16/09/2022.
-//
 
-import SwiftUI
+//                                    ZStack {
+//                                        Rectangle()
+//                                            .foregroundColor(Color("CardBackgroundColor"))
+//                                            .modifier(LightShadowModifier())
+//
+//                                        FavoriteContent(imageSize: imageSize, titleSize: titleSize, starSize: starSize, distanceSize: distanceSize, openSize: openSize, contentWidth: contentWidth, rest: rest)
+//                                            .frame(height: imageSize)
+//
+//                                    }
+//
+//                                        .frame(height: imageSize + imageSize / 2.5, alignment: .center)
+//                                        .cornerRadius(10)
 
-struct FavoriteContent: View {
-    let imageSize: CGFloat
-    let titleSize: CGFloat
-    let starSize: CGFloat
-    let distanceSize: CGFloat
-    let openSize: CGFloat
-    
-    let contentWidth: CGFloat
-    
-    let rest: Restaurant
-    var body: some View {
+
+
         HStack {
             // MARK: image
             FavoriteImage(cardWidth: imageSize, cardHeight: imageSize)
@@ -56,5 +52,28 @@ struct FavoriteContent: View {
 
         }
         .padding(30)
+
+
+
+//
+//  FavoriteOpen.swift
+//  Ambrosia
+//
+//  Created by Nhung Tran on 16/09/2022.
+//
+
+import SwiftUI
+
+struct FavoriteOpen: View {
+    var isOpen: Bool
+    var body: some View {
+        Label {
+            Text(isOpen ? "OPEN" : "CLOSED")
+        } icon: {
+            Image(systemName: "circle.fill")
+        }
+        .foregroundColor(Color("\(isOpen ? "Open" : "Close")Color"))
+        .font(.headline)
+
     }
 }

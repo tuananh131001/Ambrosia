@@ -18,15 +18,12 @@ struct LaunchView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
 
     @StateObject var firebaseService = FirebaseService.services
-
     @State var isLogging = false
+    
     var body: some View {
         // if app has not ask user permission to access location
         if !userModel.loginSuccess {
             LaunchContentView()
-        }
-        else if userModel.loginSuccess && restaurantModel.authorizationState == .notDetermined {
-            LaunchContentView(openSetting: true)
         }
         else if userModel.loginSuccess && userModel.isNewUser {
             EditInformation()
@@ -41,5 +38,6 @@ struct LaunchView: View {
         }
 
     }
+        
 
 }
