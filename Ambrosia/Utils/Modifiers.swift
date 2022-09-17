@@ -15,7 +15,7 @@ struct TextFieldModifier: ViewModifier {
         content
             .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH, minHeight: Constants.FIELD_HEIGHT)
             .padding(.horizontal)
-            .background(.thinMaterial)
+            .background(Color("TextfieldBackground"))
             .foregroundColor(Constants.PRIMARY_COLOR)
             .cornerRadius(Constants.CONRNER_RADIUS)
             .textInputAutocapitalization(.never)

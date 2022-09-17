@@ -105,7 +105,6 @@ struct SettingView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height*0.3)
                 
                     VStack (spacing: 10) {
-                        ToggleTheme
                         Form {
                             Section(header:
                                       Text("Profile Information")
@@ -149,13 +148,6 @@ struct SettingView: View {
                         Spacer()
                         
                         VStack {
-//                            Button {
-//                                showReview = true
-//                            } label: {
-//                                Text("Recent Reivews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-//                            }.sheet(isPresented: $showReview) {
-//                                RecentReviews()
-//                            }
                             
                               // MARK: EDIT INFO BTN
                               Button {
@@ -182,7 +174,7 @@ struct SettingView: View {
                                       Image("edit-icon")
                                   }
                               }
-                                  .buttonStyle(ButtonStylePrimary())
+                              .buttonStyle(ButtonStylePrimary())
 
                               // MARK: SIGN OUT BTN
                               Button {
@@ -198,7 +190,7 @@ struct SettingView: View {
                                   }
                                   
                               }
-                                  .buttonStyle(ButtonStyleLightPrimary())
+                              .buttonStyle(ButtonStyleLightPrimary())
                             
                         }
                         .padding(.bottom, geometry.size.height*0.13)
@@ -206,8 +198,6 @@ struct SettingView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height*0.7)
                     .background(Color("BackgroundSettingView"))
 
-                }
-                ToggleTheme
                 }
 
             }
@@ -228,5 +218,4 @@ struct SettingView: View {
             setAppTheme()
         })
     }
-    
 }

@@ -25,7 +25,7 @@ struct EditInformation: View {
 //            Rectangle()
 //                .foregroundColor(Constants.PRIMARY_COLOR)
             GeneralBackground()
-            VStack {
+            VStack (spacing: 20){
                 InformationForm()
                 // MARK: LOGIN BUTTON
                 Button {
@@ -43,6 +43,9 @@ struct EditInformation: View {
                     Text("Confirm Changes").bold()
                 }
                 .buttonStyle(ButtonStyleWhite())
+                .frame(maxWidth: Constants.FIELD_MAX_WIDTH)
+                .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
+//                .background(Color("ButtonTextColor"))
                 
                 if(showMessage) {
                     Text(message)
