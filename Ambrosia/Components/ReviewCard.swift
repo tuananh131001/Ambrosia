@@ -10,11 +10,12 @@ import SwiftUI
 struct ReviewCard: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
     @State var rating:Int
+    @State var reviewerAvatar:String = ""
     var review:Review
     var body: some View {
         VStack (alignment:.leading,spacing:15){
             HStack{
-                AsyncImage(url: URL(string: review.image)) { image in
+                AsyncImage(url: URL(string: reviewerAvatar)) { image in
                     image
                         .resizable().aspectRatio(contentMode: .fill).frame(width: 50, height: 50).clipShape(Circle())
                 } placeholder: {
@@ -36,10 +37,13 @@ struct ReviewCard: View {
                     Image(systemName: !review.isLiked ? "hand.thumbsup" : "hand.thumbsup.fill").resizable().aspectRatio(contentMode: .fit).frame(width: 20, height: 14).foregroundColor(Color("SecondaryColor"))
                     Text(!review.isLiked ? "Helpful?" : "").foregroundColor(Color("SubTextColor")).font(.system(size: 14)).bold()
                 }
-
-         
             }
-        }
+        }.onAppear(perform: {
+            restaurantModel.firebaseService.getUserAvatar(userId: review.userId) { newAvatar in
+                reviewerAvatar = newAvatar
+                print(newAvatar)
+            }
+        })
     }
 }
 
