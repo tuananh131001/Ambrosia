@@ -31,10 +31,8 @@ struct FavoriteCard: View {
             } label: {
                 // MARK: view
                 FavoriteContent(imageSize: imageSize, rest: rest)
-                    .frame(width: geo.size.width * 0.8, height: cardHeight, alignment: .leading)
-
+                .frame(width: geo.size.width * 0.8, height: cardHeight, alignment: .leading)
             }
-                .edgesIgnoringSafeArea(.horizontal)
             Divider()
         }
     }

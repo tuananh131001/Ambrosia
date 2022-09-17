@@ -32,7 +32,6 @@ struct FavouriteRestaurantView: View {
                                     }
                                 }
                             }
-                                .frame(width: geo.size.width)
                         }
                     }
                     else {
