@@ -468,7 +468,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
         self.currentRestaurant?.reviews.append(newReview)
         userModel.user.reviewRestaurant.append(self.currentRestaurant ?? Restaurant.testRestaurantDetail())
-        firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(), userId: userId)
+        firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(), userId: userId,userAvatar: userModel.user.avatarStr)
     }
     func updateReview(reviews: [Review]) {
         print(reviews)

@@ -14,7 +14,12 @@ struct ReviewCard: View {
     var body: some View {
         VStack (alignment:.leading,spacing:15){
             HStack{
-                Image(review.image).resizable().aspectRatio(contentMode: .fill).frame(width: 40, height: 40).clipShape(Circle())
+                AsyncImage(url: URL(string: review.image)) { image in
+                    image
+                        .resizable().aspectRatio(contentMode: .fill).frame(width: 50, height: 50).clipShape(Circle())
+                } placeholder: {
+                    ProgressView()
+                }
                 Text(review.username).foregroundColor(Color("TextColor")).bold().font(.system(size: 20))
             }
             HStack{

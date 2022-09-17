@@ -97,12 +97,12 @@ class FirebaseService: ObservableObject {
 //
 //        }
 //    }
-    func addReviewToFirebase(restaurant: Restaurant, userId: String) {
+    func addReviewToFirebase(restaurant: Restaurant, userId: String,userAvatar:String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
         for riviu in restaurant.reviews {
-            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "username": riviu.username, "email": riviu.email, "image": riviu.image, "isLiked": riviu.isLiked] as [String: Any]
+            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "username": riviu.username, "email": riviu.email, "image": userAvatar, "isLiked": riviu.isLiked] as [String: Any]
             newReviewList.append(newReview)
         }
         // assign new data to firestore
