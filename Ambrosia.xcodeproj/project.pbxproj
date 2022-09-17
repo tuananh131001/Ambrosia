@@ -71,6 +71,7 @@
 		3D85B3DC288FB0C8001BF2AF /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */; };
 		3D85B3DE288FE20E001BF2AF /* RestaurantCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3DD288FE20E001BF2AF /* RestaurantCard.swift */; };
 		3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */; };
+		3DACD26128D4FF0B006264C9 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DACD26028D4FF0B006264C9 /* Place.swift */; };
 		3DB2C8E728D19718000B4EA6 /* GeneralBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB2C8E628D19718000B4EA6 /* GeneralBackground.swift */; };
 		3DB2C8E928D19CE0000B4EA6 /* SplashTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB2C8E828D19CE0000B4EA6 /* SplashTitle.swift */; };
 		3DB2C8EB28D19DA0000B4EA6 /* SplashFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB2C8EA28D19DA0000B4EA6 /* SplashFooter.swift */; };
@@ -160,6 +161,7 @@
 		3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		3D85B3DD288FE20E001BF2AF /* RestaurantCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCard.swift; sourceTree = "<group>"; };
 		3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
+		3DACD26028D4FF0B006264C9 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		3DB2C8E628D19718000B4EA6 /* GeneralBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralBackground.swift; sourceTree = "<group>"; };
 		3DB2C8E828D19CE0000B4EA6 /* SplashTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashTitle.swift; sourceTree = "<group>"; };
 		3DB2C8EA28D19DA0000B4EA6 /* SplashFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFooter.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 			children = (
 				3D4705DA288E4C0400502DD1 /* Restaurant.swift */,
 				44CC5F1B28C6F49A003D7E19 /* User.swift */,
+				3DACD26028D4FF0B006264C9 /* Place.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				445188B228CF7CFA0037AA65 /* OpeningHoursView.swift in Sources */,
 				44DFD4EF28CDE5F400E82F9F /* FavouriteRestaurantView.swift in Sources */,
 				3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */,
+				3DACD26128D4FF0B006264C9 /* Place.swift in Sources */,
 				3D26754A28D18ED000E4302D /* UserModel.swift in Sources */,
 				54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */,
 				3DF148A628D1B70800FFF220 /* SoundModel.swift in Sources */,

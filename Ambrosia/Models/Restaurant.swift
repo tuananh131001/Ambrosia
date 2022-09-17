@@ -31,6 +31,7 @@ struct Restaurant: Codable {
     var reviews = [Review]()
     var location: Location?
     var imageUrls:[String]?
+    var url:String?
     var distance: Double = 0
     var temporarilyClosed:Bool?
     var reviewsCount:Int?
@@ -55,6 +56,7 @@ struct Restaurant: Codable {
         case rank
         case location
         case imageUrls
+        case url
         case temporarilyClosed
         case reviewsCount
         case reviewsDistribution
@@ -214,3 +216,21 @@ struct Point: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
 }
+//struct PlaceImage:Codable{
+//    var place_results:PlaceImageResult
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case place_results
+//    }
+//}
+//struct PlaceImageResult:Codable{
+//    var images:[PlaceImageDetail]
+//    enum CodingKeys: String, CodingKey {
+//        case images
+//    }
+//}
+//
+//struct PlaceImageDetail:Codable{
+//    var title:String
+//    var thumbnail:String
+//}

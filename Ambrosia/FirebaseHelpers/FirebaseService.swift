@@ -66,6 +66,10 @@ class FirebaseService: ObservableObject {
     func updateUser(user: User) {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn,"avatarStr": user.avatarStr], merge: true)
     }
+    func addPlaceImage(placeId: String, imageLink:String) {
+        print("add Place image: \(placeId) , \(imageLink)")
+        Firestore.firestore().collection("restaurant").document(placeId).setData(["ImageLink": imageLink], merge: true)
+    }
 
     func addReviewToFirebase(restaurant: Restaurant,userId:String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)

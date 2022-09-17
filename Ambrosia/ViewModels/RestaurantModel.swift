@@ -123,11 +123,35 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //        }
     //        return false
     //    }
+    func fetchImageRestaurant(url: String, placeId: String) {
+        if let url = URL(string: url) {
+            URLSession.shared
+                .dataTask(with: url) { [weak self] data, response, error in
+
+                if error != nil {
+                } else {
+                    let decoder = JSONDecoder()
+                    //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    if let data = data,
+                       let placeDetail = try? decoder.decode(Place.self, from: data) {
+                        print(placeDetail.placeResults.images[1].thumbnail) // food & drink link thumnail
+                        self?.firebaseService.addPlaceImage(placeId: placeId, imageLink: placeDetail.placeResults.images[1].thumbnail)
+                    } else {
+                        print("Cannot fetch all restaurant")
+                    }
+                }
+
+
+            }.resume()
+        }
+    }
 
 
 
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
+        let testUrl = "https://tuananh131001.github.io/ambrosia_data.json"
+        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
         hasError = false
 //        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
         let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
@@ -142,7 +166,13 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
                             let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
+                            var url = restaurantArr[0].url
+                            var resId = restaurantArr[0].placeId
+                            let split = url?.components(separatedBy: "/")
+                            let urlToFetch = "https://serpapi.com/search.json?engine=google_maps&type=place&data=\(split![7])"
+                            print("url to fetch \(urlToFetch)")
                             DispatchQueue.main.async {
+                                self?.fetchImageRestaurant(url: urlToFetch, placeId: resId!)
                                 self?.restaurants = restaurantArr
                                 self?.calculateDistanceRest()
                                 self?.sortRestaurant()

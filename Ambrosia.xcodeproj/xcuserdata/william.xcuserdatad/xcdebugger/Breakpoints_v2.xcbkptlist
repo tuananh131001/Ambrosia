@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "36A76451-ACBD-4183-91DA-BD208248686E"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2EF84FC5-1B91-4EFE-922F-196D3CFBEE64"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ambrosia/ViewModels/RestaurantModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "fetchImageRestaurant(url:placeId:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2EF84FC5-1B91-4EFE-922F-196D3CFBEE64 - b85944f7d2854257"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Ambrosia.RestaurantModel.fetchImageRestaurant(url: Swift.String, placeId: Swift.String) -&gt; ()"
+                  moduleName = "Ambrosia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/william/Documents/Coding/IOS/Ambrosia/Ambrosia/ViewModels/RestaurantModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "136"
+                  endingLineNumber = "136"
+                  offsetFromSymbolStart = "404">
+               </Location>
+               <Location
+                  uuid = "2EF84FC5-1B91-4EFE-922F-196D3CFBEE64 - b85944f7d2854257"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Ambrosia.RestaurantModel.fetchImageRestaurant(url: Swift.String, placeId: Swift.String) -&gt; ()"
+                  moduleName = "Ambrosia"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/william/Documents/Coding/IOS/Ambrosia/Ambrosia/ViewModels/RestaurantModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "136"
+                  endingLineNumber = "136"
+                  offsetFromSymbolStart = "2968">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9E947688-6EC4-4BF5-8742-100E4817E463"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ambrosia/ViewModels/RestaurantModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "fetchImageRestaurant(url:placeId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
