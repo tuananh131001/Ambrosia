@@ -1,9 +1,15 @@
-//
-//  RoundedButton.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 11/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Vo Quoc Huy
+    ID: s3823236
+    Created  date: 11/09/2022
+    Last modified: 13/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 

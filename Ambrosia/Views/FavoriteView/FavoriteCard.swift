@@ -1,9 +1,17 @@
-//
-//  FavoriteCard.swift
-//  Ambrosia
-//
-//  Created by Nhung Tran on 17/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Mai Nhung
+    ID: s3879954
+    Created  date: 17/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+    - https://onmyway133.com/posts/how-to-use-foreach-with-indices-in-swiftui/
+    - https://swiftbysundell.com/articles/stroking-and-filling-a-swiftui-shape-at-the-same-time
+*/
 
 import SwiftUI
 

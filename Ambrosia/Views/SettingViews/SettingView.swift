@@ -1,9 +1,17 @@
-//
-//  SettingView.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 11/09/2022.
-// https://betterprogramming.pub/swiftui-app-theme-switch-241a79574b87
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Nguyen Ha Khanh, Vo Quoc Huy, Tran Mai Nhung
+    ID: s3877707, s3823236, s3879954
+    Created  date: 11/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+    - https://betterprogramming.pub/swiftui-app-theme-switch-241a79574b87
+*/
+
 import SwiftUI
 import Firebase
 
