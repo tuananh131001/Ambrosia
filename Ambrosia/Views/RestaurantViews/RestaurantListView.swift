@@ -31,64 +31,67 @@ struct RestaurantListView: View {
     // function to return the restaurants array by the user input
 
     var body: some View {
-        NavigationView {
-            
-            ScrollView {
-                HStack{
-                    DistrictFilterView()
-                }
-                HorizontalListView(sectionTitle: "Suggestion Restaurants", type: "suggestion")
-                HorizontalListView(sectionTitle: "Nearby Restaurants", type: "nearby")
-                VStack (alignment: .leading) {
-                    Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
-                    // scroll view to show all the restaurants
-                    ScrollView(showsIndicators: false) {
-                        
-                        LazyVStack(alignment:.trailing,spacing: 35) {
-                            ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
-                                index in
-                                // link to the restaurant detail
-                                NavigationLink() {
-                                        // find the current restaurant and display when the view appear
-                                        RestaurantDetailView().onAppear {
-                                            restaurantModel.getCurrentRestaurant(placeId: restaurantModel.firstTwentyRestaurants[index].placeId ?? "")
-                                            restaurantModel.getServiceOptions()
-                                            restaurantModel.getDiningOptions()
-                                            restaurantModel.getPlaningOptions()
-                                            restaurantModel.getPaymentOptions()
+       
+            NavigationView {
+                
+                ScrollView {
+                    HStack{
+                        DistrictFilterView()
+                    }
+                    HorizontalListView(sectionTitle: "Suggestion Restaurants", type: "suggestion")
+                    HorizontalListView(sectionTitle: "Nearby Restaurants", type: "nearby")
+                    VStack (alignment: .leading) {
+                        Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
+                        // scroll view to show all the restaurants
+                        ScrollView(showsIndicators: false) {
+                            
+                            LazyVStack(alignment:.trailing,spacing: 35) {
+                                ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
+                                    index in
+                                    // link to the restaurant detail
+                                    NavigationLink() {
+                                            // find the current restaurant and display when the view appear
+                                            RestaurantDetailView().onAppear {
+                                                restaurantModel.getCurrentRestaurant(placeId: restaurantModel.firstTwentyRestaurants[index].placeId ?? "")
+                                                restaurantModel.getServiceOptions()
+                                                restaurantModel.getDiningOptions()
+                                                restaurantModel.getPlaningOptions()
+                                                restaurantModel.getPaymentOptions()
+                                            }
+                                            
+                                        } label: {
+                                            // Card to show restaurant
+                                            RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageLink, total_ratings: restaurantModel.firstTwentyRestaurants[index].reviewsCount ?? 5, distance: restaurantModel.firstTwentyRestaurants[index].distance)
                                         }
-                                        
-                                    } label: {
-                                        // Card to show restaurant
-                                        RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageLink, total_ratings: restaurantModel.firstTwentyRestaurants[index].reviewsCount ?? 5, distance: restaurantModel.firstTwentyRestaurants[index].distance)
-                                    }
-                                    .simultaneousGesture(TapGesture().onEnded {
-                                        SoundModel.clickCardSound()
-                                    })
-                                
-                            }
-                            NavigationLink {
-                                VerticalListView(type: "all")
-                            } label: {
-                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 16)).offset(y:-20)
-                            }
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                            SoundModel.clickCardSound()
+                                        })
+                                    
+                                }
+                                NavigationLink {
+                                    VerticalListView(type: "all")
+                                } label: {
+                                    Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 16)).offset(y:-20)
+                                }
 
+                            }
+                            
                         }
                         
+                        
+                        // add the search bar and set the mode to always display the search bar
+                    }.navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
+                    
+                } .onChange(of: restaurantModel.restaurantSelected) { newValue in
+                    if (newValue ==
+                        nil) {
+                        restaurantModel.currentRestaurant = nil
                     }
-                    
-                    
-                    // add the search bar and set the mode to always display the search bar
-                }.navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
-                
-            } .onChange(of: restaurantModel.restaurantSelected) { newValue in
-                if (newValue ==
-                    nil) {
-                    restaurantModel.currentRestaurant = nil
                 }
-            }
-            .background(Constants.BCK_COLOR)
-        }.navigationViewStyle(StackNavigationViewStyle())
+                .background(Constants.BCK_COLOR)
+            }.navigationViewStyle(StackNavigationViewStyle())
+
+        
         
     }
 }

@@ -125,7 +125,6 @@ class UserModel: ObservableObject {
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
                     let err = error?.localizedDescription ?? ""
-                    print("NORMAL LOGIN ERROR: ", err)
                     if (err.contains("no user record")) {
                         self.loginMessage = "This email hasn't registered yet"
                     }
@@ -151,14 +150,12 @@ class UserModel: ObservableObject {
 
         provider?.getCredentialWith(nil) { credential, error in
             if error != nil {
-                print(error?.localizedDescription ?? "FAILED GET CREDENTIAL MICROSOFT")
             }
 
             if let x = credential {
                 Auth.auth().signIn(with: x) { result, error in
                     if error != nil {
                         self.loginSuccess = false
-                        print(error?.localizedDescription ?? "FAILED LOGIN MICROSOFT")
                     }
                     else {
                         self.resetDefaultAfterLogin(loginMethod: .microsoft)
@@ -168,7 +165,6 @@ class UserModel: ObservableObject {
 
                 }
             } else {
-                print("FAILED GET CREDENTAIL MICROSOFT")
             }
         }
 
@@ -195,9 +191,8 @@ class UserModel: ObservableObject {
     }
 
     private func GGAuthenticateUser(for user: GIDGoogleUser?, with error: Error?, restaurantModel: RestaurantModel) {
-        if let error = error {
+        if error != nil {
             loginSuccess = false
-            print(error.localizedDescription)
             return
         }
 
@@ -209,9 +204,8 @@ class UserModel: ObservableObject {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
 
         Auth.auth().signIn(with: credential) { [unowned self] (_, error) in
-            if let error = error {
+            if error != nil {
                 loginSuccess = false
-                print(error.localizedDescription)
             } else {
                 resetDefaultAfterLogin(loginMethod: .google)
                 UserDefaults.standard.setValue("google", forKey: "loginType")
@@ -232,7 +226,6 @@ class UserModel: ObservableObject {
             state = .signedOut
             loginMessage = ""
         } catch {
-            print(error.localizedDescription)
         }
     }
 }

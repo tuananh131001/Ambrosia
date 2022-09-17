@@ -24,7 +24,8 @@ struct RestaurantAsyncImage: View {
                 image.aspectRatio(contentMode: .fit)
                 image.ignoresSafeArea()
             } placeholder: {
-                Image("testRestaurant")
+                Image("random-eat").resizable().aspectRatio(contentMode:
+                        .fill).frame(width: 150, height: 150).cornerRadius(10)
             }
             ImageShadowView()
         }

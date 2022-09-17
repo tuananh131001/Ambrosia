@@ -30,7 +30,6 @@ struct SoundModel {
                 effectAudio = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 effectAudio?.play()
             } catch {
-                print("ERROR: Could not find and play sound file")
             }
         }
     }
@@ -46,7 +45,6 @@ struct SoundModel {
                 audioPlayer.prepareToPlay()
                 audioPlayer.play()
             } catch {
-                print("ERROR: Could not find and play background music")
             }
         }
     }

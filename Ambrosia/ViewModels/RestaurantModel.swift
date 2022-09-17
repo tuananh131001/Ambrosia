@@ -79,7 +79,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             locationManager.startUpdatingLocation()
         }
         else if locationManager.authorizationStatus == .denied {
-            print("No Permission")
         }
     }
 
@@ -151,12 +150,10 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                     self.sortRestaurant()
                     self.getTwentyRestaurant()
                 } catch {
-                    print(error)
                 }
             }
             catch {
                 // execution will come here if an error is thrown
-                print(error)
             }
 
         }
@@ -177,62 +174,15 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                   
                     self.fetchImageRestaurant()
                 } catch {
-                    print(error)
                 }
             }
             catch {
                 // execution will come here if an error is thrown
-                print(error)
             }
 
         }
     }
-//    func fetchRestaurant() {
-//        let testUrl = "https://tuananh131001.github.io/ambrosia_data.json"
-//        //        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
-//        hasError = false
-//        //        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-//        let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
-//
-//        if let url = URL(string: urlString) {
-//            URLSession.shared
-//                .dataTask(with: url) { [weak self] data, response, error in
-//                DispatchQueue.global(qos: .userInitiated).async {
-//                    if error != nil {
-//                    } else {
-//                        let decoder = JSONDecoder()
-//                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                        if let data = data,
-//                            var restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-//                            self?.tempRestaurant = restaurantArr
-//                            DispatchQueue.main.async {
-//                                print("sjdjsdj")
-//                                self?.firebaseService.fetchImageResFromFirebase(self!.tempRestaurant, completion: { newRestaurants in
-//                                    self?.restaurants = newRestaurants
-//                                    for i in 0..<20 {
-//                                        self?.firstTwentyRestaurants.append(self?.restaurants[i])
-//                                    }
-////                                    self?.sortRestaurant()
-////                                    self?.sortRestaurantDistance()
-////                                    self?.getFirstTwentyRestaurants()
-//                                    print("assign")
-////                                    self?.getFirstTwentyRestaurants(newRestaurants:newRestaurants)
-//                                })
-//                                self?.calculateDistanceRest()
-////                                self?.getFirstTwentyRestaurants()
-//
-//
-//
-//                            }
-//                        } else {
-//                            print("Cannot fetch all restaurant")
-//                        }
-//                    }
-//                }
-//
-//            }.resume()
-//        }
-//    }
+
 
     func getTwentyRestaurant(){
         restaurants = restaurants.shuffled()
@@ -383,7 +333,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         sortedByDistanceRestaurants = sortedByDistanceRestaurants.sorted {
             $0.distance < $1.distance
         }
-        print(sortedByDistanceRestaurants)
 
     }
 
@@ -413,7 +362,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             return index
         } else {
             // item could not be found
-            print("cannot find")
         }
         return 0
     }
@@ -424,7 +372,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             return index
         } else {
             // item could not be found
-            print("cannot find")
         }
         return nil
     }
@@ -471,7 +418,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(), userId: userId)
     }
     func updateReview(reviews: [Review]) {
-        print(reviews)
         self.currentRestaurant?.reviews = reviews
     }
 
