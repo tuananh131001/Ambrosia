@@ -11,6 +11,8 @@ import SwiftUI
 
 enum Constants {
     static let PRIMARY_COLOR : Color = Color("PrimaryColor")
+    static let PRIMARY_COLOR_TEXT_FIELD_COLOR : Color = Color("PrimaryColorTextField")
+    
     static let PRIMARY_COLOR_UI : UIColor = UIColor(named: "PrimaryColor")!
     static let LIGH_PRIMARY_COLOR : Color = Color("LightPrimary")
     static let LIGH_PRIMARY_COLOR_UI : UIColor = UIColor(named: "LightPrimary")!

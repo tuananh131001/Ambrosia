@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct User: Decodable {
+struct User: Codable {
     var id: String
     var name: String
     var dob:Date

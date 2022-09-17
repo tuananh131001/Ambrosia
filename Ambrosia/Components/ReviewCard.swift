@@ -41,7 +41,6 @@ struct ReviewCard: View {
         }.onAppear(perform: {
             restaurantModel.firebaseService.getUserAvatar(userId: review.userId) { newAvatar in
                 reviewerAvatar = newAvatar
-                print(newAvatar)
             }
         })
     }

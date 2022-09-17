@@ -27,26 +27,19 @@ struct SettingView: View {
                         Spacer()
                         
                         ZStack (alignment: .bottomTrailing) {
-                            Group {
-                                if (userModel.user.avatarStr != "") {
-                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                            .modifier(CircularImageModifirer())
+                            AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .modifier(CircularImageModifirer())
 
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                }
-                                else {
-                                    avatar?
-                                        .resizable()
-                                        .scaledToFill()
-                                        .modifier(CircularImageModifirer())
-                                }
+                            } placeholder: {
+                                avatar?
+                                    .resizable()
+                                    .scaledToFill()
+                                    .modifier(CircularImageModifirer())
                             }
-
+                            
                             Button(action: {
                                 showPickImageModal = true
                             }) {

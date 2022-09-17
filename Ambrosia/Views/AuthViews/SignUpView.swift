@@ -58,7 +58,7 @@ struct SignUpView: View {
                             .focused($confirmPasswordIsFocused)
                             .border(passwordConfirmation != password ? Color.red : Color(uiColor: Constants.PRIMARY_COLOR_UI), width: (passwordConfirmation != password || confirmPasswordIsFocused) ? 1 : 0)
                     }
-                        .multilineTextAlignment(.leading)
+                    .multilineTextAlignment(.leading)
 
                     // Sign up message after pressing the sign up button
                     if (showMessage) {
