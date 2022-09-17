@@ -22,7 +22,7 @@ enum SignInMethod {
 
 class UserModel: ObservableObject {
     @Published var user: User = User(id: "", name: "", dob: Date(), selectedGender: 0, email: "", avatarStr: "")
-    let genders = ["Male", "Female"]
+    let genders = ["Male", "Female", "Other"]
     @Published var firebaseService = FirebaseService.services
 
     enum SignInState {
@@ -127,7 +127,7 @@ class UserModel: ObservableObject {
                     let err = error?.localizedDescription ?? ""
                     print("NORMAL LOGIN ERROR: ", err)
                     if (err.contains("no user record")) {
-                        self.loginMessage = "This email hasn't register yet"
+                        self.loginMessage = "This email hasn't registered yet"
                     }
                     else {
                         self.loginMessage = "Invalid sign-in credentials"

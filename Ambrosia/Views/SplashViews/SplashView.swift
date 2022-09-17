@@ -28,7 +28,7 @@ struct SplashView: View {
                 LaunchView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .offset(y: animationValues[nearFinalIndex] ? 0 : (geo.size.height + 50))
-                    .environmentObject(RestaurantModel())
+//                    .environmentObject(RestaurantModel())
 //                    .environmentObject(UserModel())
                 
                 

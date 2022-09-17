@@ -19,7 +19,8 @@ struct PickImageModal: View {
     @State var showingImagePicker = false
     @State var inputImage: UIImage?
     @State var image : Image?
-    @State private var filterIntensity = 0.5
+    @State var message : String = ""
+    @State var showMessage : Bool = false
     
     
     var body: some View {
@@ -39,13 +40,18 @@ struct PickImageModal: View {
                         .resizable()
                         .scaledToFit()
                 }
-                .frame(height: 140)
+                .frame(height: 120)
                 .onTapGesture {
                     showingImagePicker = true
                 }
                 
-                Button("Save", action: save)
+                Button(action: {
+                    save()                }) {
+                    Text("Save").bold()
+                }
                     .buttonStyle(ButtonStyleWhite())
+                
+                
                 
             }
             .padding(15)
@@ -88,10 +94,14 @@ struct PickImageModal: View {
                 guard let userId = Auth.auth().currentUser?.uid else { return }
                 userModel.user.id = userId
                 userModel.firebaseService.updateUser(user: userModel.user)
+                message = "Avatar is updated successfully ✅"
+                showMessage = true
             })
         }
         else {
             userModel.user.avatarStr = ""
+            message = "Cannot update avatar ✅"
+            showMessage = true
         }
     }
 }
