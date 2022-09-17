@@ -22,7 +22,7 @@ struct ReviewView: View {
                             Button {
                                 isShowAddReview = true
                             } label: {
-                                RoundedButton(buttonText: "ADD REVIEW", width: geo.size.width/2.4, height: geo.size.height/14)
+                                RoundedButton(buttonText: "ADD REVIEW", width: geo.size.width/2.4, height: geo.size.height/14,size: 16)
 
                             }.sheet(isPresented: $isShowAddReview) {
                                 AddReviewView()
@@ -55,7 +55,6 @@ struct ReviewView: View {
                 }.padding([.trailing, .leading], 30).padding(.top,30)
             }
         }.background(Color("CardBackgroundColor")).onAppear(perform: {
-            print("appear")
             restaurantModel.firebaseService.fetchReviewFromFirebase(restaurant: restaurantModel.currentRestaurant ?? Restaurant.testRestaurantDetail(),model:restaurantModel)
 
         })

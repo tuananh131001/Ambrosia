@@ -9,9 +9,8 @@ struct FavouriteRestaurantView: View {
     @EnvironmentObject var userModel: UserModel
 
     var cardWidth: CGFloat = 0.0
-    @State var imageSize: CGFloat = 0.0
+    var imageSize: CGFloat = 120
     var cardHeight: CGFloat = 135.0
-    var paddingTopTitle: CGFloat = 60
     var barTitle: some View {
         Text("\(userModel.user.name)'s Favorite")
             .font(.title)
@@ -33,28 +32,13 @@ struct FavouriteRestaurantView: View {
                                     }
                                 }
                             }
-                                .onAppear() {
-                                imageSize = 120
-                            }
-                                .frame(width: geo.size.width)
                         }
-                        .padding(.top, paddingTopTitle)
                     }
                     else {
                         FavoriteNotFound(geo: geo)
                     }
                 }
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        HStack {
-                            barTitle
-                            Spacer()
-                        }
-                        .padding(.top, paddingTopTitle)
-
-                    }
-                }
+                .navigationTitle("\(userModel.user.name)'s Favorites")
             }
         }
     }

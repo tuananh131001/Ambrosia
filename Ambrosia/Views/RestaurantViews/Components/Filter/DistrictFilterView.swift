@@ -25,7 +25,7 @@ struct DistrictFilterView: View {
                         VerticalListView(type: "district").onAppear{
                             restaurantModel.filterRestaurantByDistrict(district: "District 1")
                         }                    } label: {
-                        RoundedButton(buttonText: "🍝   District 1", width: 120, height: 35)
+                        RoundedButton(buttonText: "🍝   District 1", width: 120, height: 35,size: 12)
                     }
 
                 
@@ -33,21 +33,21 @@ struct DistrictFilterView: View {
                         VerticalListView(type: "district").onAppear{
                             restaurantModel.filterRestaurantByDistrict(district: "District 2")
                         }                    } label: {
-                        RoundedButton(buttonText: "🍺   District 2", width: 120, height: 35)
+                        RoundedButton(buttonText: "🍺   District 2", width: 120, height: 35,size: 12)
                     }
                     
                     NavigationLink {
                         VerticalListView(type: "district").onAppear{
                             restaurantModel.filterRestaurantByDistrict(district: "District 5")
                         }                    } label: {
-                        RoundedButton(buttonText: "🍜   District 5", width: 120, height: 35)
+                        RoundedButton(buttonText: "🍜   District 5", width: 120, height: 35,size: 12)
                     }
                     
                     NavigationLink {
                         VerticalListView(type: "district").onAppear{
                             restaurantModel.filterRestaurantByDistrict(district: "District 7")
                         }                    } label: {
-                        RoundedButton(buttonText: "🍧   District 7", width: 120, height: 35)
+                        RoundedButton(buttonText: "🍧   District 7", width: 120, height: 35,size: 12)
                     }
                     
                     NavigationLink {
@@ -55,7 +55,7 @@ struct DistrictFilterView: View {
                             restaurantModel.filterRestaurantByDistrict(district: "Gò Vấp")
                         }
                     } label: {
-                        RoundedButton(buttonText: "🍙   Go Vap", width: 120, height: 35)
+                        RoundedButton(buttonText: "🍙   Go Vap", width: 120, height: 35,size: 12)
                     }
                     
                    

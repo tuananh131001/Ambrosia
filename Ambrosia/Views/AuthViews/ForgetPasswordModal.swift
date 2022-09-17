@@ -64,10 +64,9 @@ struct ForgetPasswordModal: View {
     
     func resetPassword() {
         Auth.auth().sendPasswordReset(withEmail: email) { (error) in
-            if let error = error {
+            if error != nil {
                 message = "Cannot send message to your email"
                 //show alert here
-                print(error.localizedDescription)
             }
             else {
                 //show alert here

@@ -43,7 +43,6 @@ struct GifView: UIViewRepresentable {
             webView.scrollView.isScrollEnabled = false
         }
         catch {
-            print("Could not parse gif image")
         }
         
         return webView

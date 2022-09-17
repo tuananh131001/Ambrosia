@@ -11,10 +11,11 @@ struct RoundedButton: View {
     var buttonText:String
     var width:CGFloat
     var height:CGFloat
+    var size:CGFloat
     var body: some View {
         ZStack{
             Rectangle().frame(width: width, height: height).foregroundColor(Color("PrimaryColor"))   .clipShape(RoundedRectangle(cornerRadius: 10))
-            Text(buttonText).foregroundColor(Color("ButtonTextColor")).bold().font(.system(size: 12))
+            Text(buttonText).foregroundColor(Color("ButtonTextColor")).bold().font(.system(size: size))
         }
 
     }
@@ -22,6 +23,6 @@ struct RoundedButton: View {
 
 struct RoundedButton_Previews: PreviewProvider {
     static var previews: some View {
-        RoundedButton(buttonText: "Submit",width: 400,height: 60)
+        RoundedButton(buttonText: "Submit",width: 400,height: 60,size:16)
     }
 }

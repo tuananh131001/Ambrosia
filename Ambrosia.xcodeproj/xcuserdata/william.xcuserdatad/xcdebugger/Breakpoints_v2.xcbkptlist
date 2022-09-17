@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "266"
             endingLineNumber = "266"
-            landmarkName = "getFirstTwentyRestaurants(newRestaurants:)"
+            landmarkName = "getPaymentOptions()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
