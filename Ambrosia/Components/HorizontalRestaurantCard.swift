@@ -17,11 +17,9 @@ struct HorizontalRestaurantCard: View {
 
         VStack(alignment: .leading) {
             AsyncImage(url: URL(string: "\(imageLink)")) { image in
-                image.resizable()
-                image.aspectRatio(contentMode:
-                        .fill)
-                image.frame(width: 150, height: 150)
-                image.cornerRadius(10)
+                    image.frame(width: 150, height: 150)
+                                .background(Color.gray)
+                                .cornerRadius(10)
             } placeholder: {
                 Image("testRestaurant")
             }
