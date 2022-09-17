@@ -28,7 +28,6 @@ struct SplashView: View {
                 LaunchView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .offset(y: animationValues[nearFinalIndex] ? 0 : (geo.size.height + 50))
-
                 
                 
                 if !animationValues[finalIndex] {
@@ -48,52 +47,51 @@ struct SplashView: View {
                 // background music
                 SoundModel.startBackgroundMusic(bckName: "login")
                 // MARK: - animation
-                withAnimation(.interpolatingSpring(mass: 0.4, stiffness: 20, damping: 2, initialVelocity: 7)) {
+//                withAnimation(.interpolatingSpring(mass: 0.4, stiffness: 20, damping: 2, initialVelocity: 7)) {
+                withAnimation(.easeInOut(duration: 0.2).delay(0.1)) {
                     // inner icon
                     animationValues[0] = true
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // inner circle
-                    withAnimation(.easeInOut(duration: 0.3).delay(0.1)) {
+                    withAnimation(.easeInOut(duration: 0.2).delay(0.2)) {
                         animationValues[1] = true
                     }
                     // outer circle
-                    withAnimation(.easeInOut(duration: 0.3).delay(0.45)) {
+                    withAnimation(.easeInOut(duration: 0.2).delay(0.35)) {
                         animationValues[2] = true
                     }
                     // text moving up
-                    withAnimation(.easeInOut(duration: 0.4).delay(0.4)) {
+                    withAnimation(.easeInOut(duration: 0.2).delay(0.5)) {
                         animationValues[3] = true
                         footer = "Illuminati Group".uppercased()
                     }
                     // text appear horizontally
-                    withAnimation(.spring(response: 1, dampingFraction: 0.45, blendDuration: 0.4).delay(1)) {
+                    withAnimation(.easeInOut(duration: 0.3).delay(0.7)) {
                         title = "Ambr".uppercased()
                         title2 = "osia".uppercased()
                         animationValues[4] = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            withAnimation(.interpolatingSpring(mass: 1, stiffness: 20, damping: 1.3, initialVelocity: 3).delay(0.9)) {
-                                animationValues[5] = true
-                            }
+                        withAnimation(.easeInOut(duration: 0.4).delay(0.9).repeatForever()) {
+                            animationValues[5] = true
                         }
                     }
-                    
+
                     // restoring back
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
-                        withAnimation(.easeInOut(duration: 0.3).delay(0.4)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
+                        withAnimation(.easeInOut(duration: 0.1).delay(0.4)) {
                             animationValues[3] = false
                         }
                         // end splash screen
-                        withAnimation(.easeInOut(duration: 0.5).delay(0.8)) {
+                        withAnimation(.easeInOut(duration: 0.2).delay(0.8)) {
                             animationValues[nearFinalIndex] = true
 
                         }
-                        
+
                         // for removing splash view after 2s
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             animationValues[finalIndex] = true
                         }
-                        
+
                     }
                 }
                 
