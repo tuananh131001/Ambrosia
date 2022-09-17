@@ -31,6 +31,15 @@ struct LightShadowModifier: ViewModifier {
     }
 }
 
+struct CircularImageModifirer: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(width: 93, height: 93)
+            .clipShape(Circle())
+
+    }
+}
+
 
 extension Circle {
 

@@ -18,7 +18,7 @@ struct InformationForm: View {
                 // MARK: LOGIN INPUT FIELDS
                 VStack (spacing: 20) {
                     Group {
-                        Text("Edit Information")
+                        Text("Edit Profile")
                             .font(Font(UIFont(name: "Chalkboard SE Bold", size: Constants.APP_NAME_LARGE_SIZE)! as CTFont))
                     }
                     VStack (spacing: 10) {

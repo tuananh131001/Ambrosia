@@ -18,7 +18,7 @@ import Firebase
 struct EatTime: App {
     
 //    @StateObject var authModel = FirebaseService()
-    
+    @AppStorage("isDarkMode") private var isDarkMode = false
     init(){
         FirebaseApp.configure()
     }
@@ -27,8 +27,10 @@ struct EatTime: App {
         WindowGroup {
 //            LaunchView()
             SplashView()
+//                .preferredColorScheme(isDarkMode ? .dark : .light)
+//                .environmentObject(RestaurantModel())
                 .environmentObject(UserModel())
-                .environmentObject(RestaurantModel())
+
 
         }
     }
