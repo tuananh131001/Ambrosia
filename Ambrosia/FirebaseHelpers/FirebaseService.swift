@@ -131,7 +131,7 @@ class FirebaseService: ObservableObject {
                     let name: String = data?["name"] as? String ?? ""
                     let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
                     let dob: Date = timestamp.dateValue()
-                    let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
+                    let selectedGender: Int = data?["gender"] as? Int ?? 1
                     let email: String = data?["email"] as? String ?? ""
                     let restaurantsId = data?["favoriteRestaurants"] as? [String] ?? [String]()
                     let avatarStr: String = data?["avatarStr"] as? String ?? ""

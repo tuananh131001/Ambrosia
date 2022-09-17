@@ -10,6 +10,9 @@ import Firebase
 
 struct InformationForm: View {
     @EnvironmentObject var userModel: UserModel
+    @Binding var tempName : String
+    @Binding var tempDob : Date
+    @Binding var tempGender : Int
 
     var body: some View {
         // MARK: LOGIN PAGE CONTENT
@@ -35,7 +38,7 @@ struct InformationForm: View {
                             HStack {
                                 Text("Name").bold().foregroundColor(Constants.PRIMARY_COLOR)
                                 Spacer()
-                                TextField("Name", text: $userModel.user.name)
+                                TextField("Name", text: $tempName)
                                     .padding(.horizontal)
                                     .frame(maxWidth: 170, minHeight: Constants.FIELD_HEIGHT-6)
                                     .background(.thinMaterial)
@@ -44,14 +47,14 @@ struct InformationForm: View {
                                     .disableAutocorrection(true)
                             }
                             
-                            DatePicker(selection: $userModel.user.dob, in: ...Date(), displayedComponents: .date) {
+                            DatePicker(selection: $tempDob, in: ...Date(), displayedComponents: .date) {
                                 Text("Birthday").bold().foregroundColor(Constants.PRIMARY_COLOR)
                             }
                             
                             HStack (spacing: 10) {
                                 Text("Gender").bold().foregroundColor(Constants.PRIMARY_COLOR)
                                 
-                                Picker("", selection: $userModel.user.selectedGender) {
+                                Picker("", selection: $tempGender) {
                                     ForEach(0..<userModel.genders.count, id: \.self) { index in
                                         Text(userModel.genders[index]).tag(index).font(.title)
                                     }
@@ -74,10 +77,11 @@ struct InformationForm: View {
         }
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
+
     }
 }
-struct InformationForm_Previews: PreviewProvider {
-    static var previews: some View {
-        InformationForm()
-    }
-}
+//struct InformationForm_Previews: PreviewProvider {
+//    static var previews: some View {
+//        InformationForm()
+//    }
+//}

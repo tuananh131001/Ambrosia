@@ -19,6 +19,9 @@ struct EditInformation: View {
     
     @State var message = ""
     @State var showMessage = false
+    @State var tempName : String = ""
+    @State var tempDob : Date = Date()
+    @State var tempGender : Int = 1
 
     var body: some View {
         ZStack (alignment: .center) {
@@ -26,13 +29,17 @@ struct EditInformation: View {
 //                .foregroundColor(Constants.PRIMARY_COLOR)
             GeneralBackground()
             VStack (spacing: 20){
-                InformationForm()
+                InformationForm(tempName: $tempName, tempDob: $tempDob, tempGender: $tempGender)
                 // MARK: LOGIN BUTTON
                 Button {
                     // add sound effect when click button
                     SoundModel.clickButtonSound()
-                    
+
                     guard let userId = Auth.auth().currentUser?.uid else { return }
+                    userModel.user.name = tempName
+                    userModel.user.dob = tempDob
+                    userModel.user.selectedGender = tempGender
+
                     userModel.user.id = userId
                     userModel.firebaseService.updateUser(user: userModel.user)
                     userModel.isNewUser = false
@@ -49,10 +56,15 @@ struct EditInformation: View {
                 
                 if(showMessage) {
                     Text(message)
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.white)
                 }
             }
         }
+        .onAppear(perform: {
+            tempName = userModel.user.name
+            tempDob = userModel.user.dob
+            tempGender = userModel.user.selectedGender
+        })
     }
 }
 

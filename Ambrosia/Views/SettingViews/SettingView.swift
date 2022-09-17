@@ -126,7 +126,8 @@ struct SettingView: View {
                                   HStack {
                                     Text("Gender")
                                     Spacer()
-                                      Text(userModel.user.selectedGender == 0 ? "Male" : "Female")
+                                      Text(userModel.genders[userModel.user.selectedGender])
+//                                      Text(userModel.user.selectedGender == 0 ? "Male" : "Female")
                                   }
                             }
                             
