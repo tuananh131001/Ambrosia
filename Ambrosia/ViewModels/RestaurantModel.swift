@@ -142,10 +142,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                     let placeArr = try decoder.decode(Place.self, from: data)
                     for index in self.restaurants.indices {
                         let obj = placeArr.first(where: { $0.placeID == self.restaurants[index].placeId })
-//                        var link = obj["placeID"]
-                        print(obj?.thumnail)
                         self.restaurants[index].imageLink = obj?.thumnail ?? "https://i.pinimg.com/200x/ff/50/2c/ff502c2d46373cc9908091efec8cfb11.jpg"
-//                        print(link)
                     }
                     
                     self.restaurants = self.restaurants

@@ -103,7 +103,7 @@ struct LoginPhoneModal: View {
         PhoneAuthProvider.provider()
           .verifyPhoneNumber(phone, uiDelegate: nil) { verificationID, error in
               
-              if let error = error {
+              if error != nil {
                   print("ERROR SEND CODE TO PHONE")
 //                  print(error.localizedDescription)
                   return
@@ -123,7 +123,7 @@ struct LoginPhoneModal: View {
         )
         
         Auth.auth().signIn(with: credential) { authResult, error in
-            if let error = error {
+            if error != nil {
                 userModel.loginSuccess = false
 //                print("signin err: ", error.localizedDescription)
                 return
