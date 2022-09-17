@@ -1,4 +1,5 @@
 // https://onmyway133.com/posts/how-to-use-foreach-with-indices-in-swiftui/
+// https://swiftbysundell.com/articles/stroking-and-filling-a-swiftui-shape-at-the-same-time
 
 import SwiftUI
 
@@ -30,11 +31,12 @@ struct FavouriteRestaurantView: View {
                                             selection: $restaurantModel.restaurantSelected) {
                                             // find the current restaurant and display when the view appear
                                             RestaurantDetailView().onAppear {
+                                                // MARK: action
                                                 restaurantModel.getCurrentRestaurant(placeId: rest.placeId ?? "")
                                             }
 
                                         } label: {
-
+                                            // MARK: view
                                             HStack {
                                                 ZStack {
                                                     ArrowShape()
@@ -56,7 +58,7 @@ struct FavouriteRestaurantView: View {
                                 }
                             }
                                 .onAppear() {
-    //                            imageSize = cardWidth / 3
+                                //                            imageSize = cardWidth / 3
                                 imageSize = 80
                             }
                                 .edgesIgnoringSafeArea(.horizontal)
