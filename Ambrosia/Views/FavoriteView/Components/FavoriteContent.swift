@@ -13,7 +13,7 @@ struct FavoriteContent: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 // MARK: open state
                 FavoriteCategory(rest: rest)
                 // MARK: title
