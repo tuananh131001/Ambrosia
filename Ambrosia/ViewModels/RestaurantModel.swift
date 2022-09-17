@@ -50,7 +50,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     override init() {
         // Init method of NSObject
         super.init()
+//        fetchImageRestaurant() // for upload image from scraping
         fetchRestaurant()
+
 
         // Set content model as the delegate of the location manager
         locationManager.delegate = self
@@ -123,19 +125,23 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //        }
     //        return false
     //    }
-    func fetchImageRestaurant(url: String, placeId: String) {
-        if let url = URL(string: url) {
+    func fetchImageRestaurant() {
+        let placeUrl = "https://tuananh131001.github.io/jsonformatter.json"
+        if let url = URL(string: placeUrl) {
             URLSession.shared
                 .dataTask(with: url) { [weak self] data, response, error in
-
                 if error != nil {
                 } else {
                     let decoder = JSONDecoder()
                     //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                     if let data = data,
-                       let placeDetail = try? decoder.decode(Place.self, from: data) {
-                        print(placeDetail.placeResults.images[1].thumbnail) // food & drink link thumnail
-                        self?.firebaseService.addPlaceImage(placeId: placeId, imageLink: placeDetail.placeResults.images[1].thumbnail)
+                        let placeDetail = try? decoder.decode(Place.self, from: data) {
+                        print("here")
+                        print(placeDetail)
+//                        print(placeDetail.placeResults.images[1].thumbnail) // food & drink link thumnail
+                        for place in placeDetail {
+                            self?.firebaseService.addPlaceImage(placeId: place.placeID, imageLink: place.thumnail)
+                        }
                     } else {
                         print("Cannot fetch all restaurant")
                     }
@@ -147,11 +153,10 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
 
 
-
     // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         let testUrl = "https://tuananh131001.github.io/ambrosia_data.json"
-        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
+//        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
         hasError = false
 //        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
         let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
@@ -165,15 +170,16 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         let decoder = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
-                            let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            var url = restaurantArr[0].url
-                            var resId = restaurantArr[0].placeId
-                            let split = url?.components(separatedBy: "/")
-                            let urlToFetch = "https://serpapi.com/search.json?engine=google_maps&type=place&data=\(split![7])"
-                            print("url to fetch \(urlToFetch)")
+                            var restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
+                            
                             DispatchQueue.main.async {
-                                self?.fetchImageRestaurant(url: urlToFetch, placeId: resId!)
-                                self?.restaurants = restaurantArr
+                                self?.firebaseService.fetchImageResFromFirebase(restaurantArr, completion: { newRestaurants in
+                                    self?.restaurants = newRestaurants
+                                    print("assign")
+                                    print(newRestaurants[0])
+                                })
+                               
+                                
                                 self?.calculateDistanceRest()
                                 self?.sortRestaurant()
                                 self?.sortRestaurantDistance()

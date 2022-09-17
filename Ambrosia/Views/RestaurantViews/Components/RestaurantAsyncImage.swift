@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RestaurantAsyncImage: View {
-    var photo_id:String
+    var photo_id: String
     var cardWidth: CGFloat = UIScreen.main.bounds.width - 30
     var cardHeight: CGFloat = 357
     var displayType: String = "all"
@@ -27,8 +27,10 @@ struct RestaurantAsyncImage: View {
                 Image("testRestaurant")
             }
             ImageShadowView()
-        }
-        
+        }.onAppear(perform: {
+            print("name \(photo_id)")
+        })
+
     }
 }
 
