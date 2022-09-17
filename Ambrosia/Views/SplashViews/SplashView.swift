@@ -57,31 +57,35 @@ struct SplashView: View {
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     // inner circle
-                    withAnimation(.easeInOut(duration: 0.2).delay(0.2)) {
+                    withAnimation(.easeInOut(duration: 0.3).delay(0.2)) {
                         animationValues[1] = true
                     }
                     // outer circle
-                    withAnimation(.easeInOut(duration: 0.2).delay(0.35)) {
+                    withAnimation(.easeInOut(duration: 0.3).delay(0.45)) {
                         animationValues[2] = true
                     }
                     // text moving up
-                    withAnimation(.easeInOut(duration: 0.2).delay(0.5)) {
+                    withAnimation(.easeInOut(duration: 0.2).delay(0.75)) {
                         animationValues[3] = true
                         footer = "Illuminati Group".uppercased()
                     }
                     // text appear horizontally
-                    withAnimation(.easeInOut(duration: 0.3).delay(0.7)) {
-                        title = "Ambr".uppercased()
-                        title2 = "osia".uppercased()
-                        animationValues[4] = true
-                        withAnimation(.easeInOut(duration: 0.4).delay(0.9).repeatForever()) {
-                            animationValues[5] = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) {
+                        withAnimation(.easeInOut(duration: 0.4).delay(0.2)) {
+                            title = "Ambr".uppercased()
+                            title2 = "osia".uppercased()
+                            animationValues[4] = true
+    //                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            withAnimation(.easeInOut(duration: 0.3).delay(0.4).repeatForever().delay(0.15)) {
+                                    animationValues[5] = true
+                                }
+    //                        }
                         }
                     }
 
                     // restoring back
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
-                        withAnimation(.easeInOut(duration: 0.1).delay(0.4)) {
+                        withAnimation(.easeInOut(duration: 0.2).delay(0.4)) {
                             animationValues[3] = false
                         }
                         // end splash screen

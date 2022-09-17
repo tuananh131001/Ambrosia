@@ -12,30 +12,18 @@ struct FavoriteSideInfo: View {
 
     var body: some View {
         HStack {
-            // MARK: rating
-            Label {
-                Text("\(rest.totalScore ?? 0.0, specifier: "%.1f")")
-                    .foregroundColor(Constants.SECONDARY_COLOR)
-            } icon: {
-                Image(systemName: "star.fill")
-                    .foregroundColor(Color("Star On Color"))
-            }
-            
-            // MARK: separator
-            Text("❋")
-                .font(.title2)
-                .foregroundColor(Color("SubTextColor2"))
 
+            
             // MARK: distance
             Label {
                 Text("\(rest.distance, specifier: "%.2f")km")
             } icon: {
-                Image(systemName: "bicycle")
+                Image(systemName: "car.fill")
             }
-            .foregroundColor(Color("SubTextColor2"))
+            .foregroundColor(Color("SubTextColor"))
 
         }
         .lineLimit(1)
-        .font(.headline)
+        .font(.subheadline)
     }
 }

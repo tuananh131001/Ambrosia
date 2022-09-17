@@ -15,7 +15,7 @@ struct RatingContributionView: View {
                 VStack(spacing:10){
                     Text("\(restaurantModel.currentRestaurant?.totalScore ?? 0,specifier: "%.1f")").bold().foregroundColor(Color("TextColor")).font(.system(size: 22))
                     RatingView(rating: $rating, tappable: false, width: 12, height: 12)
-                    Text("\(restaurantModel.currentRestaurant?.reviewsCount ?? 0) ratings").foregroundColor(Color("SubTextColor")).font(.system(size: 12))
+                    Text("\(restaurantModel.currentRestaurant?.reviewsCount ?? 5) ratings").foregroundColor(Color("SubTextColor")).font(.system(size: 12))
                 }
                 Divider().frame(height:100)
                 VStack{

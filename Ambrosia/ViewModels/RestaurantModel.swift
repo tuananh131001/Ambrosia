@@ -330,19 +330,19 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func calculateNumber(number: Int) -> CGFloat {
         var value: CGFloat = 0
         if (number == 5) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.fiveStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.fiveStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 4) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.fourStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.fourStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 3) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.threeStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.threeStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 2) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.twoStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.twoStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 1) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.oneStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.oneStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         return value
     }
@@ -465,7 +465,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, userId: String, image: String,userModel:UserModel) {
         let id = UUID()
         let date = Date.now
-        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
+        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, userId: userId)
         self.currentRestaurant?.reviews.append(newReview)
         userModel.user.reviewRestaurant.append(self.currentRestaurant ?? Restaurant.testRestaurantDetail())
         firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(), userId: userId)
