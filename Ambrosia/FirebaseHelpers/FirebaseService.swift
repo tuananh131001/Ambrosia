@@ -10,11 +10,12 @@ import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
 import FirebaseDatabase
+import SwiftUI
 
 class FirebaseService: ObservableObject {
     static let services = FirebaseService()
 
-    @Published var showSignUpMessage = false
+//    @Published var showSignUpMessage = false
     @Published var signUpMessage = ""
     @Published var signUpSuccess = false
 
@@ -23,6 +24,9 @@ class FirebaseService: ObservableObject {
     func signUp(email: String, password: String, passwordConfirmation: String, user: UserModel) {
         if (email == "" || password == "" || passwordConfirmation == "") {
             self.signUpMessage = "Please fill in all the fields"
+        }
+        else if (password.count < 6) {
+            self.signUpMessage = "Password must be at least 6 characters"
         }
         else if (passwordConfirmation != password) {
             self.signUpMessage = "Confirm password doesn't match"

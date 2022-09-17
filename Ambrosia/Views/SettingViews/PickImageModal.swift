@@ -51,10 +51,14 @@ struct PickImageModal: View {
                 }
                     .buttonStyle(ButtonStyleWhite())
                 
-                
+                if (showMessage) {
+                    Text(message)
+                        .foregroundColor(.white)
+                }
                 
             }
-            .padding(15)
+            .offset(y:12)
+            .padding(.horizontal, 15)
             .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
             .background(Constants.PRIMARY_COLOR)
             .foregroundColor(.white)
@@ -100,7 +104,7 @@ struct PickImageModal: View {
         }
         else {
             userModel.user.avatarStr = ""
-            message = "Cannot update avatar ✅"
+            message = "Cannot update avatar"
             showMessage = true
         }
     }
