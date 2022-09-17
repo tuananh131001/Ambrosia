@@ -9,52 +9,37 @@ import SwiftUI
 
 struct FavoriteContent: View {
     let imageSize: CGFloat
-    let titleSize: CGFloat
-    let starSize: CGFloat
-    let distanceSize: CGFloat
-    let openSize: CGFloat
-    
-    let contentWidth: CGFloat
-    
     let rest: Restaurant
+    
     var body: some View {
         HStack {
-            // MARK: image
-            FavoriteImage(cardWidth: imageSize, cardHeight: imageSize)
-                .frame(width: imageSize)
-                .cornerRadius(10)
-            
-            VStack(alignment: .leading, spacing: 3) {
-                // MARK: ratding
-                FavoriteRating(restaurant: rest, starSize: starSize, titleSize: titleSize)
-
-                // MARK: name
+            VStack(alignment: .leading) {
+                // MARK: open state
+                FavoriteCategory(rest: rest)
+                // MARK: title
                 Text(rest.title)
-                    .lineLimit(1)
+                    .font(.title2)
+                    .bold()
                     .multilineTextAlignment(.leading)
-                    .foregroundColor(Color("TextColor"))
-//                    .font(.system(size: titleSize))
-                    .font(.title3)
-
+                    .lineLimit(1)
+                    .foregroundColor(Constants.TEXT_COLOR)
+                
                 // MARK: side info
-                FavoriteSideInfo(distanceSize: distanceSize, restaurant: rest)
-
+                FavoriteSideInfo(rest: rest)
                 Spacer()
-
-                // MARK: Open State
-                FavoriteOpen(isOpen: true, openSize: openSize)
-
+                
+                // MARK: rating
+                FavoriteRating(restaurant: rest)
             }
-//                .frame(width: contentWidth)
+            .frame(height: imageSize)
             
             Spacer()
             
-            VStack {
-                FavoriteButton(rest: rest)
-                Spacer()
-            }
-
+            // MARK: Image
+//            FavoriteImage(cardWidth: imageSize, cardHeight: imageSize, displayType: "")
+            RestaurantAsyncImage(photo_id: rest.imageLink )
+                .frame(width: imageSize, height: imageSize, alignment: .leading)
+                .cornerRadius(Constants.CONRNER_RADIUS)
         }
-        .padding(30)
     }
 }

@@ -67,13 +67,11 @@ class UserModel: ObservableObject {
         userDefaults.setValue(email, forKey: "email")
         userDefaults.setValue(password, forKey: "password")
         userDefaults.setValue(Auth.auth().currentUser?.uid ?? "error", forKey: "uid")
-//        userDefaults.setValue(self.user.isDarkModeOn, forKey: "isDarkModeOn")
     }
 
     func saveCurrentLoginMicrosoft(credential: String) {
         let userDefaults = UserDefaults.standard
         userDefaults.setValue(Auth.auth().currentUser?.uid ?? "error", forKey: "uid")
-//        userDefaults.setValue(self.user.isDarkModeOn, forKey: "isDarkModeOn")
     }
 
 
@@ -82,7 +80,6 @@ class UserModel: ObservableObject {
             let userDefaults = UserDefaults.standard
             let email = userDefaults.string(forKey: "email") ?? ""
             let password = userDefaults.string(forKey: "password") ?? ""
-//            self.user.isDarkModeOn = userDefaults.bool(forKey: "isDarkModeOn")
             self.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
         }
         else if (loginType == "google") {
@@ -104,7 +101,6 @@ class UserModel: ObservableObject {
         UserDefaults.standard.setValue("", forKey: "email")
         UserDefaults.standard.setValue("", forKey: "password")
         UserDefaults.standard.setValue(Auth.auth().currentUser?.uid ?? "uid error", forKey: "uid")
-//        UserDefaults.standard.setValue(true, forKey: "isDarkModeOn")
         self.loginMessage = "Login successfully. Redirecting..."
         self.loginMethod = loginMethod
         self.loginSuccess = true

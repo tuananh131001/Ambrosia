@@ -8,23 +8,22 @@
 import SwiftUI
 
 struct FavoriteSideInfo: View {
-    var distanceSize: CGFloat
-    var restaurant: Restaurant
+    var rest: Restaurant
 
     var body: some View {
-        HStack(spacing: 5) {
-            // MARK: Restaurant distance
+        HStack {
+
+            
+            // MARK: distance
             Label {
-                Text("\(restaurant.distance, specifier: "%.2f")km")
-                    .font(.subheadline)
-                    .foregroundColor(Color("SubTextColor2"))
+                Text("\(rest.distance, specifier: "%.2f")km")
             } icon: {
-                ImageSystemHier(name: "car.fill", color: "Fv Subtitle Clr 2", size: distanceSize + 1)
+                Image(systemName: "car.fill")
             }
+            .foregroundColor(Color("SubTextColor"))
+
         }
-        .multilineTextAlignment(.leading)
+        .lineLimit(1)
         .font(.subheadline)
-//            .font(.system(size: distanceSize))
-            .padding(.top, 3)
     }
 }

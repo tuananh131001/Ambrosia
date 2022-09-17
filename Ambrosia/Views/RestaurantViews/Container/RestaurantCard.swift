@@ -23,7 +23,7 @@ struct RestaurantCard: View {
         // add display gone or not gone
         VStack(alignment: .center, spacing: 5) {
             // MARK: cover image
-            RestaurantAsyncImage(photo_id: rest.imageUrls?[0] ?? "").frame(width: cardWidth, height: cardHeight)
+            RestaurantAsyncImage(photo_id: rest.imageLink ).frame(width: cardWidth, height: cardHeight)
                 .cornerRadius(10)
                 .clipped()
             // MARK: Text

@@ -31,7 +31,7 @@ struct HorizontalListView: View {
                                         restaurantModel.getPaymentOptions()
                                     }
                                 }, label: {
-                                    HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByRankRestaurants[index].title , rating: restaurantModel.sortedByRankRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByRankRestaurants[index].reviewsCount ?? 2)
+                                    HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByRankRestaurants[index].title , rating: restaurantModel.sortedByRankRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByRankRestaurants[index].reviewsCount ?? 5,distance: restaurantModel.sortedByRankRestaurants[index].distance,imageLink: restaurantModel.sortedByRankRestaurants[index].imageLink)
                                 }
                               )
                             }
@@ -48,7 +48,7 @@ struct HorizontalListView: View {
                                         restaurantModel.getPaymentOptions()
                                     }
                                 }, label: {
-                                    HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByDistanceRestaurants[index].title , rating: restaurantModel.sortedByDistanceRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByDistanceRestaurants[index].reviewsCount ?? 2)
+                                    HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByDistanceRestaurants[index].title , rating: restaurantModel.sortedByDistanceRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByDistanceRestaurants[index].reviewsCount ?? 5,distance: restaurantModel.sortedByDistanceRestaurants[index].distance,imageLink: restaurantModel.sortedByDistanceRestaurants[index].imageLink)
                                 }
                               )
                             }

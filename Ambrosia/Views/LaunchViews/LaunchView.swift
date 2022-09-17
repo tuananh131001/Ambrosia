@@ -25,9 +25,6 @@ struct LaunchView: View {
         if !userModel.loginSuccess {
             LaunchContentView()
         }
-        else if userModel.loginSuccess && restaurantModel.authorizationState == .notDetermined {
-            LaunchContentView(openSetting: true)
-        }
         else if userModel.loginSuccess && userModel.isNewUser {
             EditInformation()
         }

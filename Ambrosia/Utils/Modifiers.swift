@@ -30,6 +30,12 @@ struct LightShadowModifier: ViewModifier {
             .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.5), radius: 3, x: -5, y: 5)
     }
 }
+struct NormalShadowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.5), radius: 7, x: -5, y: 5)
+    }
+}
 
 struct CircularImageModifirer: ViewModifier {
     func body(content: Content) -> some View {

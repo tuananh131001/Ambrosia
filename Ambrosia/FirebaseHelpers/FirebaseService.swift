@@ -68,15 +68,41 @@ class FirebaseService: ObservableObject {
 
 
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn,"avatarStr": user.avatarStr], merge: true)
+        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
     }
-
-    func addReviewToFirebase(restaurant: Restaurant,userId:String) {
+    func addPlaceImage(placeId: String, imageLink: String) {
+        print("add Place image: \(placeId) , \(imageLink)")
+        Firestore.firestore().collection("restaurant").document(placeId).setData(["ImageLink": imageLink], merge: true)
+    }
+//    func fetchImageResFromFirebase(_ restaurants: [Restaurant], completion: @escaping (_ newRestaurants: [Restaurant]) -> ()) {
+//        var newRes: [Restaurant] = restaurants
+//        for i in restaurants.indices {
+//            let docRef = Firestore.firestore().collection("restaurant").document(restaurants[i].placeId ?? "")
+//            //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
+//            docRef.getDocument { document, error in
+//                if let error = error as NSError? {
+//                    print("Error getting document: \(error.localizedDescription)")
+//                }
+//                else {
+//                    if let document = document {
+//                        let data = document.data()
+//                        let imageUrl = data?["ImageLink"] as? String
+//                        print("imagel")
+//                        print(imageUrl)
+//                        newRes[i].imageLink = imageUrl ?? ""
+//                    }
+//                }
+//                completion(newRes)
+//            }
+//
+//        }
+//    }
+    func addReviewToFirebase(restaurant: Restaurant, userId: String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
         for riviu in restaurant.reviews {
-            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "username": riviu.username, "email": riviu.email, "image": riviu.image, "isLiked": riviu.isLiked] as [String: Any]
+            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "username": riviu.username, "email": riviu.email, "isLiked": riviu.isLiked, "userId": riviu.userId] as [String: Any]
             newReviewList.append(newReview)
         }
         // assign new data to firestore
@@ -107,9 +133,9 @@ class FirebaseService: ObservableObject {
                         let rating: Int = review["rating"] as? Int ?? 1
                         let username: String = review["username"] as? String ?? ""
                         let email: String = review["email"] as? String ?? ""
-                        let image: String = review["image"] as? String ?? ""
+                        let userId: String = review["userId"] as? String ?? ""
                         let isLiked: Bool = review["isLiked"] as? Bool ?? false
-                        let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, username: username, email: email, image: image, isLiked: isLiked)
+                        let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, username: username, email: email, isLiked: isLiked, userId: userId)
                         reviewFetch.append(newReview)
                     }
                     // assign to the reviews on local
@@ -119,7 +145,22 @@ class FirebaseService: ObservableObject {
             }
         }
     }
-
+    // MARK: get user
+    func getUserAvatar(userId: String, completion: @escaping (_ newAvatar: String) -> ()) {
+        let docRef = Firestore.firestore().collection("user").document(userId)
+        //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
+        docRef.getDocument { document, error in
+            if let error = error as NSError? {
+                print("Error getting document: \(error.localizedDescription)")
+            }
+            else {
+                if let document = document {
+                    let data = document.data()
+                    let avatarStr: String = data?["avatarStr"] as? String ?? ""
+                    completion(avatarStr)
+                }
+            } }
+    }
     // MARK: get user
     func getUserFirebase(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         let docRef = Firestore.firestore().collection("user").document(id)
@@ -131,7 +172,7 @@ class FirebaseService: ObservableObject {
             else {
                 if let document = document {
                     let data = document.data()
-                    
+
                     let name: String = data?["name"] as? String ?? ""
                     let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
                     let dob: Date = timestamp.dateValue()
@@ -139,7 +180,7 @@ class FirebaseService: ObservableObject {
                     let email: String = data?["email"] as? String ?? ""
                     let restaurantsId = data?["favoriteRestaurants"] as? [String] ?? [String]()
                     let avatarStr: String = data?["avatarStr"] as? String ?? ""
-                    
+
                     var favouriteRestaurants = [Restaurant]()
                     for id in restaurantsId {
                         let rest = restaurantModel.findRestaurantById(id)
@@ -156,12 +197,12 @@ class FirebaseService: ObservableObject {
                             savedReview.append(newRest)
                         }
                     }
-                    
+
                     // dark mode save
                     let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
-                   
-                    
-                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatarStr, isDarkModeOn: isDarkModeOn)
+
+
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatarStr, reviewRestaurant: savedReview, isDarkModeOn: isDarkModeOn)
                     userModel.user = newUser
                 }
             } }
@@ -190,17 +231,17 @@ class FirebaseService: ObservableObject {
             return true
         }
     }
-    
+
     // add
     func addToFavorites(user: User, restaurant: Restaurant) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId!])])
     }
-    
+
     // MARK: dark light mode switch user
     func updateThemeMode(user: User) {
         Firestore.firestore().collection("user").document(user.id).updateData(["isDarkModeOn": user.isDarkModeOn])
     }
-    
+
     static func uploadImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {
         // 1
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
@@ -225,19 +266,19 @@ class FirebaseService: ObservableObject {
             })
         })
     }
-    
+
     static func createPost(name: String, userModel: UserModel, for image: UIImage) {
         let imageRef = Storage.storage().reference().child("\(name).jpg")
         uploadImage(image, at: imageRef) { (downloadURL) in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            guard let downloadURL = downloadURL else {
-                return
-            }
+                guard let downloadURL = downloadURL else {
+                    return
+                }
 
-            let urlString = downloadURL.absoluteString
-            userModel.user.avatarStr = urlString
-            print("image url: \(userModel.user.avatarStr)")
-        }
+                let urlString = downloadURL.absoluteString
+                userModel.user.avatarStr = urlString
+                print("image url: \(userModel.user.avatarStr)")
+            }
         }
 //
     }

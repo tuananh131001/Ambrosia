@@ -3,7 +3,7 @@
 //  Ambrosia
 //
 //  Created by Võ Quốc Huy on 11/09/2022.
-//
+// https://betterprogramming.pub/swiftui-app-theme-switch-241a79574b87
 import SwiftUI
 import Firebase
 
@@ -16,39 +16,6 @@ struct SettingView: View {
     @State var hasAvatar: Bool = false
     @State var showPickImageModal = false
     @State var avatar : Image? = Image("default-avatar")
-    
-
-    // for dark light mode
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    // MARK: set theme dark light mode
-    func setAppTheme() {
-        //MARK: use saved device theme from toggle
-        userModel.user.isDarkModeOn = UserDefaultsUtils.shared.getDarkMode()
-        changeDarkMode(state: userModel.user.isDarkModeOn)
-        //MARK: or use device theme
-        if (colorScheme == .dark)
-        {
-            userModel.user.isDarkModeOn = true
-        }
-        else {
-            userModel.user.isDarkModeOn = false
-        }
-        changeDarkMode(state: userModel.user.isDarkModeOn)
-    }
-    func changeDarkMode(state: Bool) {
-        (UIApplication.shared.connectedScenes.first as?
-            UIWindowScene)?.windows.first!.overrideUserInterfaceStyle = state ? .dark : .light
-        UserDefaultsUtils.shared.setDarkMode(enable: state)
-    }
-    var ToggleTheme: some View {
-        Toggle("Dark Mode", isOn: $userModel.user.isDarkModeOn)
-            .tint(Constants.PRIMARY_COLOR)
-            .onChange(of: userModel.user.isDarkModeOn) { (state) in
-            changeDarkMode(state: state)
-            userModel.updateUserThemeMode()
-        }.labelsHidden()
-    }
-
     
     var body: some View {
         GeometryReader { geometry in
@@ -139,7 +106,7 @@ struct SettingView: View {
                                 HStack {
                                   Text("Dark Mode")
                                   Spacer()
-                                  ToggleTheme
+                                  ToggleTheme()
                                 }
                             }
                         }
@@ -215,7 +182,7 @@ struct SettingView: View {
             RecentReviews()
         }
             .onAppear(perform: {
-            setAppTheme()
+                ThemeViewUtil.setAppTheme(userModel)
         })
     }
 }

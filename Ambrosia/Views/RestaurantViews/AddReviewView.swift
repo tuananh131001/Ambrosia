@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AddReviewView: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
-    @EnvironmentObject var authModel:UserModel
+    @EnvironmentObject var userModel:UserModel
     @Environment(\.presentationMode) var presentationMode
     @State private var rating:Int = 0
     @State private var userReview = ""
@@ -20,16 +20,15 @@ struct AddReviewView: View {
             geo in
             VStack(alignment:.leading,spacing:20){
                 VStack(spacing:10){
-                    RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageUrls?[0] ?? "").frame(width: geo.size.width, height: geo.size.height/4)
+                    RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageLink ?? "").frame(width: geo.size.width, height: geo.size.height/4)
                     Spacer()
-                    Text(restaurantModel.currentRestaurant?.title ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16))
+                    Text(restaurantModel.currentRestaurant?.title ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16)).padding(.top,20)
                     Text(restaurantModel.currentRestaurant?.address ?? "").foregroundColor(Color("SubTextColor")).lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50,height: 50).font(.system(size: 14))
                 }
                 
                 VStack(alignment:.leading,spacing:20){
                     Text("Rate restaurant").foregroundColor(Color("TextColor")).bold()
                     RatingView(rating: $rating, tappable: true, width: 25, height: 20)
-                    
                 }.padding()
                 VStack(alignment:.leading){
                     Text("Leave a review").foregroundColor(Color("TextColor")).bold()
@@ -47,7 +46,7 @@ struct AddReviewView: View {
                     presentationMode.wrappedValue.dismiss()
                     // Add Review from user
                     //TODO: Load restaurant from restaurant models
-                    self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: authModel.user.name, email: authModel.user.email,userId:authModel.user.id, image: "avatar1")
+                    self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: userModel.user.name, email: userModel.user.email,userId:userModel.user.id, image: "avatar1",userModel:userModel)
                 } label: {
                     RoundedButton(buttonText: "Submit", width: geo.size.width/1.1, height: 60)
                 }.padding(.horizontal)
