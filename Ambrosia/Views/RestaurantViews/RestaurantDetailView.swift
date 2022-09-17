@@ -96,12 +96,11 @@ struct RestaurantDetailView: View {
                                     Text("\(restaurantModel.currentRestaurant?.distance ?? 0, specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                                     Text("•").foregroundColor(Color("SubTextColor"))
                                     Text(restaurantModel.currentRestaurant?.address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
-
-                                }.frame(width: geo.size.width - 100)
-                                HStack {
-                                    Text("Price:").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
                                     
-                                    Text(restaurantModel.type ?? "Inexpensive").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                                }.frame(width:geo.size.width-100)
+                                HStack{
+                                    Text("Category: ").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
+                                    Text("\(restaurantModel.currentRestaurant?.categoryName ?? "")").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                                 }
                                 
                             }.frame(width: geo.size.width - 30,height: geo.size.height / 4.5)
