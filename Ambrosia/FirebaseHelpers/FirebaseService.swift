@@ -64,10 +64,10 @@ class FirebaseService: ObservableObject {
 
 
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "avatarStr": user.avatarStr, "favoriteRestaurants": [String]()], merge: true)
+        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn,"avatarStr": user.avatarStr], merge: true)
     }
-    
-    func addReviewToFirebase(restaurant: Restaurant) {
+
+    func addReviewToFirebase(restaurant: Restaurant,userId:String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
@@ -79,6 +79,8 @@ class FirebaseService: ObservableObject {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").updateData([
             "reviews": newReviewList
             ])
+        // update user review of that restaurant
+        Firestore.firestore().collection("user").document(userId).updateData(["reviewRestaurant": FieldValue.arrayUnion([restaurant.placeId ?? ""])])
     }
     func fetchReviewFromFirebase(restaurant: Restaurant, model: RestaurantModel) {
         let docRef = Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "")
@@ -89,6 +91,7 @@ class FirebaseService: ObservableObject {
             }
             else {
                 if let document = document {
+
                     var reviewFetch: [Review] = []
                     let data = document.data()
                     let reviews = data?["reviews"] as? [[String: Any]]
@@ -106,15 +109,15 @@ class FirebaseService: ObservableObject {
                         reviewFetch.append(newReview)
                     }
                     // assign to the reviews on local
-                    model.currentRestaurantDetail?.reviews = reviewFetch
+                    model.currentRestaurant?.reviews = reviewFetch
                     //clear
                 }
             }
         }
     }
-    
-    
-    func getUserFirebase(id: String, userModel: UserModel, restaurantModel:RestaurantModel) {
+
+    // MARK: get user
+    func getUserFirebase(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         let docRef = Firestore.firestore().collection("user").document(id)
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
@@ -124,13 +127,14 @@ class FirebaseService: ObservableObject {
             else {
                 if let document = document {
                     let data = document.data()
-                    let avatar: String = data?["photoUrl"] as? String ?? ""
+                    
                     let name: String = data?["name"] as? String ?? ""
                     let timestamp: Timestamp = data?["dob"] as? Timestamp ?? Timestamp()
                     let dob: Date = timestamp.dateValue()
                     let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
                     let email: String = data?["email"] as? String ?? ""
                     let restaurantsId = data?["favoriteRestaurants"] as? [String] ?? [String]()
+                    
                     var favouriteRestaurants = [Restaurant]()
                     for id in restaurantsId {
                         let rest = restaurantModel.findRestaurantById(id)
@@ -138,19 +142,34 @@ class FirebaseService: ObservableObject {
                             favouriteRestaurants.append(newRest)
                         }
                     }
-                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatar)
+                    // review
+                    var savedReview = [Restaurant]()
+                    let reviewsRestaurant: [String] = data?["reviewRestaurant"] as? [String] ?? [String]()
+                    for id in reviewsRestaurant {
+                        let rest = restaurantModel.findRestaurantById(id)
+                        if let newRest = rest {
+                            savedReview.append(newRest)
+                        }
+                    }
+                    
+                    // dark mode save
+                    let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
+                    let avatar: String = data?["photoUrl"] as? String ?? ""
+                    
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatar, isDarkModeOn: isDarkModeOn)
                     userModel.user = newUser
                 }
-            }
-        }
+            } }
     }
-    
-    
-    func removeFavorites(user: User, restaurant: Restaurant ) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId])]
+
+    // MARK: user favorite restaurants
+    // remove
+    func removeFavorites(user: User, restaurant: Restaurant) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId!])]
         )
     }
-    
+
+    // change
     func changeFavorites(userModel: UserModel, restaurant: Restaurant) -> Bool {
         // return false -> remove favorite
         // return true -> add favorite
@@ -166,8 +185,15 @@ class FirebaseService: ObservableObject {
             return true
         }
     }
+    
+    // add
     func addToFavorites(user: User, restaurant: Restaurant) {
-        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId])])
+        Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId!])])
+    }
+    
+    // MARK: dark light mode switch user
+    func updateThemeMode(user: User) {
+        Firestore.firestore().collection("user").document(user.id).updateData(["isDarkModeOn": user.isDarkModeOn])
     }
     
     static func uploadImage(_ image: UIImage, at reference: StorageReference, completion: @escaping (URL?) -> Void) {

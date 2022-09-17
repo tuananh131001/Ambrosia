@@ -60,6 +60,7 @@ struct RestaurantDetailView: View {
     
     var favouriteBtn: some View {
         Button(action: {
+            SoundModel.clickCardSound()
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: ""))
 
         }, label: {
@@ -72,101 +73,121 @@ struct RestaurantDetailView: View {
     }
 
     var body: some View {
-        if restaurantModel.currentRestaurantDetail != nil {
+        if restaurantModel.currentRestaurant != nil {
             GeometryReader{
                 geo in
-                VStack{
-                    if (restaurantModel.currentRestaurantDetail?.imageUrls?[0] != "") {
-                        RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurantDetail?.imageUrls?[0] ?? "").frame(width: geo.size.width, height: geo.size.height/2.3)
-                    }
-                    else {
-                        Image("testRestaurants").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height / 2.5).ignoresSafeArea()
-                    }
-                    // MARK: Restaurant detail Vstack section
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Image(systemName: "clock.circle").foregroundColor(Color("PrimaryColor"))
-                            Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
-                            Spacer()
-                            Button {
-                                showOpenningHours = true
-                            } label: {
-                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-                            }.sheet(isPresented: $showOpenningHours) {
-                                OpeningHoursView()
-                            }
+                ScrollView{
+                        Image("random-eat").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.7)
 
+                    
+                        //MARK: Rectange Resutaurant Detail Card
+                    VStack(spacing:20){
+
+                        ZStack {
+                            Rectangle().foregroundColor(Constants.CARD_BCK_COLOR).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
+                            VStack(spacing: 5) {
+                                HStack {
+                                    Text("⏰").font(.system(size: 12))
+                                    Text(restaurantModel.currentRestaurant?.temporarilyClosed == false ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
+
+                                }
+                                Text(restaurantModel.currentRestaurant?.title ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
+                                HStack{
+                                    Text("\(restaurantModel.currentRestaurant?.distance ?? 0,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                                    Text("•").foregroundColor(Color("SubTextColor"))
+                                    Text(restaurantModel.currentRestaurant?.address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
+                                    
+                                }.frame(width:geo.size.width-100)
+                                HStack{
+                                    Text("Price:").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
+
+                                    Text(restaurantModel.type ?? "Inexpensive").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                                }
+
+                            }.frame(width: geo.size.width - 30,height: geo.size.height / 4.5)
                         }
-
-
-                        Divider()
-                        HStack{
-                            Image(systemName:"phone.circle.fill").foregroundColor(Color("TextColor"))
-                            Text("Phone number: \(restaurantModel.currentRestaurantDetail?.phone ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                            Spacer()
-
-                            Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-
-
-
-                        }
-                        Divider()
                         
-                        HStack{
-                            
-                            Image(systemName:"star.fill").foregroundColor(.yellow)
-                            Text("\(restaurantModel.currentRestaurantDetail?.totalScore ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                            Text("(\(restaurantModel.currentRestaurantDetail?.rank ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
-                            Spacer()
-//                            NavigationLink(destination: {
-//                                ReviewView()
-//                            }) {
-//                                Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-//                            }
-                            Button {
-                                showReview = true
-                            } label: {
-                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-                            }.sheet(isPresented: $showReview) {
-                                ReviewView()
-                            }
+                        // MARK: Restaurant detail Vstack section
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Image(systemName: "clock.circle").foregroundColor(Color("PrimaryColor"))
+                                    Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
+                                    Spacer()
+                                    Button {
+                                        showOpenningHours = true
+                                    } label: {
+                                        Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                                    }.sheet(isPresented: $showOpenningHours) {
+                                        OpeningHoursView()
+                                    }
 
-                        }
-                        Divider()
-
-                        VStack(alignment: .leading) {
-                            Text("🎁 Special Services").foregroundColor(Color("PrimaryColor")).font(.system(size: 16))
-                            Breadcrumbs().offset(y: -20)
-
-                        }
+                                }
 
 
-                    }.offset(y: 100).padding()
+                                Divider()
+                                HStack{
+                                    Image(systemName:"phone.circle.fill").foregroundColor(Color("TextColor"))
+                                    Text("Phone number: \(restaurantModel.currentRestaurant?.phone ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                                    Spacer()
 
-                    //MARK: Rectange Resutaurant Detail Card
-                    ZStack {
-                        Rectangle().foregroundColor(.white).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
-                        VStack(spacing: 5) {
-//                            HStack {
-//                                Text("⏰").font(.system(size: 12))
-//                                Text(restaurantModel.currentRestaurantDetail?.opening_hours?.open_now ?? true ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
-//
-//                            }
-                            Text(restaurantModel.currentRestaurantDetail?.title ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width:geo.size.width-70).lineLimit(2)
-                            HStack{
-                                Text("\(restaurantModel.currentRestaurantDetail?.distance ?? 0,specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
-                                Text("•").foregroundColor(Color("SubTextColor"))
-                                Text(restaurantModel.currentRestaurantDetail?.address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
+                                    Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+
+
+
+                                }
+                                Divider()
                                 
-                            }.frame(width:geo.size.width-100)
-                            HStack{
-                                Text("Price:").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
+                                HStack{
+                                    
+                                    Image(systemName:"star.fill").foregroundColor(.yellow)
+                                    Text("\(restaurantModel.currentRestaurant?.totalScore ?? 0,specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                                    Text("(\(restaurantModel.currentRestaurant?.rank ?? 0 ))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x:-5)
+                                    Spacer()
+                                    NavigationLink(destination: {
+                                        ReviewView()
+                                    }) {
+                                        Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                                    }
+//                                    Button {
+//                                        showReview = true
+//                                    } label: {
+//                                        Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+//                                    }.sheet(isPresented: $showReview) {
+//                                        ReviewView()
+//                                    }
 
-                                Text(restaurantModel.type ?? "Inexpensive").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                                }
+                                Divider()
+
+                                VStack(alignment: .leading) {
+                                    if (restaurantModel.currentRestaurant?.serviceOptionsArr.count != 0){
+                                        Breadcrumbs(options:"Service")
+                                    }
+                                    if (restaurantModel.currentRestaurant?.diningOptionsArr.count != 0){
+                                        Breadcrumbs(options:"Dining")
+                                    }
+                                    if (restaurantModel.currentRestaurant?.paymentsArr.count != 0){
+                                        Breadcrumbs(options:"Payment")
+                                    }
+                                    if (restaurantModel.currentRestaurant?.planingArr.count != 0){
+                                        Breadcrumbs(options:"Planing")
+                                    }
+
+                                }
+                                
+                                Divider()
+                                
+                                VStack(alignment:.leading){
+                                    Text("🎖 User Ratings:")
+                                    RatingContributionView(rating: Int(restaurantModel.currentRestaurant?.totalScore ?? 0))
+
+                                }
+
                             }
-
-                        }.frame(width: geo.size.width - 30).padding()
-                    }.offset(y: -400)
+                        
+                    }.padding().offset(y:-100)
+                        .background(Constants.BCK_COLOR)
+          
 
                 }
             }
@@ -189,15 +210,6 @@ struct RestaurantDetailView: View {
                     // background music
                     SoundModel.startBackgroundMusic(bckName: "detail")
                 }
-//                .onDisappear() {
-////                    // Back button sound effect
-////                    SoundModel.clickOtherSound()
-//
-//                    // background music
-//                    SoundModel.startBackgroundMusic(bckName: "home")
-//                }
-
-
         }
     }
 
@@ -206,41 +218,10 @@ struct RestaurantDetailView: View {
 
 }
 
-//struct RestaurantDetailImage: View {
-//    @State var imageScale = 1.0 // for changing cover image when scrolling
-//    var rest: Restaurant
-//    var body: some View {
-//        GeometryReader { geo in
-//            ZStack(alignment: .center) {
-//                if geo.frame(in: .global).minY <= 0 {
-//                    // scroll down outside the screen -> move image up
-//                    RestaurantAsyncImage(photo_id: rest.photos?[0].photo_reference ?? "")
-//                        .offset(y: geo.frame(in: .global).minY / 9) // move image up
-//                    .clipped()
-//
-//                }
-//                else {
-//                    // scroll up -> increase image size + move image down
-//                    RestaurantAsyncImage(photo_id: rest.photos?[0].photo_reference ?? "")
-//                        .scaleEffect(1 + geo.frame(in: .global).minY / 500) // change scale of image
-//                    .clipped()
-//                        .offset(y: -geo.frame(in: .global).minY) // move image down
-//                    .animation(.easeInOut.delay(2), value: imageScale)
-//                }
-//            }
-//            // for fixing the text stand on the image bug
-//            .frame(height: 600, alignment: .center)
-//                .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.1), radius: 5, x: 3, y: 3)
-//
-//        }.frame(height: 603, alignment: .center)
+
+//struct RestaurantDetailPreview: PreviewProvider {
+//    static var previews: some View {
+//        RestaurantDetailView()
+//            .environmentObject(RestaurantModel())
 //    }
-//
 //}
-
-
-struct RestaurantDetailPreview: PreviewProvider {
-    static var previews: some View {
-        RestaurantDetailView()
-            .environmentObject(RestaurantModel())
-    }
-}

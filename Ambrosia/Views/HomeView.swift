@@ -25,6 +25,7 @@ struct HomeViewContent: View {
     
     @EnvironmentObject var model: RestaurantModel
     
+//    @AppStorage("isDarkMode") private var isDarkMode = false
     /*
     @EnvironmentObject var viewModel: AuthenticationModel
     
@@ -66,12 +67,12 @@ struct HomeViewContent: View {
         }
         .accentColor(Color("PrimaryColor"))
         .onAppear() {
-            // background music
-            SoundModel.startBackgroundMusic(bckName: "home")
+            print()
         }
         .onChange(of: tabSelection) { newValue in
             SoundModel.clickTabSound()
         }
+//        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 struct HomeView: View {
@@ -101,8 +102,8 @@ struct HomeView: View {
             HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
                 .onAppear() {
                     restaurantModel.chooseDefaultLocation()
-                    restaurantModel.calculateDistanceRest()
-                    print(restaurantModel.restaurants)
+//                    restaurantModel.calculateDistanceRest()
+//                    print(restaurantModel.restaurants)
                 }
             
         }
@@ -122,13 +123,5 @@ struct HomeView: View {
                 }
         }
         
-    }
-    
-    struct HomeView_Previews: PreviewProvider {
-        static var previews: some View {
-            HomeView()
-                .environmentObject(RestaurantModel())
-                .environmentObject(FirebaseService())
-        }
     }
 }

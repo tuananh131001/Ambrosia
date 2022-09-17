@@ -11,11 +11,45 @@ struct SettingView: View {
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var restaurantModel: RestaurantModel
     @State var showEditInfo: Bool = false
+    @State var showReviewList: Bool = false
+    @State var showReview:Bool = false
     @State var hasAvatar: Bool = false
     @State var showPickImageModal = false
     @State var avatar : Image? = Image("default-avatar")
     
 
+    // for dark light mode
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
+    // MARK: set theme dark light mode
+    func setAppTheme() {
+        //MARK: use saved device theme from toggle
+        userModel.user.isDarkModeOn = UserDefaultsUtils.shared.getDarkMode()
+        changeDarkMode(state: userModel.user.isDarkModeOn)
+        //MARK: or use device theme
+        if (colorScheme == .dark)
+        {
+            userModel.user.isDarkModeOn = true
+        }
+        else {
+            userModel.user.isDarkModeOn = false
+        }
+        changeDarkMode(state: userModel.user.isDarkModeOn)
+    }
+    func changeDarkMode(state: Bool) {
+        (UIApplication.shared.connectedScenes.first as?
+            UIWindowScene)?.windows.first!.overrideUserInterfaceStyle = state ? .dark : .light
+        UserDefaultsUtils.shared.setDarkMode(enable: state)
+    }
+    var ToggleTheme: some View {
+        Toggle("Dark Mode", isOn: $userModel.user.isDarkModeOn)
+            .foregroundColor(Color("TextColor"))
+            .onChange(of: userModel.user.isDarkModeOn) { (state) in
+            changeDarkMode(state: state)
+            userModel.updateUserThemeMode()
+        }.labelsHidden()
+    }
+
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -60,6 +94,7 @@ struct SettingView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height*0.3)
                 
                     VStack (spacing: 10) {
+                        ToggleTheme
                         Form {
                             Section(header:
                                       Text("Profile Information")
@@ -123,6 +158,14 @@ struct SettingView: View {
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height*0.7)
                     .background(Color("BackgroundSettingView"))
+                Button {
+                    showReview = true
+                } label: {
+                    Text("Recent Reivews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+                }.sheet(isPresented: $showReview) {
+                    RecentReviews()
+                }
+                ToggleTheme
                 }
 
             }
@@ -148,6 +191,12 @@ struct SettingView: View {
             EditInformation()
         }
         
+            .sheet(isPresented: $showReviewList) {
+            RecentReviews()
+        }
+            .onAppear(perform: {
+            setAppTheme()
+        })
     }
     
 }
