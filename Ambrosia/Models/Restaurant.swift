@@ -40,7 +40,7 @@ struct Restaurant: Codable {
     var diningOptionsArr = [String]()
     var paymentsArr = [String]()
     var planingArr = [String]()
-    var imageLink:String = ""   
+    var imageLink:String = ""
 
     
     enum CodingKeys: String, CodingKey {

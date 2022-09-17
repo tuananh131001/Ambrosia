@@ -31,23 +31,24 @@ struct RestaurantListView: View {
     // function to return the restaurants array by the user input
 
     var body: some View {
-        if restaurantModel.restaurants.count != 0 {
-            NavigationView {
-                ScrollView {
-                    HorizontalListView(sectionTitle: "Suggestion Restaurants", type: "suggestion")
-                    HorizontalListView(sectionTitle: "Nearby Restaurants", type: "nearby")
-                    VStack (alignment: .leading) {
-                        Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
-                        // scroll view to show all the restaurants
-                        ScrollView(showsIndicators: false) {
-
-                            LazyVStack(spacing: 35) {
-                                ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
-                                    index in
-                                    // link to the restaurant detail
-                                    NavigationLink(
-                                        tag: index,
-                                        selection: $restaurantModel.restaurantSelected) {
+        NavigationView {
+            
+            ScrollView {
+                HStack{
+                    DistrictFilterView()
+                }
+                HorizontalListView(sectionTitle: "Suggestion Restaurants", type: "suggestion")
+                HorizontalListView(sectionTitle: "Nearby Restaurants", type: "nearby")
+                VStack (alignment: .leading) {
+                    Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
+                    // scroll view to show all the restaurants
+                    ScrollView(showsIndicators: false) {
+                        
+                        LazyVStack(alignment:.trailing,spacing: 35) {
+                            ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
+                                index in
+                                // link to the restaurant detail
+                                NavigationLink() {
                                         // find the current restaurant and display when the view appear
                                         RestaurantDetailView().onAppear {
                                             restaurantModel.getCurrentRestaurant(placeId: restaurantModel.firstTwentyRestaurants[index].placeId ?? "")
@@ -56,51 +57,39 @@ struct RestaurantListView: View {
                                             restaurantModel.getPlaningOptions()
                                             restaurantModel.getPaymentOptions()
                                         }
-
+                                        
                                     } label: {
                                         // Card to show restaurant
-                                        RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageLink , total_ratings: restaurantModel.firstTwentyRestaurants[index].rank ?? 1, distance: restaurantModel.firstTwentyRestaurants[index].distance)
+                                        RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageLink ?? "", total_ratings: restaurantModel.firstTwentyRestaurants[index].rank ?? 1, distance: restaurantModel.firstTwentyRestaurants[index].distance)
                                     }
-                                        .simultaneousGesture(TapGesture().onEnded {
-                                            SoundModel.clickCardSound()
-                                        })
-
-                                }
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        SoundModel.clickCardSound()
+                                    })
+                                
+                            }
+                            NavigationLink {
+                                VerticalListView(type: "all")
+                            } label: {
+                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 16)).offset(y:-20)
                             }
 
                         }
-
-
-                        // add the search bar and set the mode to always display the search bar
-                    }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name").navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
-
-                } .onChange(of: restaurantModel.restaurantSelected) { newValue in
-                    if (newValue ==
-                            nil) {
-                        restaurantModel.currentRestaurant = nil
+                        
                     }
-                }
-                    .background(Constants.BCK_COLOR)
-                    .onChange(of: restaurantModel.restaurantSelected) { newValue in
-                    if (newValue ==
-                            nil) {
-                        restaurantModel.currentRestaurant = nil
-                    }
-                }.navigationViewStyle(StackNavigationViewStyle())
-                    .onChange(of: restaurantModel.currentRestaurant?.reviews.count) { newValue in
+                    
+                    
+                    // add the search bar and set the mode to always display the search bar
+                }.navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
+                
+            } .onChange(of: restaurantModel.restaurantSelected) { newValue in
+                if (newValue ==
+                    nil) {
+                    restaurantModel.currentRestaurant = nil
                 }
             }
-
-        }
-        else{
-            ProgressView()
-//            ProgressView() {
-//                VStack {
-//                    GifView(name: "nothing").offset(y: 120)
-//                }
-//            }
-//                .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
-        }
+            .background(Constants.BCK_COLOR)
+        }.navigationViewStyle(StackNavigationViewStyle())
+        
     }
 }
 
@@ -111,4 +100,3 @@ struct RestaurantListView_Previews: PreviewProvider {
             .environmentObject(RestaurantModel())
     }
 }
-

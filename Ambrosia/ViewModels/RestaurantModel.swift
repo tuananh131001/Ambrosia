@@ -31,6 +31,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var sortedByDistanceRestaurants: [Restaurant] = [Restaurant]()
     @Published var districtRestaurants: [Restaurant] = [Restaurant]()
     @Published var firstTwentyRestaurants: [Restaurant] = [Restaurant]()
+    var tempRestaurant:[Restaurant] = [Restaurant]()
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -147,15 +148,11 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             }.resume()
         }
     }
-
-
-
-    // Method to fetch all nearby restaurants
     func fetchRestaurant() {
         let testUrl = "https://tuananh131001.github.io/ambrosia_data.json"
-        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
+        //        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
         hasError = false
-//        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
+        //        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
         let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
 
         if let url = URL(string: urlString) {
@@ -167,17 +164,26 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         let decoder = JSONDecoder()
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
-                            let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
+                            var restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
+                            self?.tempRestaurant = restaurantArr
                             DispatchQueue.main.async {
-                                self?.firebaseService.fetchImageResFromFirebase(restaurantArr, completion: { newRestaurants in
+                                print("sjdjsdj")
+                                self?.firebaseService.fetchImageResFromFirebase(self!.tempRestaurant, completion: { newRestaurants in
                                     self?.restaurants = newRestaurants
+                                    for i in 0..<20 {
+                                        self?.firstTwentyRestaurants.append(self?.restaurants[i])
+                                    }
+//                                    self?.sortRestaurant()
+//                                    self?.sortRestaurantDistance()
+//                                    self?.getFirstTwentyRestaurants()
                                     print("assign")
-                                    print(newRestaurants[0])
+//                                    self?.getFirstTwentyRestaurants(newRestaurants:newRestaurants)
                                 })
                                 self?.calculateDistanceRest()
-                                self?.sortRestaurant()
-                                self?.sortRestaurantDistance()
-                                self?.getFirstTwentyRestaurants()
+//                                self?.getFirstTwentyRestaurants()
+
+                                
+
                             }
                         } else {
                             print("Cannot fetch all restaurant")
@@ -188,7 +194,6 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             }.resume()
         }
     }
-
 
 
     func getServiceOptions() {
@@ -209,8 +214,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
     }
 
-    func getFirstTwentyRestaurants() {
-        for r in restaurants {
+    func getFirstTwentyRestaurants(newRestaurants:[Restaurant]) {
+        for r in newRestaurants {
             if firstTwentyRestaurants.count <= 20 {
                 firstTwentyRestaurants.append(r)
             }

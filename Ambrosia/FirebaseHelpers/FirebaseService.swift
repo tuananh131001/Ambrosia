@@ -83,6 +83,8 @@ class FirebaseService: ObservableObject {
                     if let document = document {
                         let data = document.data()
                         let imageUrl = data?["ImageLink"] as? String
+                        print("imagel")
+                        print(imageUrl)
                         newRes[i].imageLink = imageUrl ?? ""
                     }
                 }
@@ -90,7 +92,6 @@ class FirebaseService: ObservableObject {
             }
 
         }
-
     }
     func addReviewToFirebase(restaurant: Restaurant, userId: String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
