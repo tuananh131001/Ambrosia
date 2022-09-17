@@ -28,8 +28,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
     @Published var sortedByRankRestaurants: [Restaurant] = [Restaurant]()
-    @Published var sortedByDistanceRestaurants: [Restaurant] = [Restaurant]()
-
+    @Published var sortedByDistanceRestaurants:[Restaurant] = [Restaurant]()
+    @Published var districtRestaurants:[Restaurant] = [Restaurant]()
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -230,6 +230,12 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
+    
+    func filterRestaurantByDistrict(district:String){
+        districtRestaurants = restaurants.filter{
+            $0.state == "\(district), Ho Chi Minh City"
+        }
+    }
 
     func getPaymentOptions() {
         for index in 0..<(currentRestaurant?.additionalInfo?.payments?.count ?? 0) {
@@ -374,6 +380,17 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         currentRestaurant = restaurants[currentRestaurantIndex]
     }
 
+    func getCurrentRestaurantByDistance(placeId:String){
+        for index in 0..<districtRestaurants.count {
+            if (districtRestaurants[index].placeId == placeId) {
+                currentRestaurantIndex = index
+                break
+            }
+        }
+        currentRestaurant = districtRestaurants[currentRestaurantIndex]
+
+    }
+    
     // Function to update like for specific review
     func updateLikeForReview(id: UUID) {
         for i in 0..<(currentRestaurant?.reviews.count ?? 0) {

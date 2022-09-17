@@ -17,11 +17,11 @@
 import SwiftUI
 
 struct RestaurantDetailView: View {
-
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var userModel: UserModel
     @StateObject var firebaseService: FirebaseService = FirebaseService.services
-
+    
     @EnvironmentObject var restaurantModel: RestaurantModel
     @State var showOpenningHours = false
     @State var showReview = false
@@ -54,7 +54,7 @@ struct RestaurantDetailView: View {
                     .font(.system(size: 16))
                     .foregroundColor(Color("PrimaryColor"))
             }
-
+            
         }.buttonStyle(PlainButtonStyle())
     }
 
@@ -62,7 +62,7 @@ struct RestaurantDetailView: View {
         Button(action: {
             SoundModel.clickCardSound()
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: ""))
-
+            
         }, label: {
                 CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
                     .onAppear() {
@@ -71,25 +71,25 @@ struct RestaurantDetailView: View {
             })
 
     }
-
+    
     var body: some View {
         if restaurantModel.currentRestaurant != nil {
             GeometryReader {
                 geo in
-                ScrollView {
-                    Image("random-eat").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height / 2.7)
-
-
+                ScrollView{
+                    Image("random-eat").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.7)
+                    
+                    
                     //MARK: Rectange Resutaurant Detail Card
-                    VStack(spacing: 20) {
-
+                    VStack(spacing:20){
+                        
                         ZStack {
                             Rectangle().foregroundColor(Constants.CARD_BCK_COLOR).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
                             VStack(spacing: 5) {
                                 HStack {
                                     Text("⏰").font(.system(size: 12))
                                     Text(restaurantModel.currentRestaurant?.temporarilyClosed == false ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
-
+                                    
                                 }
                                 Text(restaurantModel.currentRestaurant?.title ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width: geo.size.width - 70).lineLimit(2)
                                 HStack {
@@ -100,11 +100,11 @@ struct RestaurantDetailView: View {
                                 }.frame(width: geo.size.width - 100)
                                 HStack {
                                     Text("Price:").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
-
+                                    
                                     Text(restaurantModel.type ?? "Inexpensive").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                                 }
-
-                            }.frame(width: geo.size.width - 30, height: geo.size.height / 4.5)
+                                
+                            }.frame(width: geo.size.width - 30,height: geo.size.height / 4.5)
                         }
 
                         // MARK: Restaurant detail Vstack section
@@ -153,54 +153,47 @@ struct RestaurantDetailView: View {
                                 }) {
                                     Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
                                 }
-//                                    Button {
-//                                        showReview = true
-//                                    } label: {
-//                                        Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-//                                    }.sheet(isPresented: $showReview) {
-//                                        ReviewView()
-//                                    }
-
+                                
                             }
                             Divider()
-
+                            
                             VStack(alignment: .leading) {
-                                if (restaurantModel.currentRestaurant?.serviceOptionsArr.count != 0) {
-                                    Breadcrumbs(options: "Service")
+                                if (restaurantModel.currentRestaurant?.serviceOptionsArr.count != 0){
+                                    Breadcrumbs(options:"Service")
                                 }
-                                if (restaurantModel.currentRestaurant?.diningOptionsArr.count != 0) {
-                                    Breadcrumbs(options: "Dining")
+                                if (restaurantModel.currentRestaurant?.diningOptionsArr.count != 0){
+                                    Breadcrumbs(options:"Dining")
                                 }
-                                if (restaurantModel.currentRestaurant?.paymentsArr.count != 0) {
-                                    Breadcrumbs(options: "Payment")
+                                if (restaurantModel.currentRestaurant?.paymentsArr.count != 0){
+                                    Breadcrumbs(options:"Payment")
                                 }
-                                if (restaurantModel.currentRestaurant?.planingArr.count != 0) {
-                                    Breadcrumbs(options: "Planing")
+                                if (restaurantModel.currentRestaurant?.planingArr.count != 0){
+                                    Breadcrumbs(options:"Planing")
                                 }
-
+                                
                             }
-
+                            
                             Divider()
-
-                            VStack(alignment: .leading) {
+                            
+                            VStack(alignment:.leading){
                                 Text("🎖 User Ratings:")
                                 RatingContributionView(rating: Int(restaurantModel.currentRestaurant?.totalScore ?? 0))
-
+                                
                             }
-
+                            
                         }
-
-                    }.padding().offset(y: -100)
+                        
+                    }.padding().offset(y:-100)
                         .background(Constants.BCK_COLOR)
-
-
+                    
+                    
                 }
             }
-                .ignoresSafeArea()
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(leading: btnBack, trailing: favouriteBtn)
-
-
+            .ignoresSafeArea()
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: btnBack, trailing: favouriteBtn)
+            
+            
         }
         else {
             ProgressView() {
@@ -208,19 +201,19 @@ struct RestaurantDetailView: View {
                     GifView(name: "nothing").offset(y: 120)
                 }
             }
-                .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(leading: btnBackProgress)
-                .onAppear() {
+            .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: btnBackProgress)
+            .onAppear() {
                 // background music
                 SoundModel.startBackgroundMusic(bckName: "detail")
             }
         }
     }
-
-
-
-
+    
+    
+    
+    
 }
 
 
