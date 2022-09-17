@@ -9,52 +9,32 @@ import SwiftUI
 
 struct FavoriteContent: View {
     let imageSize: CGFloat
-    let titleSize: CGFloat
-    let starSize: CGFloat
-    let distanceSize: CGFloat
-    let openSize: CGFloat
-    
-    let contentWidth: CGFloat
-    
     let rest: Restaurant
+    
     var body: some View {
         HStack {
-            // MARK: image
-            FavoriteImage(cardWidth: imageSize, cardHeight: imageSize)
-                .frame(width: imageSize)
-                .cornerRadius(10)
-            
-            VStack(alignment: .leading, spacing: 3) {
-                // MARK: ratding
-                FavoriteRating(restaurant: rest, starSize: starSize, titleSize: titleSize)
-
-                // MARK: name
+            VStack(alignment: .leading) {
+                // MARK: open state
+                FavoriteOpen(isOpen: rest.temporarilyClosed == false)
+                
+                // MARK: title
                 Text(rest.title)
-                    .lineLimit(1)
-                    .multilineTextAlignment(.leading)
-                    .foregroundColor(Color("TextColor"))
-//                    .font(.system(size: titleSize))
                     .font(.title3)
-
+                    .bold()
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(1)
+                    .foregroundColor(Constants.TEXT_COLOR)
+                
                 // MARK: side info
-                FavoriteSideInfo(distanceSize: distanceSize, restaurant: rest)
-
-                Spacer()
-
-                // MARK: Open State
-                FavoriteOpen(isOpen: true, openSize: openSize)
-
+                FavoriteSideInfo(rest: rest)
             }
-//                .frame(width: contentWidth)
             
+            
+            // MARK: Image
+            FavoriteImage(cardWidth: imageSize, cardHeight: imageSize, displayType: "")
+                .frame(width: imageSize, height: imageSize, alignment: .leading)
+                .clipShape(Circle())
             Spacer()
-            
-            VStack {
-                FavoriteButton(rest: rest)
-                Spacer()
-            }
-
         }
-        .padding(30)
     }
 }

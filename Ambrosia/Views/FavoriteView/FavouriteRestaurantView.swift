@@ -9,66 +9,66 @@ struct FavouriteRestaurantView: View {
 
     @State var cardWidth: CGFloat = 0.0
     @State var imageSize: CGFloat = 0.0
-
-    @State var contentWidth: CGFloat = 0.0
-    @State var starSize: CGFloat = 0.0
-    @State var distanceSize: CGFloat = 0.0
-    @State var openSize: CGFloat = 0.0
-    @State var titleSize: CGFloat = 0.0
+    @State var cardHeight: CGFloat = 135.0
 
 
 
     var body: some View {
         GeometryReader { geo in
             NavigationView {
-                VStack(alignment: .leading, spacing: 50) {
-                    if (userModel.user.favouriteRestaurants.count != 0) {
-                        ScrollView {
-                            ForEach(userModel.user.favouriteRestaurants, id: \.placeId) { rest in
-                                NavigationLink(
-                                    tag: restaurantModel.findRestaurantIndexById(rest.placeId ?? ""),
-                                    selection: $restaurantModel.restaurantSelected) {
-                                    // find the current restaurant and display when the view appear
-                                    RestaurantDetailView().onAppear {
-                                        restaurantModel.getCurrentRestaurant(placeId: rest.placeId ?? "")
+
+                ZStack {
+                    BackgroundImage(name: "favorite-bck", brightness: -0.01, contrast: 1, opacity: 0.3)
+                        .background(Constants.BCK_COLOR)
+                    VStack(alignment: .leading, spacing: 50) {
+                        if (userModel.user.favouriteRestaurants.count != 0) {
+                            ScrollView {
+                                VStack(spacing: 30) {
+                                    ForEach(userModel.user.favouriteRestaurants, id: \.placeId) { rest in
+                                        NavigationLink(
+                                            tag: restaurantModel.findRestaurantIndexById(rest.placeId ?? ""),
+                                            selection: $restaurantModel.restaurantSelected) {
+                                            // find the current restaurant and display when the view appear
+                                            RestaurantDetailView().onAppear {
+                                                restaurantModel.getCurrentRestaurant(placeId: rest.placeId ?? "")
+                                            }
+
+                                        } label: {
+
+                                            HStack {
+                                                ZStack {
+                                                    ArrowShape()
+                                                        .fill(Constants.CARD_BCK_COLOR)
+                                                        .frame(width: geo.size.width * 0.9, height: cardHeight, alignment: .trailing)
+                                                        .modifier(NormalShadowModifier())
+
+                                                    FavoriteContent(imageSize: imageSize, rest: rest)
+                                                        .frame(width: geo.size.width * 0.7, height: cardHeight, alignment: .leading)
+                                                }
+                                                Spacer()
+                                            }
+
+                                        }
+                                            .edgesIgnoringSafeArea(.horizontal)
+
+
                                     }
-
-                                } label: {
-                                    ZStack {
-                                        Rectangle()
-                                            .foregroundColor(Color("CardBackgroundColor"))
-                                            .modifier(LightShadowModifier())
-
-                                        FavoriteContent(imageSize: imageSize, titleSize: titleSize, starSize: starSize, distanceSize: distanceSize, openSize: openSize, contentWidth: contentWidth, rest: rest)
-                                            .frame(height: imageSize)
-
-                                    }
-
-                                        .frame(height: imageSize + imageSize / 2.5, alignment: .center)
-                                        .cornerRadius(10)
                                 }
-
-
                             }
+                                .onAppear() {
+    //                            imageSize = cardWidth / 3
+                                imageSize = 80
+                            }
+                                .edgesIgnoringSafeArea(.horizontal)
+                                .frame(width: geo.size.width)
                         }
-                            .onAppear() {
-                            cardWidth = geo.size.width / 1.1
-                            imageSize = cardWidth / 3
-
-                            starSize = geo.size.width / 30
-                            distanceSize = geo.size.width / 27
-                            openSize = geo.size.width / 25
-                            titleSize = geo.size.width / 21
-
+                        else {
+                            NotFoundView()
                         }
-                    }
-                    else {
-                        NotFoundView()
                     }
                 }
-
-                    .background(Constants.BCK_COLOR)
                     .navigationBarBackButtonHidden(true)
+                    .edgesIgnoringSafeArea(.horizontal)
                     .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Text("Your Favorite".uppercased())
@@ -77,8 +77,7 @@ struct FavouriteRestaurantView: View {
                     }
                 }
             }
-
-
+                .edgesIgnoringSafeArea(.horizontal)
         }
     }
 

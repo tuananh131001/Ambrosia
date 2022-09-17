@@ -14,8 +14,10 @@ enum Constants {
     static let PRIMARY_COLOR_UI : UIColor = UIColor(named: "PrimaryColor")!
     static let LIGH_PRIMARY_COLOR : Color = Color("LightPrimary")
     static let LIGH_PRIMARY_COLOR_UI : UIColor = UIColor(named: "LightPrimary")!
+    static let SECONDARY_COLOR: Color = Color("SecondaryColor")
     static let BCK_COLOR: Color = Color("BackgroundViewColor")
     static let CARD_BCK_COLOR: Color = Color("CardBackgroundColor")
+    static let TEXT_COLOR : Color = Color("TextColor")
     
     static let APP_NAME_LARGE_SIZE : CGFloat = 45
     static let FORM_PADDING_VERTICAL : CGFloat = 30

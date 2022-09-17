@@ -13,7 +13,7 @@ struct FavoriteImage: View {
     var displayType: String = "all"
     var body: some View {
         ZStack {
-            Image("Chuyen Rooftop-bck")
+            Image("ChineseRestaurant")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: cardWidth)

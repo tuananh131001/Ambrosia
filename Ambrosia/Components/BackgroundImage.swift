@@ -9,21 +9,18 @@ import SwiftUI
 
 struct BackgroundImage: View {
     var name: String = "launch"
+    var brightness: CGFloat = -0.75
+    var contrast: CGFloat = 0.5
+    var opacity: CGFloat = 0.6
     var body: some View {
         Color.clear.overlay(
             Image(name)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .brightness(-0.75)
-                .contrast(0.5)
-                .opacity(0.6)
+                .brightness(brightness)
+                .contrast(contrast)
+                .opacity(opacity)
         )
             .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct BackgroundImage_Previews: PreviewProvider {
-    static var previews: some View {
-        BackgroundImage()
     }
 }
