@@ -173,8 +173,10 @@ struct LaunchContentView: View {
             .onAppear(perform: {
                 let userDefaults = UserDefaults.standard
                 if let loginType = userDefaults.string(forKey: "loginType") {
-                    userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
-                    afterVerify()
+                    if (loginType != "") {
+                        userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
+                        afterVerify()
+                    }
                 }
              })
             .onDisappear(perform: {
