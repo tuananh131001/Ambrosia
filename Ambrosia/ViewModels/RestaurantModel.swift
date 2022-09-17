@@ -28,9 +28,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var restaurantSelected: Int?
     @Published var loginSuccess = false
     @Published var sortedByRankRestaurants: [Restaurant] = [Restaurant]()
-    @Published var sortedByDistanceRestaurants:[Restaurant] = [Restaurant]()
-    @Published var districtRestaurants:[Restaurant] = [Restaurant]()
-    @Published var firstTwentyRestaurants:[Restaurant] = [Restaurant]()
+    @Published var sortedByDistanceRestaurants: [Restaurant] = [Restaurant]()
+    @Published var districtRestaurants: [Restaurant] = [Restaurant]()
+    @Published var firstTwentyRestaurants: [Restaurant] = [Restaurant]()
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -135,7 +135,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                     let decoder = JSONDecoder()
                     //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                     if let data = data,
-                       let placeDetail = try? decoder.decode(Place.self, from: data) {
+                        let placeDetail = try? decoder.decode(Place.self, from: data) {
                         print(placeDetail.placeResults.images[1].thumbnail) // food & drink link thumnail
                         self?.firebaseService.addPlaceImage(placeId: placeId, imageLink: placeDetail.placeResults.images[1].thumbnail)
                     } else {
@@ -168,11 +168,17 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
                             let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            self?.restaurants = restaurantArr
-                            self?.calculateDistanceRest()
-                            self?.sortRestaurant()
-                            self?.sortRestaurantDistance()
-                            self?.getFirstTwentyRestaurants()
+                            DispatchQueue.main.async {
+                                self?.firebaseService.fetchImageResFromFirebase(restaurantArr, completion: { newRestaurants in
+                                    self?.restaurants = newRestaurants
+                                    print("assign")
+                                    print(newRestaurants[0])
+                                })
+                                self?.calculateDistanceRest()
+                                self?.sortRestaurant()
+                                self?.sortRestaurantDistance()
+                                self?.getFirstTwentyRestaurants()
+                            }
                         } else {
                             print("Cannot fetch all restaurant")
                         }
@@ -202,9 +208,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
-    
-    func getFirstTwentyRestaurants(){
-        for r in restaurants{
+
+    func getFirstTwentyRestaurants() {
+        for r in restaurants {
             if firstTwentyRestaurants.count <= 20 {
                 firstTwentyRestaurants.append(r)
             }
@@ -232,9 +238,9 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
 
     }
-    
-    func filterRestaurantByDistrict(district:String){
-        districtRestaurants = restaurants.filter{
+
+    func filterRestaurantByDistrict(district: String) {
+        districtRestaurants = restaurants.filter {
             $0.state == "\(district), Ho Chi Minh City"
         }
     }
@@ -334,7 +340,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             restaurants[index].distance = CalculateDistance.calculateDistance(lat1: currentUserCoordinate?.latitude ?? Constants.DEFAULT_LOCATION_LAT, lon1: currentUserCoordinate?.longitude ?? Constants.DEFAULT_LOCATION_LNG, lat2: restaurants[index].location?.lat ?? 0, lon2: restaurants[index].location?.lng ?? 0)
         }
     }
-    
+
     // MARK: function for calling restaurant
     func callRest() {
         // if have phone -> call action
@@ -382,7 +388,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         currentRestaurant = restaurants[currentRestaurantIndex]
     }
 
-    func getCurrentRestaurantByDistance(placeId:String){
+    func getCurrentRestaurantByDistance(placeId: String) {
         for index in 0..<districtRestaurants.count {
             if (districtRestaurants[index].placeId == placeId) {
                 currentRestaurantIndex = index
@@ -392,7 +398,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         currentRestaurant = districtRestaurants[currentRestaurantIndex]
 
     }
-    
+
     // Function to update like for specific review
     func updateLikeForReview(id: UUID) {
         for i in 0..<(currentRestaurant?.reviews.count ?? 0) {
