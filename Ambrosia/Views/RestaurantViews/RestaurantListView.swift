@@ -29,17 +29,7 @@ struct RestaurantListView: View {
     @State private var searchText = ""
     @State private var isTapped: Bool = false
     // function to return the restaurants array by the user input
-    var searchResults: [Restaurant] {
-        // if the search bar is empty -> show all
-        if searchText.isEmpty {
-            return restaurantModel.restaurants
-        } else {
-            // search items that contain either title or address (Case insensitive) from user input
-            return restaurantModel.restaurants.filter { $0.title.localizedCaseInsensitiveContains(searchText)
-                
-            }
-        }
-    }
+
     var body: some View {
         NavigationView {
             
@@ -54,16 +44,14 @@ struct RestaurantListView: View {
                     // scroll view to show all the restaurants
                     ScrollView(showsIndicators: false) {
                         
-                        LazyVStack(spacing: 35) {
-                            ForEach(0..<searchResults.count, id: \.self) {
+                        LazyVStack(alignment:.trailing,spacing: 35) {
+                            ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
                                 index in
                                 // link to the restaurant detail
-                                NavigationLink(
-                                    tag: index,
-                                    selection: $restaurantModel.restaurantSelected) {
+                                NavigationLink() {
                                         // find the current restaurant and display when the view appear
                                         RestaurantDetailView().onAppear {
-                                            restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
+                                            restaurantModel.getCurrentRestaurant(placeId: restaurantModel.firstTwentyRestaurants[index].placeId ?? "")
                                             restaurantModel.getServiceOptions()
                                             restaurantModel.getDiningOptions()
                                             restaurantModel.getPlaningOptions()
@@ -72,20 +60,26 @@ struct RestaurantListView: View {
                                         
                                     } label: {
                                         // Card to show restaurant
-                                        RestaurantCardView(name: searchResults[index].title, rating: searchResults[index].totalScore ?? 5.0, address: searchResults[index].address ?? "", photo_id: searchResults[index].imageUrls?[0] ?? "", total_ratings: searchResults[index].rank ?? 1, distance: searchResults[index].distance)
+                                        RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageUrls?[0] ?? "", total_ratings: restaurantModel.firstTwentyRestaurants[index].rank ?? 1, distance: restaurantModel.firstTwentyRestaurants[index].distance)
                                     }
                                     .simultaneousGesture(TapGesture().onEnded {
                                         SoundModel.clickCardSound()
                                     })
                                 
                             }
+                            NavigationLink {
+                                VerticalListView(type: "all")
+                            } label: {
+                                Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 16)).offset(y:-20)
+                            }
+
                         }
                         
                     }
                     
                     
                     // add the search bar and set the mode to always display the search bar
-                }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name").navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
+                }.navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
                 
             } .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==

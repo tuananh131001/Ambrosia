@@ -30,6 +30,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var sortedByRankRestaurants: [Restaurant] = [Restaurant]()
     @Published var sortedByDistanceRestaurants:[Restaurant] = [Restaurant]()
     @Published var districtRestaurants:[Restaurant] = [Restaurant]()
+    @Published var firstTwentyRestaurants:[Restaurant] = [Restaurant]()
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -167,18 +168,11 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                         //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
                         if let data = data,
                             let restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            var url = restaurantArr[0].url
-                            var resId = restaurantArr[0].placeId
-                            let split = url?.components(separatedBy: "/")
-                            let urlToFetch = "https://serpapi.com/search.json?engine=google_maps&type=place&data=\(split![7])"
-                            print("url to fetch \(urlToFetch)")
-                            DispatchQueue.main.async {
-                                self?.fetchImageRestaurant(url: urlToFetch, placeId: resId!)
-                                self?.restaurants = restaurantArr
-                                self?.calculateDistanceRest()
-                                self?.sortRestaurant()
-                                self?.sortRestaurantDistance()
-                            }
+                            self?.restaurants = restaurantArr
+                            self?.calculateDistanceRest()
+                            self?.sortRestaurant()
+                            self?.sortRestaurantDistance()
+                            self?.getFirstTwentyRestaurants()
                         } else {
                             print("Cannot fetch all restaurant")
                         }
@@ -207,6 +201,14 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
         }
 
+    }
+    
+    func getFirstTwentyRestaurants(){
+        for r in restaurants{
+            if firstTwentyRestaurants.count <= 20 {
+                firstTwentyRestaurants.append(r)
+            }
+        }
     }
 
     func getDiningOptions() {
