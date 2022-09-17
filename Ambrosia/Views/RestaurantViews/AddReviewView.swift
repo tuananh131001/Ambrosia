@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AddReviewView: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
-    @EnvironmentObject var authModel:UserModel
+    @EnvironmentObject var userModel:UserModel
     @Environment(\.presentationMode) var presentationMode
     @State private var rating:Int = 0
     @State private var userReview = ""
@@ -29,7 +29,6 @@ struct AddReviewView: View {
                 VStack(alignment:.leading,spacing:20){
                     Text("Rate restaurant").foregroundColor(Color("TextColor")).bold()
                     RatingView(rating: $rating, tappable: true, width: 25, height: 20)
-                    
                 }.padding()
                 VStack(alignment:.leading){
                     Text("Leave a review").foregroundColor(Color("TextColor")).bold()
@@ -47,7 +46,7 @@ struct AddReviewView: View {
                     presentationMode.wrappedValue.dismiss()
                     // Add Review from user
                     //TODO: Load restaurant from restaurant models
-                    self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: authModel.user.name, email: authModel.user.email,userId:authModel.user.id, image: "avatar1")
+                    self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: userModel.user.name, email: userModel.user.email,userId:userModel.user.id, image: "avatar1",userModel:userModel)
                 } label: {
                     RoundedButton(buttonText: "Submit", width: geo.size.width/1.1, height: 60)
                 }.padding(.horizontal)

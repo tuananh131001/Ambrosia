@@ -17,12 +17,12 @@ struct FavouriteRestaurantView: View {
     var body: some View {
         GeometryReader { geo in
             NavigationView {
-
                 ZStack {
                     BackgroundImage(name: "favorite-bck\(userModel.user.isDarkModeOn ? "-dark" : "")", brightness: -0.01, contrast: 1, opacity: 0.3)
                         .background(Constants.BCK_COLOR)
-                    VStack(alignment: .leading, spacing: 50) {
-                        if (userModel.user.favouriteRestaurants.count != 0) {
+                    if (userModel.user.favouriteRestaurants.count != 0) {
+                        VStack(alignment: .leading, spacing: 50) {
+
                             ScrollView {
                                 VStack(spacing: 30) {
                                     ForEach(userModel.user.favouriteRestaurants, id: \.placeId) { rest in
@@ -33,8 +33,11 @@ struct FavouriteRestaurantView: View {
                                             RestaurantDetailView().onAppear {
                                                 // MARK: action
                                                 restaurantModel.getCurrentRestaurant(placeId: rest.placeId ?? "")
+                                                restaurantModel.getServiceOptions()
+                                                restaurantModel.getDiningOptions()
+                                                restaurantModel.getPlaningOptions()
+                                                restaurantModel.getPaymentOptions()
                                             }
-
                                         } label: {
                                             // MARK: view
                                             HStack {
@@ -53,7 +56,6 @@ struct FavouriteRestaurantView: View {
                                         }
                                             .edgesIgnoringSafeArea(.horizontal)
 
-
                                     }
                                 }
                             }
@@ -64,9 +66,18 @@ struct FavouriteRestaurantView: View {
                                 .edgesIgnoringSafeArea(.horizontal)
                                 .frame(width: geo.size.width)
                         }
-                        else {
-                            NotFoundView()
+                        
+                    }
+                    else {
+                        VStack(spacing: 6) {
+                            GifView(name: "boring-cat")
+                                .frame(width: geo.size.width, height: 500)
+                            Text("Hmmm....")
+                            Text("You have no favorites yet")
                         }
+                        .font(.title2)
+                        
+
                     }
                 }
                     .navigationBarBackButtonHidden(true)

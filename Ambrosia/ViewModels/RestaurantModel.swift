@@ -142,10 +142,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                     let placeArr = try decoder.decode(Place.self, from: data)
                     for index in self.restaurants.indices {
                         let obj = placeArr.first(where: { $0.placeID == self.restaurants[index].placeId })
-//                        var link = obj["placeID"]
-                        print(obj?.thumnail)
                         self.restaurants[index].imageLink = obj?.thumnail ?? "https://i.pinimg.com/200x/ff/50/2c/ff502c2d46373cc9908091efec8cfb11.jpg"
-//                        print(link)
                     }
                     
                     self.restaurants = self.restaurants
@@ -238,6 +235,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 //    }
 
     func getTwentyRestaurant(){
+        restaurants = restaurants.shuffled()
         for r in restaurants{
             if firstTwentyRestaurants.count < 20 {
                 firstTwentyRestaurants.append(r)
@@ -464,11 +462,12 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
 
     // Function to add new review from user
-    func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, userId: String, image: String) {
+    func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, userId: String, image: String,userModel:UserModel) {
         let id = UUID()
         let date = Date.now
         let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, image: "avatar1")
         self.currentRestaurant?.reviews.append(newReview)
+        userModel.user.reviewRestaurant.append(self.currentRestaurant ?? Restaurant.testRestaurantDetail())
         firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(), userId: userId)
     }
     func updateReview(reviews: [Review]) {

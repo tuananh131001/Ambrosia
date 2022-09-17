@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct RecentReviews: View {
-    
-    
     @EnvironmentObject var userModel:UserModel
     @EnvironmentObject var restaurantModel:RestaurantModel
     @State private var searchText = ""
@@ -44,10 +42,9 @@ struct RecentReviews: View {
                                     restaurantModel.getPlaningOptions()
                                     restaurantModel.getPaymentOptions()
                                 }
-                                
                             } label: {
                                 // Card to show restaurant
-                                RestaurantCardView(name: searchResults[index].title,rating: searchResults[index].totalScore ?? 5.0, address:searchResults[index].address ?? "", photo_id: searchResults[index].imageLink ?? "" , total_ratings: searchResults[index].rank ?? 1, distance: searchResults[index].distance )
+                                RestaurantCardView(name: searchResults[index].title,rating: searchResults[index].totalScore ?? 5.0, address:searchResults[index].address ?? "", photo_id: searchResults[index].imageLink , total_ratings: searchResults[index].rank ?? 1, distance: searchResults[index].distance )
                             }
                             .simultaneousGesture(TapGesture().onEnded {
                                 SoundModel.clickCardSound()
