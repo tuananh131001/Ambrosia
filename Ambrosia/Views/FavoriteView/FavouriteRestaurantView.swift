@@ -17,7 +17,6 @@ struct FavouriteRestaurantView: View {
     var body: some View {
         GeometryReader { geo in
             NavigationView {
-
                 ZStack {
                     BackgroundImage(name: "favorite-bck\(userModel.user.isDarkModeOn ? "-dark" : "")", brightness: -0.01, contrast: 1, opacity: 0.3)
                         .background(Constants.BCK_COLOR)
@@ -34,7 +33,6 @@ struct FavouriteRestaurantView: View {
                                                 // MARK: action
                                                 restaurantModel.getCurrentRestaurant(placeId: rest.placeId ?? "")
                                             }
-
                                         } label: {
                                             // MARK: view
                                             HStack {
@@ -52,7 +50,6 @@ struct FavouriteRestaurantView: View {
 
                                         }
                                             .edgesIgnoringSafeArea(.horizontal)
-
 
                                     }
                                 }
