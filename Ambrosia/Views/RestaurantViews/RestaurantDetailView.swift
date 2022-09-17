@@ -77,7 +77,6 @@ struct RestaurantDetailView: View {
             GeometryReader {
                 geo in
                 ScrollView{
-//                    Image("random-eat").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.7)
                     RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageLink ?? "").frame(width: geo.size.width, height: geo.size.height/2.7)
                     
                     //MARK: Rectange Resutaurant Detail Card
