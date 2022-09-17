@@ -16944,7 +16944,7 @@
     "lng": 106.6673361
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 4.2,
   "isAdvertisement": false,
   "rank": 29,
   "placeId": "ChIJkd8GobovdTERx_wShJMhqCI",
@@ -17001,13 +17001,13 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 15,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
-    "threeStar": 0,
-    "fourStar": 0,
-    "fiveStar": 0
+    "threeStar": 4,
+    "fourStar": 4,
+    "fiveStar": 7
   },
   "reviews": [],
   "orderBy": []
@@ -19952,7 +19952,7 @@
     "lng": 106.6651621
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 3.5,
   "isAdvertisement": false,
   "rank": 21,
   "placeId": "ChIJJeME1HQvdTERA-PDTvTKAsI",
@@ -19985,12 +19985,12 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 10,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
-    "threeStar": 0,
-    "fourStar": 0,
+    "threeStar": 7,
+    "fourStar": 3,
     "fiveStar": 0
   },
   "reviews": [],
@@ -76627,7 +76627,7 @@
     "lng": 106.6648611
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 3.5,
   "isAdvertisement": false,
   "rank": 54,
   "placeId": "ChIJt29osagpdTERnloHgbym4rU",
@@ -76660,12 +76660,12 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 5,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
-    "threeStar": 0,
-    "fourStar": 0,
+    "threeStar": 3,
+    "fourStar": 2,
     "fiveStar": 0
   },
   "reviews": [],
@@ -76812,7 +76812,7 @@
     "lng": 106.6659413
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 1,
   "isAdvertisement": false,
   "rank": 51,
   "placeId": "ChIJE7hRlagpdTERB8ktge0SZtw",
@@ -76893,9 +76893,9 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 50,
   "reviewsDistribution": {
-    "oneStar": 0,
+    "oneStar": 50,
     "twoStar": 0,
     "threeStar": 0,
     "fourStar": 0,
@@ -78779,7 +78779,7 @@
     "lng": 106.6665698
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 3.5,
   "isAdvertisement": false,
   "rank": 38,
   "placeId": "ChIJ6SmQ0aUpdTERzmg-LH81SpA",
@@ -78830,12 +78830,12 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 10,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
-    "threeStar": 0,
-    "fourStar": 0,
+    "threeStar": 7,
+    "fourStar": 3,
     "fiveStar": 0
   },
   "reviews": [],
@@ -79764,7 +79764,7 @@
     "lng": 106.6724523
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 3.5,
   "isAdvertisement": false,
   "rank": 31,
   "placeId": "ChIJ-ddpS2UpdTERiTzdZngYB-I",
@@ -79810,12 +79810,12 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 10,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
-    "threeStar": 0,
-    "fourStar": 0,
+    "threeStar": 7,
+    "fourStar": 3,
     "fiveStar": 0
   },
   "reviews": [],
@@ -83353,7 +83353,7 @@
     "lng": 106.6664188
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 3.5,
   "isAdvertisement": false,
   "rank": 26,
   "placeId": "ChIJsX4eokMpdTERhC1Ho6KG0y4",
@@ -83384,12 +83384,12 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 10,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
-    "threeStar": 0,
-    "fourStar": 0,
+    "threeStar": 7,
+    "fourStar": 3,
     "fiveStar": 0
   },
   "reviews": [],
@@ -84330,7 +84330,7 @@
     "lng": 106.6664163
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 3.5,
   "isAdvertisement": false,
   "rank": 23,
   "placeId": "ChIJWc9qKKgpdTERJx-3ruDtn90",
@@ -84393,12 +84393,12 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 10,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
-    "threeStar": 0,
-    "fourStar": 0,
+    "threeStar": 7,
+    "fourStar": 3,
     "fiveStar": 0
   },
   "reviews": [],
@@ -111583,7 +111583,7 @@
     "lng": 106.7032856
   },
   "permanentlyClosed": false,
-  "totalScore": null,
+  "totalScore": 4.8,
   "isAdvertisement": false,
   "rank": 11,
   "placeId": "ChIJtXkqXXcvdTERj_rHG8cZLg8",
@@ -111710,13 +111710,13 @@
       }
     ]
   },
-  "reviewsCount": 0,
+  "reviewsCount": 20,
   "reviewsDistribution": {
     "oneStar": 0,
     "twoStar": 0,
     "threeStar": 0,
     "fourStar": 0,
-    "fiveStar": 0
+    "fiveStar": 20
   },
   "imageUrls": [
     "https://lh5.googleusercontent.com/p/AF1QipODixlenvp7Ya-uhU28LEQPObP9NIQ6wfhqivbm=w1920-h1080-k-no"

@@ -48,7 +48,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"
             endingLineNumber = "147"
-            landmarkName = "fetchRestaurant()"
+            landmarkName = "fetchImageRestaurant()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -64,7 +64,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
             endingLineNumber = "146"
-            landmarkName = "fetchRestaurant()"
+            landmarkName = "fetchImageRestaurant()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -80,8 +80,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "86"
             endingLineNumber = "86"
-            landmarkName = "locationManager(_:didUpdateLocations:)"
-            landmarkType = "7">
+            landmarkName = "RestaurantModel"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -94,9 +94,9 @@
             filePath = "Ambrosia/ViewModels/RestaurantModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
-            landmarkName = "updateLikeForReview(id:)"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
+            landmarkName = "sortRestaurant()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -110,9 +110,9 @@
             filePath = "Ambrosia/ViewModels/RestaurantModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
-            landmarkName = "calculateDistanceRest()"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
+            landmarkName = "getPaymentOptions()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -128,7 +128,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
             endingLineNumber = "165"
-            landmarkName = "getServiceOptions()"
+            landmarkName = "fetchImageRestaurant()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -142,9 +142,9 @@
             filePath = "Ambrosia/ViewModels/RestaurantModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
-            landmarkName = "sortRestaurantDistance()"
+            startingLineNumber = "291"
+            endingLineNumber = "291"
+            landmarkName = "getDiningOptions()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -158,9 +158,9 @@
             filePath = "Ambrosia/ViewModels/RestaurantModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
-            landmarkName = "getCurrentRestaurantByDistance(placeId:)"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
+            landmarkName = "calculateNumber(number:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
