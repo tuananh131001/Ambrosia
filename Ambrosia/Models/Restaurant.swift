@@ -30,7 +30,6 @@ struct Restaurant: Codable {
     var rank: Int?
     var reviews = [Review]()
     var location: Location?
-    var imageUrls:[String]?
     var url:String?
     var distance: Double = 0
     var temporarilyClosed:Bool?
@@ -56,14 +55,13 @@ struct Restaurant: Codable {
         case totalScore
         case rank
         case location
-        case imageUrls
         case url
         case temporarilyClosed
         case reviewsCount
         case reviewsDistribution
     }
     static func testRestaurantDetail() -> Restaurant {
-        return Restaurant(placeId: "3123", title: "3221", address: "3213123", phone: "#2213", totalScore: 10.0, rank: 1, reviews: [], location: Location.testLocation(), imageUrls: ["testRestaurant"], distance: 0.5)
+        return Restaurant(placeId: "3123", title: "3221", address: "3213123", phone: "#2213", totalScore: 10.0, rank: 1, reviews: [], location: Location.testLocation(), distance: 0.5)
 //        return Restaurant(placeId: "23123", title: "SIr", address: "Sir street, Sir city, Sir country", phone: "09301293910", categories: ["chinese"], categoryName: "korean food", additionalInfo: AdditionalInfo.testAdditionalInfo(), openingHours: OpeningHours.testOpeningHours(), totalScore: 10, rank: 1, reviews: [], location: Location.testLocation(), imageUrls: ["testRestaurant"], distance: 0, temporarilyClosed: true, reviewsCount: 10, reviewsDistribution: ReviewsDistribution.testReviewsDistribution())
     }
 
