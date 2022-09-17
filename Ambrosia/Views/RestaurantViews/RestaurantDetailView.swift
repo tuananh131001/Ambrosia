@@ -77,8 +77,8 @@ struct RestaurantDetailView: View {
             GeometryReader {
                 geo in
                 ScrollView{
-                    Image("random-eat").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.7)
-                    
+//                    Image("random-eat").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.7)
+                    RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageLink ?? "").frame(width: geo.size.width, height: geo.size.height/2.7)
                     
                     //MARK: Rectange Resutaurant Detail Card
                     VStack(spacing:20){
@@ -147,11 +147,17 @@ struct RestaurantDetailView: View {
                                 Text("\(restaurantModel.currentRestaurant?.totalScore ?? 0, specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                                 Text("(\(restaurantModel.currentRestaurant?.rank ?? 0))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
                                 Spacer()
-                                NavigationLink(destination: {
-                                    ReviewView()
-                                }) {
+                                Button {
+                                    showReview.toggle()
+                                } label: {
                                     Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
+
+                                }.sheet(isPresented: $showReview) {
+                                    ReviewView()
+
                                 }
+
+                             
                                 
                             }
                             Divider()

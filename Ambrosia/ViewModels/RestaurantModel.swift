@@ -235,6 +235,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 //    }
 
     func getTwentyRestaurant(){
+        restaurants = restaurants.shuffled()
         for r in restaurants{
             if firstTwentyRestaurants.count < 20 {
                 firstTwentyRestaurants.append(r)
