@@ -18,7 +18,7 @@ struct FavoriteSideInfo: View {
                     .foregroundColor(Constants.SECONDARY_COLOR)
             } icon: {
                 Image(systemName: "star.fill")
-                    .foregroundColor(Constants.PRIMARY_COLOR)
+                    .foregroundColor(Color("Star On Color"))
             }
             
             // MARK: separator

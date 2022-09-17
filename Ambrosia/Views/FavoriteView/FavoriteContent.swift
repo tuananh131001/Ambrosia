@@ -15,7 +15,7 @@ struct FavoriteContent: View {
         HStack {
             VStack(alignment: .leading) {
                 // MARK: open state
-                FavoriteOpen(isOpen: rest.temporarilyClosed == false)
+                FavoriteCategory(rest: rest)
                 
                 // MARK: title
                 Text(rest.title)
