@@ -26,32 +26,40 @@ struct SettingView: View {
                     VStack (spacing: 10) {
                         Spacer()
                         
-                        ZStack {
-                            ZStack (alignment: .bottomTrailing) {
-                                Group {
-    //                                if (userModel.user.avatarStr != "") {
-    //                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
-    //                                        image.resizable()
-    //                                        image.scaledToFill()
-    //                                        image.modifier(AvatarModifier())
-    //
-    //                                    } placeholder: {
-    //                                        Image("default-avatar")
-    //                                    }
-    //                                }
-    //                                else {
-                                        avatar?
+                        ZStack (alignment: .bottomTrailing) {
+                            Group {
+                                if (userModel.user.avatarStr != "") {
+                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
+                                        image
                                             .resizable()
                                             .scaledToFill()
-                                            .modifier(AvatarModifier())                            }
-    //                            }
-                                
-                                Button(action: {
-                                    showPickImageModal = true
-                                }) {
-                                  Image("camera-icon")
+                                            .modifier(CircularImageModifirer())
+
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
                                 }
-                                
+                                else {
+                                    avatar?
+                                        .resizable()
+                                        .scaledToFill()
+                                        .modifier(CircularImageModifirer())
+                                }
+                            }
+
+                            Button(action: {
+                                showPickImageModal = true
+                            }) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.white)
+                                        .frame(width: 35, height: 35)
+                                    
+                                    Image("camera-icon")
+                                          .resizable()
+                                          .scaledToFill()
+                                          .frame(width: 30, height: 30)
+                                }
                             }
                         }
                         
@@ -90,14 +98,15 @@ struct SettingView: View {
                             }
                             
                             Section(header:
-                                      Text("Settings")
-                                      .font(.system(size: 15))
-                                      .fontWeight(.semibold)
-                            ) {
+                                    Text("App Setting")
+                                    .font(.system(size: 15))
+                                    .fontWeight(.semibold)
+                            )
+                            {
                                 HStack {
-                                  Text("Appearance")
+                                  Text("Dark Mode")
                                   Spacer()
-                                    ToggleTheme()
+                                  ToggleTheme
                                 }
                             }
                         }
@@ -106,6 +115,22 @@ struct SettingView: View {
                         Spacer()
                         
                         VStack {
+                            
+                              // MARK: EDIT INFO BTN
+                              Button {
+                                    showReview = true
+
+                              } label: {
+                                  HStack {
+                                      Text("View My Reviews").bold()
+                                      Image("review-icon")
+                                  }
+                              }
+                              .buttonStyle(ButtonStylePrimary())
+                              .sheet(isPresented: $showReview) {
+                                    RecentReviews()
+                              }
+                            
                               // MARK: EDIT INFO BTN
                               Button {
                                   showEditInfo = true
@@ -116,7 +141,7 @@ struct SettingView: View {
                                       Image("edit-icon")
                                   }
                               }
-                                  .buttonStyle(ButtonStylePrimary())
+                              .buttonStyle(ButtonStylePrimary())
 
                               // MARK: SIGN OUT BTN
                               Button {
@@ -132,20 +157,14 @@ struct SettingView: View {
                                   }
                                   
                               }
-                                  .buttonStyle(ButtonStyleLightPrimary())
+                              .buttonStyle(ButtonStyleLightPrimary())
                             
                         }
                         .padding(.bottom, geometry.size.height*0.13)
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height*0.7)
                     .background(Color("BackgroundSettingView"))
-                Button {
-                    showReview = true
-                } label: {
-                    Text("Recent Reivews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-                }.sheet(isPresented: $showReview) {
-                    RecentReviews()
-                }
+
                 }
 
             }
@@ -155,18 +174,6 @@ struct SettingView: View {
             }
         }
         .frame(width: UIScreen.main.bounds.width, height:UIScreen.main.bounds.height)
-        .onAppear(perform: {
-            if (userModel.user.avatarStr != "") {
-                if let resourcePath = Bundle.main.resourcePath {
-                    let imgName = "userAvatar.png"
-                    let path = resourcePath + "/" + imgName
-                    PickImageModal.download(url: URL(string: userModel.user.avatarStr)!, toFile: URL(string: path)!, completion: {_ in
-                        print("download done")
-                    })
-                }
-                avatar = Image("userAvatar")
-            }
-        })
         .sheet(isPresented: $showEditInfo) {
             EditInformation()
         }
@@ -178,5 +185,4 @@ struct SettingView: View {
                 ThemeViewUtil.setAppTheme(userModel)
         })
     }
-    
 }

@@ -39,7 +39,7 @@ struct ButtonStyleWhite: ButtonStyle {
         configuration.label
             .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH, minHeight: Constants.FIELD_HEIGHT)
             .padding(.horizontal)
-            .background(.white)
+            .background(Color("ButtonTextColor"))
             .foregroundColor(Constants.PRIMARY_COLOR)
             .cornerRadius(Constants.CONRNER_RADIUS)
             .scaleEffect(configuration.isPressed ? 1.1 : 1)

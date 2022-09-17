@@ -18,8 +18,8 @@ struct LaunchView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
 
     @StateObject var firebaseService = FirebaseService.services
-
     @State var isLogging = false
+    
     var body: some View {
         // if app has not ask user permission to access location
         if !userModel.loginSuccess {
@@ -38,5 +38,6 @@ struct LaunchView: View {
         }
 
     }
+        
 
 }

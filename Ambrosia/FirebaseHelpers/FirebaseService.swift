@@ -138,6 +138,7 @@ class FirebaseService: ObservableObject {
                     let selectedGender: Int = data?["selectedGender"] as? Int ?? 1
                     let email: String = data?["email"] as? String ?? ""
                     let restaurantsId = data?["favoriteRestaurants"] as? [String] ?? [String]()
+                    let avatarStr: String = data?["avatarStr"] as? String ?? ""
                     
                     var favouriteRestaurants = [Restaurant]()
                     for id in restaurantsId {
@@ -158,9 +159,9 @@ class FirebaseService: ObservableObject {
                     
                     // dark mode save
                     let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
-                    let avatar: String = data?["photoUrl"] as? String ?? ""
+                   
                     
-                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatar, isDarkModeOn: isDarkModeOn)
+                    let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatarStr, isDarkModeOn: isDarkModeOn)
                     userModel.user = newUser
                 }
             } }
@@ -228,9 +229,8 @@ class FirebaseService: ObservableObject {
     static func createPost(name: String, userModel: UserModel, for image: UIImage) {
         let imageRef = Storage.storage().reference().child("\(name).jpg")
         uploadImage(image, at: imageRef) { (downloadURL) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             guard let downloadURL = downloadURL else {
-                print(downloadURL)
                 return
             }
 

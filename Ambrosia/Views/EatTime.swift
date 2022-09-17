@@ -28,7 +28,7 @@ struct EatTime: App {
 //            LaunchView()
             SplashView()
 //                .preferredColorScheme(isDarkMode ? .dark : .light)
-                .environmentObject(RestaurantModel())
+//                .environmentObject(RestaurantModel())
                 .environmentObject(UserModel())
 
 

@@ -174,10 +174,7 @@ struct LaunchContentView: View {
                 let userDefaults = UserDefaults.standard
                 if let loginType = userDefaults.string(forKey: "loginType") {
                     userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
-                    if (userModel.loginSuccess) {
-                        userModel.state = .signedIn
-//                        restaurantModel.requestGeolocationPermission()
-                    }
+                    afterVerify()
                 }
              })
             .onDisappear(perform: {
@@ -211,7 +208,8 @@ struct LaunchContentView: View {
     }
         
     func afterVerify() {
-        showLoginMessage = userModel.loginMessage != "" ? true : false
+        showLoginMessage = true
+//        showLoginMessage = userModel.loginMessage != "" ? true : false
         if (userModel.loginSuccess) {
             userModel.state = .signedIn
             userModel.fetchUserInfo(id: Auth.auth().currentUser?.uid ?? "uid error", userModel: userModel, restaurantModel: restaurantModel)

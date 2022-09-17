@@ -51,11 +51,13 @@ class UserModel: ObservableObject {
     func fetchUserInfo(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         firebaseService.getUserFirebase(id: id, userModel: userModel, restaurantModel: restaurantModel)
         if (self.user.email == "") {
-            if (self.loginMethod == .normal) {
-                self.user.email = Auth.auth().currentUser?.email ?? "email error"
-            }
-            else {
-                self.user.email = Auth.auth().currentUser?.providerData[0].email ?? "email error"
+            if let usertemp = Auth.auth().currentUser {
+                if (usertemp.email != "") {
+                    self.user.email = usertemp.email ?? "email is hidden"
+                }
+                else if (usertemp.providerData[0].email != "") {
+                    self.user.email = usertemp.providerData[0].email ?? "email is hidden"
+                }
             }
         }
     }
@@ -228,6 +230,7 @@ class UserModel: ObservableObject {
             removeCurrentLogin()
             loginSuccess = false
             state = .signedOut
+            loginMessage = ""
         } catch {
             print(error.localizedDescription)
         }
