@@ -106,7 +106,7 @@ struct SettingView: View {
                                 HStack {
                                   Text("Dark Mode")
                                   Spacer()
-                                  ToggleTheme
+                                  ToggleTheme()
                                 }
                             }
                         }

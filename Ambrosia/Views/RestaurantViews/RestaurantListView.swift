@@ -42,7 +42,7 @@ struct RestaurantListView: View {
                         ScrollView(showsIndicators: false) {
 
                             LazyVStack(spacing: 35) {
-                                ForEach(0..<searchResults.count, id: \.self) {
+                                ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
                                     index in
                                     // link to the restaurant detail
                                     NavigationLink(
@@ -50,7 +50,7 @@ struct RestaurantListView: View {
                                         selection: $restaurantModel.restaurantSelected) {
                                         // find the current restaurant and display when the view appear
                                         RestaurantDetailView().onAppear {
-                                            restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
+                                            restaurantModel.getCurrentRestaurant(placeId: restaurantModel.firstTwentyRestaurants[index].placeId ?? "")
                                             restaurantModel.getServiceOptions()
                                             restaurantModel.getDiningOptions()
                                             restaurantModel.getPlaningOptions()
@@ -59,7 +59,7 @@ struct RestaurantListView: View {
 
                                     } label: {
                                         // Card to show restaurant
-                                        RestaurantCardView(name: searchResults[index].title, rating: searchResults[index].totalScore ?? 5.0, address: searchResults[index].address ?? "", photo_id: searchResults[index].imageUrls?[0] ?? "", total_ratings: searchResults[index].rank ?? 1, distance: searchResults[index].distance)
+                                        RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageUrls?[0] ?? "", total_ratings: restaurantModel.firstTwentyRestaurants[index].rank ?? 1, distance: restaurantModel.firstTwentyRestaurants[index].distance)
                                     }
                                         .simultaneousGesture(TapGesture().onEnded {
                                             SoundModel.clickCardSound()
