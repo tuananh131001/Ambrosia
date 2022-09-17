@@ -19,7 +19,7 @@ struct ReviewCard: View {
                     image
                         .resizable().aspectRatio(contentMode: .fill).frame(width: 50, height: 50).clipShape(Circle())
                 } placeholder: {
-                    ProgressView()
+                    Image("avatar1").resizable().aspectRatio(contentMode: .fill).frame(width: 40, height: 40).clipShape(Circle())
                 }
                 Text(review.username).foregroundColor(Color("TextColor")).bold().font(.system(size: 20))
             }
