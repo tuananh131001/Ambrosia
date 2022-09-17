@@ -99,9 +99,8 @@ struct RestaurantDetailView: View {
                                     
                                 }.frame(width:geo.size.width-100)
                                 HStack{
-                                    Text("Price:").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
-                                    
-                                    Text(restaurantModel.type ?? "Inexpensive").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                                    Text("Category: ").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
+                                    Text("\(restaurantModel.currentRestaurant?.categoryName ?? "")").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
                                 }
                                 
                             }.frame(width: geo.size.width - 30,height: geo.size.height / 4.5)
