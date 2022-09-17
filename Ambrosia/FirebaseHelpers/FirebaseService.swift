@@ -70,29 +70,29 @@ class FirebaseService: ObservableObject {
         print("add Place image: \(placeId) , \(imageLink)")
         Firestore.firestore().collection("restaurant").document(placeId).setData(["ImageLink": imageLink], merge: true)
     }
-    func fetchImageResFromFirebase(_ restaurants: [Restaurant], completion: @escaping (_ newRestaurants: [Restaurant]) -> ()) {
-        var newRes: [Restaurant] = restaurants
-        for i in restaurants.indices {
-            let docRef = Firestore.firestore().collection("restaurant").document(restaurants[i].placeId ?? "")
-            //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
-            docRef.getDocument { document, error in
-                if let error = error as NSError? {
-                    print("Error getting document: \(error.localizedDescription)")
-                }
-                else {
-                    if let document = document {
-                        let data = document.data()
-                        let imageUrl = data?["ImageLink"] as? String
-                        print("imagel")
-                        print(imageUrl)
-                        newRes[i].imageLink = imageUrl ?? ""
-                    }
-                }
-                completion(newRes)
-            }
-
-        }
-    }
+//    func fetchImageResFromFirebase(_ restaurants: [Restaurant], completion: @escaping (_ newRestaurants: [Restaurant]) -> ()) {
+//        var newRes: [Restaurant] = restaurants
+//        for i in restaurants.indices {
+//            let docRef = Firestore.firestore().collection("restaurant").document(restaurants[i].placeId ?? "")
+//            //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
+//            docRef.getDocument { document, error in
+//                if let error = error as NSError? {
+//                    print("Error getting document: \(error.localizedDescription)")
+//                }
+//                else {
+//                    if let document = document {
+//                        let data = document.data()
+//                        let imageUrl = data?["ImageLink"] as? String
+//                        print("imagel")
+//                        print(imageUrl)
+//                        newRes[i].imageLink = imageUrl ?? ""
+//                    }
+//                }
+//                completion(newRes)
+//            }
+//
+//        }
+//    }
     func addReviewToFirebase(restaurant: Restaurant, userId: String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []

@@ -31,7 +31,8 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var sortedByDistanceRestaurants: [Restaurant] = [Restaurant]()
     @Published var districtRestaurants: [Restaurant] = [Restaurant]()
     @Published var firstTwentyRestaurants: [Restaurant] = [Restaurant]()
-    var tempRestaurant:[Restaurant] = [Restaurant]()
+
+    var tempRestaurant: [Restaurant] = [Restaurant]()
     var firebaseService: FirebaseService = FirebaseService.services
     // MARK: Location
     var locationManager = CLLocationManager()
@@ -126,75 +127,123 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //        }
     //        return false
     //    }
-    func fetchImageRestaurant(url: String, placeId: String) {
-        if let url = URL(string: url) {
-            URLSession.shared
-                .dataTask(with: url) { [weak self] data, response, error in
 
-                if error != nil {
-                } else {
-                    let decoder = JSONDecoder()
-                    //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    if let data = data,
-                        let placeDetail = try? decoder.decode(Place.self, from: data) {
-                        print(placeDetail.placeResults.images[1].thumbnail) // food & drink link thumnail
-                        self?.firebaseService.addPlaceImage(placeId: placeId, imageLink: placeDetail.placeResults.images[1].thumbnail)
-                    } else {
-                        print("Cannot fetch all restaurant")
+    func fetchImageRestaurant() {
+        let pathString = Bundle.main.path(forResource: "jsonformatter", ofType: "json")
+        if let path = pathString {
+            // Create a url object
+            let url = URL(fileURLWithPath: path)
+            //Error handling
+            do {
+                let data = try Data(contentsOf: url)
+                //Parse the data
+                let decoder = JSONDecoder()
+                do {
+                    let placeArr = try decoder.decode(Place.self, from: data)
+                    for index in self.restaurants.indices {
+                        let obj = placeArr.first(where: { $0.placeID == self.restaurants[index].placeId })
+//                        var link = obj["placeID"]
+                        print(obj?.thumnail)
+                        self.restaurants[index].imageLink = obj?.thumnail ?? "https://i.pinimg.com/200x/ff/50/2c/ff502c2d46373cc9908091efec8cfb11.jpg"
+//                        print(link)
                     }
+                    
+                    self.restaurants = self.restaurants
+                    self.calculateDistanceRest()
+                    self.sortRestaurantDistance()
+                    self.sortRestaurant()
+                    self.getTwentyRestaurant()
+                } catch {
+                    print(error)
                 }
+            }
+            catch {
+                // execution will come here if an error is thrown
+                print(error)
+            }
 
-
-            }.resume()
         }
     }
     func fetchRestaurant() {
-        let testUrl = "https://tuananh131001.github.io/ambrosia_data.json"
-        //        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
-        hasError = false
-        //        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
-        let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
-
-        if let url = URL(string: urlString) {
-            URLSession.shared
-                .dataTask(with: url) { [weak self] data, response, error in
-                DispatchQueue.global(qos: .userInitiated).async {
-                    if error != nil {
-                    } else {
-                        let decoder = JSONDecoder()
-                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        if let data = data,
-                            var restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
-                            self?.tempRestaurant = restaurantArr
-                            DispatchQueue.main.async {
-                                print("sjdjsdj")
-                                self?.firebaseService.fetchImageResFromFirebase(self!.tempRestaurant, completion: { newRestaurants in
-                                    self?.restaurants = newRestaurants
-                                    for i in 0..<20 {
-                                        self?.firstTwentyRestaurants.append(self?.restaurants[i])
-                                    }
-//                                    self?.sortRestaurant()
-//                                    self?.sortRestaurantDistance()
-//                                    self?.getFirstTwentyRestaurants()
-                                    print("assign")
-//                                    self?.getFirstTwentyRestaurants(newRestaurants:newRestaurants)
-                                })
-                                self?.calculateDistanceRest()
-//                                self?.getFirstTwentyRestaurants()
-
-                                
-
-                            }
-                        } else {
-                            print("Cannot fetch all restaurant")
-                        }
-                    }
+        let pathString = Bundle.main.path(forResource: "ambrosia_data", ofType: "json")
+        if let path = pathString {
+            // Create a url object
+            let url = URL(fileURLWithPath: path)
+            //Error handling
+            do {
+                let data = try Data(contentsOf: url)
+                //Parse the data
+                let decoder = JSONDecoder()
+                do {
+                    let restaurantArr = try decoder.decode([Restaurant].self, from: data)
+                    self.restaurants = restaurantArr
+                  
+                    self.fetchImageRestaurant()
+                } catch {
+                    print(error)
                 }
+            }
+            catch {
+                // execution will come here if an error is thrown
+                print(error)
+            }
 
-            }.resume()
         }
     }
+//    func fetchRestaurant() {
+//        let testUrl = "https://tuananh131001.github.io/ambrosia_data.json"
+//        //        fetchImageRestaurant(url: testUrl, placeId: "ChIJf1ud4fkudTERzkik9gwaXQU")
+//        hasError = false
+//        //        let urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=restaurant&location=10.73578300%2C106.69093400&radius=200&type=restaurant&key=AIzaSyC2jWBSaP5fZLAuwlOc2mwcSBHfYXtv6hU"
+//        let urlString = "https://tuananh131001.github.io/ambrosia_data.json"
+//
+//        if let url = URL(string: urlString) {
+//            URLSession.shared
+//                .dataTask(with: url) { [weak self] data, response, error in
+//                DispatchQueue.global(qos: .userInitiated).async {
+//                    if error != nil {
+//                    } else {
+//                        let decoder = JSONDecoder()
+//                        //                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                        if let data = data,
+//                            var restaurantArr = try? decoder.decode([Restaurant].self, from: data) {
+//                            self?.tempRestaurant = restaurantArr
+//                            DispatchQueue.main.async {
+//                                print("sjdjsdj")
+//                                self?.firebaseService.fetchImageResFromFirebase(self!.tempRestaurant, completion: { newRestaurants in
+//                                    self?.restaurants = newRestaurants
+//                                    for i in 0..<20 {
+//                                        self?.firstTwentyRestaurants.append(self?.restaurants[i])
+//                                    }
+////                                    self?.sortRestaurant()
+////                                    self?.sortRestaurantDistance()
+////                                    self?.getFirstTwentyRestaurants()
+//                                    print("assign")
+////                                    self?.getFirstTwentyRestaurants(newRestaurants:newRestaurants)
+//                                })
+//                                self?.calculateDistanceRest()
+////                                self?.getFirstTwentyRestaurants()
+//
+//
+//
+//                            }
+//                        } else {
+//                            print("Cannot fetch all restaurant")
+//                        }
+//                    }
+//                }
+//
+//            }.resume()
+//        }
+//    }
 
+    func getTwentyRestaurant(){
+        for r in restaurants{
+            if firstTwentyRestaurants.count < 20 {
+                firstTwentyRestaurants.append(r)
+            }
+        }
+    }
 
     func getServiceOptions() {
         for index in 0..<(currentRestaurant?.additionalInfo?.serviceOptions?.count ?? 0) {
@@ -214,7 +263,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
 
     }
 
-    func getFirstTwentyRestaurants(newRestaurants:[Restaurant]) {
+    func getFirstTwentyRestaurants(newRestaurants: [Restaurant]) {
         for r in newRestaurants {
             if firstTwentyRestaurants.count <= 20 {
                 firstTwentyRestaurants.append(r)
