@@ -60,7 +60,7 @@ struct RestaurantListView: View {
                                         
                                     } label: {
                                         // Card to show restaurant
-                                        RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageLink , total_ratings: restaurantModel.firstTwentyRestaurants[index].rank ?? 1, distance: restaurantModel.firstTwentyRestaurants[index].distance)
+                                        RestaurantCardView(name: restaurantModel.firstTwentyRestaurants[index].title, rating: restaurantModel.firstTwentyRestaurants[index].totalScore ?? 5.0, address: restaurantModel.firstTwentyRestaurants[index].address ?? "", photo_id: restaurantModel.firstTwentyRestaurants[index].imageLink, total_ratings: restaurantModel.firstTwentyRestaurants[index].reviewsCount ?? 5, distance: restaurantModel.firstTwentyRestaurants[index].distance)
                                     }
                                     .simultaneousGesture(TapGesture().onEnded {
                                         SoundModel.clickCardSound()

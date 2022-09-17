@@ -22,7 +22,7 @@ struct AddReviewView: View {
                 VStack(spacing:10){
                     RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageLink ?? "").frame(width: geo.size.width, height: geo.size.height/4)
                     Spacer()
-                    Text(restaurantModel.currentRestaurant?.title ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16))
+                    Text(restaurantModel.currentRestaurant?.title ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16)).padding(.top,20)
                     Text(restaurantModel.currentRestaurant?.address ?? "").foregroundColor(Color("SubTextColor")).lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50,height: 50).font(.system(size: 14))
                 }
                 

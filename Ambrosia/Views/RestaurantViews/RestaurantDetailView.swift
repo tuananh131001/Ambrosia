@@ -144,8 +144,8 @@ struct RestaurantDetailView: View {
                             HStack {
 
                                 Image(systemName: "star.fill").foregroundColor(.yellow)
-                                Text("\(restaurantModel.currentRestaurant?.totalScore ?? 0, specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
-                                Text("(\(restaurantModel.currentRestaurant?.rank ?? 0))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
+                                Text("\(restaurantModel.currentRestaurant?.totalScore ?? 5.0, specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                                Text("(\(restaurantModel.currentRestaurant?.reviewsCount ?? 5))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
                                 Spacer()
                                 Button {
                                     showReview.toggle()
@@ -182,7 +182,7 @@ struct RestaurantDetailView: View {
                             
                             VStack(alignment:.leading){
                                 Text("🎖 User Ratings:")
-                                RatingContributionView(rating: Int(restaurantModel.currentRestaurant?.totalScore ?? 0))
+                                RatingContributionView(rating: Int(restaurantModel.currentRestaurant?.totalScore ?? 5.0))
                                 
                             }
                             

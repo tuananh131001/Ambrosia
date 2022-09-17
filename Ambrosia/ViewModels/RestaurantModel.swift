@@ -330,19 +330,19 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func calculateNumber(number: Int) -> CGFloat {
         var value: CGFloat = 0
         if (number == 5) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.fiveStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.fiveStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 4) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.fourStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.fourStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 3) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.threeStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.threeStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 2) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.twoStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.twoStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         else if (number == 1) {
-            value = CGFloat(currentRestaurant?.reviewsDistribution?.oneStar ?? 0) / CGFloat(currentRestaurant?.reviewsCount ?? 1) * 100
+            value = CGFloat(abs(currentRestaurant?.reviewsDistribution?.oneStar ?? 0)) / CGFloat(abs(currentRestaurant?.reviewsCount ?? 5)) * 200
         }
         return value
     }

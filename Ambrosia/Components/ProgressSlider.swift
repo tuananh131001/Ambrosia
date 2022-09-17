@@ -16,7 +16,7 @@ struct ProgressSlider: View {
             Text("\(number)").foregroundColor(Color("PrimaryColor")).font(.system(size: 11))
             ZStack(alignment:.leading){
                 Rectangle().frame(width:200,height:10).foregroundColor(Color("PlaceholderText")).cornerRadius(25)
-                Rectangle().frame(width:value,height:10).foregroundColor(Color("PrimaryColor")).cornerRadius(25)
+                Rectangle().frame(width:value <= 0 ? 0 : value,height:10).foregroundColor(Color("PrimaryColor")).cornerRadius(25)
             }
         }
         .onAppear {
