@@ -72,7 +72,6 @@ struct ForgetPasswordModal: View {
             else {
                 //show alert here
                 message = "We sent you an email with instructions on how to reset your password"
-                print("We send you an email with instructions on how to reset your password.")
             }
         }
     }

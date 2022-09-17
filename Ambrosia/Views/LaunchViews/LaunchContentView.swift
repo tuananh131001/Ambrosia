@@ -67,7 +67,7 @@ struct LaunchContentView: View {
 
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
-                            if (showLoginMessage) {
+                            if (showLoginMessage && userModel.loginMessage != "") {
                                 Text(userModel.loginMessage)
                                     .foregroundColor(userModel.loginSuccess ? .green : .red)
                             }
@@ -173,10 +173,9 @@ struct LaunchContentView: View {
             .onAppear(perform: {
                 let userDefaults = UserDefaults.standard
                 if let loginType = userDefaults.string(forKey: "loginType") {
-                    userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
-                    if (userModel.loginSuccess) {
-                        userModel.state = .signedIn
-                        restaurantModel.requestGeolocationPermission()
+                    if (loginType != "") {
+                        userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
+                        afterVerify()
                     }
                 }
              })
@@ -211,11 +210,12 @@ struct LaunchContentView: View {
     }
         
     func afterVerify() {
-        showLoginMessage = userModel.loginMessage != "" ? true : false
+        showLoginMessage = true
+//        showLoginMessage = userModel.loginMessage != "" ? true : false
         if (userModel.loginSuccess) {
             userModel.state = .signedIn
             userModel.fetchUserInfo(id: Auth.auth().currentUser?.uid ?? "uid error", userModel: userModel, restaurantModel: restaurantModel)
-                restaurantModel.requestGeolocationPermission()
+//                restaurantModel.requestGeolocationPermission()
         }
         
     }

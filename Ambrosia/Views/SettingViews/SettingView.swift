@@ -3,7 +3,7 @@
 //  Ambrosia
 //
 //  Created by Võ Quốc Huy on 11/09/2022.
-//
+// https://betterprogramming.pub/swiftui-app-theme-switch-241a79574b87
 import SwiftUI
 import Firebase
 
@@ -17,39 +17,6 @@ struct SettingView: View {
     @State var showPickImageModal = false
     @State var avatar : Image? = Image("default-avatar")
     
-
-    // for dark light mode
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    // MARK: set theme dark light mode
-    func setAppTheme() {
-        //MARK: use saved device theme from toggle
-        userModel.user.isDarkModeOn = UserDefaultsUtils.shared.getDarkMode()
-        changeDarkMode(state: userModel.user.isDarkModeOn)
-        //MARK: or use device theme
-        if (colorScheme == .dark)
-        {
-            userModel.user.isDarkModeOn = true
-        }
-        else {
-            userModel.user.isDarkModeOn = false
-        }
-        changeDarkMode(state: userModel.user.isDarkModeOn)
-    }
-    func changeDarkMode(state: Bool) {
-        (UIApplication.shared.connectedScenes.first as?
-            UIWindowScene)?.windows.first!.overrideUserInterfaceStyle = state ? .dark : .light
-        UserDefaultsUtils.shared.setDarkMode(enable: state)
-    }
-    var ToggleTheme: some View {
-        Toggle("Dark Mode", isOn: $userModel.user.isDarkModeOn)
-            .foregroundColor(Color("TextColor"))
-            .onChange(of: userModel.user.isDarkModeOn) { (state) in
-            changeDarkMode(state: state)
-            userModel.updateUserThemeMode()
-        }.labelsHidden()
-    }
-
-    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -61,27 +28,38 @@ struct SettingView: View {
                         
                         ZStack (alignment: .bottomTrailing) {
                             Group {
-//                                if (userModel.user.avatarStr != "") {
-//                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
-//                                        image.resizable()
-//                                        image.scaledToFill()
-//                                        image.modifier(AvatarModifier())
-//
-//                                    } placeholder: {
-//                                        Image("default-avatar")
-//                                    }
-//                                }
-//                                else {
+                                if (userModel.user.avatarStr != "") {
+                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                            .modifier(CircularImageModifirer())
+
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                }
+                                else {
                                     avatar?
                                         .resizable()
                                         .scaledToFill()
-                                        .modifier(AvatarModifier())                            }
-//                            }
-                            
+                                        .modifier(CircularImageModifirer())
+                                }
+                            }
+
                             Button(action: {
                                 showPickImageModal = true
                             }) {
-                              Image("camera-icon")
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.white)
+                                        .frame(width: 35, height: 35)
+                                    
+                                    Image("camera-icon")
+                                          .resizable()
+                                          .scaledToFill()
+                                          .frame(width: 30, height: 30)
+                                }
                             }
                         }
                         
@@ -94,7 +72,6 @@ struct SettingView: View {
                     .frame(width: geometry.size.width, height: geometry.size.height*0.3)
                 
                     VStack (spacing: 10) {
-                        ToggleTheme
                         Form {
                             Section(header:
                                       Text("Profile Information")
@@ -116,8 +93,21 @@ struct SettingView: View {
                                   HStack {
                                     Text("Gender")
                                     Spacer()
-                                      Text(userModel.user.selectedGender == 0 ? "Male" : "Female")
+                                      Text(userModel.genders[userModel.user.selectedGender])
                                   }
+                            }
+                            
+                            Section(header:
+                                    Text("App Setting")
+                                    .font(.system(size: 15))
+                                    .fontWeight(.semibold)
+                            )
+                            {
+                                HStack {
+                                  Text("Dark Mode")
+                                  Spacer()
+                                  ToggleTheme()
+                                }
                             }
                         }
                         .font(.system(.body, design: .rounded))
@@ -125,6 +115,22 @@ struct SettingView: View {
                         Spacer()
                         
                         VStack {
+                            
+                              // MARK: EDIT INFO BTN
+                              Button {
+                                    showReview = true
+
+                              } label: {
+                                  HStack {
+                                      Text("View My Reviews").bold()
+                                      Image("review-icon")
+                                  }
+                              }
+                              .buttonStyle(ButtonStylePrimary())
+                              .sheet(isPresented: $showReview) {
+                                    RecentReviews()
+                              }
+                            
                               // MARK: EDIT INFO BTN
                               Button {
                                   showEditInfo = true
@@ -135,7 +141,7 @@ struct SettingView: View {
                                       Image("edit-icon")
                                   }
                               }
-                                  .buttonStyle(ButtonStylePrimary())
+                              .buttonStyle(ButtonStylePrimary())
 
                               // MARK: SIGN OUT BTN
                               Button {
@@ -151,21 +157,14 @@ struct SettingView: View {
                                   }
                                   
                               }
-                                  .buttonStyle(ButtonStyleLightPrimary())
+                              .buttonStyle(ButtonStyleLightPrimary())
                             
                         }
                         .padding(.bottom, geometry.size.height*0.13)
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height*0.7)
                     .background(Color("BackgroundSettingView"))
-                Button {
-                    showReview = true
-                } label: {
-                    Text("Recent Reivews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-                }.sheet(isPresented: $showReview) {
-                    RecentReviews()
-                }
-                ToggleTheme
+
                 }
 
             }
@@ -175,18 +174,6 @@ struct SettingView: View {
             }
         }
         .frame(width: UIScreen.main.bounds.width, height:UIScreen.main.bounds.height)
-        .onAppear(perform: {
-            if (userModel.user.avatarStr != "") {
-                if let resourcePath = Bundle.main.resourcePath {
-                    let imgName = "userAvatar.png"
-                    let path = resourcePath + "/" + imgName
-                    PickImageModal.download(url: URL(string: userModel.user.avatarStr)!, toFile: URL(string: path)!, completion: {_ in
-                        print("download done")
-                    })
-                }
-                avatar = Image("userAvatar")
-            }
-        })
         .sheet(isPresented: $showEditInfo) {
             EditInformation()
         }
@@ -195,8 +182,7 @@ struct SettingView: View {
             RecentReviews()
         }
             .onAppear(perform: {
-            setAppTheme()
+                ThemeViewUtil.setAppTheme(userModel)
         })
     }
-    
 }

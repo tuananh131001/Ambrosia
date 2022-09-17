@@ -24,6 +24,7 @@ struct HomeViewContent: View {
     @Binding var tabSelection: Int
     
     @EnvironmentObject var model: RestaurantModel
+    @EnvironmentObject var userModel: UserModel
     
 //    @AppStorage("isDarkMode") private var isDarkMode = false
     /*
@@ -67,7 +68,7 @@ struct HomeViewContent: View {
         }
         .accentColor(Color("PrimaryColor"))
         .onAppear() {
-            print()
+            ThemeViewUtil.setAppTheme(userModel)
         }
         .onChange(of: tabSelection) { newValue in
             SoundModel.clickTabSound()

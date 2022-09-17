@@ -20,9 +20,20 @@ import SwiftUI
 struct ArrowShape: Shape {
 
     func path(in rect: CGRect) -> Path {
-        let xArrowPoint = CGFloat(rect.maxX + (rect.maxX - rect.midX) / 3)
-        let downArrowPoint = CGPoint(x: rect.maxX, y: rect.minY)
-        let upArrowPoint = CGPoint(x: rect.maxX, y: rect.maxY)
+        /*
+                  __________upArrowPoint
+                            \
+                             \
+                              \
+                             (xArrowPoint, midY) = middleArrowPoint
+                              /
+                             /
+                ____________/ downArrowPoint
+                
+         */
+        let xArrowPoint = CGFloat(rect.maxX)
+        let downArrowPoint = CGPoint(x: rect.maxX - (rect.maxX - rect.midX) / 3, y: rect.minY)
+        let upArrowPoint = CGPoint(x: rect.maxX - (rect.maxX - rect.midX) / 3, y: rect.maxY)
         let middleArrowPoint = CGPoint(x: xArrowPoint, y: rect.midY)
         var path = Path()
 

@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestoreSwift
+import FirebaseStorage
+import FirebaseDatabase
 
 struct PickImageModal: View {
     @EnvironmentObject var userModel: UserModel
@@ -15,7 +19,8 @@ struct PickImageModal: View {
     @State var showingImagePicker = false
     @State var inputImage: UIImage?
     @State var image : Image?
-    @State private var filterIntensity = 0.5
+    @State var message : String = ""
+    @State var showMessage : Bool = false
     
     
     var body: some View {
@@ -35,16 +40,25 @@ struct PickImageModal: View {
                         .resizable()
                         .scaledToFit()
                 }
-                .frame(height: 180)
+                .frame(height: 120)
                 .onTapGesture {
                     showingImagePicker = true
                 }
                 
-                Button("Save", action: save)
+                Button(action: {
+                    save()                }) {
+                    Text("Save").bold()
+                }
                     .buttonStyle(ButtonStyleWhite())
                 
+                if (showMessage) {
+                    Text(message)
+                        .foregroundColor(.white)
+                }
+                
             }
-            .padding(15)
+            .offset(y:12)
+            .padding(.horizontal, 15)
             .frame(maxWidth: Constants.MODAL_WIDTH, minHeight: Constants.MODAL_MIN_HEIGHT)
             .background(Constants.PRIMARY_COLOR)
             .foregroundColor(.white)
@@ -79,53 +93,19 @@ struct PickImageModal: View {
             guard let inputImage = inputImage else { return }
             avatar = Image(uiImage: inputImage)
             FirebaseService.createPost(name: userModel.user.id, userModel: userModel, for: img)
-            print(userModel.user.avatarStr)
-            userModel.firebaseService.updateUser(user: userModel.user)
-
-            if let resourcePath = Bundle.main.resourcePath {
-                let imgName = "userAvatar.png"
-                let path = resourcePath + "/" + imgName
-                PickImageModal.download(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/ambrosia-4e8fb.appspot.com/o/yjg9zIHztqdFtuvnsGcMl1zmxh93.jpg?alt=media&token=92274cc1-9a34-42e7-bf5a-f436dd858c6a")!, toFile: URL(string: path)!, completion: {_ in
-                    print("download done")
-                })
-            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now()+3, execute: {
+                guard let userId = Auth.auth().currentUser?.uid else { return }
+                userModel.user.id = userId
+                userModel.firebaseService.updateUser(user: userModel.user)
+                message = "Avatar is updated successfully ✅"
+                showMessage = true
+            })
         }
         else {
             userModel.user.avatarStr = ""
+            message = "Cannot update avatar"
+            showMessage = true
         }
-    }
-    
-    static func download(url: URL, toFile file: URL, completion: @escaping (Error?) -> Void) {
-        let task = URLSession.shared.downloadTask(with: url) {
-            (tempURL, response, error) in
-            // Early exit on error
-            guard let tempURL = tempURL else {
-                completion(error)
-                return
-            }
-
-            do {
-                // Remove any existing document at file
-                if FileManager.default.fileExists(atPath: file.path) {
-                    try FileManager.default.removeItem(at: file)
-                }
-
-                // Copy the tempURL to file
-                try FileManager.default.copyItem(
-                    at: tempURL,
-                    to: file
-                )
-
-                completion(nil)
-            }
-
-            // Handle potential file system errors
-            catch let fileError {
-                completion(error)
-            }
-        }
-
-        // Start the download
-        task.resume()
     }
 }
