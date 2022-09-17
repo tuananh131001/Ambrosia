@@ -31,7 +31,7 @@ struct HorizontalListView: View {
                                         restaurantModel.getPaymentOptions()
                                     }
                                 }, label: {
-                                    HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByRankRestaurants[index].title , rating: restaurantModel.sortedByRankRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByRankRestaurants[index].reviewsCount ?? 2,distance: restaurantModel.sortedByRankRestaurants[index].distance,imageLink: restaurantModel.sortedByDistanceRestaurants[index].imageLink)
+                                    HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByRankRestaurants[index].title , rating: restaurantModel.sortedByRankRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByRankRestaurants[index].reviewsCount ?? 2,distance: restaurantModel.sortedByRankRestaurants[index].distance,imageLink: restaurantModel.sortedByRankRestaurants[index].imageLink)
                                 }
                               )
                             }

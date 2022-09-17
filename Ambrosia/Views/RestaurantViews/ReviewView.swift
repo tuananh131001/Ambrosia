@@ -22,7 +22,7 @@ struct ReviewView: View {
                             Button {
                                 isShowAddReview = true
                             } label: {
-                                RoundedButton(buttonText: "REVIEW", width: geo.size.width/2.4, height: geo.size.height/16)
+                                RoundedButton(buttonText: "ADD REVIEW", width: geo.size.width/2.4, height: geo.size.height/14)
 
                             }.sheet(isPresented: $isShowAddReview) {
                                 AddReviewView()
