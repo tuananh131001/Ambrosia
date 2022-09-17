@@ -67,7 +67,7 @@ struct LaunchContentView: View {
 
                             // MARK: LOGIN MESSAGE
                             // Login message after pressing the login button
-                            if (showLoginMessage) {
+                            if (showLoginMessage && userModel.loginMessage != "") {
                                 Text(userModel.loginMessage)
                                     .foregroundColor(userModel.loginSuccess ? .green : .red)
                             }

@@ -127,7 +127,6 @@ struct SettingView: View {
                                     Text("Gender")
                                     Spacer()
                                       Text(userModel.genders[userModel.user.selectedGender])
-//                                      Text(userModel.user.selectedGender == 0 ? "Male" : "Female")
                                   }
                             }
                             
