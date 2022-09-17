@@ -51,10 +51,8 @@ class FirebaseService: ObservableObject {
                         "name": "Sir",
                         "email": authResult?.user.email ?? ""
                         ]) { err in
-                        if let err = err {
-                            print("Error writing document: \(err)")
+                            if err != nil {
                         } else {
-                            print("Document successfully written!")
                         }
                     }
                     user.loginSuccess = true
@@ -71,32 +69,9 @@ class FirebaseService: ObservableObject {
         Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
     }
     func addPlaceImage(placeId: String, imageLink: String) {
-        print("add Place image: \(placeId) , \(imageLink)")
         Firestore.firestore().collection("restaurant").document(placeId).setData(["ImageLink": imageLink], merge: true)
     }
-//    func fetchImageResFromFirebase(_ restaurants: [Restaurant], completion: @escaping (_ newRestaurants: [Restaurant]) -> ()) {
-//        var newRes: [Restaurant] = restaurants
-//        for i in restaurants.indices {
-//            let docRef = Firestore.firestore().collection("restaurant").document(restaurants[i].placeId ?? "")
-//            //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
-//            docRef.getDocument { document, error in
-//                if let error = error as NSError? {
-//                    print("Error getting document: \(error.localizedDescription)")
-//                }
-//                else {
-//                    if let document = document {
-//                        let data = document.data()
-//                        let imageUrl = data?["ImageLink"] as? String
-//                        print("imagel")
-//                        print(imageUrl)
-//                        newRes[i].imageLink = imageUrl ?? ""
-//                    }
-//                }
-//                completion(newRes)
-//            }
-//
-//        }
-//    }
+
     func addReviewToFirebase(restaurant: Restaurant, userId: String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
@@ -116,8 +91,7 @@ class FirebaseService: ObservableObject {
         let docRef = Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "")
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
-            if let error = error as NSError? {
-                print("Error getting document: \(error.localizedDescription)")
+            if (error as NSError?) != nil {
             }
             else {
                 if let document = document {
@@ -151,8 +125,7 @@ class FirebaseService: ObservableObject {
         let docRef = Firestore.firestore().collection("user").document(id)
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
-            if let error = error as NSError? {
-                print("Error getting document: \(error.localizedDescription)")
+            if (error as NSError?) != nil {
             }
             else {
                 if let document = document {
@@ -262,7 +235,6 @@ class FirebaseService: ObservableObject {
 
                 let urlString = downloadURL.absoluteString
                 userModel.user.avatarStr = urlString
-                print("image url: \(userModel.user.avatarStr)")
             }
         }
 //

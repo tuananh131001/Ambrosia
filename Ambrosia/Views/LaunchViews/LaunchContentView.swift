@@ -183,7 +183,6 @@ struct LaunchContentView: View {
                 if let uid = Auth.auth().currentUser?.uid {
                     userModel.fetchUserInfo(id: uid, userModel: userModel, restaurantModel: restaurantModel)
                 }
-                print(userModel.user.email)
             })
     }
 

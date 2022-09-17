@@ -103,8 +103,6 @@ struct HomeView: View {
             HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
                 .onAppear() {
                     restaurantModel.chooseDefaultLocation()
-//                    restaurantModel.calculateDistanceRest()
-//                    print(restaurantModel.restaurants)
                 }
             
         }
@@ -120,7 +118,6 @@ struct HomeView: View {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
                         }
                     }
-                    print("Settings")
                 }
         }
         
