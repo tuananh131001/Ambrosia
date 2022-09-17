@@ -72,6 +72,7 @@
 		3D85B3DC288FB0C8001BF2AF /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */; };
 		3D85B3DE288FE20E001BF2AF /* RestaurantCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3DD288FE20E001BF2AF /* RestaurantCard.swift */; };
 		3D85B3E4288FF57D001BF2AF /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */; };
+		3DA85AE128D604AD008B55B9 /* boring-cat.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3DA85AE028D604AD008B55B9 /* boring-cat.gif */; };
 		3DACD26128D4FF0B006264C9 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DACD26028D4FF0B006264C9 /* Place.swift */; };
 		3DB2C8E728D19718000B4EA6 /* GeneralBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB2C8E628D19718000B4EA6 /* GeneralBackground.swift */; };
 		3DB2C8E928D19CE0000B4EA6 /* SplashTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB2C8E828D19CE0000B4EA6 /* SplashTitle.swift */; };
@@ -168,6 +169,7 @@
 		3D85B3DB288FB0C8001BF2AF /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		3D85B3DD288FE20E001BF2AF /* RestaurantCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCard.swift; sourceTree = "<group>"; };
 		3D85B3E3288FF57D001BF2AF /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
+		3DA85AE028D604AD008B55B9 /* boring-cat.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "boring-cat.gif"; sourceTree = "<group>"; };
 		3DACD26028D4FF0B006264C9 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		3DB2C8E628D19718000B4EA6 /* GeneralBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralBackground.swift; sourceTree = "<group>"; };
 		3DB2C8E828D19CE0000B4EA6 /* SplashTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashTitle.swift; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 				3D7508A128D5E1F800B4EE92 /* ambrosia_data.json */,
 				3D7508A028D5E1F700B4EE92 /* jsonformatter.json */,
 				444B4F7D28D04DDD00B76114 /* nothing.gif */,
+				3DA85AE028D604AD008B55B9 /* boring-cat.gif */,
 				444B4F7B28D04DDD00B76114 /* pikachu.gif */,
 				444B4F7E28D04DDD00B76114 /* waiting.gif */,
 			);
@@ -666,6 +669,7 @@
 				444B4F8028D04DDD00B76114 /* cat-eat.gif in Resources */,
 				3D1D7B3628D31FAA0038A5B7 /* bck-login.mp3 in Resources */,
 				3D1D7B3E28D337220038A5B7 /* tab-click.mp3 in Resources */,
+				3DA85AE128D604AD008B55B9 /* boring-cat.gif in Resources */,
 				3D275823289FCDBD00C7DD6C /* DontUse in Resources */,
 				3D1D7B3A28D32BA20038A5B7 /* button-click.mp3 in Resources */,
 				3DC2FC9B2886E18F003750D3 /* Assets.xcassets in Resources */,
