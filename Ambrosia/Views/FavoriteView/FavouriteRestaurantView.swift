@@ -18,7 +18,7 @@ struct FavouriteRestaurantView: View {
             NavigationView {
 
                 ZStack {
-                    BackgroundImage(name: "favorite-bck", brightness: -0.01, contrast: 1, opacity: 0.3)
+                    BackgroundImage(name: "favorite-bck\(userModel.user.isDarkModeOn ? "-dark" : "")", brightness: -0.01, contrast: 1, opacity: 0.3)
                         .background(Constants.BCK_COLOR)
                     VStack(alignment: .leading, spacing: 50) {
                         if (userModel.user.favouriteRestaurants.count != 0) {
