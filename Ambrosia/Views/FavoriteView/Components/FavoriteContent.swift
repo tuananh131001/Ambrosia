@@ -16,10 +16,9 @@ struct FavoriteContent: View {
             VStack(alignment: .leading) {
                 // MARK: open state
                 FavoriteCategory(rest: rest)
-                
                 // MARK: title
                 Text(rest.title)
-                    .font(.title3)
+                    .font(.title2)
                     .bold()
                     .multilineTextAlignment(.leading)
                     .lineLimit(1)
@@ -27,14 +26,20 @@ struct FavoriteContent: View {
                 
                 // MARK: side info
                 FavoriteSideInfo(rest: rest)
+                Spacer()
+                
+                // MARK: rating
+                FavoriteRating(restaurant: rest)
             }
+            .frame(height: imageSize)
             
+            Spacer()
             
             // MARK: Image
-            FavoriteImage(cardWidth: imageSize, cardHeight: imageSize, displayType: "")
+//            FavoriteImage(cardWidth: imageSize, cardHeight: imageSize, displayType: "")
+            RestaurantAsyncImage(photo_id: rest.imageLink )
                 .frame(width: imageSize, height: imageSize, alignment: .leading)
-                .clipShape(Circle())
-            Spacer()
+                .cornerRadius(Constants.CONRNER_RADIUS)
         }
     }
 }

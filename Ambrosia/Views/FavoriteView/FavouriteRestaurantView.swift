@@ -8,12 +8,16 @@ struct FavouriteRestaurantView: View {
     @EnvironmentObject var restaurantModel: RestaurantModel
     @EnvironmentObject var userModel: UserModel
 
-    @State var cardWidth: CGFloat = 0.0
+    var cardWidth: CGFloat = 0.0
     @State var imageSize: CGFloat = 0.0
-    @State var cardHeight: CGFloat = 135.0
-
-
-
+    var cardHeight: CGFloat = 135.0
+    var paddingTopTitle: CGFloat = 60
+    var barTitle: some View {
+        Text("\(userModel.user.name)'s Favorite")
+            .font(.title)
+            .bold()
+            .foregroundColor(Constants.PRIMARY_COLOR)
+    }
     var body: some View {
         GeometryReader { geo in
             NavigationView {
@@ -22,75 +26,36 @@ struct FavouriteRestaurantView: View {
                         .background(Constants.BCK_COLOR)
                     if (userModel.user.favouriteRestaurants.count != 0) {
                         VStack(alignment: .leading, spacing: 50) {
-
                             ScrollView {
                                 VStack(spacing: 30) {
                                     ForEach(userModel.user.favouriteRestaurants, id: \.placeId) { rest in
-                                        NavigationLink(
-                                            tag: restaurantModel.findRestaurantIndexById(rest.placeId ?? ""),
-                                            selection: $restaurantModel.restaurantSelected) {
-                                            // find the current restaurant and display when the view appear
-                                            RestaurantDetailView().onAppear {
-                                                // MARK: action
-                                                restaurantModel.getCurrentRestaurant(placeId: rest.placeId ?? "")
-                                                restaurantModel.getServiceOptions()
-                                                restaurantModel.getDiningOptions()
-                                                restaurantModel.getPlaningOptions()
-                                                restaurantModel.getPaymentOptions()
-                                            }
-                                        } label: {
-                                            // MARK: view
-                                            HStack {
-                                                ZStack {
-                                                    ArrowShape()
-                                                        .fill(Constants.CARD_BCK_COLOR)
-                                                        .frame(width: geo.size.width * 0.9, height: cardHeight, alignment: .trailing)
-                                                        .modifier(NormalShadowModifier())
-
-                                                    FavoriteContent(imageSize: imageSize, rest: rest)
-                                                        .frame(width: geo.size.width * 0.7, height: cardHeight, alignment: .leading)
-                                                }
-                                                Spacer()
-                                            }
-
-                                        }
-                                            .edgesIgnoringSafeArea(.horizontal)
-
+                                        FavoriteCard(imageSize: imageSize, cardHeight: cardHeight, geo: geo, rest: rest)
                                     }
                                 }
                             }
                                 .onAppear() {
-                                //                            imageSize = cardWidth / 3
-                                imageSize = 80
+                                imageSize = 120
                             }
-                                .edgesIgnoringSafeArea(.horizontal)
                                 .frame(width: geo.size.width)
                         }
-                        
+                        .padding(.top, paddingTopTitle)
                     }
                     else {
-                        VStack(spacing: 6) {
-                            GifView(name: "boring-cat")
-                                .frame(width: geo.size.width, height: 500)
-                            Text("Hmmm....")
-                            Text("You have no favorites yet")
+                        FavoriteNotFound(geo: geo)
+                    }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        HStack {
+                            barTitle
+                            Spacer()
                         }
-                        .font(.title2)
-                        
+                        .padding(.top, paddingTopTitle)
 
                     }
                 }
-                    .navigationBarBackButtonHidden(true)
-                    .edgesIgnoringSafeArea(.horizontal)
-                    .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Text("Your Favorite".uppercased())
-                            .font(.title)
-                            .foregroundColor(Constants.PRIMARY_COLOR)
-                    }
-                }
             }
-                .edgesIgnoringSafeArea(.horizontal)
         }
     }
 
