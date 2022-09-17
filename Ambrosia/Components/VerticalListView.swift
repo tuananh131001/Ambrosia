@@ -10,17 +10,20 @@ import SwiftUI
 struct VerticalListView: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
     @State private var searchText = ""
-
+    var type:String
+ 
     var searchResults: [Restaurant] {
         // if the search bar is empty -> show all
         if searchText.isEmpty {
-            return restaurantModel.districtRestaurants
+            return type == "all" ? restaurantModel.restaurants : restaurantModel.districtRestaurants
+            
+             
         } else {
-            // search items that contain either title or address (Case insensitive) from user input
-            return restaurantModel.districtRestaurants.filter { $0.title.localizedCaseInsensitiveContains(searchText)
-                
+                return type == "all" ? restaurantModel.restaurants.filter { $0.title.localizedCaseInsensitiveContains(searchText)
+                } : restaurantModel.districtRestaurants.filter { $0.title.localizedCaseInsensitiveContains(searchText)
+                }
             }
-        }
+        
     }
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -32,7 +35,13 @@ struct VerticalListView: View {
                     NavigationLink() {
                             // find the current restaurant and display when the view appear
                             RestaurantDetailView().onAppear {
-                                restaurantModel.getCurrentRestaurantByDistance(placeId: searchResults[index].placeId ?? "")
+                                if (type == "all") {
+                                    restaurantModel.getCurrentRestaurant(placeId: searchResults[index].placeId ?? "")
+
+                                }else {
+                                    restaurantModel.getCurrentRestaurantByDistance(placeId: searchResults[index].placeId ?? "")
+
+                                }
                                 restaurantModel.getServiceOptions()
                                 restaurantModel.getDiningOptions()
                                 restaurantModel.getPlaningOptions()
@@ -61,6 +70,6 @@ struct VerticalListView: View {
 
 struct VerticalListView_Previews: PreviewProvider {
     static var previews: some View {
-        VerticalListView()
+        VerticalListView(type: "all")
     }
 }
