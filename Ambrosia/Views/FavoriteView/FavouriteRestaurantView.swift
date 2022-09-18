@@ -34,8 +34,14 @@ struct FavouriteRestaurantView: View {
         GeometryReader { geo in
             NavigationView {
                 ZStack {
-                    BackgroundImage(name: "favorite-bck\(userModel.user.isDarkModeOn ? "-dark" : "")", brightness: -0.01, contrast: 1, opacity: 0.3)
-                        .background(Constants.BCK_COLOR)
+                    if !userModel.user.isDarkModeOn {
+                        BackgroundImage(name: "favorite-bck", brightness: -0.01, contrast: 1, opacity: 0.3)
+                    }
+                    else {
+                        Constants.BCK_COLOR
+                            .edgesIgnoringSafeArea(.all)
+                    }
+                        
                     if (userModel.user.favouriteRestaurants.count != 0) {
                         VStack(alignment: .leading, spacing: 50) {
                             ScrollView {
