@@ -1,17 +1,17 @@
 /*
-     RMIT University Vietnam
-     Course: COSC2659 iOS Development
-     Semester: 2022B
-     Assessment: Assignment 3
-     Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Mai Nhung
-     ID: s3864077, s3823236, s3879954
-     Created  date: 09/09/2022
-     Last modified: 17/09/2022
-     Acknowledgement:
-     - Canvas, CodeWithChris Course
-     - https://stackoverflow.com/questions/59158476/how-to-have-text-in-shapes-in-swiftui
-     - https://blckbirds.com/post/stretchy-header-and-parallax-scrolling-in-swiftui/
-     - https://stackoverflow.com/questions/57582653/how-to-create-tappable-url-phone-number-in-swiftui
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Mai Nhung
+ ID: s3864077, s3823236, s3879954
+ Created  date: 09/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas, CodeWithChris Course
+ - https://stackoverflow.com/questions/59158476/how-to-have-text-in-shapes-in-swiftui
+ - https://blckbirds.com/post/stretchy-header-and-parallax-scrolling-in-swiftui/
+ - https://stackoverflow.com/questions/57582653/how-to-create-tappable-url-phone-number-in-swiftui
  */
 
 import SwiftUI
@@ -40,12 +40,12 @@ struct RestaurantDetailView: View {
             CircleButtonView(buttonImage: "arrow.left")
         }.buttonStyle(PlainButtonStyle())
     }
-
+    
     var btnBackProgress: some View {
         Button(action: {
             // Sound effect
             SoundModel.clickOtherSound()
-
+            
             self.presentationMode.wrappedValue.dismiss()
             // background music
             SoundModel.startBackgroundMusic(bckName: "home")
@@ -59,19 +59,19 @@ struct RestaurantDetailView: View {
             
         }.buttonStyle(PlainButtonStyle())
     }
-
+    
     var favouriteBtn: some View {
         Button(action: {
             SoundModel.clickCardSound()
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: ""))
             countFavourite += 1
         }, label: {
-                CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
-                    .onAppear() {
+            CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
+                .onAppear() {
                     clickFavourite = userModel.isRestaurantFavorite(restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: "click favorite")) == nil ? false : true
                 }
-            })
-
+        })
+        
     }
     
     var body: some View {
@@ -106,7 +106,7 @@ struct RestaurantDetailView: View {
                                 
                             }.frame(width: geo.size.width - 30,height: geo.size.height / 4.5)
                         }
-
+                        
                         // MARK: Restaurant detail Vstack section
                         VStack(alignment: .leading) {
                             HStack {
@@ -121,17 +121,17 @@ struct RestaurantDetailView: View {
                                 }.sheet(isPresented: $showOpenningHours) {
                                     OpeningHoursView()
                                 }
-
+                                
                             }
-
-
+                            
+                            
                             Divider()
                             // MARK: phone
                             HStack {
                                 Image(systemName: "phone.circle.fill").foregroundColor(Color("TextColor"))
                                 Text("Phone number: \(restaurantModel.currentRestaurant?.phone ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                                 Spacer()
-
+                                
                                 Button {
                                     SoundModel.clickOtherSound()
                                     restaurantModel.callRest()
@@ -140,9 +140,9 @@ struct RestaurantDetailView: View {
                                 }
                             }
                             Divider()
-
+                            
                             HStack {
-
+                                
                                 Image(systemName: "star.fill").foregroundColor(.yellow)
                                 Text("\(restaurantModel.currentRestaurant?.totalScore ?? 5.0, specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                                 Text("(\(restaurantModel.currentRestaurant?.reviewsCount ?? 5))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
@@ -152,13 +152,13 @@ struct RestaurantDetailView: View {
                                     showReview.toggle()
                                 } label: {
                                     Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
-
+                                    
                                 }.sheet(isPresented: $showReview) {
                                     ReviewView()
-
+                                    
                                 }
-
-                             
+                                
+                                
                                 
                             }
                             Divider()

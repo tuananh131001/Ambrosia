@@ -1,15 +1,15 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Nguyen Tuan Anh, Vo Quoc Huy
-    ID: s3864077, s3823236
-    Created  date: 9/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Nguyen Tuan Anh, Vo Quoc Huy
+ ID: s3864077, s3823236
+ Created  date: 9/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 
@@ -27,15 +27,16 @@ struct RestaurantCardInfo: View {
                     .bold()
                     .lineLimit(1)
                     .foregroundColor(Color("PrimaryColor"))
+                
                 Spacer()
-
+                
             }
-                .padding(.top, 10)
+            .padding(.top, 10)
             Spacer()
             HStack(spacing: 0) {
                 HStack(spacing: 5) {
                     // MARK: restaurant rating
-//                    RatingView(rest: rest)
+                    //                    RatingView(rest: rest)
                     Text("•")
                         .font(.headline)
                         .bold()
@@ -43,10 +44,10 @@ struct RestaurantCardInfo: View {
                 }
                 Spacer()
             }
-                .font(.subheadline)
-
+            .font(.subheadline)
+            
         }
-            .frame(width: cardWidth)
+        .frame(width: cardWidth)
     }
 }
 

@@ -1,15 +1,15 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Tom Huynh, Tran Nguyen Ha Khanh
-    ID: s3877707
-    Created  date: 9/3/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tom Huynh, Tran Nguyen Ha Khanh
+ ID: s3877707
+ Created  date: 9/3/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 import Firebase
@@ -23,58 +23,65 @@ struct SignUpView: View {
     @State var password = ""
     @State var passwordConfirmation = ""
     @State var showMessage : Bool = false
-
+    
     @FocusState private var emailIsFocused: Bool
     @FocusState private var passwordIsFocused: Bool
     @FocusState private var confirmPasswordIsFocused: Bool
-
+    
     var body: some View {
         ZStack (alignment: .center) {
             VStack (spacing: 20) {
-
+                
+                // MARK: -  welcome title
                 VStack (spacing: 10) {
                     Group {
                         Text("AMBROSIA")
                             .font(Font(UIFont(name: "Chalkboard SE Bold", size: Constants.APP_NAME_LARGE_SIZE)! as CTFont))
-
+                        
                         Text("Join us for good meals !")
                             .font(Font(UIFont(name: "Chalkboard SE", size: Constants.APP_NAME_LARGE_SIZE - 20)! as CTFont))
                     }
-
+                    
                     // MARK: CAT GIF
                     GifView(name: "cat-eat") .frame(width: 130, height: 110)
                 }
                 .padding(.bottom, 10)
-
-
+                
+                // MARK: - Form
                 VStack (spacing: 8) {
-
+                    
                     // Sign up fields to sign up for a new account
                     Group {
+                        // MARK: input email
                         TextField("Email", text: $email)
                             .modifier(TextFieldModifier())
                             .focused($emailIsFocused)
                             .border(Color(uiColor: Constants.PRIMARY_COLOR_UI), width: emailIsFocused ? 1 : 0)
+                        
+                        // MARK: input password
+                        // input
                         SecureField("Password", text: $password)
                             .modifier(TextFieldModifier())
                             .focused($passwordIsFocused)
                             .border(Color(uiColor: Constants.PRIMARY_COLOR_UI), width: passwordIsFocused ? 1 : 0)
+                        // confirm
                         SecureField("Confirm Password", text: $passwordConfirmation)
                             .modifier(TextFieldModifier())
                             .focused($confirmPasswordIsFocused)
                             .border(passwordConfirmation != password ? Color.red : Color(uiColor: Constants.PRIMARY_COLOR_UI), width: (passwordConfirmation != password || confirmPasswordIsFocused) ? 1 : 0)
                     }
                     .multilineTextAlignment(.leading)
-
-                    // Sign up message after pressing the sign up button
+                    
+                    // MARK: Sign up message after pressing the sign up button
                     if (showMessage) {
                         Text(userModel.firebaseService.signUpMessage)
                             .foregroundColor(userModel.firebaseService.signUpSuccess ? .green : .red)
                     }
                 }
-
+                
+                // MARK: - navigate btns
                 VStack (spacing: 10) {
-                    // Sign up button
+                    // MARK: Sign up button
                     Button(action: {
                         // add sound effect when click button
                         SoundModel.clickButtonSound()
@@ -85,10 +92,10 @@ struct SignUpView: View {
                         Text("Sign Up")
                             .bold()
                     }
-                        .buttonStyle(ButtonStylePrimary())
-
-
-                    // Button to dismiss sign up sheet and go back to sign in page
+                    .buttonStyle(ButtonStylePrimary())
+                    
+                    
+                    // MARK: Button to dismiss sign up sheet and go back to sign in page
                     Button {
                         SoundModel.clickOtherSound()
                         
@@ -98,18 +105,18 @@ struct SignUpView: View {
                     }
                 }
             }
-                .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
-                .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
-                .multilineTextAlignment(.center)
-                .foregroundColor(Constants.PRIMARY_COLOR)
-
+            .padding(.vertical, Constants.FORM_PADDING_VERTICAL)
+            .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
+            .multilineTextAlignment(.center)
+            .foregroundColor(Constants.PRIMARY_COLOR)
+            
         }
-            .background(.white)
-            .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
-            .cornerRadius(Constants.CONRNER_RADIUS)
-
+        .background(.white)
+        .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH)
+        .cornerRadius(Constants.CONRNER_RADIUS)
+        
     }
-
+    
 }
 
 struct SignUpView_Previews: PreviewProvider {
