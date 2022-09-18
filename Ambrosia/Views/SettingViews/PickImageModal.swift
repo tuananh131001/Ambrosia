@@ -74,6 +74,7 @@ struct PickImageModal: View {
             .cornerRadius(Constants.CONRNER_RADIUS)
             .overlay(
               Button(action: {
+                  SoundModel.clickOtherSound()
                   isModalAppear = false
                   DispatchQueue.main.asyncAfter(deadline: .now() + Constants.ANIMATION_MODAL_DURATION) {
                       showPickImageModal = false
