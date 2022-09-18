@@ -63,10 +63,10 @@ class FirebaseService: ObservableObject {
                         } else {
                         }
                     }
+                    // back to sign in page
                     user.loginSuccess = true
                     user.isNewUser = true
                     self.signUpSuccess = true
-
                 }
             }
         }
@@ -208,9 +208,7 @@ class FirebaseService: ObservableObject {
         // return true -> add favorite
         let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
         if restaurantIndex != nil {
-            if directRemove {
-                userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
-            }
+            userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
             removeFavorites(user: userModel.user, restaurant: restaurant)
             return false
         }
