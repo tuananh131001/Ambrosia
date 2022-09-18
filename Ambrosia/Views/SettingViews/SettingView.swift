@@ -173,6 +173,7 @@ struct SettingView: View {
             
             if(showPickImageModal) {
                 PickImageModal(showPickImageModal: $showPickImageModal, avatar: $avatar)
+                    .transition(.scale)
             }
         }
         .onAppear(perform: {

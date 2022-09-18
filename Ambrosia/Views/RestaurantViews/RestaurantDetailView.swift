@@ -31,6 +31,14 @@ struct RestaurantDetailView: View {
             // Sound effect
             SoundModel.clickOtherSound()
             
+            // favorite logic
+            if let restaurant = restaurantModel.currentRestaurant {
+                let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
+                if restaurantIndex != nil && !clickFavourite {
+                    userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+                }
+            }
+            
             self.presentationMode.wrappedValue.dismiss()
             // background music
             SoundModel.startBackgroundMusic(bckName: "home")
@@ -194,20 +202,6 @@ struct RestaurantDetailView: View {
             .ignoresSafeArea()
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: btnBack, trailing: favouriteBtn)
-            .onDisappear() {
-                print("Disappear sir")
-                if let restaurant = restaurantModel.currentRestaurant {
-                    print("Sir disappear ", restaurant)
-                    let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
-                    if restaurantIndex != nil && !clickFavourite {
-                        print("Sir disappear is favorite", restaurant)
-                        userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
-                    }
-                }
-                
-            }
-            
-            
         }
         else {
             ProgressView() {
