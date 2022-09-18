@@ -39,12 +39,17 @@ struct RestaurantListView: View {
         NavigationView {
             
             ScrollView {
+                // MARK: district filter buttons
                 HStack{
                     DistrictFilterView()
                 }
+                // MARK: - restaurants highest ranking
                 HorizontalListView(sectionTitle: "Suggestion Restaurants", type: "suggestion")
+                // MARK: - restaurants nearby
                 HorizontalListView(sectionTitle: "Nearby Restaurants", type: "nearby")
+                // MARK: - All restaurants display
                 VStack (alignment: .leading) {
+                    // MARK: title view
                     HStack(alignment:.center){
                         Text("All Restaurants").bold().foregroundColor(Color("TextColor"))
                         Spacer()
@@ -56,15 +61,16 @@ struct RestaurantListView: View {
                     }.padding()
                     
                     
-                    // scroll view to show all the restaurants
+                    // MARK: scroll view to show all the restaurants
                     LazyVStack(alignment:.trailing,spacing: 35) {
                         ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
                             index in
                             // link to the restaurant detail
                             NavigationLink(tag: index, selection: $restaurantModel.restaurantSelected) {
-                                // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
+                                    // find the current restaurant and display when the view appear
                                     restaurantModel.getCurrentRestaurant(placeId: restaurantModel.firstTwentyRestaurants[index].placeId ?? "")
+                                    // after: fetch more
                                     restaurantModel.getServiceOptions()
                                     restaurantModel.getDiningOptions()
                                     restaurantModel.getPlaningOptions()
@@ -80,7 +86,7 @@ struct RestaurantListView: View {
                             })
                             
                         }
-                     
+                        
                         // add the search bar and set the mode to always display the search bar
                     }.navigationTitle("Ambrosia").accentColor(Color("PrimaryColor")).padding()
                 }
@@ -89,6 +95,7 @@ struct RestaurantListView: View {
             } .onChange(of: restaurantModel.restaurantSelected) { newValue in
                 if (newValue ==
                     nil) {
+                    // back previous view
                     restaurantModel.currentRestaurant = nil
                 }
             }

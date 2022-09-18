@@ -27,6 +27,8 @@ struct RestaurantDetailView: View {
     @State var showReview = false
     @State var clickFavourite = false
     @State var countFavourite = 0
+    
+    // MARK: back button when not in loading phase
     var btnBack: some View {
         Button(action: {
             // Sound effect
@@ -41,6 +43,7 @@ struct RestaurantDetailView: View {
         }.buttonStyle(PlainButtonStyle())
     }
     
+    // MARK: back button when in loading phase
     var btnBackProgress: some View {
         Button(action: {
             // Sound effect
@@ -60,9 +63,11 @@ struct RestaurantDetailView: View {
         }.buttonStyle(PlainButtonStyle())
     }
     
+    // MARK: favorite button to add restaurant to favorite
     var favouriteBtn: some View {
         Button(action: {
             SoundModel.clickCardSound()
+            // change favorite when click
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: ""))
             countFavourite += 1
         }, label: {
@@ -79,26 +84,38 @@ struct RestaurantDetailView: View {
             GeometryReader {
                 geo in
                 ScrollView{
+                    // MARK: - restaurant image
                     RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageLink ?? "").frame(width: geo.size.width, height: geo.size.height/2.7)
                     
-                    //MARK: Rectange Resutaurant Detail Card
+                    //MARK: - Rectange Restaurant Detail Card
                     VStack(spacing:20){
                         
                         ZStack {
+                            // MARK: container
                             Rectangle().foregroundColor(Constants.CARD_BCK_COLOR).frame(width: geo.size.width - 30, height: geo.size.height / 4.5).cornerRadius(10).shadow(color: .black.opacity(0.5), radius: 5)
+                            
+                            // MARK: content
                             VStack(spacing: 5) {
+                                // Open status
                                 HStack {
                                     Text("⏰").font(.system(size: 12))
                                     Text(restaurantModel.currentRestaurant?.temporarilyClosed == false ? "OPEN" : "CLOSED").font(.system(size: 12)).foregroundColor(.red)
                                     
                                 }
+                                // Title
                                 Text(restaurantModel.currentRestaurant?.title ?? "Mr.Sir - Mì Sir - Salad Sir - Sir nè").foregroundColor(Color("TextColor")).bold().font(.system(size: 30)).multilineTextAlignment(.center).frame(width: geo.size.width - 70).lineLimit(2)
+                                // Distance and address
                                 HStack {
+                                    // distance
                                     Text("\(restaurantModel.currentRestaurant?.distance ?? 0, specifier: "%.1f") km").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
+                                    
                                     Text("•").foregroundColor(Color("SubTextColor"))
+                                    
+                                    // address
                                     Text(restaurantModel.currentRestaurant?.address ?? "Sir street, Sir city, Sir ngu").foregroundColor(Color("SubTextColor")).lineLimit(1).font(.system(size: 14))
                                     
                                 }.frame(width:geo.size.width-100)
+                                // Restaurant category
                                 HStack{
                                     Text("Category: ").font(.system(size: 14)).foregroundColor(Color("SubTextColor"))
                                     Text("\(restaurantModel.currentRestaurant?.categoryName ?? "")").font(.system(size: 14)).foregroundColor(Color("SubTextColor")).bold()
@@ -107,12 +124,16 @@ struct RestaurantDetailView: View {
                             }.frame(width: geo.size.width - 30,height: geo.size.height / 4.5)
                         }
                         
-                        // MARK: Restaurant detail Vstack section
+                        // MARK: - Restaurant detail Vstack section
                         VStack(alignment: .leading) {
+                            // MARK: open hours list
                             HStack {
+                                // Icon
                                 Image(systemName: "clock.circle").foregroundColor(Color("PrimaryColor"))
+                                // Text
                                 Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                                 Spacer()
+                                // See more to see open hours + map in sheet
                                 Button {
                                     SoundModel.clickOtherSound()
                                     showOpenningHours = true
@@ -124,14 +145,16 @@ struct RestaurantDetailView: View {
                                 
                             }
                             
-                            
                             Divider()
+                            
                             // MARK: phone
                             HStack {
+                                // Icon
                                 Image(systemName: "phone.circle.fill").foregroundColor(Color("TextColor"))
+                                // Text
                                 Text("Phone number: \(restaurantModel.currentRestaurant?.phone ?? "No contact")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
                                 Spacer()
-                                
+                                // Call button
                                 Button {
                                     SoundModel.clickOtherSound()
                                     restaurantModel.callRest()
@@ -141,12 +164,16 @@ struct RestaurantDetailView: View {
                             }
                             Divider()
                             
+                            // MARK: review
                             HStack {
-                                
+                                // icon
                                 Image(systemName: "star.fill").foregroundColor(.yellow)
+                                // rating score
                                 Text("\(restaurantModel.currentRestaurant?.totalScore ?? 5.0, specifier: "%.1f")").font(.system(size: 14)).foregroundColor(Color("TextColor"))
+                                // number of rating
                                 Text("(\(restaurantModel.currentRestaurant?.reviewsCount ?? 5))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
                                 Spacer()
+                                // add review/ view review view (in sheet)
                                 Button {
                                     SoundModel.clickOtherSound()
                                     showReview.toggle()
@@ -163,16 +190,21 @@ struct RestaurantDetailView: View {
                             }
                             Divider()
                             
+                            // MARK: Other options display
                             VStack(alignment: .leading) {
+                                // service
                                 if (restaurantModel.currentRestaurant?.serviceOptionsArr.count != 0){
                                     Breadcrumbs(options:"Service")
                                 }
+                                // dining
                                 if (restaurantModel.currentRestaurant?.diningOptionsArr.count != 0){
                                     Breadcrumbs(options:"Dining")
                                 }
+                                // payment
                                 if (restaurantModel.currentRestaurant?.paymentsArr.count != 0){
                                     Breadcrumbs(options:"Payment")
                                 }
+                                // planning
                                 if (restaurantModel.currentRestaurant?.planingArr.count != 0){
                                     Breadcrumbs(options:"Planing")
                                 }
@@ -180,7 +212,7 @@ struct RestaurantDetailView: View {
                             }
                             
                             Divider()
-                            
+                            // MARK: display user rating in details
                             VStack(alignment:.leading){
                                 Text("🎖 User Ratings:")
                                 RatingContributionView(rating: Int(restaurantModel.currentRestaurant?.totalScore ?? 5.0))
@@ -200,6 +232,7 @@ struct RestaurantDetailView: View {
             .navigationBarItems(leading: btnBack, trailing: favouriteBtn)
         }
         else {
+            // load if loading restaurant/ no restaurant
             ProgressView() {
                 VStack {
                     GifView(name: "nothing").offset(y: 120)
@@ -211,6 +244,7 @@ struct RestaurantDetailView: View {
             .navigationBarItems(leading: btnBackProgress)
             
             .onAppear() {
+                // favorite back home
                 if(countFavourite != 0){
                     self.presentationMode.wrappedValue.dismiss()
                 }

@@ -1,15 +1,15 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Vo Quoc Huy
-    ID: s3823236
-    Created  date: 10/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Vo Quoc Huy
+ ID: s3823236
+ Created  date: 10/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 
@@ -25,17 +25,24 @@ struct AddReviewView: View {
         GeometryReader{
             geo in
             VStack(alignment:.leading,spacing:20){
+                // MARK: - restaurant info display
                 VStack(spacing:10){
+                    // MARK: restaurant image
                     RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageLink ?? "").frame(width: geo.size.width, height: geo.size.height/4)
                     Spacer()
+                    // MARK: restaurant title
                     Text(restaurantModel.currentRestaurant?.title ?? "").foregroundColor(Color("TextColor")).bold().lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50).font(.system(size: 16)).padding(.top,20)
+                    // MARK: restaurant address
                     Text(restaurantModel.currentRestaurant?.address ?? "").foregroundColor(Color("SubTextColor")).lineLimit(3).multilineTextAlignment(.center).frame(width: geo.size.width-50,height: 50).font(.system(size: 14))
                 }
                 
+                // MARK: - add rating site
                 VStack(alignment:.leading,spacing:20){
                     Text("Rate restaurant").foregroundColor(Color("TextColor")).bold()
                     RatingView(rating: $rating, tappable: true, width: 25, height: 20)
                 }.padding()
+                
+                // MARK: - add review
                 VStack(alignment:.leading){
                     Text("Leave a review").foregroundColor(Color("TextColor")).bold()
                     TextEditor(text: $userReview)
@@ -48,7 +55,10 @@ struct AddReviewView: View {
                         .disableAutocorrection(true)
                     
                 }.padding(.horizontal)
+                
+                // MARK: - submit button
                 Button {
+                    // close sheet
                     presentationMode.wrappedValue.dismiss()
                     SoundModel.clickButtonSound()
                     // Add Review from user
