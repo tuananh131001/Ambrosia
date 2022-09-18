@@ -24,13 +24,18 @@ struct FavouriteRestaurantView: View {
     var cardWidth: CGFloat = 0.0
     var imageSize: CGFloat = 120
     var cardHeight: CGFloat = 135.0
+    
+    @State private var searchText = ""
+    
+    // MARK: view title
     var barTitle: some View {
         Text("\(userModel.user.name)'s Favorite")
             .font(.title)
             .bold()
             .foregroundColor(Constants.PRIMARY_COLOR)
     }
-    @State private var searchText = ""
+    
+    // MARK: searching results
     var searchResults: [Restaurant] {
         // if the search bar is empty -> show all
         if searchText.isEmpty {
@@ -47,19 +52,24 @@ struct FavouriteRestaurantView: View {
         GeometryReader { geo in
             NavigationView {
                 ZStack {
+                    // MARK: bck color
                     Constants.BCK_COLOR
                         .edgesIgnoringSafeArea(.all)
+                    
+                    // MARK: if has favorite rests
                     if (userModel.user.favouriteRestaurants.count != 0) {
                         VStack(alignment: .leading, spacing: 50) {
                             ScrollView {
                                 VStack(spacing: 30) {
                                     ForEach(searchResults, id: \.placeId) { rest in
+                                        // Rest card
                                         FavoriteCard(imageSize: imageSize, cardHeight: cardHeight, geo: geo, rest: rest)
                                     }
                                 }
                             }
                         }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name").disableAutocorrection(true)
                     }
+                    // MARK: if no favorite rest
                     else {
                         FavoriteNotFound(geo: geo)
                     }

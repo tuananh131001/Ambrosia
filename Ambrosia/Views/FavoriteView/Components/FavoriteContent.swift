@@ -1,24 +1,26 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Tran Mai Nhung
-    ID: s3879954
-    Created  date: 16/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tran Mai Nhung
+ ID: s3879954
+ Created  date: 16/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 
 struct FavoriteContent: View {
+    // card content
     let imageSize: CGFloat
     let rest: Restaurant
     
     var body: some View {
         HStack {
+            // MARK: - text content
             VStack(alignment: .leading, spacing: 5) {
                 // MARK: open state
                 FavoriteCategory(rest: rest)
@@ -41,8 +43,7 @@ struct FavoriteContent: View {
             
             Spacer()
             
-            // MARK: Image
-//            FavoriteImage(cardWidth: imageSize, cardHeight: imageSize, displayType: "")
+            // MARK: - Image
             RestaurantAsyncImage(photo_id: rest.imageLink )
                 .frame(width: imageSize, height: imageSize, alignment: .leading)
                 .cornerRadius(Constants.CONRNER_RADIUS)

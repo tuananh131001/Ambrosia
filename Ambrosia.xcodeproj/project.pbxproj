@@ -47,7 +47,6 @@
 		3D304AFD289CBFB700B269ED /* AssignGradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D304AFC289CBFB700B269ED /* AssignGradientColor.swift */; };
 		3D379D7328D42A84008FF117 /* FavoriteRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7228D42A84008FF117 /* FavoriteRating.swift */; };
 		3D379D7728D42AFB008FF117 /* FavoriteSideInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */; };
-		3D379D7D28D456A3008FF117 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7C28D456A3008FF117 /* FavoriteButton.swift */; };
 		3D379D7F28D46936008FF117 /* FavoriteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7E28D46936008FF117 /* FavoriteContent.swift */; };
 		3D379D8128D4946F008FF117 /* UserDefaultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D8028D4946F008FF117 /* UserDefaultUtils.swift */; };
 		3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42C2172896D680005BA233 /* NotFoundView.swift */; };
@@ -142,7 +141,6 @@
 		3D304AFC289CBFB700B269ED /* AssignGradientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignGradientColor.swift; sourceTree = "<group>"; };
 		3D379D7228D42A84008FF117 /* FavoriteRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRating.swift; sourceTree = "<group>"; };
 		3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSideInfo.swift; sourceTree = "<group>"; };
-		3D379D7C28D456A3008FF117 /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		3D379D7E28D46936008FF117 /* FavoriteContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteContent.swift; sourceTree = "<group>"; };
 		3D379D8028D4946F008FF117 /* UserDefaultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultUtils.swift; sourceTree = "<group>"; };
 		3D42C2172896D680005BA233 /* NotFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundView.swift; sourceTree = "<group>"; };
@@ -329,7 +327,6 @@
 				3D379D7E28D46936008FF117 /* FavoriteContent.swift */,
 				3D379D7228D42A84008FF117 /* FavoriteRating.swift */,
 				3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */,
-				3D379D7C28D456A3008FF117 /* FavoriteButton.swift */,
 				3DF6A24128D55C1800C08607 /* UnusedFavorite */,
 				3DF6A24328D56AA100C08607 /* FavoriteCategory.swift */,
 				3DA85AE428D611D2008B55B9 /* FavoriteNotFound.swift */,
@@ -685,7 +682,6 @@
 				3D379D7728D42AFB008FF117 /* FavoriteSideInfo.swift in Sources */,
 				3DF148A428D1B1E400FFF220 /* ImageSystemHier.swift in Sources */,
 				3DC2FC972886E18E003750D3 /* EatTime.swift in Sources */,
-				3D379D7D28D456A3008FF117 /* FavoriteButton.swift in Sources */,
 				442A4E8028CEF3DD00AD37E4 /* CalculateDistance.swift in Sources */,
 				3D42C2182896D680005BA233 /* NotFoundView.swift in Sources */,
 				44CC5F1C28C6F49A003D7E19 /* User.swift in Sources */,
