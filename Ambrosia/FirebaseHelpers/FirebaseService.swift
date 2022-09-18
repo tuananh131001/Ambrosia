@@ -59,7 +59,7 @@ class FirebaseService: ObservableObject {
                         "name": "Sir",
                         "email": authResult?.user.email ?? ""
                         ]) { err in
-                            if err != nil {
+                        if err != nil {
                         } else {
                         }
                     }
@@ -91,7 +91,7 @@ class FirebaseService: ObservableObject {
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
         for riviu in restaurant.reviews {
-            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "username": riviu.username, "email": riviu.email, "isLiked": riviu.isLiked, "userId": riviu.userId] as [String: Any]
+            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "email": riviu.email, "isLiked": riviu.isLiked, "userId": riviu.userId] as [String: Any]
             newReviewList.append(newReview)
         }
         // assign new data to firestore
@@ -119,11 +119,10 @@ class FirebaseService: ObservableObject {
                         let timestamp: Timestamp = review["dateCreated"] as? Timestamp ?? Timestamp()
                         let dateCreated: Date = timestamp.dateValue()
                         let rating: Int = review["rating"] as? Int ?? 1
-                        let username: String = review["username"] as? String ?? ""
                         let email: String = review["email"] as? String ?? ""
                         let userId: String = review["userId"] as? String ?? ""
                         let isLiked: Bool = review["isLiked"] as? Bool ?? false
-                        let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, username: username, email: email, isLiked: isLiked, userId: userId)
+                        let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, email: email, isLiked: isLiked, userId: userId)
                         reviewFetch.append(newReview)
                     }
                     // assign to the reviews on local
@@ -133,10 +132,9 @@ class FirebaseService: ObservableObject {
             }
         }
     }
-    // MARK: get user
-    func getUserAvatar(userId: String, completion: @escaping (_ newAvatar: String) -> ()) {
+    // MARK: get user avatar
+    func getUserAvatar(userId: String, completion: @escaping (_ newAvatar: String) -> (), setUserName: @escaping (_ newUsername: String) -> ()) {
         let docRef = Firestore.firestore().collection("user").document(userId)
-        //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
             if let error = error as NSError? {
                 print("Error getting document: \(error.localizedDescription)")
@@ -145,7 +143,9 @@ class FirebaseService: ObservableObject {
                 if let document = document {
                     let data = document.data()
                     let avatarStr: String = data?["avatarStr"] as? String ?? ""
+                    let name: String = data?["name"] as? String ?? ""
                     completion(avatarStr)
+                    setUserName(name)
                 }
             } }
     }
