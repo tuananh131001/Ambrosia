@@ -1,14 +1,14 @@
 /*
-     RMIT University Vietnam
-     Course: COSC2659 iOS Development
-     Semester: 2022B
-     Assessment: Assignment 3
-     Author: Tran Nguyen Ha Khanh
-     ID: s3877707
-     Created  date: 16/09/2022
-     Last modified: 17/09/2022
-     Acknowledgement:
-     - Canvas
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tran Nguyen Ha Khanh
+ ID: s3877707
+ Created  date: 16/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
  */
 
 import SwiftUI
@@ -34,9 +34,12 @@ struct PickImageModal: View {
     
     var body: some View {
         ZStack {
+            // MARK: - Blur background when appear modal
             Color("Shadow")
                 .edgesIgnoringSafeArea(.all)
+            // MARK: - modal
             VStack {
+                // MARK: select image
                 ZStack {
                     Rectangle()
                         .fill(.secondary)
@@ -54,12 +57,15 @@ struct PickImageModal: View {
                     showingImagePicker = true
                 }
                 
+                // MARK: save button
                 Button(action: {
-                    save()                }) {
+                    save()
+                }) {
                     Text("Save").bold()
                 }
-                    .buttonStyle(ButtonStyleWhite())
+                .buttonStyle(ButtonStyleWhite())
                 
+                // MARK: show message if success
                 if (showMessage) {
                     Text(message)
                         .foregroundColor(.white)
@@ -73,22 +79,24 @@ struct PickImageModal: View {
             .foregroundColor(.white)
             .cornerRadius(Constants.CONRNER_RADIUS)
             .overlay(
-              Button(action: {
-                  SoundModel.clickOtherSound()
-                  isModalAppear = false
-                  DispatchQueue.main.asyncAfter(deadline: .now() + Constants.ANIMATION_MODAL_DURATION) {
-                      showPickImageModal = false
-                  }
-                  
-              }) {
-                Image(systemName: "xmark.circle")
-                  .font(.title)
-              }
-                .foregroundColor(.white)
-                .padding(.top, 20)
-                .padding(.trailing, 20),
+                // MARK: close button
+                Button(action: {
+                    SoundModel.clickOtherSound()
+                    isModalAppear = false
+                    // for animation
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.ANIMATION_MODAL_DURATION) {
+                        showPickImageModal = false
+                    }
+                    
+                }) {
+                    Image(systemName: "xmark.circle")
+                        .font(.title)
+                }
+                    .foregroundColor(.white)
+                    .padding(.top, 20)
+                    .padding(.trailing, 20),
                 alignment: .topTrailing
-                )
+            )
         }
         .onChange(of: inputImage) { _ in loadImage() }
         .sheet(isPresented: $showingImagePicker) {
@@ -96,12 +104,14 @@ struct PickImageModal: View {
         }
     }
     
+    // load image function
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
         
     }
     
+    // save function when click save
     func save() {
         if let img = inputImage {
             guard let inputImage = inputImage else { return }

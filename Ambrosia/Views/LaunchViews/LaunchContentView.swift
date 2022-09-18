@@ -169,11 +169,13 @@ struct LaunchContentView: View {
             
             
         }.sheet(isPresented: $showingSignUpSheet) {
+            // Display sign up view
             SignUpView()
         }
         .ignoresSafeArea(.all, edges: .all)
         .onAppear(perform: {
             let userDefaults = UserDefaults.standard
+            // Call login function
             if let loginType = userDefaults.string(forKey: "loginType") {
                 if (loginType != "") {
                     userModel.autoLogin(restaurantModel: restaurantModel, loginType: loginType)
@@ -182,23 +184,27 @@ struct LaunchContentView: View {
             }
         })
         .onDisappear(perform: {
+            // fetch user info now
             if let uid = Auth.auth().currentUser?.uid {
                 userModel.fetchUserInfo(id: uid, userModel: userModel, restaurantModel: restaurantModel)
             }
         })
     }
     
-    
+    // MARK: login function
     func login(type: SignInMethod) {
         userModel.loginMessage = ""
+        // google
         if (type == .google) {
             userModel.GoogleSignIn(restaurantModel: restaurantModel)
             afterVerify()
         }
+        // microsoft
         else if (type == .microsoft) {
             userModel.MicrosoftSignIn(restaurantModel: restaurantModel)
             afterVerify()
         }
+        // normal
         else {
             DispatchQueue.main.async {
                 userModel.NormalSignIn(email: email, password: password, restaurantModel: restaurantModel)
@@ -210,6 +216,7 @@ struct LaunchContentView: View {
         }
     }
     
+    // verfy
     func afterVerify() {
         showLoginMessage = true
         //        showLoginMessage = userModel.loginMessage != "" ? true : false

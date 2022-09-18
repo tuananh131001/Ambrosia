@@ -1,14 +1,14 @@
 /*
-     RMIT University Vietnam
-     Course: COSC2659 iOS Development
-     Semester: 2022B
-     Assessment: Assignment 3
-     Author: Nguyen Tuan Anh
-     ID: s3864077
-     Created  date: 16/09/2022
-     Last modified: 17/09/2022
-     Acknowledgement:
-     - Canvas
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Nguyen Tuan Anh
+ ID: s3864077
+ Created  date: 16/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
  */
 
 import SwiftUI
@@ -18,6 +18,7 @@ struct RecentReviews: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
     @State private var searchText = ""
     
+    // searching results inside recent review list
     var searchResults: [Restaurant] {
         // if the search bar is empty -> show all
         if searchText.isEmpty {

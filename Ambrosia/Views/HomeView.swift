@@ -1,13 +1,13 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Tran Mai Nhung, Vo Quoc Huy
-    ID: s3879954, s3823236
-    Created  date: 9/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tran Mai Nhung, Vo Quoc Huy
+ ID: s3879954, s3823236
+ Created  date: 9/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
  - Canvas, CodeWithChris Course
  - https://www.hackingwithswift.com/quick-start/swiftui/how-to-add-a-search-bar-to-filter-your-data
  - https://stackoverflow.com/questions/56505528/swiftui-update-navigation-bar-title-color
@@ -26,20 +26,21 @@ struct HomeViewContent: View {
     @EnvironmentObject var model: RestaurantModel
     @EnvironmentObject var userModel: UserModel
     
-//    @AppStorage("isDarkMode") private var isDarkMode = false
+    //    @AppStorage("isDarkMode") private var isDarkMode = false
     /*
-    @EnvironmentObject var viewModel: AuthenticationModel
-    
-    init() {
-        // Customize the tab bar for the whole app
-        UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
-        UITabBar.appearance().unselectedItemTintColor = UIColor(Color("PlaceholderText"))
-        UITabBar.appearance().barTintColor = UIColor(Color("PrimaryColor"))
-    }
-    */
+     @EnvironmentObject var viewModel: AuthenticationModel
+     
+     init() {
+     // Customize the tab bar for the whole app
+     UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance.init(idiom: .unspecified)
+     UITabBar.appearance().unselectedItemTintColor = UIColor(Color("PlaceholderText"))
+     UITabBar.appearance().barTintColor = UIColor(Color("PrimaryColor"))
+     }
+     */
     
     
     var body: some View {
+        // View on home view
         TabView(selection: $tabSelection) {
             // MARK: Main feature character view
             RestaurantListView().tabItem {
@@ -71,10 +72,9 @@ struct HomeViewContent: View {
             ThemeViewUtil.setAppTheme(userModel)
         }
         .onChange(of: tabSelection) { newValue in
-            
+            // click tab item -> sound effect
             SoundModel.clickTabSound()
         }
-//        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 struct HomeView: View {
@@ -92,6 +92,7 @@ struct HomeView: View {
     }
     
     var body: some View {
+        // if not ask user location yet
         if restaurantModel.authorizationState == .notDetermined {
             HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
                 .onAppear() {
