@@ -28,6 +28,9 @@ struct PickImageModal: View {
     @State var message : String = ""
     @State var showMessage : Bool = false
     
+    // for animation
+    @Binding var isModalAppear: Bool
+    
     
     var body: some View {
         ZStack {
@@ -71,7 +74,11 @@ struct PickImageModal: View {
             .cornerRadius(Constants.CONRNER_RADIUS)
             .overlay(
               Button(action: {
-                  showPickImageModal = false
+                  isModalAppear = false
+                  DispatchQueue.main.asyncAfter(deadline: .now() + Constants.ANIMATION_MODAL_DURATION) {
+                      showPickImageModal = false
+                  }
+                  
               }) {
                 Image(systemName: "xmark.circle")
                   .font(.title)

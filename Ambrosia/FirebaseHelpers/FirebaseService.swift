@@ -203,12 +203,14 @@ class FirebaseService: ObservableObject {
     }
 
     // change
-    func changeFavorites(userModel: UserModel, restaurant: Restaurant) -> Bool {
+    func changeFavorites(userModel: UserModel, restaurant: Restaurant, directRemove: Bool = false) -> Bool {
         // return false -> remove favorite
         // return true -> add favorite
         let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
         if restaurantIndex != nil {
-//            userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+            if directRemove {
+                userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+            }
             removeFavorites(user: userModel.user, restaurant: restaurant)
             return false
         }
