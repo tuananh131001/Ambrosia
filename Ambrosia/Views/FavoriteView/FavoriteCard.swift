@@ -41,6 +41,9 @@ struct FavoriteCard: View {
                 FavoriteContent(imageSize: imageSize, rest: rest)
                 .frame(width: geo.size.width * 0.8, height: cardHeight, alignment: .leading)
             }
+            .simultaneousGesture(TapGesture().onEnded {
+                SoundModel.clickCardSound()
+            })
             Divider()
         }
     }

@@ -121,6 +121,7 @@ struct RestaurantDetailView: View {
                                 Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                                 Spacer()
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     showOpenningHours = true
                                 } label: {
                                     Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -139,6 +140,7 @@ struct RestaurantDetailView: View {
                                 Spacer()
 
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     restaurantModel.callRest()
                                 } label: {
                                     Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -153,6 +155,7 @@ struct RestaurantDetailView: View {
                                 Text("(\(restaurantModel.currentRestaurant?.reviewsCount ?? 5))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
                                 Spacer()
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     showReview.toggle()
                                 } label: {
                                     Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()

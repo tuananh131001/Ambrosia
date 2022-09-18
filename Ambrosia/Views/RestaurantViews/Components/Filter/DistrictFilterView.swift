@@ -67,6 +67,9 @@ struct DistrictFilterView: View {
                    
                    
                 }
+                .simultaneousGesture(TapGesture().onEnded {
+                    SoundModel.clickButtonSound()
+                })
 
         }
         }.padding()

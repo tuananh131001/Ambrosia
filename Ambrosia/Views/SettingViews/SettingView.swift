@@ -51,6 +51,7 @@ struct SettingView: View {
                             }
                             
                             Button(action: {
+                                SoundModel.clickOtherSound()
                                 showPickImageModal = true
                             }) {
                                 ZStack {
@@ -121,6 +122,7 @@ struct SettingView: View {
                             
                               // MARK: EDIT INFO BTN
                               Button {
+                                  SoundModel.clickButtonSound()
                                     showReview = true
 
                               } label: {
@@ -136,6 +138,7 @@ struct SettingView: View {
                             
                               // MARK: EDIT INFO BTN
                               Button {
+                                  SoundModel.clickButtonSound()
                                   showEditInfo = true
 
                               } label: {
