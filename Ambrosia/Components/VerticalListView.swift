@@ -66,7 +66,7 @@ struct VerticalListView: View {
                 }
             }.padding()
             
-        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name")
+        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name").disableAutocorrection(true)
         
         
         // add the search bar and set the mode to always display the search bar

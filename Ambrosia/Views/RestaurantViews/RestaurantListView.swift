@@ -61,7 +61,7 @@ struct RestaurantListView: View {
                         ForEach(0..<restaurantModel.firstTwentyRestaurants.count, id: \.self) {
                             index in
                             // link to the restaurant detail
-                            NavigationLink() {
+                            NavigationLink(tag: index, selection: $restaurantModel.restaurantSelected) {
                                 // find the current restaurant and display when the view appear
                                 RestaurantDetailView().onAppear {
                                     restaurantModel.getCurrentRestaurant(placeId: restaurantModel.firstTwentyRestaurants[index].placeId ?? "")
