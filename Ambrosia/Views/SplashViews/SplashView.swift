@@ -72,7 +72,7 @@ struct SplashView: View {
                         animationValues[2] = true
                     }
                     // text moving up
-                    withAnimation(.easeInOut(duration: 0.2).delay(0.75)) {
+                    withAnimation(.easeInOut(duration: 0.17).delay(0.75)) {
                         animationValues[3] = true
                         footer = "Illuminati Group".uppercased()
                     }
@@ -82,11 +82,10 @@ struct SplashView: View {
                             title = "Ambr".uppercased()
                             title2 = "osia".uppercased()
                             animationValues[4] = true
-    //                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            withAnimation(.easeInOut(duration: 0.3).delay(0.4).repeatForever().delay(0.15)) {
+                            // trim circle
+                            withAnimation(.easeInOut(duration: 0.3).delay(0.4).repeatForever().delay(0.1)) {
                                     animationValues[5] = true
                                 }
-    //                        }
                         }
                     }
 

@@ -26,6 +26,7 @@ struct ReviewView: View {
                         VStack(spacing:20){
                             Text("This restaurant has not been reviewed yet.").foregroundColor(Color("TextColor"))
                             Button {
+                                SoundModel.clickButtonSound()
                                 isShowAddReview = true
                             } label: {
                                 RoundedButton(buttonText: "ADD REVIEW", width: geo.size.width/2.4, height: geo.size.height/14,size: 16)

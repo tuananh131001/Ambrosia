@@ -22,6 +22,7 @@ struct ToggleTheme: View {
         Toggle("Dark Mode", isOn: $userModel.user.isDarkModeOn)
             .foregroundColor(Color("TextColor"))
             .onChange(of: userModel.user.isDarkModeOn) { (state) in
+                SoundModel.clickTabSound()
                 ThemeViewUtil.changeDarkMode(state: state)
                 userModel.updateUserThemeMode()
         }

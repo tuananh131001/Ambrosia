@@ -50,6 +50,7 @@ struct AddReviewView: View {
                 }.padding(.horizontal)
                 Button {
                     presentationMode.wrappedValue.dismiss()
+                    SoundModel.clickButtonSound()
                     // Add Review from user
                     //TODO: Load restaurant from restaurant models
                     self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: userModel.user.name, email: userModel.user.email,userId:userModel.user.id, image: "avatar1",userModel:userModel)

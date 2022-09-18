@@ -48,4 +48,6 @@ enum Constants {
     
     static let DARK_MODE = "DARK_MODE"
     static let LIGHT_MODE = "LIGHT_MODE"
+    
+    static let ANIMATION_MODAL_DURATION: CGFloat = 0.3
 }

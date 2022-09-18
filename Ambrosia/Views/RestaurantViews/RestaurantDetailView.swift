@@ -31,6 +31,14 @@ struct RestaurantDetailView: View {
             // Sound effect
             SoundModel.clickOtherSound()
             
+            // favorite logic
+            if let restaurant = restaurantModel.currentRestaurant {
+                let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
+                if restaurantIndex != nil && !clickFavourite {
+                    userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+                }
+            }
+            
             self.presentationMode.wrappedValue.dismiss()
             // background music
             SoundModel.startBackgroundMusic(bckName: "home")
@@ -113,6 +121,7 @@ struct RestaurantDetailView: View {
                                 Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                                 Spacer()
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     showOpenningHours = true
                                 } label: {
                                     Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -131,6 +140,7 @@ struct RestaurantDetailView: View {
                                 Spacer()
 
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     restaurantModel.callRest()
                                 } label: {
                                     Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -145,6 +155,7 @@ struct RestaurantDetailView: View {
                                 Text("(\(restaurantModel.currentRestaurant?.reviewsCount ?? 5))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
                                 Spacer()
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     showReview.toggle()
                                 } label: {
                                     Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -194,20 +205,6 @@ struct RestaurantDetailView: View {
             .ignoresSafeArea()
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: btnBack, trailing: favouriteBtn)
-            .onDisappear() {
-                print("Disappear sir")
-                if let restaurant = restaurantModel.currentRestaurant {
-                    print("Sir disappear ", restaurant)
-                    let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
-                    if restaurantIndex != nil && !clickFavourite {
-                        print("Sir disappear is favorite", restaurant)
-                        userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
-                    }
-                }
-                
-            }
-            
-            
         }
         else {
             ProgressView() {
