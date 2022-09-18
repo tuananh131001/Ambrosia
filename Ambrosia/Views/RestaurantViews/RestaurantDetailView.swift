@@ -31,14 +31,6 @@ struct RestaurantDetailView: View {
             // Sound effect
             SoundModel.clickOtherSound()
             
-            // favorite logic
-            if let restaurant = restaurantModel.currentRestaurant {
-                let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
-                if restaurantIndex != nil && !clickFavourite {
-                    userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
-                }
-            }
-            
             self.presentationMode.wrappedValue.dismiss()
             // background music
             SoundModel.startBackgroundMusic(bckName: "home")
