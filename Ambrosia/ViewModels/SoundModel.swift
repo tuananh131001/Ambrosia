@@ -2,13 +2,14 @@
  RMIT University Vietnam
  Course: COSC2659 iOS Development
  Semester: 2022B
- Assessment: Assignment 2
+ Assessment: Assignment 3
  Author: Tran Mai Nhung
  ID: s3879954
- Created  date: 15/08/2022
- Last modified: 29/08/2022
- Acknowledgement: Tom Huynh github, canvas
- // https://www.zerotoappstore.com/how-to-add-background-music-in-swift.html
+ Created  date: 14/09/2022
+ Last modified: 14/09/2022
+ Acknowledgement:
+ - Tom Huynh github, canvas
+ - https://www.zerotoappstore.com/how-to-add-background-music-in-swift.html
  */
 
 
@@ -30,7 +31,6 @@ struct SoundModel {
                 effectAudio = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 effectAudio?.play()
             } catch {
-                print("ERROR: Could not find and play sound file")
             }
         }
     }
@@ -46,7 +46,6 @@ struct SoundModel {
                 audioPlayer.prepareToPlay()
                 audioPlayer.play()
             } catch {
-                print("ERROR: Could not find and play background music")
             }
         }
     }

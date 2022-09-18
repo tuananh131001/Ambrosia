@@ -1,9 +1,15 @@
-//
-//  SplashView.swift
-//  Ambrosia
-//
-//  Created by Nhung Tran on 10/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Mai Nhung
+    ID: s3879954
+    Created  date: 10/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+- Canvas, CodeWithChris Course
+*/
 
 import SwiftUI
 
@@ -28,6 +34,7 @@ struct SplashView: View {
                 LaunchView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .offset(y: animationValues[nearFinalIndex] ? 0 : (geo.size.height + 50))
+
 //                    .environmentObject(RestaurantModel())
 //                    .environmentObject(UserModel())
                 
@@ -65,7 +72,7 @@ struct SplashView: View {
                         animationValues[2] = true
                     }
                     // text moving up
-                    withAnimation(.easeInOut(duration: 0.2).delay(0.75)) {
+                    withAnimation(.easeInOut(duration: 0.17).delay(0.75)) {
                         animationValues[3] = true
                         footer = "Illuminati Group".uppercased()
                     }
@@ -75,11 +82,10 @@ struct SplashView: View {
                             title = "Ambr".uppercased()
                             title2 = "osia".uppercased()
                             animationValues[4] = true
-    //                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            withAnimation(.easeInOut(duration: 0.3).delay(0.4).repeatForever().delay(0.15)) {
+                            // trim circle
+                            withAnimation(.easeInOut(duration: 0.3).delay(0.4).repeatForever().delay(0.1)) {
                                     animationValues[5] = true
                                 }
-    //                        }
                         }
                     }
 

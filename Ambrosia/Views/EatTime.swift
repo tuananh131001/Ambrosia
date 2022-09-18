@@ -2,11 +2,11 @@
     RMIT University Vietnam
     Course: COSC2659 iOS Development
     Semester: 2022B
-    Assessment: Assignment 2
-    Author: Tran Mai Nhung
-    ID: s3879954
-    Created  date: 19/07/2022
-    Last modified: 07/08/2022
+    Assessment: Assignment 3
+    Author: Tran Nguyen Ha Khanh, Vo Quoc Huy, Nguyen Tuan Anh, Tran Mai Nhung
+    ID: s3877707, s3823236, s3864077, s3879954
+    Created  date: 9/09/2022
+    Last modified: 17/09/2022
     Acknowledgement:
 - Canvas, CodeWithChris Course
 */
@@ -18,7 +18,6 @@ import Firebase
 struct EatTime: App {
     
 //    @StateObject var authModel = FirebaseService()
-    @AppStorage("isDarkMode") private var isDarkMode = false
     init(){
         FirebaseApp.configure()
     }
@@ -28,9 +27,8 @@ struct EatTime: App {
 //            LaunchView()
             SplashView()
 //                .preferredColorScheme(isDarkMode ? .dark : .light)
-                .environmentObject(RestaurantModel())
                 .environmentObject(UserModel())
-
+                .environmentObject(RestaurantModel())
 
         }
     }

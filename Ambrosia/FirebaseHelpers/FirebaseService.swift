@@ -1,9 +1,17 @@
-//
-//  FirebaseService.swift
-//  Ambrosia
-//
-//  Created by William on 12/09/2022.
-// https://stackoverflow.com/questions/60225869/how-do-i-return-an-object-from-a-document-stored-in-firestore-swift
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+    ID: s3864077, s3823236, s3877707, s3879954
+    Created  date: 14/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+    -  https://stackoverflow.com/questions/60225869/how-do-i-return-an-object-from-a-document-stored-in-firestore-swift
+*/
+
 
 import Foundation
 import Firebase
@@ -51,10 +59,8 @@ class FirebaseService: ObservableObject {
                         "name": "Sir",
                         "email": authResult?.user.email ?? ""
                         ]) { err in
-                        if let err = err {
-                            print("Error writing document: \(err)")
+                        if err != nil {
                         } else {
-                            print("Document successfully written!")
                         }
                     }
                     user.loginSuccess = true
@@ -68,41 +74,24 @@ class FirebaseService: ObservableObject {
 
 
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
+//        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
+        do {
+            try Firestore.firestore().collection("user").document(user.id).setData(from: user, merge: true)
+        }
+        catch {
+            print("UPDATE USER FAILED : updateUser()")
+        }
     }
     func addPlaceImage(placeId: String, imageLink: String) {
-        print("add Place image: \(placeId) , \(imageLink)")
         Firestore.firestore().collection("restaurant").document(placeId).setData(["ImageLink": imageLink], merge: true)
     }
-//    func fetchImageResFromFirebase(_ restaurants: [Restaurant], completion: @escaping (_ newRestaurants: [Restaurant]) -> ()) {
-//        var newRes: [Restaurant] = restaurants
-//        for i in restaurants.indices {
-//            let docRef = Firestore.firestore().collection("restaurant").document(restaurants[i].placeId ?? "")
-//            //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
-//            docRef.getDocument { document, error in
-//                if let error = error as NSError? {
-//                    print("Error getting document: \(error.localizedDescription)")
-//                }
-//                else {
-//                    if let document = document {
-//                        let data = document.data()
-//                        let imageUrl = data?["ImageLink"] as? String
-//                        print("imagel")
-//                        print(imageUrl)
-//                        newRes[i].imageLink = imageUrl ?? ""
-//                    }
-//                }
-//                completion(newRes)
-//            }
-//
-//        }
-//    }
+
     func addReviewToFirebase(restaurant: Restaurant, userId: String) {
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").setData(["created": true], merge: true)
         var newReviewList: [[String: Any]] = []
         // get each reviews put in dictionary for uploading
         for riviu in restaurant.reviews {
-            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "username": riviu.username, "email": riviu.email, "isLiked": riviu.isLiked, "userId": riviu.userId] as [String: Any]
+            let newReview = ["reviewDescription": riviu.reviewDescription, "dateCreated": riviu.dateCreated, "rating": riviu.rating, "email": riviu.email, "isLiked": riviu.isLiked, "userId": riviu.userId] as [String: Any]
             newReviewList.append(newReview)
         }
         // assign new data to firestore
@@ -116,8 +105,7 @@ class FirebaseService: ObservableObject {
         let docRef = Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "")
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
-            if let error = error as NSError? {
-                print("Error getting document: \(error.localizedDescription)")
+            if (error as NSError?) != nil {
             }
             else {
                 if let document = document {
@@ -131,11 +119,10 @@ class FirebaseService: ObservableObject {
                         let timestamp: Timestamp = review["dateCreated"] as? Timestamp ?? Timestamp()
                         let dateCreated: Date = timestamp.dateValue()
                         let rating: Int = review["rating"] as? Int ?? 1
-                        let username: String = review["username"] as? String ?? ""
                         let email: String = review["email"] as? String ?? ""
                         let userId: String = review["userId"] as? String ?? ""
                         let isLiked: Bool = review["isLiked"] as? Bool ?? false
-                        let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, username: username, email: email, isLiked: isLiked, userId: userId)
+                        let newReview = Review(reviewDescription: reviewDescription, dateCreated: dateCreated, rating: rating, email: email, isLiked: isLiked, userId: userId)
                         reviewFetch.append(newReview)
                     }
                     // assign to the reviews on local
@@ -145,10 +132,9 @@ class FirebaseService: ObservableObject {
             }
         }
     }
-    // MARK: get user
-    func getUserAvatar(userId: String, completion: @escaping (_ newAvatar: String) -> ()) {
+    // MARK: get user avatar
+    func getUserAvatar(userId: String, completion: @escaping (_ newAvatar: String) -> (), setUserName: @escaping (_ newUsername: String) -> ()) {
         let docRef = Firestore.firestore().collection("user").document(userId)
-        //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
             if let error = error as NSError? {
                 print("Error getting document: \(error.localizedDescription)")
@@ -157,7 +143,9 @@ class FirebaseService: ObservableObject {
                 if let document = document {
                     let data = document.data()
                     let avatarStr: String = data?["avatarStr"] as? String ?? ""
+                    let name: String = data?["name"] as? String ?? ""
                     completion(avatarStr)
+                    setUserName(name)
                 }
             } }
     }
@@ -166,8 +154,7 @@ class FirebaseService: ObservableObject {
         let docRef = Firestore.firestore().collection("user").document(id)
         //https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
         docRef.getDocument { document, error in
-            if let error = error as NSError? {
-                print("Error getting document: \(error.localizedDescription)")
+            if (error as NSError?) != nil {
             }
             else {
                 if let document = document {
@@ -216,12 +203,14 @@ class FirebaseService: ObservableObject {
     }
 
     // change
-    func changeFavorites(userModel: UserModel, restaurant: Restaurant) -> Bool {
+    func changeFavorites(userModel: UserModel, restaurant: Restaurant, directRemove: Bool = false) -> Bool {
         // return false -> remove favorite
         // return true -> add favorite
         let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
         if restaurantIndex != nil {
-            userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+            if directRemove {
+                userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+            }
             removeFavorites(user: userModel.user, restaurant: restaurant)
             return false
         }
@@ -277,7 +266,6 @@ class FirebaseService: ObservableObject {
 
                 let urlString = downloadURL.absoluteString
                 userModel.user.avatarStr = urlString
-                print("image url: \(userModel.user.avatarStr)")
             }
         }
 //

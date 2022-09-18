@@ -1,9 +1,15 @@
-//
-//  FavoriteContent.swift
-//  Ambrosia
-//
-//  Created by Nhung Tran on 16/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Mai Nhung
+    ID: s3879954
+    Created  date: 16/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 
@@ -13,7 +19,7 @@ struct FavoriteContent: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 // MARK: open state
                 FavoriteCategory(rest: rest)
                 // MARK: title

@@ -1,9 +1,15 @@
-//
-//  Modifiers.swift
-//  Ambrosia
-//
-//  Created by Khanh Tran Nguyen Ha on 10/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+    ID: s3864077, s3823236, s3877707, s3879954
+    Created  date: 6/09/2022
+    Last modified: 15/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 
@@ -16,7 +22,7 @@ struct TextFieldModifier: ViewModifier {
             .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH, minHeight: Constants.FIELD_HEIGHT)
             .padding(.horizontal)
             .background(.thinMaterial)
-            .foregroundColor(Constants.PRIMARY_COLOR)
+            .foregroundColor(Constants.PRIMARY_COLOR_TEXT_FIELD_COLOR)
             .cornerRadius(Constants.CONRNER_RADIUS)
             .textInputAutocapitalization(.never)
             .disableAutocorrection(true)

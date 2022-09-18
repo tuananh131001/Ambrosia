@@ -1,17 +1,17 @@
 /*
- RMIT University Vietnam
- Course: COSC2659 iOS Development
- Semester: 2022B
- Assessment: Assignment 2
- Author: Tran Mai Nhung
- ID: s3879954
- Created  date: 26/07/2022
- Last modified: 07/08/2022
- Acknowledgement:
- - Canvas, CodeWithChris Course
- - https://stackoverflow.com/questions/59158476/how-to-have-text-in-shapes-in-swiftui
- - https://blckbirds.com/post/stretchy-header-and-parallax-scrolling-in-swiftui/
- - https://stackoverflow.com/questions/57582653/how-to-create-tappable-url-phone-number-in-swiftui
+     RMIT University Vietnam
+     Course: COSC2659 iOS Development
+     Semester: 2022B
+     Assessment: Assignment 3
+     Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Mai Nhung
+     ID: s3864077, s3823236, s3879954
+     Created  date: 09/09/2022
+     Last modified: 17/09/2022
+     Acknowledgement:
+     - Canvas, CodeWithChris Course
+     - https://stackoverflow.com/questions/59158476/how-to-have-text-in-shapes-in-swiftui
+     - https://blckbirds.com/post/stretchy-header-and-parallax-scrolling-in-swiftui/
+     - https://stackoverflow.com/questions/57582653/how-to-create-tappable-url-phone-number-in-swiftui
  */
 
 import SwiftUI
@@ -30,10 +30,19 @@ struct RestaurantDetailView: View {
         Button(action: {
             // Sound effect
             SoundModel.clickOtherSound()
-
+            
+            // favorite logic
+            if let restaurant = restaurantModel.currentRestaurant {
+                let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
+                if restaurantIndex != nil && !clickFavourite {
+                    userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+                }
+            }
+            
             self.presentationMode.wrappedValue.dismiss()
             // background music
             SoundModel.startBackgroundMusic(bckName: "home")
+            
         }) {
             CircleButtonView(buttonImage: "arrow.left")
         }.buttonStyle(PlainButtonStyle())
@@ -77,7 +86,6 @@ struct RestaurantDetailView: View {
             GeometryReader {
                 geo in
                 ScrollView{
-//                    Image("random-eat").resizable().aspectRatio(contentMode: .fill).frame(width: geo.size.width, height: geo.size.height/2.7)
                     RestaurantAsyncImage(photo_id: restaurantModel.currentRestaurant?.imageLink ?? "").frame(width: geo.size.width, height: geo.size.height/2.7)
                     
                     //MARK: Rectange Resutaurant Detail Card
@@ -113,6 +121,7 @@ struct RestaurantDetailView: View {
                                 Text("Open Hours:  Monday-Sunday").font(.system(size: 14)).foregroundColor(Color("PrimaryColor"))
                                 Spacer()
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     showOpenningHours = true
                                 } label: {
                                     Text("See More").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -131,13 +140,11 @@ struct RestaurantDetailView: View {
                                 Spacer()
 
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     restaurantModel.callRest()
                                 } label: {
                                     Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
                                 }
-
-
-
                             }
                             Divider()
 
@@ -148,6 +155,7 @@ struct RestaurantDetailView: View {
                                 Text("(\(restaurantModel.currentRestaurant?.reviewsCount ?? 5))").font(.system(size: 12)).foregroundColor(Color("SubTextColor")).offset(x: -5)
                                 Spacer()
                                 Button {
+                                    SoundModel.clickOtherSound()
                                     showReview.toggle()
                                 } label: {
                                     Text("Read Reviews").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
@@ -197,8 +205,6 @@ struct RestaurantDetailView: View {
             .ignoresSafeArea()
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: btnBack, trailing: favouriteBtn)
-            
-            
         }
         else {
             ProgressView() {

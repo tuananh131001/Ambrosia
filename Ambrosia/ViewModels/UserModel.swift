@@ -1,9 +1,15 @@
-//
-//  UserModel.swift
-//  Ambrosia
-//
-//  Created by William on 14/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+    ID: s3864077, s3823236, s3877707, s3879954
+    Created  date: 14/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import Foundation
 import Firebase
@@ -50,16 +56,16 @@ class UserModel: ObservableObject {
     // MARK: Fetch User
     func fetchUserInfo(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         firebaseService.getUserFirebase(id: id, userModel: userModel, restaurantModel: restaurantModel)
-        if (self.user.email == "") {
-            if let usertemp = Auth.auth().currentUser {
-                if (usertemp.email != "") {
-                    self.user.email = usertemp.email ?? "email is hidden"
-                }
-                else if (usertemp.providerData[0].email != "") {
-                    self.user.email = usertemp.providerData[0].email ?? "email is hidden"
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if (self.user.email == "") {
+                self.user.email = Auth.auth().currentUser?.email ?? ""
+                if (self.user.email == "") {
+                    self.user.email = Auth.auth().currentUser?.providerData[0].email ?? ""
                 }
             }
         }
+        
     }
 
     func saveCurrentLoginNormal(email: String, password: String) {
@@ -125,7 +131,6 @@ class UserModel: ObservableObject {
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
                     let err = error?.localizedDescription ?? ""
-                    print("NORMAL LOGIN ERROR: ", err)
                     if (err.contains("no user record")) {
                         self.loginMessage = "This email hasn't registered yet"
                     }
@@ -151,14 +156,12 @@ class UserModel: ObservableObject {
 
         provider?.getCredentialWith(nil) { credential, error in
             if error != nil {
-                print(error?.localizedDescription ?? "FAILED GET CREDENTIAL MICROSOFT")
             }
 
             if let x = credential {
                 Auth.auth().signIn(with: x) { result, error in
                     if error != nil {
                         self.loginSuccess = false
-                        print(error?.localizedDescription ?? "FAILED LOGIN MICROSOFT")
                     }
                     else {
                         self.resetDefaultAfterLogin(loginMethod: .microsoft)
@@ -168,7 +171,6 @@ class UserModel: ObservableObject {
 
                 }
             } else {
-                print("FAILED GET CREDENTAIL MICROSOFT")
             }
         }
 
@@ -195,9 +197,8 @@ class UserModel: ObservableObject {
     }
 
     private func GGAuthenticateUser(for user: GIDGoogleUser?, with error: Error?, restaurantModel: RestaurantModel) {
-        if let error = error {
+        if error != nil {
             loginSuccess = false
-            print(error.localizedDescription)
             return
         }
 
@@ -209,9 +210,8 @@ class UserModel: ObservableObject {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
 
         Auth.auth().signIn(with: credential) { [unowned self] (_, error) in
-            if let error = error {
+            if error != nil {
                 loginSuccess = false
-                print(error.localizedDescription)
             } else {
                 resetDefaultAfterLogin(loginMethod: .google)
                 UserDefaults.standard.setValue("google", forKey: "loginType")
@@ -232,7 +232,6 @@ class UserModel: ObservableObject {
             state = .signedOut
             loginMessage = ""
         } catch {
-            print(error.localizedDescription)
         }
     }
 }

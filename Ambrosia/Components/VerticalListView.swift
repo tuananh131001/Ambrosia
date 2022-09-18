@@ -1,9 +1,16 @@
-//
-//  VerticalListView.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 17/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Vo Quoc Huy
+    ID: s3823236
+    Created  date: 17/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
+
 
 import SwiftUI
 
@@ -59,7 +66,7 @@ struct VerticalListView: View {
                 }
             }.padding()
             
-        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name")
+        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name").disableAutocorrection(true)
         
         
         // add the search bar and set the mode to always display the search bar

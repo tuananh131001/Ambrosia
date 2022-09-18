@@ -1,9 +1,15 @@
-//
-//  LoginPhoneModal.swift
-//  Ambrosia
-//
-//  Created by Khanh Tran Nguyen Ha on 12/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Nguyen Ha Khanh
+    ID: s3877707
+    Created  date: 12/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 import Firebase
@@ -99,24 +105,18 @@ struct LoginPhoneModal: View {
     }
     
     func sendCode() {
-        print(phone)
         PhoneAuthProvider.provider()
           .verifyPhoneNumber(phone, uiDelegate: nil) { verificationID, error in
               
               if error != nil {
-                  print("ERROR SEND CODE TO PHONE")
-//                  print(error.localizedDescription)
                   return
               }
-              print("Code Sent")
               UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
-//              print("saved veri1: ", verificationID as Any)
           }
     }
     
     func verifyPhoneLogin() {
         let verificationID = UserDefaults.standard.string(forKey: "authVerificationID")
-        print("veri2: ", verificationID as Any)
         let credential = PhoneAuthProvider.provider().credential(
             withVerificationID: verificationID ?? "-1",
           verificationCode: code
@@ -125,12 +125,10 @@ struct LoginPhoneModal: View {
         Auth.auth().signIn(with: credential) { authResult, error in
             if error != nil {
                 userModel.loginSuccess = false
-//                print("signin err: ", error.localizedDescription)
                 return
             }
         
             // User is signed in
-            print("Sign in by PHONE is success")
             userModel.loginSuccess = true
             userModel.state = .signedIn
             model.requestGeolocationPermission()

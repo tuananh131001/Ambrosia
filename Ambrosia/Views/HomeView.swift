@@ -1,13 +1,13 @@
 /*
- RMIT University Vietnam
- Course: COSC2659 iOS Development
- Semester: 2022B
- Assessment: Assignment 2
- Author: Tran Mai Nhung
- ID: s3879954
- Created  date: 19/07/2022
- Last modified: 07/08/2022
- Acknowledgement:
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Mai Nhung, Vo Quoc Huy
+    ID: s3879954, s3823236
+    Created  date: 9/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
  - Canvas, CodeWithChris Course
  - https://www.hackingwithswift.com/quick-start/swiftui/how-to-add-a-search-bar-to-filter-your-data
  - https://stackoverflow.com/questions/56505528/swiftui-update-navigation-bar-title-color
@@ -103,8 +103,6 @@ struct HomeView: View {
             HomeViewContent(isShowingMap: $isShowingMap, searchQuery: $searchQuery, tabSelection: $tabSelection)
                 .onAppear() {
                     restaurantModel.chooseDefaultLocation()
-//                    restaurantModel.calculateDistanceRest()
-//                    print(restaurantModel.restaurants)
                 }
             
         }
@@ -120,7 +118,6 @@ struct HomeView: View {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
                         }
                     }
-                    print("Settings")
                 }
         }
         

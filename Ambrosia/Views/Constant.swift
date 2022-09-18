@@ -1,9 +1,15 @@
-//
-//  Constant.swift
-//  Ambrosia
-//
-//  Created by Khanh Tran Nguyen Ha on 10/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Nguyen Ha Khanh
+    ID: s3877707
+    Created  date: 10/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import Foundation
 import SwiftUI
@@ -11,6 +17,8 @@ import SwiftUI
 
 enum Constants {
     static let PRIMARY_COLOR : Color = Color("PrimaryColor")
+    static let PRIMARY_COLOR_TEXT_FIELD_COLOR : Color = Color("PrimaryColorTextField")
+    
     static let PRIMARY_COLOR_UI : UIColor = UIColor(named: "PrimaryColor")!
     static let LIGH_PRIMARY_COLOR : Color = Color("LightPrimary")
     static let LIGH_PRIMARY_COLOR_UI : UIColor = UIColor(named: "LightPrimary")!
@@ -40,4 +48,6 @@ enum Constants {
     
     static let DARK_MODE = "DARK_MODE"
     static let LIGHT_MODE = "LIGHT_MODE"
+    
+    static let ANIMATION_MODAL_DURATION: CGFloat = 0.3
 }

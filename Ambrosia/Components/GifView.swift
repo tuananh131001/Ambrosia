@@ -2,7 +2,7 @@
  RMIT University Vietnam
  Course: COSC2659 iOS Development
  Semester: 2022B
- Assessment: Assignment 2
+ Assessment: Assignment 3
  Author: Tran Mai Nhung
  ID: s3879954
  Created  date: 29/07/2022
@@ -43,7 +43,6 @@ struct GifView: UIViewRepresentable {
             webView.scrollView.isScrollEnabled = false
         }
         catch {
-            print("Could not parse gif image")
         }
         
         return webView

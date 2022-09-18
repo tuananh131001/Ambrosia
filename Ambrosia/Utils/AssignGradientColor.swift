@@ -2,11 +2,11 @@
     RMIT University Vietnam
     Course: COSC2659 iOS Development
     Semester: 2022B
-    Assessment: Assignment 2
+    Assessment: Assignment 3
     Author: Tran Mai Nhung
     ID: s3879954
-    Created  date: 05/08/2022
-    Last modified: 07/08/2022
+    Created  date: 09/09/2022
+    Last modified: 13/09/2022
     Acknowledgement:
 - Canvas, CodeWithChris Course
 - https://stackoverflow.com/questions/60527932/remove-back-button-text-from-navigationbar-in-swiftui
