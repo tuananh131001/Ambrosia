@@ -59,7 +59,7 @@ struct RecentReviews: View {
                         }
                     }.padding()
                     // add the search bar and set the mode to always display the search bar
-                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Recent Reviews").accentColor(Color("PrimaryColor"))
+                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Recent Reviews").accentColor(Color("PrimaryColor")).disableAutocorrection(true)
                 
             }
         }.navigationViewStyle(StackNavigationViewStyle())

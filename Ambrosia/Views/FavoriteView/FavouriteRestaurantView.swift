@@ -58,14 +58,14 @@ struct FavouriteRestaurantView: View {
                                     }
                                 }
                             }
-                        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name")
+                        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search by restaurant's name").disableAutocorrection(true)
                     }
                     else {
                         FavoriteNotFound(geo: geo)
                     }
                 }
                 .navigationTitle("\(userModel.user.name)'s Favorites")
-            }
+            }.navigationViewStyle(StackNavigationViewStyle())
         }
     }
     
