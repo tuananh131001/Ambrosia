@@ -30,7 +30,7 @@ struct InformationForm: View {
                             HStack {
                                 Text("Email:").bold().foregroundColor(Constants.PRIMARY_COLOR)
                                 Spacer()
-                                Text("\(Auth.auth().currentUser?.email ?? "hidden")")
+                                Text(userModel.user.email)
                             }
                             .padding(.bottom, 10)
                             
@@ -67,7 +67,7 @@ struct InformationForm: View {
 
                 }
                     .padding(.vertical, Constants.FORM_PADDING_VERTICAL + 10)
-                    .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL)
+                    .padding(.horizontal, Constants.FORM_PADDING_HORIZAONTAL-5)
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color("TextColor"))
             }
