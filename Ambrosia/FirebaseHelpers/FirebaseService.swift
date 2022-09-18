@@ -63,10 +63,10 @@ class FirebaseService: ObservableObject {
                         } else {
                         }
                     }
+                    // back to sign in page
                     user.loginSuccess = true
                     user.isNewUser = true
                     self.signUpSuccess = true
-
                 }
             }
         }

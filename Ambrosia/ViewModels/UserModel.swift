@@ -56,7 +56,7 @@ class UserModel: ObservableObject {
     // MARK: Fetch User
     func fetchUserInfo(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         firebaseService.getUserFirebase(id: id, userModel: userModel, restaurantModel: restaurantModel)
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             if (self.user.email == "") {
                 self.user.email = Auth.auth().currentUser?.email ?? ""
@@ -65,7 +65,7 @@ class UserModel: ObservableObject {
                 }
             }
         }
-        
+
     }
 
     func saveCurrentLoginNormal(email: String, password: String) {

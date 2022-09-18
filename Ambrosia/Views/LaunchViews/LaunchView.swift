@@ -23,7 +23,7 @@ struct LaunchView: View {
     var body: some View {
         // if app has not ask user permission to access location
         if !userModel.loginSuccess {
-            LaunchContentView()
+            LaunchContentView() 
         }
         else if userModel.loginSuccess && userModel.isNewUser {
             EditInformation()

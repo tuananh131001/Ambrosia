@@ -17,24 +17,22 @@ import Firebase
 struct EditInformation: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var userModel: UserModel
-    
+
     @State var email = ""
     @State var password = ""
-
     @State var loginSuccess = false
-    
     @State var message = ""
     @State var showMessage = false
-    @State var tempName : String = ""
-    @State var tempDob : Date = Date()
-    @State var tempGender : Int = 1
+    @State var tempName: String = ""
+    @State var tempDob: Date = Date()
+    @State var tempGender: Int = 1
 
     var body: some View {
         ZStack (alignment: .center) {
 //            Rectangle()
 //                .foregroundColor(Constants.PRIMARY_COLOR)
             GeneralBackground()
-            VStack (spacing: 20){
+            VStack (spacing: 20) {
                 InformationForm(tempName: $tempName, tempDob: $tempDob, tempGender: $tempGender)
                 // MARK: LOGIN BUTTON
                 Button {
@@ -48,25 +46,27 @@ struct EditInformation: View {
 
                     userModel.user.id = userId
                     userModel.firebaseService.updateUser(user: userModel.user)
-                    userModel.isNewUser = false
-                    
+                    // redirect to sign in page after sign up
+                    if(userModel.isNewUser == true) {
+                        userModel.isNewUser = false
+                        userModel.loginSuccess = false
+                    }
+
                     message = "Profile is updated successfully ✅"
                     showMessage = true
                 } label: {
                     Text("Confirm Changes").bold()
                 }
-                .buttonStyle(ButtonStyleWhite())
-                .frame(maxWidth: Constants.FIELD_MAX_WIDTH)
-                .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
-//                .background(Color("ButtonTextColor"))
-                
+                    .buttonStyle(ButtonStyleWhite())
+                    .frame(maxWidth: Constants.FIELD_MAX_WIDTH)
+                    .shadow(color: Color("Shadow"), radius: 6.0, x: 2, y: 2)
                 if(showMessage) {
                     Text(message)
                         .foregroundColor(.white)
                 }
             }
         }
-        .onAppear(perform: {
+            .onAppear(perform: {
             tempName = userModel.user.name
             tempDob = userModel.user.dob
             tempGender = userModel.user.selectedGender
