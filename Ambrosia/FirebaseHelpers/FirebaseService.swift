@@ -1,9 +1,17 @@
-//
-//  FirebaseService.swift
-//  Ambrosia
-//
-//  Created by William on 12/09/2022.
-// https://stackoverflow.com/questions/60225869/how-do-i-return-an-object-from-a-document-stored-in-firestore-swift
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+    ID: s3864077, s3823236, s3877707, s3879954
+    Created  date: 14/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+    -  https://stackoverflow.com/questions/60225869/how-do-i-return-an-object-from-a-document-stored-in-firestore-swift
+*/
+
 
 import Foundation
 import Firebase

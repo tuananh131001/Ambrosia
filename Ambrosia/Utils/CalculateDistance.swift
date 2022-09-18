@@ -1,9 +1,16 @@
-//
-//  CalculateDistance.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 12/09/2022.
-// https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Vo Quoc Huy, Tran Mai Nhung
+    ID: s3823236, s3879954
+    Created  date: 6/09/2022
+    Last modified: 15/09/2022
+    Acknowledgement:
+    - Canvas
+    - https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
+*/
 
 import Foundation
 import MapKit

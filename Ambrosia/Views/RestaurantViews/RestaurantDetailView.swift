@@ -1,17 +1,17 @@
 /*
- RMIT University Vietnam
- Course: COSC2659 iOS Development
- Semester: 2022B
- Assessment: Assignment 2
- Author: Tran Mai Nhung
- ID: s3879954
- Created  date: 26/07/2022
- Last modified: 07/08/2022
- Acknowledgement:
- - Canvas, CodeWithChris Course
- - https://stackoverflow.com/questions/59158476/how-to-have-text-in-shapes-in-swiftui
- - https://blckbirds.com/post/stretchy-header-and-parallax-scrolling-in-swiftui/
- - https://stackoverflow.com/questions/57582653/how-to-create-tappable-url-phone-number-in-swiftui
+     RMIT University Vietnam
+     Course: COSC2659 iOS Development
+     Semester: 2022B
+     Assessment: Assignment 3
+     Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Mai Nhung
+     ID: s3864077, s3823236, s3879954
+     Created  date: 09/09/2022
+     Last modified: 17/09/2022
+     Acknowledgement:
+     - Canvas, CodeWithChris Course
+     - https://stackoverflow.com/questions/59158476/how-to-have-text-in-shapes-in-swiftui
+     - https://blckbirds.com/post/stretchy-header-and-parallax-scrolling-in-swiftui/
+     - https://stackoverflow.com/questions/57582653/how-to-create-tappable-url-phone-number-in-swiftui
  */
 
 import SwiftUI

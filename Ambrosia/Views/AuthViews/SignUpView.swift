@@ -1,9 +1,15 @@
-//
-//  SignUpView.swift
-//  UserLoginWithFirebase
-//
-//  Created by Tom Huynh on 9/3/22.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tom Huynh, Tran Nguyen Ha Khanh
+    ID: s3877707
+    Created  date: 9/3/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 import Firebase
