@@ -1,21 +1,21 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
-    ID: s3864077, s3823236, s3877707, s3879954
-    Created  date: 6/09/2022
-    Last modified: 15/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+ ID: s3864077, s3823236, s3877707, s3879954
+ Created  date: 6/09/2022
+ Last modified: 15/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import Foundation
 import CoreLocation
 import FirebaseFirestoreSwift
 
-
+// MARK: - restaurant
 struct Restaurant: Codable {
     var placeId: String?
     var title: String = ""
@@ -40,8 +40,8 @@ struct Restaurant: Codable {
     var paymentsArr = [String]()
     var planingArr = [String]()
     var imageLink: String = ""
-
-
+    
+    // for decode and fetch
     enum CodingKeys: String, CodingKey {
         case placeId
         case address
@@ -60,16 +60,19 @@ struct Restaurant: Codable {
         case reviewsCount
         case reviewsDistribution
     }
+    // test
     static func testRestaurantDetail() -> Restaurant {
         return Restaurant(placeId: "3123", title: "3221", address: "3213123", phone: "#2213", totalScore: 10.0, rank: 1, reviews: [], location: Location.testLocation(), distance: 0.5)
-//        return Restaurant(placeId: "23123", title: "SIr", address: "Sir street, Sir city, Sir country", phone: "09301293910", categories: ["chinese"], categoryName: "korean food", additionalInfo: AdditionalInfo.testAdditionalInfo(), openingHours: OpeningHours.testOpeningHours(), totalScore: 10, rank: 1, reviews: [], location: Location.testLocation(), imageUrls: ["testRestaurant"], distance: 0, temporarilyClosed: true, reviewsCount: 10, reviewsDistribution: ReviewsDistribution.testReviewsDistribution())
+        //        return Restaurant(placeId: "23123", title: "SIr", address: "Sir street, Sir city, Sir country", phone: "09301293910", categories: ["chinese"], categoryName: "korean food", additionalInfo: AdditionalInfo.testAdditionalInfo(), openingHours: OpeningHours.testOpeningHours(), totalScore: 10, rank: 1, reviews: [], location: Location.testLocation(), imageUrls: ["testRestaurant"], distance: 0, temporarilyClosed: true, reviewsCount: 10, reviewsDistribution: ReviewsDistribution.testReviewsDistribution())
     }
-
+    
 }
+// MARK:  list of restaurants
 struct Restaurants: Codable {
     var results: [Restaurant]
 }
 
+// MARK: open hours in restaurant detail
 struct OpeningHours: Codable {
     var day: String
     var hours: String
@@ -78,28 +81,32 @@ struct OpeningHours: Codable {
     }
 }
 
-
-
+// MARK: additional options in restaurant detail
 struct AdditionalInfo: Codable {
     var serviceOptions: [ServiceOptions]?
     var diningOptions: [DiningOptions]?
     var planning: [Planning]?
     var payments: [Payments]?
+    
+    // for fetching
     enum CodingKeys: String, CodingKey {
         case planning = "Planning"
         case diningOptions = "Dining options"
         case serviceOptions = "Service options"
         case payments = "Payments"
     }
+    //test
     static func testAdditionalInfo() -> AdditionalInfo {
         return AdditionalInfo(serviceOptions: [ServiceOptions.testServiceOptions()], diningOptions: [DiningOptions.testDiningOptions()], planning: [Planning.testPlanning()], payments: [Payments.testPayments()])
     }
 }
 
+// MARK: payment method in restaurant detail
 struct Payments: Codable {
     var cashOnly: Bool?
     var debitCards: Bool?
     var creditCards: Bool?
+    // for fetching
     enum CodingKeys: String, CodingKey {
         case cashOnly = "Cash-only"
         case debitCards = "Debit cards"
@@ -110,21 +117,23 @@ struct Payments: Codable {
     }
 }
 
-
+// MARK: service option in restaurant detail
 struct ServiceOptions: Codable {
     var delivery: Bool?
     var takeout: Bool?
     var dineIn: Bool?
+    // fetching
     enum CodingKeys: String, CodingKey {
         case delivery = "Delivery"
         case takeout = "Takeout"
         case dineIn = "Dine-in"
     }
+    // test
     static func testServiceOptions() -> ServiceOptions {
         return ServiceOptions(delivery: true, takeout: true, dineIn: true)
     }
 }
-
+// MARK: dining option in restaurant detail
 struct DiningOptions: Codable {
     var Lunch: Bool?
     var Dinner: Bool?
@@ -135,6 +144,7 @@ struct DiningOptions: Codable {
     }
 }
 
+// MARK: planning option in restaurant detail
 struct Planning: Codable {
     var acceptReservations: Bool?
     var reservationRequired: Bool?
@@ -146,7 +156,7 @@ struct Planning: Codable {
         return Planning(acceptReservations: true)
     }
 }
-
+// MARK: reviews in restaurant detail
 struct ReviewsDistribution: Codable {
     var oneStar: Int?
     var twoStar: Int?
@@ -157,7 +167,7 @@ struct ReviewsDistribution: Codable {
         return ReviewsDistribution(oneStar: 2, twoStar: 1, threeStar: 3, fourStar: 4, fiveStar: 2)
     }
 }
-
+// MARK: restaurant location
 struct Location: Codable {
     var lat: Double?
     var lng: Double?
@@ -166,9 +176,7 @@ struct Location: Codable {
     }
 }
 
-
-
-
+// MARK: - Reviee
 struct Review: Identifiable, Decodable {
     var id: UUID = UUID()
     var reviewDescription: String
@@ -177,6 +185,7 @@ struct Review: Identifiable, Decodable {
     var email: String
     var isLiked: Bool = false
     var userId: String
+    // for fetching
     enum CodingKeys: String, CodingKey {
         case dateCreated
         case email
@@ -185,6 +194,7 @@ struct Review: Identifiable, Decodable {
         case reviewDescription
         case userId
     }
+    // for test
     static func testReviews() -> [Review] {
         let review1 = Review(reviewDescription: "hơi ngon", dateCreated: Date.now, rating: 4, email: "Sir@gmail.com", userId: "avatar1")
         let review2 = Review(reviewDescription: "hơi dở", dateCreated: Date.now, rating: 3, email: "ChóSir@gmail.com", userId: "avatar1")
@@ -201,33 +211,15 @@ struct Review: Identifiable, Decodable {
         reviews.append(review5)
         reviews.append(review6)
         reviews.append(review7)
-
+        
         return reviews
     }
 }
 
 typealias Reviews = [Review]
 
-
+// MARK: - Point
 struct Point: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
 }
-//struct PlaceImage:Codable{
-//    var place_results:PlaceImageResult
-//
-//    enum CodingKeys: String, CodingKey {
-//        case place_results
-//    }
-//}
-//struct PlaceImageResult:Codable{
-//    var images:[PlaceImageDetail]
-//    enum CodingKeys: String, CodingKey {
-//        case images
-//    }
-//}
-//
-//struct PlaceImageDetail:Codable{
-//    var title:String
-//    var thumbnail:String
-//}

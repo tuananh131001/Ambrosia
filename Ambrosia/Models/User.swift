@@ -1,15 +1,15 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
-    ID: s3864077, s3823236, s3877707, s3879954
-    Created  date: 6/09/2022
-    Last modified: 15/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+ ID: s3864077, s3823236, s3877707, s3879954
+ Created  date: 6/09/2022
+ Last modified: 15/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import Foundation
 import SwiftUI

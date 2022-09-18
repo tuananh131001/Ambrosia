@@ -21,8 +21,8 @@ struct SoundModel {
     
     static var effectAudio: AVAudioPlayer?
     static var backgroundAudio: AVAudioPlayer?
-
-
+    
+    
     // MARK: - start sound
     // MARK: play sound effect (1 time play only)
     static func startEffectSound(sound soundPath: String, type: String) {
@@ -34,7 +34,7 @@ struct SoundModel {
             }
         }
     }
-
+    
     // MARK: play background music (infinite loop)
     static func startBackgroundMusic(bckName: String, type: String = "mp3") {
         if let bundle = Bundle.main.path(forResource: "bck-\(bckName)", ofType: type) {
@@ -63,20 +63,21 @@ struct SoundModel {
     }
     
     // MARK: - sound with name
+    // button
     static func clickButtonSound() {
         startEffectSound(sound: "button-click", type: "mp3")
     }
-    
+    // restaurant card
     static func clickCardSound() {
-//        stopSoundEffect()
+        //        stopSoundEffect()
         startEffectSound(sound: "card-click", type: "mp3")
     }
-    
+    // tab item
     static func clickTabSound() {
-//        stopSoundEffect()
+        //        stopSoundEffect()
         startEffectSound(sound: "tab-click", type: "mp3")
     }
-    
+    // others
     static func clickOtherSound() {
         startEffectSound(sound: "other-click", type: "mp3")
     }
