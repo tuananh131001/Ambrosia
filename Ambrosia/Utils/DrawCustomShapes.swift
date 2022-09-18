@@ -1,5 +1,3 @@
-//
-//  Ultility.swift
 /*
     RMIT University Vietnam
     Course: COSC2659 iOS Development
@@ -7,10 +5,10 @@
     Assessment: Assignment 2
     Author: Tran Mai Nhung
     ID: s3879954
-    Created  date: 05/08/2022
-    Last modified: 07/08/2022
+    Created  date: 14/08/2022
+    Last modified: 17/08/2022
     Acknowledgement:
-- Canvas, CodeWithChris Course
+- Canvas
  */
 
 import Foundation

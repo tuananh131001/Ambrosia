@@ -1,9 +1,15 @@
-//
-//  AddReview.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 10/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Vo Quoc Huy
+    ID: s3823236
+    Created  date: 10/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 
@@ -44,6 +50,7 @@ struct AddReviewView: View {
                 }.padding(.horizontal)
                 Button {
                     presentationMode.wrappedValue.dismiss()
+                    SoundModel.clickButtonSound()
                     // Add Review from user
                     //TODO: Load restaurant from restaurant models
                     self.restaurantModel.addReviewFromUser(reviewDescription: userReview, rating: rating, name: userModel.user.name, email: userModel.user.email,userId:userModel.user.id, image: "avatar1",userModel:userModel)

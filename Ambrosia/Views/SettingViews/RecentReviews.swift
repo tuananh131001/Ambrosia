@@ -1,9 +1,15 @@
-//
-//  RecentReviews.swift
-//  Ambrosia
-//
-//  Created by William on 16/09/2022.
-//
+/*
+     RMIT University Vietnam
+     Course: COSC2659 iOS Development
+     Semester: 2022B
+     Assessment: Assignment 3
+     Author: Nguyen Tuan Anh
+     ID: s3864077
+     Created  date: 16/09/2022
+     Last modified: 17/09/2022
+     Acknowledgement:
+     - Canvas
+ */
 
 import SwiftUI
 
@@ -53,7 +59,7 @@ struct RecentReviews: View {
                         }
                     }.padding()
                     // add the search bar and set the mode to always display the search bar
-                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Recent Reviews").accentColor(Color("PrimaryColor"))
+                }.searchable(text: $searchText,placement:.navigationBarDrawer(displayMode: .always),prompt: "Search by restaurant's name").navigationTitle("Recent Reviews").accentColor(Color("PrimaryColor")).disableAutocorrection(true)
                 
             }
         }.navigationViewStyle(StackNavigationViewStyle())

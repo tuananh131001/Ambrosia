@@ -1,9 +1,15 @@
-//
-//  ReviewCard.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 10/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Vo Quoc Huy
+    ID: s3823236
+    Created  date: 10/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 
@@ -11,6 +17,7 @@ struct ReviewCard: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
     @State var rating:Int
     @State var reviewerAvatar:String = ""
+    @State var reviewerUsername:String = ""
     var review:Review
     var body: some View {
         VStack (alignment:.leading,spacing:15){
@@ -21,7 +28,7 @@ struct ReviewCard: View {
                 } placeholder: {
                     Image("avatar1").resizable().aspectRatio(contentMode: .fill).frame(width: 40, height: 40).clipShape(Circle())
                 }
-                Text(review.username).foregroundColor(Color("TextColor")).bold().font(.system(size: 20))
+                Text(reviewerUsername).foregroundColor(Color("TextColor")).bold().font(.system(size: 20))
             }
             HStack{
                 RatingView(rating: $rating, tappable: false,width: 12,height: 12)
@@ -39,9 +46,12 @@ struct ReviewCard: View {
                 }
             }
         }.onAppear(perform: {
-            restaurantModel.firebaseService.getUserAvatar(userId: review.userId) { newAvatar in
+            restaurantModel.firebaseService.getUserAvatar(userId: review.userId)  { newAvatar in
                 reviewerAvatar = newAvatar
+            } setUserName: { newUsername in
+                reviewerUsername = newUsername
             }
+
         })
     }
 }

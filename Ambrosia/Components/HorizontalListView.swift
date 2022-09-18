@@ -1,9 +1,15 @@
-//
-//  HorizontalListView.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 16/09/2022.
-//
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Vo Quoc Huy
+    ID: s3823236
+    Created  date: 16/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+*/
 
 import SwiftUI
 
@@ -34,6 +40,9 @@ struct HorizontalListView: View {
                                     HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByRankRestaurants[index].title , rating: restaurantModel.sortedByRankRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByRankRestaurants[index].reviewsCount ?? 5,distance: restaurantModel.sortedByRankRestaurants[index].distance,imageLink: restaurantModel.sortedByRankRestaurants[index].imageLink)
                                 }
                               )
+                                .simultaneousGesture(TapGesture().onEnded {
+                                    SoundModel.clickCardSound()
+                                })
                             }
                         }
                         else if (type == "nearby"){
@@ -51,6 +60,9 @@ struct HorizontalListView: View {
                                     HorizontalRestaurantCard(restaurantName: restaurantModel.sortedByDistanceRestaurants[index].title , rating: restaurantModel.sortedByDistanceRestaurants[index].totalScore ?? 0.2, ratingCount: restaurantModel.sortedByDistanceRestaurants[index].reviewsCount ?? 5,distance: restaurantModel.sortedByDistanceRestaurants[index].distance,imageLink: restaurantModel.sortedByDistanceRestaurants[index].imageLink)
                                 }
                               )
+                                .simultaneousGesture(TapGesture().onEnded {
+                                    SoundModel.clickCardSound()
+                                })
                             }
                         }
                         

@@ -1,9 +1,15 @@
-//
-//  PickImageModal.swift
-//  Ambrosia
-//
-//  Created by Khanh Tran Nguyen Ha on 16/09/2022.
-//
+/*
+     RMIT University Vietnam
+     Course: COSC2659 iOS Development
+     Semester: 2022B
+     Assessment: Assignment 3
+     Author: Tran Nguyen Ha Khanh
+     ID: s3877707
+     Created  date: 16/09/2022
+     Last modified: 17/09/2022
+     Acknowledgement:
+     - Canvas
+ */
 
 import SwiftUI
 import Firebase
@@ -21,6 +27,9 @@ struct PickImageModal: View {
     @State var image : Image?
     @State var message : String = ""
     @State var showMessage : Bool = false
+    
+    // for animation
+    @Binding var isModalAppear: Bool
     
     
     var body: some View {
@@ -65,7 +74,11 @@ struct PickImageModal: View {
             .cornerRadius(Constants.CONRNER_RADIUS)
             .overlay(
               Button(action: {
-                  showPickImageModal = false
+                  isModalAppear = false
+                  DispatchQueue.main.asyncAfter(deadline: .now() + Constants.ANIMATION_MODAL_DURATION) {
+                      showPickImageModal = false
+                  }
+                  
               }) {
                 Image(systemName: "xmark.circle")
                   .font(.title)

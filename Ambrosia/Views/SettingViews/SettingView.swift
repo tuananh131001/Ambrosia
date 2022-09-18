@@ -1,9 +1,17 @@
-//
-//  SettingView.swift
-//  Ambrosia
-//
-//  Created by Võ Quốc Huy on 11/09/2022.
-// https://betterprogramming.pub/swiftui-app-theme-switch-241a79574b87
+/*
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Tran Nguyen Ha Khanh, Vo Quoc Huy, Tran Mai Nhung
+    ID: s3877707, s3823236, s3879954
+    Created  date: 11/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+    - https://betterprogramming.pub/swiftui-app-theme-switch-241a79574b87
+*/
+
 import SwiftUI
 import Firebase
 
@@ -15,6 +23,7 @@ struct SettingView: View {
     @State var showReview:Bool = false
     @State var hasAvatar: Bool = false
     @State var showPickImageModal = false
+    @State var isModalAppear = false
     @State var avatar : Image? = Image("default-avatar")
     @State var email : String = ""
     
@@ -42,6 +51,7 @@ struct SettingView: View {
                             }
                             
                             Button(action: {
+                                SoundModel.clickOtherSound()
                                 showPickImageModal = true
                             }) {
                                 ZStack {
@@ -112,6 +122,7 @@ struct SettingView: View {
                             
                               // MARK: EDIT INFO BTN
                               Button {
+                                  SoundModel.clickButtonSound()
                                     showReview = true
 
                               } label: {
@@ -127,6 +138,7 @@ struct SettingView: View {
                             
                               // MARK: EDIT INFO BTN
                               Button {
+                                  SoundModel.clickButtonSound()
                                   showEditInfo = true
 
                               } label: {
@@ -164,7 +176,13 @@ struct SettingView: View {
             }
             
             if(showPickImageModal) {
-                PickImageModal(showPickImageModal: $showPickImageModal, avatar: $avatar)
+                PickImageModal(showPickImageModal: $showPickImageModal, avatar: $avatar, isModalAppear: $isModalAppear)
+                    .opacity(isModalAppear ? 1 : 0)
+                    .offset(y: isModalAppear ? 0: geometry.frame(in: .global).maxY + 10)
+                    .animation(.easeInOut(duration: Constants.ANIMATION_MODAL_DURATION), value: isModalAppear)
+                    .onAppear() {
+                        isModalAppear = true
+                    }
             }
         }
         .onAppear(perform: {

@@ -1,19 +1,19 @@
 /*
- RMIT University Vietnam
- Course: COSC2659 iOS Development
- Semester: 2022B
- Assessment: Assignment 2
- Author: Tran Mai Nhung
- ID: s3879954
- Created  date: 26/07/2022
- Last modified: 07/08/2022
- Acknowledgement:
- - Canvas, CodeWithChris Course
- - https://stackoverflow.com/questions/24534229/swift-modifying-arrays-inside-dictionaries
- - https://stackoverflow.com/questions/37517829/get-distinct-elements-in-an-array-by-object-property
- - https://stackoverflow.com/questions/21983559/opens-apple-maps-app-from-ios-app-with-directions
- - https://stackoverflow.com/questions/32364055/formatting-phone-number-in-swift
- */
+    RMIT University Vietnam
+    Course: COSC2659 iOS Development
+    Semester: 2022B
+    Assessment: Assignment 3
+    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+    ID: s3864077, s3823236, s3877707, s3879954
+    Created  date: 9/09/2022
+    Last modified: 17/09/2022
+    Acknowledgement:
+    - Canvas
+     - https://stackoverflow.com/questions/24534229/swift-modifying-arrays-inside-dictionaries
+     - https://stackoverflow.com/questions/37517829/get-distinct-elements-in-an-array-by-object-property
+     - https://stackoverflow.com/questions/21983559/opens-apple-maps-app-from-ios-app-with-directions
+     - https://stackoverflow.com/questions/32364055/formatting-phone-number-in-swift
+*/
 
 import Foundation
 import CoreLocation
@@ -412,7 +412,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     func addReviewFromUser(reviewDescription: String, rating: Int, name: String, email: String, userId: String, image: String,userModel:UserModel) {
         let id = UUID()
         let date = Date.now
-        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, username: name, email: email, userId: userId)
+        let newReview = Review(id: id, reviewDescription: reviewDescription, dateCreated: date, rating: rating, email: email, userId: userId)
         self.currentRestaurant?.reviews.append(newReview)
         userModel.user.reviewRestaurant.append(self.currentRestaurant ?? Restaurant.testRestaurantDetail())
         firebaseService.addReviewToFirebase(restaurant: self.currentRestaurant ?? Restaurant.testRestaurantDetail(), userId: userId)
