@@ -71,7 +71,7 @@ struct FavouriteRestaurantView: View {
                     }
                 }
                 .navigationTitle("\(userModel.user.name)'s Favorites")
-            }
+            }.navigationViewStyle(StackNavigationViewStyle())
         }
     }
     
