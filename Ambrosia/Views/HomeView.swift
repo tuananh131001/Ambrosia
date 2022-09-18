@@ -71,6 +71,7 @@ struct HomeViewContent: View {
             ThemeViewUtil.setAppTheme(userModel)
         }
         .onChange(of: tabSelection) { newValue in
+            
             SoundModel.clickTabSound()
         }
 //        .preferredColorScheme(isDarkMode ? .dark : .light)

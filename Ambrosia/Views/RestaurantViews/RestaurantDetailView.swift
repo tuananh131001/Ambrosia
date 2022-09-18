@@ -26,6 +26,7 @@ struct RestaurantDetailView: View {
     @State var showOpenningHours = false
     @State var showReview = false
     @State var clickFavourite = false
+    @State var countFavourite = 0
     var btnBack: some View {
         Button(action: {
             // Sound effect
@@ -63,7 +64,7 @@ struct RestaurantDetailView: View {
         Button(action: {
             SoundModel.clickCardSound()
             clickFavourite = firebaseService.changeFavorites(userModel: userModel, restaurant: restaurantModel.currentRestaurant ?? Restaurant(placeId: ""))
-            
+            countFavourite += 1
         }, label: {
                 CircleButtonView(buttonImage: "heart\(clickFavourite ? ".fill" : "")")
                     .onAppear() {
@@ -204,11 +205,15 @@ struct RestaurantDetailView: View {
                     GifView(name: "nothing").offset(y: 120)
                 }
             }
+            
             .progressViewStyle(CircularProgressViewStyle(tint: Color("PrimaryColor")))
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: btnBackProgress)
+            
             .onAppear() {
-                // background music
+                if(countFavourite != 0){
+                    self.presentationMode.wrappedValue.dismiss()
+                }
                 SoundModel.startBackgroundMusic(bckName: "detail")
             }
         }
