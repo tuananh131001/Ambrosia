@@ -45,7 +45,6 @@
 		3D275821289FC4BA00C7DD6C /* ImageShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D275820289FC4BA00C7DD6C /* ImageShadowView.swift */; };
 		3D275823289FCDBD00C7DD6C /* DontUse in Resources */ = {isa = PBXBuildFile; fileRef = 3D275822289FCDBD00C7DD6C /* DontUse */; };
 		3D304AFD289CBFB700B269ED /* AssignGradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D304AFC289CBFB700B269ED /* AssignGradientColor.swift */; };
-		3D304B03289ED8A300B269ED /* DrawCustomShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D304B02289ED8A300B269ED /* DrawCustomShapes.swift */; };
 		3D379D7328D42A84008FF117 /* FavoriteRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7228D42A84008FF117 /* FavoriteRating.swift */; };
 		3D379D7728D42AFB008FF117 /* FavoriteSideInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */; };
 		3D379D7D28D456A3008FF117 /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D379D7C28D456A3008FF117 /* FavoriteButton.swift */; };
@@ -117,7 +116,6 @@
 		44F1A3D628D471290017A7CA /* RatingContributionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1A3D528D471290017A7CA /* RatingContributionView.swift */; };
 		44F1A3D828D473AC0017A7CA /* ProgressSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1A3D728D473AC0017A7CA /* ProgressSlider.swift */; };
 		44FDA24828CDBD2C0039C46C /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FDA24728CDBD2C0039C46C /* RoundedButton.swift */; };
-		540BDDB628CE002500A2B45B /* LoginUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540BDDB528CE002500A2B45B /* LoginUtils.swift */; };
 		54585AF928CC501C003567D5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AF828CC501C003567D5 /* Constant.swift */; };
 		54585AFD28CC52DA003567D5 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFC28CC52DA003567D5 /* Modifiers.swift */; };
 		54585AFF28CC6CCA003567D5 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */; };
@@ -142,7 +140,6 @@
 		3D275820289FC4BA00C7DD6C /* ImageShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageShadowView.swift; sourceTree = "<group>"; };
 		3D275822289FCDBD00C7DD6C /* DontUse */ = {isa = PBXFileReference; lastKnownFileType = text; path = DontUse; sourceTree = "<group>"; };
 		3D304AFC289CBFB700B269ED /* AssignGradientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignGradientColor.swift; sourceTree = "<group>"; };
-		3D304B02289ED8A300B269ED /* DrawCustomShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawCustomShapes.swift; sourceTree = "<group>"; };
 		3D379D7228D42A84008FF117 /* FavoriteRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRating.swift; sourceTree = "<group>"; };
 		3D379D7628D42AFB008FF117 /* FavoriteSideInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSideInfo.swift; sourceTree = "<group>"; };
 		3D379D7C28D456A3008FF117 /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
@@ -216,7 +213,6 @@
 		44F1A3D528D471290017A7CA /* RatingContributionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingContributionView.swift; sourceTree = "<group>"; };
 		44F1A3D728D473AC0017A7CA /* ProgressSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSlider.swift; sourceTree = "<group>"; };
 		44FDA24728CDBD2C0039C46C /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
-		540BDDB528CE002500A2B45B /* LoginUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUtils.swift; sourceTree = "<group>"; };
 		54585AF828CC501C003567D5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		54585AFC28CC52DA003567D5 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		54585AFE28CC6CCA003567D5 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
@@ -299,9 +295,7 @@
 			children = (
 				3D304AFC289CBFB700B269ED /* AssignGradientColor.swift */,
 				54585AFC28CC52DA003567D5 /* Modifiers.swift */,
-				3D304B02289ED8A300B269ED /* DrawCustomShapes.swift */,
 				44969A1728CCBE9E00F7EDD4 /* FormatDate.swift */,
-				540BDDB528CE002500A2B45B /* LoginUtils.swift */,
 				442A4E7F28CEF3DD00AD37E4 /* CalculateDistance.swift */,
 				5458966F28D4741100263F3F /* ImagePicker.swift */,
 				3D379D8028D4946F008FF117 /* UserDefaultUtils.swift */,
@@ -741,9 +735,7 @@
 				54646D4628CF44510052A3AA /* ForgetPasswordModal.swift in Sources */,
 				3D4D1B2428CEE7D600034146 /* SplashIconImage.swift in Sources */,
 				44DFD4ED28CDE5AF00E82F9F /* SettingView.swift in Sources */,
-				3D304B03289ED8A300B269ED /* DrawCustomShapes.swift in Sources */,
 				3DB2C8EB28D19DA0000B4EA6 /* SplashFooter.swift in Sources */,
-				540BDDB628CE002500A2B45B /* LoginUtils.swift in Sources */,
 				54BE932F28CEF8D800CD21CD /* LoginPhoneModal.swift in Sources */,
 				44DFD4F128CDEBDA00E82F9F /* RestaurantCardView.swift in Sources */,
 				3D85B3DE288FE20E001BF2AF /* RestaurantCard.swift in Sources */,

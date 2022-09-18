@@ -1,18 +1,18 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Tran Mai Nhung
-    ID: s3879954
-    Created  date: 09/09/2022
-    Last modified: 13/09/2022
-    Acknowledgement:
-- Canvas, CodeWithChris Course
-- https://stackoverflow.com/questions/60527932/remove-back-button-text-from-navigationbar-in-swiftui
-- https://www.codebales.com/swiftui-background-image-with-gradient-tint
-- https://stackoverflow.com/questions/40667985/how-to-hide-the-navigation-bar-and-toolbar-as-scroll-down-swift-like-mybridge
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tran Mai Nhung
+ ID: s3879954
+ Created  date: 09/09/2022
+ Last modified: 13/09/2022
+ Acknowledgement:
+ - Canvas, CodeWithChris Course
+ - https://stackoverflow.com/questions/60527932/remove-back-button-text-from-navigationbar-in-swiftui
+ - https://www.codebales.com/swiftui-background-image-with-gradient-tint
+ - https://stackoverflow.com/questions/40667985/how-to-hide-the-navigation-bar-and-toolbar-as-scroll-down-swift-like-mybridge
+ */
 
 import Foundation
 import SwiftUI
@@ -60,5 +60,5 @@ extension Color {
             Color(red: 60 / 255, green: 37 / 255, blue: 37 / 255, opacity: 1)
         ]
     }
-
+    
 }
