@@ -1,15 +1,15 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Vo Quoc Huy
-    ID: s3823236
-    Created  date: 16/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Vo Quoc Huy
+ ID: s3823236
+ Created  date: 16/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 
@@ -19,7 +19,10 @@ struct ProgressSlider: View {
     @State private var value:CGFloat = 0
     var body: some View {
         HStack{
+            // MARK: which number slider is displaying
             Text("\(number)").foregroundColor(Color("PrimaryColor")).font(.system(size: 11))
+            
+            // MARK: progress bar
             ZStack(alignment:.leading){
                 Rectangle().frame(width:200,height:10).foregroundColor(Color("PlaceholderText")).cornerRadius(25)
                 Rectangle().frame(width:value <= 0 ? 0 : value,height:10).foregroundColor(Color("PrimaryColor")).cornerRadius(25)
@@ -30,7 +33,7 @@ struct ProgressSlider: View {
         }
     }
     
-
+    
 }
 
 struct ProgressSlider_Previews: PreviewProvider {

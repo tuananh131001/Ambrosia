@@ -1,17 +1,17 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
-    ID: s3864077, s3823236, s3877707, s3879954
-    Created  date: 14/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-    -  https://stackoverflow.com/questions/60225869/how-do-i-return-an-object-from-a-document-stored-in-firestore-swift
-    -         https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Nguyen Tuan Anh, Vo Quoc Huy, Tran Nguyen Ha Khanh, Tran Mai Nhung
+ ID: s3864077, s3823236, s3877707, s3879954
+ Created  date: 14/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ -  https://stackoverflow.com/questions/60225869/how-do-i-return-an-object-from-a-document-stored-in-firestore-swift
+ -         https://stackoverflow.com/questions/55368369/how-to-get-an-array-of-objects-from-firestore-in-swift
+ */
 
 
 import Foundation
@@ -23,11 +23,11 @@ import SwiftUI
 
 class FirebaseService: ObservableObject {
     static let services = FirebaseService()
-
-//    @Published var showSignUpMessage = false
+    
+    //    @Published var showSignUpMessage = false
     @Published var signUpMessage = ""
     @Published var signUpSuccess = false
-
+    
     // MARK: sign up function to use Firebase to create a new user account in Firebase
     func signUp(email: String, password: String, passwordConfirmation: String, user: UserModel) {
         // check if empty string email, pass
@@ -65,7 +65,7 @@ class FirebaseService: ObservableObject {
                     Firestore.firestore().collection("user").document(userID).setData([
                         "name": "Sir",
                         "email": authResult?.user.email ?? ""
-                        ]) { err in
+                    ]) { err in
                         if err != nil {
                         } else {
                         }
@@ -78,10 +78,10 @@ class FirebaseService: ObservableObject {
             }
         }
     }
-
+    
     // MARK: change user info in firestore
     func updateUser(user: User) {
-//        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
+        //        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
         do {
             try Firestore.firestore().collection("user").document(user.id).setData(from: user, merge: true)
         }
@@ -107,7 +107,7 @@ class FirebaseService: ObservableObject {
         // assign new data to firestore
         Firestore.firestore().collection("restaurant").document(restaurant.placeId ?? "").updateData([
             "reviews": newReviewList
-            ])
+        ])
         // update user review of that restaurant
         Firestore.firestore().collection("user").document(userId).updateData(["reviewRestaurant": FieldValue.arrayUnion([restaurant.placeId ?? ""])])
     }
@@ -202,10 +202,10 @@ class FirebaseService: ObservableObject {
                             savedReview.append(newRest)
                         }
                     }
-
+                    
                     // dark mode save
                     let isDarkModeOn = data?["isDarkModeOn"] as? Bool ?? false
-
+                    
                     // create user object to store
                     let newUser = User(id: id, name: name, dob: dob, selectedGender: selectedGender, favouriteRestaurants: favouriteRestaurants, email: email, avatarStr: avatarStr, reviewRestaurant: savedReview, isDarkModeOn: isDarkModeOn)
                     // pass to user model
@@ -213,14 +213,14 @@ class FirebaseService: ObservableObject {
                 }
             } }
     }
-
+    
     // MARK: user favorite restaurants
     // remove
     func removeFavorites(user: User, restaurant: Restaurant) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayRemove([restaurant.placeId!])]
         )
     }
-
+    
     // change
     func changeFavorites(userModel: UserModel, restaurant: Restaurant, directRemove: Bool = false) -> Bool {
         // return false -> remove favorite
@@ -239,12 +239,12 @@ class FirebaseService: ObservableObject {
             return true
         }
     }
-
+    
     // add
     func addToFavorites(user: User, restaurant: Restaurant) {
         Firestore.firestore().collection("user").document(user.id).updateData(["favoriteRestaurants": FieldValue.arrayUnion([restaurant.placeId!])])
     }
-
+    
     // MARK: dark light mode switch user
     func updateThemeMode(user: User) {
         Firestore.firestore().collection("user").document(user.id).updateData(["isDarkModeOn": user.isDarkModeOn])
@@ -256,7 +256,7 @@ class FirebaseService: ObservableObject {
         guard let imageData = image.jpegData(compressionQuality: 0.1) else {
             return completion(nil)
         }
-
+        
         // put data
         reference.putData(imageData, metadata: nil, completion: { (metadata, error) in
             // error handling
@@ -264,7 +264,7 @@ class FirebaseService: ObservableObject {
                 assertionFailure(error.localizedDescription)
                 return completion(nil)
             }
-
+            
             // download
             reference.downloadURL(completion: { (url, error) in
                 if let error = error {
@@ -284,11 +284,11 @@ class FirebaseService: ObservableObject {
                 guard let downloadURL = downloadURL else {
                     return
                 }
-
+                
                 let urlString = downloadURL.absoluteString
                 userModel.user.avatarStr = urlString
             }
         }
-//
+        //
     }
 }

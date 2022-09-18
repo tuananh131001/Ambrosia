@@ -1,15 +1,15 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Vo Quoc Huy
-    ID: s3823236
-    Created  date: 10/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Vo Quoc Huy
+ ID: s3823236
+ Created  date: 10/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 
@@ -60,7 +60,7 @@ struct ReviewCard: View {
             } setUserName: { newUsername in
                 reviewerUsername = newUsername
             }
-
+            
         })
     }
 }

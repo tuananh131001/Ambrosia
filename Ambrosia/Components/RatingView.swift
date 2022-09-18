@@ -29,7 +29,7 @@ struct RatingView: View {
     // Assign image before and after rating
     var offImage: Image?
     var onImage = Image(systemName: "star.fill")
-
+    
     // Assign the color for image before and after rating
     var onColor = UIColor(Color("Star On Color"))
     var offColor = UIColor(Color("Star Off Color"))
@@ -40,7 +40,7 @@ struct RatingView: View {
             if label.isEmpty == false {
                 Text(label)
             }
-
+            
             ForEach(1..<maximumRating + 1, id: \.self) { number in
                 image(for: number)
                     .resizable()
@@ -50,15 +50,15 @@ struct RatingView: View {
                         // if can change razting
                         if (tappable){
                             rating = number
-
+                            
                         }
                     }
-                    
+                
             }
         }
     }
     
-    // Update the image base on the rating number 
+    // Update the image base on the rating number
     func image(for number: Int) -> Image {
         if number > rating {
             return offImage ?? onImage
@@ -73,5 +73,5 @@ struct RatingViewPreview:PreviewProvider{
     static var previews: some View {
         RatingView(rating: .constant(4),tappable:true,width: 14,height: 14)
     }
-
+    
 }
