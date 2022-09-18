@@ -50,16 +50,16 @@ class UserModel: ObservableObject {
     // MARK: Fetch User
     func fetchUserInfo(id: String, userModel: UserModel, restaurantModel: RestaurantModel) {
         firebaseService.getUserFirebase(id: id, userModel: userModel, restaurantModel: restaurantModel)
-        if (self.user.email == "") {
-            if let usertemp = Auth.auth().currentUser {
-                if (usertemp.email != "") {
-                    self.user.email = usertemp.email ?? "email is hidden"
-                }
-                else if (usertemp.providerData[0].email != "") {
-                    self.user.email = usertemp.providerData[0].email ?? "email is hidden"
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if (self.user.email == "") {
+                self.user.email = Auth.auth().currentUser?.email ?? ""
+                if (self.user.email == "") {
+                    self.user.email = Auth.auth().currentUser?.providerData[0].email ?? ""
                 }
             }
         }
+        
     }
 
     func saveCurrentLoginNormal(email: String, password: String) {

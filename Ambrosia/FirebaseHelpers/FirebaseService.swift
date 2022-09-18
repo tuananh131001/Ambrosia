@@ -66,7 +66,13 @@ class FirebaseService: ObservableObject {
 
 
     func updateUser(user: User) {
-        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
+//        Firestore.firestore().collection("user").document(user.id).setData(["name": user.name, "dob": user.dob, "gender": user.selectedGender, "favoriteRestaurants": user.favouriteRestaurants, "isDarkModeOn": user.isDarkModeOn, "avatarStr": user.avatarStr], merge: true)
+        do {
+            try Firestore.firestore().collection("user").document(user.id).setData(from: user, merge: true)
+        }
+        catch {
+            print("UPDATE USER FAILED : updateUser()")
+        }
     }
     func addPlaceImage(placeId: String, imageLink: String) {
         Firestore.firestore().collection("restaurant").document(placeId).setData(["ImageLink": imageLink], merge: true)

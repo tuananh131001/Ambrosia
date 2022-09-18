@@ -16,6 +16,7 @@ struct SettingView: View {
     @State var hasAvatar: Bool = false
     @State var showPickImageModal = false
     @State var avatar : Image? = Image("default-avatar")
+    @State var email : String = ""
     
     var body: some View {
         GeometryReader { geometry in
@@ -27,26 +28,19 @@ struct SettingView: View {
                         Spacer()
                         
                         ZStack (alignment: .bottomTrailing) {
-                            Group {
-                                if (userModel.user.avatarStr != "") {
-                                    AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                            .modifier(CircularImageModifirer())
+                            AsyncImage(url: URL(string: userModel.user.avatarStr)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .modifier(CircularImageModifirer())
 
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                }
-                                else {
-                                    avatar?
-                                        .resizable()
-                                        .scaledToFill()
-                                        .modifier(CircularImageModifirer())
-                                }
+                            } placeholder: {
+                                avatar?
+                                    .resizable()
+                                    .scaledToFill()
+                                    .modifier(CircularImageModifirer())
                             }
-
+                            
                             Button(action: {
                                 showPickImageModal = true
                             }) {
@@ -81,7 +75,7 @@ struct SettingView: View {
                                   HStack {
                                     Text("Email")
                                     Spacer()
-                                      Text((Auth.auth().currentUser?.email != "" ? Auth.auth().currentUser?.email : Auth.auth().currentUser?.providerData[0].email) ?? "")
+                                      Text(userModel.user.email)
                                   }
                                 
                                   HStack {
@@ -173,6 +167,9 @@ struct SettingView: View {
                 PickImageModal(showPickImageModal: $showPickImageModal, avatar: $avatar)
             }
         }
+        .onAppear(perform: {
+
+        })
         .frame(width: UIScreen.main.bounds.width, height:UIScreen.main.bounds.height)
         .sheet(isPresented: $showEditInfo) {
             EditInformation()
