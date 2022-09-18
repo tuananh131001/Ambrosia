@@ -47,6 +47,7 @@ struct RatingView: View {
                     .frame(width: width, height: height)
                     .foregroundColor(Color(number > rating ? offColor : onColor))
                     .onTapGesture {
+                        // if can change razting
                         if (tappable){
                             rating = number
 

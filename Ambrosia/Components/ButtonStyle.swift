@@ -13,6 +13,7 @@
 
 import SwiftUI
 
+// reusable button styles
 struct ButtonStylePrimary: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -38,7 +39,6 @@ struct ButtonStyleLightPrimary: ButtonStyle {
             .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }
 }
-
 
 struct ButtonStyleWhite: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {

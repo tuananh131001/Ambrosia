@@ -14,7 +14,7 @@
 import SwiftUI
 
 struct ImageShadowView: View {
-    // Use this for
+    // Use this for apply shadow to the image
     var opacity = 0.45
     var gradient = Color.gradient
     var body: some View {
