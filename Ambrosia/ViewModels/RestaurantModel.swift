@@ -14,19 +14,6 @@
      - https://stackoverflow.com/questions/21983559/opens-apple-maps-app-from-ios-app-with-directions
      - https://stackoverflow.com/questions/32364055/formatting-phone-number-in-swift
 */
-/*
- RMIT University Vietnam
- Course: COSC2659 iOS Development
- Semester: 2022B
- Assessment: Assignment 2
- Author: Tran Mai Nhung
- ID: s3879954
- Created  date: 26/07/2022
- Last modified: 07/08/2022
- Acknowledgement:
- - Canvas, CodeWithChris Course
- 
- */
 
 import Foundation
 import CoreLocation

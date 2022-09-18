@@ -208,7 +208,7 @@ class FirebaseService: ObservableObject {
         // return true -> add favorite
         let restaurantIndex = userModel.isRestaurantFavorite(restaurant: restaurant)
         if restaurantIndex != nil {
-            userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
+//            userModel.user.favouriteRestaurants.remove(at: restaurantIndex!)
             removeFavorites(user: userModel.user, restaurant: restaurant)
             return false
         }
