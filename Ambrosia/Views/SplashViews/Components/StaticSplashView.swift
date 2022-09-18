@@ -1,19 +1,20 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Tran Mai Nhung
-    ID: s3879954
-    Created  date: 12/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tran Mai Nhung
+ ID: s3879954
+ Created  date: 12/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 
 struct StaticSplashView: View {
+    // splash view without animation
     var animationValues: [Bool]
     
     var outerCircle: CGFloat

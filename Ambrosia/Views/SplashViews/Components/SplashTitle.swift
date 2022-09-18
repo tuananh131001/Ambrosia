@@ -1,19 +1,20 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Tran Mai Nhung
-    ID: s3879954
-    Created  date: 12/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-    - Canvas
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tran Mai Nhung
+ ID: s3879954
+ Created  date: 12/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas
+ */
 
 import SwiftUI
 
 struct SplashTitle: View {
+    // for Ambrosia styling title
     let animationValues: [Bool]
     let title: String
     let title2: String
@@ -21,10 +22,12 @@ struct SplashTitle: View {
     
     var body: some View {
         HStack(spacing: 1) {
+            // First half title styling (AMBR)
             Text(title)
                 .tracking(2)
                 .foregroundColor(.white)
                 .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.9), radius: 1, x: 1, y: 3)
+            // Second half title styling (OSIA)
             Text(title2)
                 .tracking(2)
                 .foregroundColor(.black)

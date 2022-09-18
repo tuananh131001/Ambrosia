@@ -1,15 +1,15 @@
 /*
-    RMIT University Vietnam
-    Course: COSC2659 iOS Development
-    Semester: 2022B
-    Assessment: Assignment 3
-    Author: Tran Mai Nhung
-    ID: s3879954
-    Created  date: 10/09/2022
-    Last modified: 17/09/2022
-    Acknowledgement:
-- Canvas, CodeWithChris Course
-*/
+ RMIT University Vietnam
+ Course: COSC2659 iOS Development
+ Semester: 2022B
+ Assessment: Assignment 3
+ Author: Tran Mai Nhung
+ ID: s3879954
+ Created  date: 10/09/2022
+ Last modified: 17/09/2022
+ Acknowledgement:
+ - Canvas, CodeWithChris Course
+ */
 
 import SwiftUI
 
@@ -30,36 +30,30 @@ struct SplashView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                // Home View
+                // MARK: view appearing after splash view
                 LaunchView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .offset(y: animationValues[nearFinalIndex] ? 0 : (geo.size.height + 50))
-
-//                    .environmentObject(RestaurantModel())
-//                    .environmentObject(UserModel())
-                
-                
                 
                 if !animationValues[finalIndex] {
                     // MARK: - Splash View
                     StaticSplashView(animationValues: animationValues, outerCircle: outerCircle, titleSize: titleSize, footerSize: footerSize, title: title, title2: title2, footer: footer)
-                    .opacity(animationValues[nearFinalIndex] ? 0 : 1)
-                    .onAppear() {
-                        outerCircle = geo.size.width / 2.43
-                        titleSize = geo.size.width / 6.9
-                        footerSize = geo.size.width / 20.6
-                    }
+                        .opacity(animationValues[nearFinalIndex] ? 0 : 1)
+                        .onAppear() {
+                            outerCircle = geo.size.width / 2.43
+                            titleSize = geo.size.width / 6.9
+                            footerSize = geo.size.width / 20.6
+                        }
                 }
                 
             }
             .ignoresSafeArea()
             .onAppear() {
-                // background music
+                // MARK: background music
                 SoundModel.startBackgroundMusic(bckName: "login")
                 // MARK: - animation
-//                withAnimation(.interpolatingSpring(mass: 0.4, stiffness: 20, damping: 2, initialVelocity: 7)) {
+                // inner icon
                 withAnimation(.easeInOut(duration: 0.2).delay(0.1)) {
-                    // inner icon
                     animationValues[0] = true
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -84,11 +78,11 @@ struct SplashView: View {
                             animationValues[4] = true
                             // trim circle
                             withAnimation(.easeInOut(duration: 0.3).delay(0.4).repeatForever().delay(0.1)) {
-                                    animationValues[5] = true
-                                }
+                                animationValues[5] = true
+                            }
                         }
                     }
-
+                    
                     // restoring back
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
                         withAnimation(.easeInOut(duration: 0.2).delay(0.4)) {
@@ -97,14 +91,14 @@ struct SplashView: View {
                         // end splash screen
                         withAnimation(.easeInOut(duration: 0.2).delay(0.8)) {
                             animationValues[nearFinalIndex] = true
-
+                            
                         }
-
+                        
                         // for removing splash view after 2s
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             animationValues[finalIndex] = true
                         }
-
+                        
                     }
                 }
                 

@@ -452,6 +452,7 @@ class RestaurantModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     
 }
+// For Fetching
 extension RestaurantModel {
     enum RestaurantError: LocalizedError {
         case custom(error: Error)
