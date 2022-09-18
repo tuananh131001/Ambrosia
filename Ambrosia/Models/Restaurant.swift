@@ -174,7 +174,6 @@ struct Review: Identifiable, Decodable {
     var reviewDescription: String
     var dateCreated: Date
     var rating: Int
-    var username: String
     var email: String
     var isLiked: Bool = false
     var userId: String
@@ -184,17 +183,16 @@ struct Review: Identifiable, Decodable {
         case isLiked
         case rating
         case reviewDescription
-        case username
         case userId
     }
     static func testReviews() -> [Review] {
-        let review1 = Review(reviewDescription: "hơi ngon", dateCreated: Date.now, rating: 4, username: "Sir", email: "Sir@gmail.com", userId: "avatar1")
-        let review2 = Review(reviewDescription: "hơi dở", dateCreated: Date.now, rating: 3, username: "Chó Sir", email: "ChóSir@gmail.com", userId: "avatar1")
-        let review3 = Review(reviewDescription: "hơi Sir", dateCreated: Date.now, rating: 2, username: "Lê Anh Sir", email: "LêAnhSir@gmail.com", userId: "avatar1")
-        let review4 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com", userId: "avatar1")
-        let review5 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com", userId: "avatar1")
-        let review6 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com", userId: "avatar1")
-        let review7 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, username: "The King", email: "TheKing@gmail.com", userId: "avatar1")
+        let review1 = Review(reviewDescription: "hơi ngon", dateCreated: Date.now, rating: 4, email: "Sir@gmail.com", userId: "avatar1")
+        let review2 = Review(reviewDescription: "hơi dở", dateCreated: Date.now, rating: 3, email: "ChóSir@gmail.com", userId: "avatar1")
+        let review3 = Review(reviewDescription: "hơi Sir", dateCreated: Date.now, rating: 2, email: "LêAnhSir@gmail.com", userId: "avatar1")
+        let review4 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, email: "TheKing@gmail.com", userId: "avatar1")
+        let review5 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, email: "TheKing@gmail.com", userId: "avatar1")
+        let review6 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, email: "TheKing@gmail.com", userId: "avatar1")
+        let review7 = Review(reviewDescription: "hơi siu", dateCreated: Date.now, rating: 5, email: "TheKing@gmail.com", userId: "avatar1")
         var reviews: [Review] = []
         reviews.append(review1)
         reviews.append(review2)

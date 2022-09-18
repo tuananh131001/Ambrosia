@@ -17,6 +17,7 @@ struct ReviewCard: View {
     @EnvironmentObject var restaurantModel:RestaurantModel
     @State var rating:Int
     @State var reviewerAvatar:String = ""
+    @State var reviewerUsername:String = ""
     var review:Review
     var body: some View {
         VStack (alignment:.leading,spacing:15){
@@ -25,9 +26,9 @@ struct ReviewCard: View {
                     image
                         .resizable().aspectRatio(contentMode: .fill).frame(width: 50, height: 50).clipShape(Circle())
                 } placeholder: {
-                    ProgressView()
+                    Image("avatar1").resizable().aspectRatio(contentMode: .fill).frame(width: 40, height: 40).clipShape(Circle())
                 }
-                Text(review.username).foregroundColor(Color("TextColor")).bold().font(.system(size: 20))
+                Text(reviewerUsername).foregroundColor(Color("TextColor")).bold().font(.system(size: 20))
             }
             HStack{
                 RatingView(rating: $rating, tappable: false,width: 12,height: 12)
@@ -45,10 +46,12 @@ struct ReviewCard: View {
                 }
             }
         }.onAppear(perform: {
-            restaurantModel.firebaseService.getUserAvatar(userId: review.userId) { newAvatar in
+            restaurantModel.firebaseService.getUserAvatar(userId: review.userId)  { newAvatar in
                 reviewerAvatar = newAvatar
-                print(newAvatar)
+            } setUserName: { newUsername in
+                reviewerUsername = newUsername
             }
+
         })
     }
 }

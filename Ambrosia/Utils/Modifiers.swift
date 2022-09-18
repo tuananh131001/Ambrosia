@@ -22,7 +22,7 @@ struct TextFieldModifier: ViewModifier {
             .frame(minWidth: Constants.FIELD_MIN_WIDTH, maxWidth: Constants.FIELD_MAX_WIDTH, minHeight: Constants.FIELD_HEIGHT)
             .padding(.horizontal)
             .background(.thinMaterial)
-            .foregroundColor(Constants.PRIMARY_COLOR)
+            .foregroundColor(Constants.PRIMARY_COLOR_TEXT_FIELD_COLOR)
             .cornerRadius(Constants.CONRNER_RADIUS)
             .textInputAutocapitalization(.never)
             .disableAutocorrection(true)

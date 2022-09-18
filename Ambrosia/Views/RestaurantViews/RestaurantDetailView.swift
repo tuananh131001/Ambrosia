@@ -135,9 +135,6 @@ struct RestaurantDetailView: View {
                                 } label: {
                                     Text("Call").foregroundColor(Color("SecondaryColor")).font(.system(size: 14)).bold()
                                 }
-
-
-
                             }
                             Divider()
 
